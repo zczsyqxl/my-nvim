@@ -1,0 +1,78 @@
+
+return {
+	'smoka7/hop.nvim',
+	config = function()
+		local hop = require('hop')
+		local opt = {
+			uppercase_labels = true,
+			multi_windows = true,
+		}
+		hop.setup(opt)
+
+		local directions = require('hop.hint').HintDirection
+		vim.keymap.set('', ',f', function()
+			hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+		end, {remap=true})
+		vim.keymap.set('', ',F', function()
+			hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+		end, {remap=true})
+		vim.keymap.set('', ',t', function()
+			hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+		end, {remap=true})
+		vim.keymap.set('', ',T', function()
+			hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+		end, {remap=true})
+		vim.keymap.set('', ',t', function()
+			hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+		end, {remap=true})
+		vim.keymap.set('', ',T', function()
+			hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+		end, {remap=true})
+		vim.keymap.set('', ',w', function()
+			hop.hint_words({ direction = directions.AFTER_CURSOR })
+		end, {remap=true})
+		vim.keymap.set('', ',b', function()
+			hop.hint_words({ direction = directions.BEFORE_CURSOR })
+		end, {remap=true})
+		vim.keymap.set('', ',j', function()
+			hop.hint_lines({ direction = directions.AFTER_CURSOR })
+		end, {remap=true})
+		vim.keymap.set('', ',k', function()
+			hop.hint_lines({ direction = directions.BEFORE_CURSOR })
+		end, {remap=true})
+		vim.keymap.set('', ',J', function()
+			hop.hint_vertical({ direction = directions.AFTER_CURSOR })
+		end, {remap=true})
+		vim.keymap.set('', ',K', function()
+			hop.hint_vertical({ direction = directions.BEFORE_CURSOR })
+		end, {remap=true})
+		vim.keymap.set('', ',s', function()
+			hop.hint_char1()
+		end, {remap=true})
+		vim.keymap.set('', ',x', function()
+			hop.hint_char2()
+		end, {remap=true})
+		vim.keymap.set('', ',z', function()
+			hop.hint_patterns()
+		end, {remap=true})
+		vim.keymap.set('', ',a', function()
+			hop.hint_anywhere()
+		end, {remap=true})
+
+		local hopyank = require('hop-yank')
+		vim.keymap.set('', ',c', function()
+			hopyank.yank_char1()
+		end, {remap=true})
+		vim.keymap.set('', ',vv', function()
+			hopyank.paste_char1()
+		end, {remap=true})
+
+		local function set_hl(g, fg, bg, bold, underline)
+			vim.api.nvim_set_hl(0, g, { fg = fg, bg = bg, bold = bold, underline = underline })
+		end
+		set_hl('HopNextKey',  '#80dcfe', '', false, false)
+		set_hl('HopNextKey1', '#adff2f', '', false, false)
+		set_hl('HopNextKey2', '#1e90ff', '', false, false)
+		set_hl('HopPreview',  'white', '#191970', false, false)
+	end,
+}
