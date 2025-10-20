@@ -5,7 +5,9 @@ else
         { 
             'vim-airline/vim-airline',
             init = function()
-                vim.g.airline_powerline_fonts=1
+            vim.g.airline_powerline_fonts = 1
+                vim.g['airline#extensions#tabline#enabled'] = 1
+                vim.g['airline#extensions#tabline#show_splits'] = 1
                 vim.g.airline_symbols = {
                     linenr = '',
                     colnr = 'cn:'
