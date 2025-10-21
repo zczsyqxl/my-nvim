@@ -1,9 +1,14 @@
 if vim.g.vscode then
     return {}
 else
-    return {
-        'ludovicchabant/vim-gutentags'
-    }
+    if false then
+        return {
+            'ludovicchabant/vim-gutentags'
+        }
+    else
+        return {}
+    end
+
 end
 
 

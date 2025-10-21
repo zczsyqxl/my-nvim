@@ -1,0 +1,12 @@
+if vim.g.vscode then
+    return {}
+else
+    return {
+        'mason-org/mason-lspconfig.nvim',
+        opts = {},
+        dependencies = {
+            { 'mason-org/mason.nvim', opts = {} },
+            'neovim/nvim-lspconfig'
+        }
+    }
+end

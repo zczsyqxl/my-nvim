@@ -13,7 +13,7 @@ else
                     linewise_hybrid_mode = true,
                 },
             });
-            vim.keymap.set('n', '<leader>m', '<cmd>Markview splitToggle<cr>', { remap = false})
+            vim.keymap.set('n', '<leader>v.', '<cmd>Markview splitToggle<cr>', { remap = false})
         end,
 
     }
