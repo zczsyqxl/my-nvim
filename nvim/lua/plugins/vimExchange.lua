@@ -1,5 +1,8 @@
 return {
     'tommcdo/vim-exchange',
+    init = function()
+        vim.g.exchange_no_mappings = 1
+    end,
     config = function()
         vim.keymap.set('n', 'cn', '<Plug>(Exchange)', {remap = true})
         vim.keymap.set('x', 'X', '<Plug>(Exchange)', {remap = true})
