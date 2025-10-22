@@ -35,7 +35,7 @@ else
                 action = 'none'
             },
             cmake_dap_configuration = {
-                stopOnEntry = true,
+                -- stopOnEntry = true,
             }
         },
         config = function(_,opts)

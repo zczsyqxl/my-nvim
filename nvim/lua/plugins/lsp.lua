@@ -10,24 +10,71 @@ else
                     'neovim/nvim-lspconfig'
                 },
                 {
-                    'mfussenegger/nvim-dap',
+                    'rcarriga/nvim-dap-ui',
                     dependencies = {
-                        {'mason-org/mason.nvim'},
-                        {'jay-babu/mason-nvim-dap.nvim'},
+                        {'nvim-neotest/nvim-nio'},
+                        {
+                            'mfussenegger/nvim-dap',
+                            dependencies = {
+                                {'mason-org/mason.nvim'},
+                                {'jay-babu/mason-nvim-dap.nvim'},
+                            },
+                            opts = {},
+                            config = function()
+                                require('mason').setup()
+                                require('mason-nvim-dap').setup({
+                                    -- ensure_installed = {'codelldb'},
+                                    handlers = {
+                                        function(config)
+                                            require('mason-nvim-dap').default_setup(config)
+                                        end,
+                                    }
+                                })
+                                -- local dap = require('dap')
+                                -- dap.adapters.codelldb = {
+                                --     type = 'executable',
+                                --     command = [[C:\Users\yingqi.zhang\AppData\Local\nvim-data\mason\packages\codelldb\extension\adapter\codelldb.exe]]
+                                -- }
+                                -- dap.configurations.c = {
+                                --     {
+                                --         name = 'Launch file',
+                                --         type = 'codelldb',
+                                --         request = 'launch',
+                                --         program = function()
+                                --             return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                                --         end,
+                                --         cwd = '${workspaceFolder}',
+                                --         stopOnEntry = false,
+                                --     },
+                                -- }
+                                -- dap.set_log_level('DEBUG')
+                                vim.keymap.set('n', '<F4>', '<cmd>CMakeDebug<cr>', {remap = false, silent = true})
+                                vim.keymap.set('n', '<F5>', '<cmd>DapNew<cr>', {remap = false, silent = true})
+                                vim.keymap.set('n', '<S-F5>', '<cmd>DapTerminate<cr>', {remap = false, silent = true})
+                                vim.keymap.set('n', '<F6>', '<cmd>DapPause<cr>', {remap = false, silent = true})
+                                vim.keymap.set('n', '<F7>', '<cmd>DapContinue<cr>', {remap = false, silent = true})
+                                vim.keymap.set('n', '<F8>', '<cmd>DapStepOver<cr>', {remap = false, silent = true})
+                                vim.keymap.set('n', '<F9>', '<cmd>DapToggleBreakpoint<cr>', {remap = false, silent = true})
+                                vim.keymap.set('n', '<F10>', '<cmd>DapStepInto<cr>', {remap = false, silent = true})
+                                vim.keymap.set('n', '<F11>', '<cmd>DapStepOut<cr>', {remap = false, silent = true})
+                            end
+                        }
                     },
-                    opts = {},
                     config = function()
-                        require('mason').setup()
-                        require('mason-nvim-dap').setup(
-                            {
-                                -- ensure_installed = {'codelldb'},
-                                handlers = {
-                                    function(config)
-                                        require('mason-nvim-dap').default_setup(config)
-                                    end,
-                                }
-                            }
-                        )
+                        require('dapui').setup()
+                        local dap, dapui = require("dap"), require("dapui")
+                        dap.listeners.before.attach.dapui_config = function()
+                            dapui.open()
+                        end
+                        dap.listeners.before.launch.dapui_config = function()
+                            dapui.open()
+                        end
+                        dap.listeners.before.event_terminated.dapui_config = function()
+                            dapui.close()
+                        end
+                        dap.listeners.before.event_exited.dapui_config = function()
+                            dapui.close()
+                        end
                     end
                 }
             }
