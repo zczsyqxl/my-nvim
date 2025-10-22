@@ -1,13 +1,13 @@
 
 return {
 	'smoka7/hop.nvim',
-	config = function()
-		local hop = require('hop')
-		local opt = {
-			uppercase_labels = true,
-			multi_windows = true,
-		}
-		hop.setup(opt)
+    opts = {
+        uppercase_labels = true,
+        multi_windows = true,
+    },
+	config = function(_, opts)
+        local hop = require('hop')
+		hop.setup(opts)
 
 		local directions = require('hop.hint').HintDirection
 		vim.keymap.set('', ',f', function()

@@ -1,13 +1,14 @@
 
 return {
 	'ggandor/lightspeed.nvim',
-	config = function()
-		require'lightspeed'.setup {
-			ignore_case = true,
-			substitute_chars = { [' '] = '■' },
-			safe_labels = {nil},
-			labels = { "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"},
-		}
+    opts = {
+        ignore_case = true,
+        substitute_chars = { [' '] = '■' },
+        safe_labels = {nil},
+        labels = { "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"},
+    },
+	config = function(_, opts)
+		require'lightspeed'.setup(opts)
 
 		function set_highlight(group, fg, bg, bold, underline)
 			vim.api.nvim_set_hl(0, group, {fg = fg, bg = bg, bold = bold, underline=underline})

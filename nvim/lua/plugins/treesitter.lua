@@ -3,15 +3,16 @@ if vim.g.vscode then
 else
 	return {
 		'nvim-treesitter/nvim-treesitter',
-        config = function()
-            require('nvim-treesitter.configs').setup {
-                highlight = {
-                    enable = true,
-                },
-                indent = {
-                    enable = true,
-                },
-            }
+        opts = {
+            highlight = {
+                enable = true,
+            },
+            indent = {
+                enable = true,
+            },
+        },
+        config = function(_, opts)
+            require('nvim-treesitter.configs').setup(opts)
             vim.api.nvim_create_autocmd('BufReadPost', {
                 callback = function()
                     if vim.treesitter.language.get_lang(vim.bo.filetype) then
