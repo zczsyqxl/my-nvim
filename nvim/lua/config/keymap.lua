@@ -19,12 +19,13 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>gv', '<cmd>vsplit $myvimrc<cr>', {remap = false})
     vim.keymap.set('n', '<leader>gs', '<cmd>source $myvimrc<cr>', {remap = false})
     vim.keymap.set('n', 'gh', '<c-w>d', {remap = true, silent = true})
-    vim.keymap.set('n', '<leader>vm', '<cmd>botright split term://zsh<cr>i', {remap = false, silent = true})
+    -- vim.keymap.set('n', '<leader>vm', '<cmd>botright split term://zsh<cr>i', {remap = false, silent = true})
 
     vim.keymap.set('i', 'jk', '<esc>', { remap = false, desc = 'escape' })
     vim.keymap.set('i', '<c-l>', '<c-x>', {remap = true, silent = true})
 
-    vim.keymap.set('t', '<esc>', '<c-\\><c-n>', {remap = false})
+    vim.keymap.set('t', '<esc>', [[<c-\><c-n>]], {remap = false})
+    vim.keymap.set('t', 'jk', [[<c-\><c-n>]], {remap = false})
     vim.keymap.set('t', '<C-R>', function()
         local char = vim.fn.nr2char(vim.fn.getchar())
         return '<C-\\><C-N>"' .. char .. 'pi'
