@@ -40,7 +40,6 @@ else
         },
         config = function(_,opts)
             require('cmake-tools').setup(opts)
-            print('loaded cmake')
         end
     }
 end

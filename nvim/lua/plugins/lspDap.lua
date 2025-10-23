@@ -45,6 +45,7 @@ else
                                 --         end,
                                 --         cwd = '${workspaceFolder}',
                                 --         stopOnEntry = false,
+                                --         -- externalConsole = true,
                                 --     },
                                 -- }
                                 -- dap.set_log_level('DEBUG')
@@ -53,6 +54,7 @@ else
                                 vim.keymap.set('n', '<S-F5>', '<cmd>DapTerminate<cr>', {remap = false, silent = true})
                                 vim.keymap.set('n', '<F6>', '<cmd>DapPause<cr>', {remap = false, silent = true})
                                 vim.keymap.set('n', '<F7>', '<cmd>DapContinue<cr>', {remap = false, silent = true})
+                                vim.keymap.set('n', '<S-F7>', '<cmd>DapTerminate<cr>', {remap = false, silent = true})
                                 vim.keymap.set('n', '<F8>', '<cmd>DapStepOver<cr>', {remap = false, silent = true})
                                 vim.keymap.set('n', '<F9>', '<cmd>DapToggleBreakpoint<cr>', {remap = false, silent = true})
                                 vim.keymap.set('n', '<F10>', '<cmd>DapStepInto<cr>', {remap = false, silent = true})
@@ -75,6 +77,10 @@ else
                         dap.listeners.before.event_exited.dapui_config = function()
                             dapui.close()
                         end
+                        vim.keymap.set('n', '<F1>', function() require('dapui').open() end, {remap = false, silent = true})
+                        vim.keymap.set('n', '<F2>', function() require('dapui').close() end, {remap = false, silent = true})
+                        vim.keymap.set('n', '<F3>', function() require('dapui').toggle() end, {remap = false, silent = true})
+                        vim.keymap.set('n', '<leader>va', function() require('dapui').toggle() end, {remap = false, silent = true})
                     end
                 }
             }

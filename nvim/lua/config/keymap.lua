@@ -24,8 +24,8 @@ if vim.g.vscode == nil then
     vim.keymap.set('i', 'jk', '<esc>', { remap = false, desc = 'escape' })
     vim.keymap.set('i', '<c-l>', '<c-x>', {remap = true, silent = true})
 
-    vim.keymap.set('t', '<esc>', [[<c-\><c-n>]], {remap = false})
-    vim.keymap.set('t', 'jk', [[<c-\><c-n>]], {remap = false})
+    vim.keymap.set('t', '<A-q>', [[<c-\><c-n>]], {remap = false})
+    -- vim.keymap.set('t', 'jk', [[<c-\><c-n>]], {remap = false})
     vim.keymap.set('t', '<C-R>', function()
         local char = vim.fn.nr2char(vim.fn.getchar())
         return '<C-\\><C-N>"' .. char .. 'pi'
