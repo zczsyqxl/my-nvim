@@ -2,6 +2,7 @@
   "aerial.nvim": { "branch": "master", "commit": "5e687b5a14004fa2dd9eccbee042b96869fe1557" },
   "cmake-tools.nvim": { "branch": "master", "commit": "88e07c6bff838a5bda2f461e9c1122b79ff0829f" },
   "ctrlp.vim": { "branch": "master", "commit": "86872f021c4e245e3c583054fda82fb820a2faee" },
+  "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "far.vim": { "branch": "master", "commit": "796d60857ae4dcdae78c64bae69902503cca31f4" },
   "fzf": { "branch": "master", "commit": "aa259fdc1910acbbeef4562bf41a762ecb428828" },
   "fzf.vim": { "branch": "master", "commit": "879db51d0965515cdaef9b7f6bdeb91c65d2829e" },

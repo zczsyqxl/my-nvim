@@ -16,8 +16,8 @@ vim.keymap.set('n', '<backspace>', '<cmd>noh<cr>', {remap = false, silent = true
 
 if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>;', '<cmd>set wrap!<cr>', {remap = false})
-    vim.keymap.set('n', '<leader>gv', '<cmd>vsplit $myvimrc<cr>', {remap = false})
-    vim.keymap.set('n', '<leader>gs', '<cmd>source $myvimrc<cr>', {remap = false})
+    vim.keymap.set('n', '<leader>ce', '<cmd>vsplit $myvimrc<cr>', {remap = false})
+    vim.keymap.set('n', '<leader>cs', '<cmd>source $myvimrc<cr>', {remap = false})
     vim.keymap.set('n', 'gh', '<c-w>d', {remap = true, silent = true})
     -- vim.keymap.set('n', '<leader>vm', '<cmd>botright split term://zsh<cr>i', {remap = false, silent = true})
 

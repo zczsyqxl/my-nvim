@@ -43,7 +43,7 @@ else
         },
         config = function(_, opts)
             require('aerial').setup(opts)
-            vim.keymap.set('n', '<leader>vd', '<cmd>AerialToggle!<cr>')
+            vim.keymap.set('n', '<leader>vo', '<cmd>AerialToggle!<cr>')
         end,
     }
 end
