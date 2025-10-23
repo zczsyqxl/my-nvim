@@ -2,7 +2,7 @@ if vim.g.vscode then
     return {}
 else
     return {
-        'brooth/far.vim'
+        'MagicDuck/grug-far.nvim'
     }
 end
 
