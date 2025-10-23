@@ -42,6 +42,15 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<A-/>','<C-w>j', {remap = false, silent = true})
     vim.keymap.set('n', '<A-[>','<C-w>k', {remap = false, silent = true})
     vim.keymap.set('n', '<A-\'>','<C-w>l', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>en','<cmd>tabnew<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>ej','<cmd>tabnext<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>et','<cmd>exe v:count1 . "tabnext"<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>ek','<cmd>tabprevious<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>ec','<cmd>tabclose<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>eo','<cmd>tabonly<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>eh','<cmd>exe "bprevious" . v:count1<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>el','<cmd>exe "bnext" . v:count1<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>ee','<cmd>exe "b" . v:count1<cr>', {remap = false, silent = true})
 
     require('config.mylua.exkeymap')
 else
