@@ -40,6 +40,20 @@ else
         },
         config = function(_,opts)
             require('cmake-tools').setup(opts)
+            vim.keymap.set('n', '<leader>cb', '<cmd>CMakeBuild<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cB', '<cmd>CMakeBuildCurrentFile<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cc', '<cmd>CMakeClean<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cg', '<cmd>CMakeGenerate<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cr', '<cmd>CMakeRun<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cR', '<cmd>CMakeRunCurrentFile<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cp', '<cmd>CMakeSelectConfigurePreset<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cd', '<cmd>CMakeSelectBuildDir<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>ct', '<cmd>CMakeSelectBuildTarget<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cy', '<cmd>CMakeSelectBuildType<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>ce', '<cmd>CMakeSelectBuildPreset<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cw', '<cmd>CMakeSelectCwd<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>ck', '<cmd>CMakeSelectKit<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>cl', '<cmd>CMakeSelectLaunchTarget<cr>', {remap = false, silent = true})
         end
     }
 end
