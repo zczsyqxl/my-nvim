@@ -8,6 +8,7 @@ else
             config = function()
                 require('nvim-tree').setup()
                 vim.keymap.set('n', '<leader>vn', '<cmd>NvimTreeFindFileToggle<cr>', { remap=fale, silent=treu})
+                vim.keymap.set('n', '<leader>vf', '<cmd>NvimTreeFindFile<cr>', { remap=fale, silent=treu})
             end
         }
     }

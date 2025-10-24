@@ -31,6 +31,14 @@ else
             require('telescope').load_extension('file_browser')
             require('telescope').load_extension('ui-select')
             require('telescope').load_extension('dap')
+            vim.keymap.set('n', '<leader>fg', '<cmd>Telescop git_files<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>ff', '<cmd>Telescop file_browser<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>fb', '<cmd>Telescop buffers<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>fk', '<cmd>Telescop lsp_document_symbols<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>fl', '<cmd>Telescop lsp_workspace_symbols<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>fd', '<cmd>Telescop diagnostics<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>fm', '<cmd>Telescop keymaps<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>fs', '<cmd>Telescop live_grep<cr>', {remap = false, silent = true})
         end
     }
 end

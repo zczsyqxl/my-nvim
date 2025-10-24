@@ -18,6 +18,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>;', '<cmd>set wrap!<cr>', {remap = false})
     vim.keymap.set('n', '<leader>ce', '<cmd>vsplit $myvimrc<cr>', {remap = false})
     vim.keymap.set('n', '<leader>cs', '<cmd>source $myvimrc<cr>', {remap = false})
+    vim.keymap.set('n', '<leader>cr', '<cmd>exe "Lazy reload " . @l<cr>', {remap = false, silent=false})
     vim.keymap.set('n', 'gh', '<c-w>d', {remap = true, silent = true})
     -- vim.keymap.set('n', '<leader>vm', '<cmd>botright split term://zsh<cr>i', {remap = false, silent = true})
 
