@@ -1,4 +1,6 @@
 if vim.g.vscode == nil then
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
     vim.cmd('colorscheme bubblegum')
     vim.opt.autochdir = true
     vim.opt.foldmethod = 'syntax'
@@ -28,11 +30,6 @@ vim.opt.wrap = false
 vim.opt.textwidth = 9999
 vim.opt.fileencodings = 'ucs-bom,utf-8,gbk,cp936,latin1'
 vim.opt.undofile = true
-
-
-
--- vim.print(vim.opt.mmp)
-
 
 
 
