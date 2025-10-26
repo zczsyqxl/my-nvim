@@ -31,27 +31,40 @@ else
                                 function(config)
                                     require('mason-nvim-dap').default_setup(config)
                                 end,
+                                python = function(config)
+                                    config.adapters = {
+                                        type = "executable",
+                                        command = "python",
+                                        args = {
+                                            "-m",
+                                            "debugpy.adapter",
+                                        }
+                                    }
+                                    config.configurations = {
+                                        {
+                                            type = "python",
+                                            request = "launch",
+                                            name = "Launch Current File",
+                                            program = "${file}",  -- 调试当前文件
+                                            -- pythonPath = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/Scripts/python.exe",
+                                            console = "integratedTerminal",
+                                        },
+                                        {
+                                            type = "python",
+                                            request = "launch",
+                                            name = "Run Script With Args",
+                                            program = "${file}",
+                                            args = { "arg2", "arg2" },
+                                            -- pythonPath = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/Scripts/python.exe",
+                                            console = "integratedTerminal",
+                                        },
+                                    }
+                                    require('mason-nvim-dap').default_setup(config)
+                                end,
                             }
                         })
-                        -- local dap = require('dap')
-                        -- dap.adapters.codelldb = {
-                        --     type = 'executable',
-                        --     command = [[C:\Users\yingqi.zhang\AppData\Local\nvim-data\mason\packages\codelldb\extension\adapter\codelldb.exe]]
-                        -- }
-                        -- dap.configurations.c = {
-                        --     {
-                        --         name = 'Launch file',
-                        --         type = 'codelldb',
-                        --         request = 'launch',
-                        --         program = function()
-                        --             return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-                        --         end,
-                        --         cwd = '${workspaceFolder}',
-                        --         stopOnEntry = false,
-                        --         -- externalConsole = true,
-                        --     },
-                        -- }
-                        -- dap.set_log_level('DEBUG')
+                        local dap = require('dap')
+                        dap.set_log_level('DEBUG')
                         vim.keymap.set('n', '<F4>', '<cmd>CMakeDebug<cr>', {remap = false, silent = true})
                         vim.keymap.set('n', '<F5>', '<cmd>DapNew<cr>', {remap = false, silent = true})
                         vim.keymap.set('n', '<S-F5>', '<cmd>DapTerminate<cr>', {remap = false, silent = true})
@@ -88,3 +101,6 @@ else
         }
     }
 end
+
+
+
