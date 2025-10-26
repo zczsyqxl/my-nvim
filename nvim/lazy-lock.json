@@ -9,7 +9,7 @@
   "grug-far.nvim": { "branch": "main", "commit": "3e72397465f774b01aa38e4fe8e6eecf23d766d9" },
   "hop.nvim": { "branch": "master", "commit": "707049feaca9ae65abb3696eff9aefc7879e66aa" },
   "indentLine": { "branch": "master", "commit": "b96a75985736da969ac38b72a7716a8c57bdde98" },
-  "lazy.nvim": { "branch": "main", "commit": "db067881fff0fd4be8c00e5bde7492e0e1c77a2f" },
+  "lazy.nvim": { "branch": "main", "commit": "ed4dc336a73c18da6fea6e1cf7ad6e1b76d281eb" },
   "lazygit.nvim": { "branch": "main", "commit": "2305deed25bc61b866d5d39189e9105a45cf1cfb" },
   "lightspeed.nvim": { "branch": "main", "commit": "fcc72d8a4d5f4ebba62d8a3a0660f88f1b5c3b05" },
   "lualine.nvim": { "branch": "master", "commit": "3946f0122255bc377d14a59b27b609fb3ab25768" },

@@ -59,6 +59,8 @@ else
                                             console = "integratedTerminal",
                                         },
                                     }
+                                    -- print(vim.inspect(require("dap").adapters.python))
+                                    -- print(vim.inspect(require("dap").configurations.c))
                                     require('mason-nvim-dap').default_setup(config)
                                 end,
                             }

@@ -52,6 +52,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>eh','<cmd>exe "bprevious" . v:count1<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader>el','<cmd>exe "bnext" . v:count1<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader>ee','<cmd>exe "b" . v:count1<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>q','<cmd>q<cr>', {remap = false, silent = true})
 
     require('config.mylua.exkeymap')
 else
@@ -79,7 +80,7 @@ else
     vim.keymap.set('n', '<leader>vn', function() vscode.call('workbench.action.toggleSidebarVisibility') end, {remap = false, silent = true})
     vim.keymap.set('n', '<leader>vm', function() vscode.call('workbench.action.togglePanel') end, {remap = false, silent = true})
     vim.keymap.set('n', '<leader>.', function() vscode.call('workbench.action.navigateToLastEditLocation') end, {remap = false, silent = true})
-
+    vim.keymap.set('n', '<leader>q', function() vscode.call('workbench.action.closeActiveEditor') end, {remap = false, silent = true})
     -- Search
     vim.keymap.set('n', '<leader>[', function() vscode.call('workbench.action.findInFiles') end, {remap = false, silent = true})
 
