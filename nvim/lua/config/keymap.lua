@@ -53,6 +53,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>el','<cmd>exe "bnext" . v:count1<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader>ee','<cmd>exe "b" . v:count1<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader>q','<cmd>q<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>Q','<cmd>qa<cr>', {remap = false, silent = true})
 
     require('config.mylua.exkeymap')
 else
