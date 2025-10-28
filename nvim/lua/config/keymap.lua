@@ -6,10 +6,10 @@ vim.keymap.set('n', 'z;', '<cmd>w<cr>', { remap = false })
 vim.keymap.set('n', '<space>', '$', { remap = false })
 
 vim.keymap.set({'n', 'v', 'x'}, '<leader>y', '"+y', {remap = false})
-vim.keymap.set('n', '<leader>p', '"+p', {remap = false})
-vim.keymap.set('n', '<leader>p', '"+p', {remap = false})
-vim.keymap.set('n', '<leader>]p', '"+]p', {remap = false})
-vim.keymap.set('n', '<leader>[p', '"+[p', {remap = false})
+vim.keymap.set({'n', 'v', 'x'}, '<leader>p', '"+p', {remap = false})
+vim.keymap.set({'n', 'v', 'x'}, '<leader>p', '"+p', {remap = false})
+vim.keymap.set({'n', 'v', 'x'}, '<leader>]p', '"+]p', {remap = false})
+vim.keymap.set({'n', 'v', 'x'}, '<leader>[p', '"+[p', {remap = false})
 vim.keymap.set('n', '<backspace>', '<cmd>noh<cr>', {remap = false, silent = true})
 
 
@@ -75,7 +75,7 @@ else
     vim.keymap.set('n', '<leader>;', function() vscode.call('editor.action.toggleWordWrap') end, {remap = false, silent = true})
 
     vim.keymap.set('n', '<leader>vf', function() vscode.call('workbench.files.action.showActiveFileInExplorer') end, {remap = false, silent = true})
-    vim.keymap.set('n', '<leader>vd', function() vscode.call('outline.focus') end, {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>vo', function() vscode.call('outline.focus') end, {remap = false, silent = true})
     vim.keymap.set('n', '<leader>vh', function() vscode.call('timeline.focus') end, {remap = false, silent = true})
     vim.keymap.set('n', '<leader>ve', function() vscode.call('workbench.action.focusActiveEditorGroup') end, {remap = false, silent = true})
     vim.keymap.set('n', '<leader>vn', function() vscode.call('workbench.action.toggleSidebarVisibility') end, {remap = false, silent = true})
@@ -98,7 +98,7 @@ else
     vim.keymap.set('', ']e',         function() vscode.call('editor.action.marker.next') end, {remap = false, silent = true})
     vim.keymap.set('', '[g',         function() vscode.call('editor.action.marker.prevInFiles') end, {remap = false, silent = true})
     vim.keymap.set('', ']g',         function() vscode.call('editor.action.marker.nextInFiles') end, {remap = false, silent = true})
-    vim.keymap.set('', '<leader>do', function() vscode.action('git.revertSelectedRanges') end, {remap = false, silent = true})
+    vim.keymap.set('', '<leader>do', function() vscode.call('git.revertSelectedRanges') end, {remap = false, silent = true})
     vim.keymap.set('', '<leader>dp', function() vscode.call('git.stageSelectedRanges') end, {remap = false, silent = true})
     vim.keymap.set('', '<leader>du', function() vscode.call('git.unstageSelectedRanges') end, {remap = false, silent = true})
 end
