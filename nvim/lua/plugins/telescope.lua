@@ -17,14 +17,23 @@ else
             },
         },
         config = function()
+            local actions = require('telescope.actions')
             require('telescope').setup({
-                -- defaults = {
-                --     mapppings = {
-                --         i = {
-                --             ['<cr>'] = actions.select_default
-                --         }
-                --     }
-                -- }
+                defaults = {
+                    mappings = {
+                        i = {
+                            ['<esc>'] = actions.close,
+                        },
+                        n = {
+                            ['<esc>'] = actions.close,
+                        }
+                    },
+                },
+                pickers = {
+                    find_files = {
+                        find_command = {'fd', '--type', 'f', '-a', '--no-ignore', '--hidden', '--exclude', '.git' }
+                    }
+                }
             })
             require('telescope').load_extension('fzf')
             require('telescope').load_extension('live_grep_args')
@@ -32,7 +41,8 @@ else
             require('telescope').load_extension('ui-select')
             require('telescope').load_extension('dap')
             vim.keymap.set('n', '<leader>fg', '<cmd>Telescop git_files<cr>', {remap = false, silent = true})
-            vim.keymap.set('n', '<leader>ff', '<cmd>Telescop file_browser<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>fe', '<cmd>Telescop file_browser<cr>', {remap = false, silent = true})
+            vim.keymap.set('n', '<leader>ff', '<cmd>Telescop find_files<cr>', {remap = false, silent = true})
             vim.keymap.set('n', '<leader>fb', '<cmd>Telescop buffers<cr>', {remap = false, silent = true})
             vim.keymap.set('n', '<leader>fk', '<cmd>Telescop lsp_document_symbols<cr>', {remap = false, silent = true})
             vim.keymap.set('n', '<leader>fl', '<cmd>Telescop lsp_workspace_symbols<cr>', {remap = false, silent = true})
