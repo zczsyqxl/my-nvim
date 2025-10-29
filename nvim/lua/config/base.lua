@@ -1,6 +1,4 @@
 if vim.g.vscode == nil then
-    vim.g.loaded_netrw = 1
-    vim.g.loaded_netrwPlugin = 1
     vim.cmd('colorscheme bubblegum')
     vim.opt.autochdir = true
     vim.opt.foldmethod = 'syntax'
