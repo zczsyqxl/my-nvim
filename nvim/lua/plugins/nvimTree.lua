@@ -76,10 +76,21 @@ else
                             },
                         },
                     },
+                    event_handlers = {
+                        {
+                            event = 'neo_tree_window_after_open',
+                            handler = function(args)
+                                if args.position == 'left' or args.position == 'right' then
+                                    vim.wo.foldcolumn = '0'
+                                    vim.wo.foldenable = false
+                                end
+                            end,
+                        },
+                    },
                 })
-                vim.keymap.set('n','<leader>vn', '<cmd>Neotree reveal float toggle reveal_force_cwd<cr>', {remap = false, silent = treu})
-                vim.keymap.set('n','<leader>vb', '<cmd>Neotree buffers float toggle reveal_force_cwd<cr>', {remap = false, silent = treu})
-                vim.keymap.set('n','<leader>vg', '<cmd>Neotree git_status float toggle reveal_force_cwd<cr>', {remap = false, silent = treu})
+                vim.keymap.set('n','<leader>vn', '<cmd>Neotree reveal toggle reveal_force_cwd<cr>', {remap = false, silent = treu})
+                vim.keymap.set('n','<leader>vb', '<cmd>Neotree buffers toggle reveal_force_cwd<cr>', {remap = false, silent = treu})
+                vim.keymap.set('n','<leader>vg', '<cmd>Neotree git_status toggle reveal_force_cwd<cr>', {remap = false, silent = treu})
             end,
             lazy = false, -- neo-tree will lazily load itself
         }
