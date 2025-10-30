@@ -98,7 +98,7 @@ else
                 vim.keymap.set('n', '<F1>', function() require('dapui').open() end, {remap = false, silent = true})
                 vim.keymap.set('n', '<F2>', function() require('dapui').close() end, {remap = false, silent = true})
                 vim.keymap.set('n', '<F3>', function() require('dapui').toggle() end, {remap = false, silent = true})
-                vim.keymap.set('n', '<leader>vd', function() require('dapui').toggle() end, {remap = false, silent = true})
+                vim.keymap.set('n', '<leader>va', function() require('dapui').toggle() end, {remap = false, silent = true})
             end
         }
     }
