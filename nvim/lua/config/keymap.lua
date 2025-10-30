@@ -54,6 +54,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>ee','<cmd>exe "b" . v:count1<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader>q','<cmd>q<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader>Q','<cmd>qa<cr>', {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>v<tab>',function() vim.fn.system('start explorer /select,' .. vim.fn.fnamemodify(vim.fn.expand('%:p'), ':8')) end, {remap = false, silent = true})
 
     require('config.mylua.exkeymap')
 else

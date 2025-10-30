@@ -9,6 +9,7 @@ else
             'nvim-lua/plenary.nvim',
         },
         opts = {
+            cmake_regenerate_on_save = false,
             cmake_executor = {
                 name = 'toggleterm',
                 -- default_opts = {

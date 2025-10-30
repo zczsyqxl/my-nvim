@@ -65,6 +65,14 @@ else
                                 ['v'] = 'open_vsplit',
                                 ['S'] = 'noop',
                                 ['s'] = 'open_split',
+                                [",v<tab>"] = {
+                                    function(state)
+                                        local node = state.tree:get_node()
+                                        vim.fn.system('start ' .. node.path)
+                                    end,
+                                    desc = "System Open",
+                                    nowait = true
+                                },
                             },
                         },
                     },
