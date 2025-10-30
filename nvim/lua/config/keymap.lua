@@ -25,7 +25,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('i', 'jk', '<esc>', { remap = false, desc = 'escape' })
     vim.keymap.set('i', '<c-l>', '<c-x>', {remap = true, silent = true})
 
-    vim.keymap.set('t', '<A-q>', [[<c-\><c-n>]], {remap = false})
+    vim.keymap.set('t', '<C-q>', [[<c-\><c-n>]], {remap = false})
     -- vim.keymap.set('t', 'jk', [[<c-\><c-n>]], {remap = false})
     vim.keymap.set('t', '<C-i>', function()
         local char = vim.fn.nr2char(vim.fn.getchar())
@@ -54,7 +54,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>ee','<cmd>exe "b" . v:count1<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader>q','<cmd>q<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader>Q','<cmd>qa<cr>', {remap = false, silent = true})
-    vim.keymap.set('n', '<leader>v<tab>',function() vim.fn.system('start explorer /select,' .. vim.fn.fnamemodify(vim.fn.expand('%:p'), ':8')) end, {remap = false, silent = true})
+    vim.keymap.set('n', '<leader><tab>',function() vim.fn.system('start explorer /select,' .. vim.fn.fnamemodify(vim.fn.expand('%:p'), ':8')) end, {remap = false, silent = true})
 
     require('config.mylua.exkeymap')
 else

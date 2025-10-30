@@ -7,7 +7,7 @@ else
         config = function()
             local myshell
             if vim.fn.has('win32') == 1 then
-                myshell = 'powershell'
+                myshell = 'pwsh'
             else
                 myshell = 'zsh'
             end
