@@ -1,6 +1,7 @@
 local function echo_color(hl, text)
 	vim.cmd(string.format('echohl %s', hl))
-	vim.cmd(string.format('echo "%s"', text:gsub('"', '\\"')))
+    local escaped = text:gsub('\\','\\\\'):gsub('"', '\\"')
+	vim.cmd(string.format('echo "%s"', escaped))
 	vim.cmd 'echohl None'
 end
 

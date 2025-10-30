@@ -15,6 +15,7 @@ vim.keymap.set('n', '<backspace>', '<cmd>noh<cr>', {remap = false, silent = true
 
 
 if vim.g.vscode == nil then
+    local echo_color = require('config.mylua.helper').echo_color
     vim.keymap.set('n', '<leader>;', '<cmd>set wrap!<cr>', {remap = false})
     vim.keymap.set('n', '<leader>ce', '<cmd>vsplit $myvimrc<cr>', {remap = false})
     vim.keymap.set('n', '<leader>cs', '<cmd>source $myvimrc<cr>', {remap = false})
@@ -55,6 +56,24 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>q','<cmd>q<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader>Q','<cmd>qa<cr>', {remap = false, silent = true})
     vim.keymap.set('n', '<leader><tab>',function() vim.fn.system('start explorer /select,' .. vim.fn.fnamemodify(vim.fn.expand('%:p'), ':8')) end, {remap = false, silent = true})
+		--   vim.keymap.set('n', 'z\'',function()
+		--       vim.cmd('wa')
+		--       vim.cmd('exe "mksession! " .. v:this_session')
+		-- echo_color('WarningMsg','Session have been write to ' .. vim.v.this_session)
+		--   end, {remap = false, silent = true})
+    vim.keymap.set('n', 'z\'', function()
+        vim.cmd('wa')
+
+        vim.ui.input({
+            prompt = 'Save session to: ',
+            default = (vim.v.this_session ~='' and vim.v.this_session) or [[d:\workspace\nvim\Session.vim]],
+            completion = 'file',
+        }, function(path)
+            if not path or path == '' then return end          -- 用户按了 <Esc> 或留空
+            vim.cmd.mksession({args = {path}, bang = true})    -- 强制写入
+            vim.api.nvim_echo({{'Session saved → ' .. path, 'WarningMsg'}}, false, {})
+        end)
+    end, { remap = false, silent = true })
 
     require('config.mylua.exkeymap')
 else
