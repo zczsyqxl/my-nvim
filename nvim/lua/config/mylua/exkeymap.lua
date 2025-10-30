@@ -4,8 +4,6 @@
 --
 -- loaded_exkeymap = 1
 
-local echo_color = require('config.mylua.helper').echo_color
-
 local function foldcolumn_toggle()
 	if vim.o.foldcolumn ~= '0' then
 		vim.opt_local.foldcolumn = '0'
@@ -19,10 +17,10 @@ vim.keymap.set('n', '<leader>.', foldcolumn_toggle, {silent = true})
 local function virtualedit_toggle()
 	if vim.o.virtualedit == '' then
 		vim.o.virtualedit = 'all'
-		echo_color('Error','Enter virtual edit mode!')
+        vim.api.nvim_echo({{'Enter virtual edit mode!', 'Error'}}, false, {})
 	else
 		vim.o.virtualedit = ''
-		echo_color('WarningMsg','Exit virtual edit mode!')
+        vim.api.nvim_echo({{'Exit virtual edit mode!', 'WarningMsg'}}, false, {})
 	end
 end
 

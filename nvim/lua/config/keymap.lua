@@ -75,6 +75,7 @@ if vim.g.vscode == nil then
         end)
     end, { remap = false, silent = true })
 
+    package.loaded["config.mylua.exkeymap"] = nil
     require('config.mylua.exkeymap')
 else
     local vscode = require('vscode')
