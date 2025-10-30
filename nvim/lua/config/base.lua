@@ -9,6 +9,9 @@ if vim.g.vscode == nil then
     vim.opt.tildeop = true
     vim.opt.encoding = 'utf-8'
     vim.opt.grepprg = 'grep -n $*'
+    if vim.fn.has('win32') then
+        vim.opt.shada = ''
+    end
 end
 
 vim.cmd('syntax on')
