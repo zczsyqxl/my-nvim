@@ -32,8 +32,9 @@ else
                 --     },
                 -- }
             },
+            cmake_generate_options = { "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" }, -- this will be passed when invoke `CMakeGenerate`
             cmake_compile_commands_options = {
-                action = 'none'
+                action = 'none',
             },
             cmake_dap_configuration = {
                 -- stopOnEntry = true,
