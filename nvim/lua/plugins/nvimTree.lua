@@ -69,7 +69,6 @@ else
                         },
                     },
                 })
-                vim.opt.foldcolumn = '0'
                 vim.keymap.set('n','<leader>vn', '<cmd>Neotree reveal float toggle reveal_force_cwd<cr>', {remap = false, silent = treu})
                 vim.keymap.set('n','<leader>vb', '<cmd>Neotree buffers float toggle reveal_force_cwd<cr>', {remap = false, silent = treu})
                 vim.keymap.set('n','<leader>vg', '<cmd>Neotree git_status float toggle reveal_force_cwd<cr>', {remap = false, silent = treu})
