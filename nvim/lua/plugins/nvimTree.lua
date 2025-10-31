@@ -89,6 +89,7 @@ else
                     },
                 })
                 vim.keymap.set('n','<leader>vn', '<cmd>Neotree reveal toggle left reveal_force_cwd<cr>', {remap = false, silent = treu})
+                vim.keymap.set('n','<leader>vd', '<cmd>Neotree <cr>', {remap = false, silent = treu})
                 vim.keymap.set('n','<leader>vf', '<cmd>Neotree buffers toggle left reveal_force_cwd<cr>', {remap = false, silent = treu})
                 vim.keymap.set('n','<leader>vg', '<cmd>Neotree git_status toggle left reveal_force_cwd<cr>', {remap = false, silent = treu})
                 vim.keymap.set('n','<leader>vv', '<cmd>Neotree reveal toggle float reveal_force_cwd<cr>', {remap = false, silent = treu})
