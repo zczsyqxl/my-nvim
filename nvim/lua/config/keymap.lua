@@ -15,7 +15,6 @@ vim.keymap.set('n', '<backspace>', '<cmd>noh<cr>', {remap = false, silent = true
 
 
 if vim.g.vscode == nil then
-    local echo_color = require('config.mylua.helper').echo_color
     vim.keymap.set('n', '<leader>;', '<cmd>set wrap!<cr>', {remap = false})
     vim.keymap.set('n', '<leader>\\e', '<cmd>vsplit $myvimrc<cr>', {remap = false})
     vim.keymap.set('n', '<leader>\\s', '<cmd>source $myvimrc<cr>', {remap = false})
