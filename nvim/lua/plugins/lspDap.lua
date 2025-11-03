@@ -24,6 +24,13 @@ else
                     },
                     opts = {},
                     config = function()
+                        local dap = require('dap')
+                        dap.set_log_level('DEBUG')
+                        -- dap.defaults.fallback.external_terminal = {
+                        --     command = [[pwsh]],
+                        --     args = {'-NoExit'},
+                        -- }
+                        -- dap.defaults.fallback.force_external_terminal = true
                         require('mason').setup()
                         require('mason-nvim-dap').setup({
                             -- ensure_installed = {'codelldb'},
@@ -31,6 +38,31 @@ else
                                 function(config)
                                     require('mason-nvim-dap').default_setup(config)
                                 end,
+                                -- codelldb = function(config)
+                                --     config.adapters = {
+                                --         type = 'server',
+                                --         port = "${port}",
+                                --         executable = {
+                                --             command = vim.fn.stdpath('data') .. '/mason/bin/codelldb.cmd',
+                                --             args = {"--port", "${port}"},
+                                --         }
+                                --     }
+                                --
+                                --     config.configurations = {
+                                --         {
+                                --             name = "Launch (CMD)",
+                                --             type = "codelldb",
+                                --             request = "launch",
+                                --             program = function()
+                                --                 return vim.fn.input('Path to exe: ', vim.fn.getcwd() .. '\\build\\', 'file')
+                                --             end,
+                                --             cwd = '${workspaceFolder}',
+                                --             stopOnEntry = false,
+                                --             console = "externalTerminal",  -- <== 关键
+                                --         },
+                                --     }
+                                --     require('mason-nvim-dap').default_setup(config)
+                                -- end,
                                 python = function(config)
                                     config.adapters = {
                                         type = "executable",
@@ -65,8 +97,7 @@ else
                                 end,
                             }
                         })
-                        local dap = require('dap')
-                        dap.set_log_level('DEBUG')
+
                         vim.keymap.set('n', '<F4>', '<cmd>CMakeDebug<cr>', {remap = false, silent = true})
                         vim.keymap.set('n', '<F5>', '<cmd>DapNew<cr>', {remap = false, silent = true})
                         vim.keymap.set('n', '<S-F5>', '<cmd>DapTerminate<cr>', {remap = false, silent = true})
@@ -81,7 +112,46 @@ else
                 }
             },
             config = function()
-                require('dapui').setup()
+                require('dapui').setup({
+                    layouts = {
+                        {
+                            elements = {
+                                {
+                                    id = "scopes",
+                                    size = 0.25
+                                },
+                                {
+                                    id = "breakpoints",
+                                    size = 0.25
+                                },
+                                {
+                                    id = "stacks",
+                                    size = 0.25
+                                },
+                                {
+                                    id = "watches",
+                                    size = 0.25
+                                }
+                            },
+                            position = "left",
+                            size = 40
+                        },
+                        {
+                            elements = {
+                                {
+                                    id = "repl",
+                                    size = 0.5
+                                },
+                                {
+                                    id = "console",
+                                    size = 0.5
+                                }
+                            },
+                            position = "bottom",
+                            size = 10
+                        },
+                    },
+                })
                 local dap, dapui = require("dap"), require("dapui")
                 dap.listeners.before.attach.dapui_config = function()
                     dapui.open()
@@ -99,6 +169,8 @@ else
                 vim.keymap.set('n', '<F2>', function() require('dapui').close() end, {remap = false, silent = true})
                 vim.keymap.set('n', '<F3>', function() require('dapui').toggle() end, {remap = false, silent = true})
                 vim.keymap.set('n', '<leader>va', function() require('dapui').toggle() end, {remap = false, silent = true})
+                vim.keymap.set('n', '<leader>vt', function() require('dapui').float_element('console',{position = 'center', title = 'dap-terminal-float'}) end, {remap = false, silent = true})
+
             end
         }
     }
