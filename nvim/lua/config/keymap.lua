@@ -27,7 +27,7 @@ if vim.g.vscode == nil then
 
     vim.keymap.set('t', '<C-q>', [[<c-\><c-n>]], {remap = false})
     -- vim.keymap.set('t', 'jk', [[<c-\><c-n>]], {remap = false})
-    vim.keymap.set('t', '<C-i>', function()
+    vim.keymap.set('t', '<C-y>', function()
         local char = vim.fn.nr2char(vim.fn.getchar())
         return '<C-\\><C-N>"' .. char .. 'pi'
     end, { expr = true, desc = "Paste from register in terminal mode" })

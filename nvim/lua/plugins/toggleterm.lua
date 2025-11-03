@@ -20,6 +20,7 @@ else
 
             local newshell = Terminal:new({
                 cmd = myshell,
+                direction = 'float',
                 dir = "git_dir",
             })
 
