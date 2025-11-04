@@ -35,7 +35,7 @@ return {
   Kimi = {
     name = "Kimi",
     url = "https://api.moonshot.cn/v1/chat/completions",
-    model = "moonshot-v1-8k", -- "moonshot-v1-8k", "moonshot-v1-32k", "moonshot-v1-128k"
+    model = "moonshot-v1-128k", -- "moonshot-v1-8k", "moonshot-v1-32k", "moonshot-v1-128k"
     api_type = "openai",
     max_tokens = 4096,
     fetch_key = vim.env.KIMI_KEY,
