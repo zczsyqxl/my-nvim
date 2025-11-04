@@ -10,7 +10,7 @@ return {
 	config = function(_, opts)
 		require'lightspeed'.setup(opts)
 
-		function set_highlight(group, fg, bg, bold, underline)
+		local function set_highlight(group, fg, bg, bold, underline)
 			vim.api.nvim_set_hl(0, group, {fg = fg, bg = bg, bold = bold, underline=underline})
 		end
 
