@@ -5,8 +5,12 @@ else
         {
             'kdheepak/lazygit.nvim',
             dependencies = {
-                'nvim-lua/plenary.nvim',
+                "nvim-telescope/telescope.nvim",
+                "nvim-lua/plenary.nvim",
             },
+            config = function()
+                require("telescope").load_extension("lazygit")
+            end,
             keys = {
                 {'<leader>vl', '<cmd>LazyGit<cr>', desc = 'LazyGit' }
             }
