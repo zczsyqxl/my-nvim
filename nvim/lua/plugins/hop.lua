@@ -49,7 +49,7 @@ return {
 		vim.keymap.set('', '<leader>z', function()
 			hop.hint_patterns()
 		end, {remap=true})
-		vim.keymap.set('', ',a', function()
+		vim.keymap.set('', ',A', function()
 			hop.hint_anywhere()
 		end, {remap=true})
 
