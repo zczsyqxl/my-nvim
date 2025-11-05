@@ -10,7 +10,7 @@ if vim.g.vscode == nil then
     vim.opt.encoding = 'utf-8'
     vim.opt.grepprg = 'grep -n $*'
     if vim.fn.has('win32') then
-        vim.opt.shada = ''
+        -- vim.opt.shada = ''
     end
 end
 

@@ -6,7 +6,6 @@ else
         require('plugins.nvim.aerial'),
         require('plugins.nvim.cmpn'),
         require('plugins.nvim.cmake'),
-        require('plugins.nvim.diff'),
         require('plugins.nvim.git'),
         require('plugins.nvim.grugFar'),
         require('plugins.nvim.indentLine'),
@@ -17,6 +16,5 @@ else
         require('plugins.nvim.telescope'),
         require('plugins.nvim.toggleterm'),
         require('plugins.nvim.treesitter'),
-        require('plugins.nvim.vimStartify'),
     }
 end
