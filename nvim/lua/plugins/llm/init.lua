@@ -6,7 +6,8 @@ local api, tbl_deep_extend, env = vim.api, vim.tbl_deep_extend, vim.env
 return {
   {
     "Kurama622/llm.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim",}, --"Kurama622/windsurf.nvim" },
+    -- dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "Kurama622/windsurf.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim",},
     cmd = { "LLMSessionToggle", "LLMSelectedTextHandler", "LLMAppHandler" },
     config = function()
       api.nvim_set_hl(0, "LlmCmds", { link = "String" })
@@ -97,7 +98,7 @@ return {
       -- { "<leader>ap", mode = { "v", "n" }, "<cmd>LLMAppHandler Completion<cr>", desc = " Code Completion" },
       -- { "<leader>ao", mode = "x", "<cmd>LLMAppHandler OptimizeCode<cr>" },
       -- { "<leader>ae", mode = "v", "<cmd>LLMSelectedTextHandler 请解释下面这段代码<cr>" },
-      -- { "<leader>ts", mode = { "x", "n" }, "<cmd>LLMSelectedTextHandler 英译汉<cr>" },
+      -- { "<leader>at", mode = { "x", "n" }, "<cmd>LLMSelectedTextHandler 英译汉<cr>" },
     },
   },
 }

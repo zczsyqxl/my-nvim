@@ -66,7 +66,7 @@ return {
     keymap = {
       toggle = {
         mode = "n",
-        keys = "<leader>cp",
+        keys = "<leader>ap",
       },
       virtual_text = {
         accept = {
