@@ -1,4 +1,3 @@
-
 return {
     'wellle/targets.vim',
 }

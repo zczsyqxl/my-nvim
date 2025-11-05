@@ -1,0 +1,79 @@
+return {
+    "saghen/blink.cmp",
+    dependencies = { "Kurama622/llm.nvim" },
+    version = "1.6.0",
+    opts = {
+        completion = {
+            menu = {
+                scrollbar = false,
+                border = "rounded",
+                winhighlight = "Normal:BlinkCmpMenu,FloatBorder:FloatBorder",
+
+                draw = {
+                    components = {
+                        kind_icon = {
+                            ellipsis = false,
+                            text = function(ctx)
+                                if ctx.item.kind_name == "llm" then
+                                    return " "
+                                else
+                                    return ctx.kind_icon
+                                end
+                            end,
+
+                            highlight = function(ctx)
+                                if ctx.item.kind_name == "llm" then
+                                    return "BlinkCmpKindSnippet"
+                                else
+                                    return ctx.kind_hl
+                                end
+                            end,
+                        },
+                    },
+
+                    -- columns = {
+                    --   { "kind_icon", "kind" },
+                    --   { "label", "label_description", gap = 1 },
+                    --   { "source_name", "source_id", gap = 1 },
+                    -- },
+                },
+            },
+            documentation = { window = { border = "rounded" } },
+            trigger = {
+                prefetch_on_insert = false,
+                show_on_blocked_trigger_characters = {},
+            },
+        },
+        signature = { window = { border = "single" } },
+
+        keymap = {
+            preset = "default",
+            ["<C-y>"] = {
+                function(cmp)
+                    cmp.show({ providers = { "llm" } })
+                end,
+            },
+            ["<CR>"] = { "select_and_accept", "fallback" },
+        },
+
+        sources = {
+            -- if you want to use auto-complete
+            default = { "lsp", "path", "snippets", "buffer", "llm" },
+            per_filetype = {
+                -- optionally inherit from the `default` sources
+                llm = { inherit_defaults = false },
+            },
+
+            ---@note Windsurf does not require the following configuration
+            -- providers = {
+            --   llm = {
+            --     name = "LLM",
+            --     module = "llm.common.completion.frontends.blink",
+            --     timeout_ms = 10000,
+            --     score_offset = 100,
+            --     async = true,
+            --   },
+            -- },
+        },
+    },
+}
