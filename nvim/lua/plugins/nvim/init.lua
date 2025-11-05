@@ -14,7 +14,6 @@ else
         require('plugins.nvim.lualine'),
         require('plugins.nvim.markview'),
         require('plugins.nvim.project'),
-        require('plugins.nvim.rainbow'),
         require('plugins.nvim.telescope'),
         require('plugins.nvim.toggleterm'),
         require('plugins.nvim.treesitter'),
