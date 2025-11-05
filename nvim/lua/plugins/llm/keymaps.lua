@@ -2,16 +2,16 @@ return {
   -- stylua: ignore
   keys = {
     -- The keyboard mapping for the input window.
-    ["Input:Submit"]      = { mode = {"n", "i"}, key = "<C-g>" },
+    ["Input:Submit"]      = { mode = {"n", "i"}, key = "<cr>" },
     ["Input:Cancel"]      = { mode = {"n", "i"}, key = "<C-c>" },
     ["Input:Resend"]      = { mode = {"n", "i"}, key = "<C-r>" },
 
     -- only works when "save_session = true"
-    ["Input:HistoryNext"] = { mode = {"n", "i"}, key = "<C-j>" },
-    ["Input:HistoryPrev"] = { mode = {"n", "i"}, key = "<C-k>" },
+    ["Input:HistoryNext"] = { mode = {"n", "i"}, key = "<C-PageDown>" },
+    ["Input:HistoryPrev"] = { mode = {"n", "i"}, key = "<C-PageUp>" },
 
-    ["Input:ModelsNext"]  = { mode = {"n", "i"}, key = "<C-A-j>" },
-    ["Input:ModelsPrev"]  = { mode = {"n", "i"}, key = "<C-A-k>" },
+    ["Input:ModelsNext"]  = { mode = {"n", "i"}, key = "<C-down>" },
+    ["Input:ModelsPrev"]  = { mode = {"n", "i"}, key = "<C-up>" },
 
     -- The keyboard mapping for the output window in "split" style.
     ["Output:Ask"]        = { mode = "n", key = "i" },
