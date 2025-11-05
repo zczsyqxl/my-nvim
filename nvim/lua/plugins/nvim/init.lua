@@ -4,7 +4,7 @@ else
     return {
         require('plugins.nvim.tree'),
         require('plugins.nvim.aerial'),
-        require('plugins.nvim.cmp'),
+        require('plugins.nvim.cmpn'),
         require('plugins.nvim.cmake'),
         require('plugins.nvim.diff'),
         require('plugins.nvim.git'),
