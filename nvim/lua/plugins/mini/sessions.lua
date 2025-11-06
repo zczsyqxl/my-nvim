@@ -1,5 +1,15 @@
+local dir = nil
+
+if vim.fn.has('win32') == 1 then
+    dir = 'd:/workspace/nvim'
+else
+    dir = nil
+end
+
+
 require('mini.sessions').setup({
-    directory = 'd:/workspace/nvim',
+
+    directory = dir,
 
     hooks = {
         -- Before successful action
