@@ -6,6 +6,7 @@ else
         require('plugins.nvim.aerial'),
         require('plugins.nvim.cmpn'),
         require('plugins.nvim.cmake'),
+        require('plugins.nvim.tab'),
         require('plugins.nvim.git'),
         require('plugins.nvim.grugFar'),
         require('plugins.nvim.indentLine'),

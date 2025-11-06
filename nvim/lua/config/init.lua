@@ -1,3 +1,5 @@
+package.loaded["config.theme"] = nil
+require('config.theme')
 package.loaded["config.base"] = nil
 require('config.base')
 require("config.lazy")
