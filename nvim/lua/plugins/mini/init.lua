@@ -13,6 +13,6 @@ return {
         require('plugins.mini.ai')
         require('plugins.mini.operators')
         require('plugins.mini.surround')
+        require('plugins.mini.align')
     end
 }
-
