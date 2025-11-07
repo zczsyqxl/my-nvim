@@ -92,8 +92,8 @@ else
 
     vim.keymap.set('', ']c',         function() vscode.call('workbench.action.compareEditor.nextChange') end, {remap = false, silent = true})
     vim.keymap.set('', '[c',         function() vscode.call('workbench.action.compareEditor.previousChange') end, {remap = false, silent = true})
-    vim.keymap.set('', ']h',         function() vscode.call('workbench.action.editor.nextChange') end, {remap = false, silent = true})
-    vim.keymap.set('', '[h',         function() vscode.call('workbench.action.editor.previousChange') end, {remap = false, silent = true})
+    vim.keymap.set('', ']g',         function() vscode.call('workbench.action.editor.nextChange') end, {remap = false, silent = true})
+    vim.keymap.set('', '[g',         function() vscode.call('workbench.action.editor.previousChange') end, {remap = false, silent = true})
     vim.keymap.set('', '[d',         function() vscode.call('editor.action.marker.prev') end, {remap = false, silent = true})
     vim.keymap.set('', ']d',         function() vscode.call('editor.action.marker.next') end, {remap = false, silent = true})
     vim.keymap.set('', '[D',         function() vscode.call('editor.action.marker.prevInFiles') end, {remap = false, silent = true})
