@@ -21,7 +21,7 @@ return {
             dir = "git_dir",
         })
 
-        vim.keymap.set("n", "<leader>vm", function() newshell:toggle() end, {remap = false, silent = true})
+        vim.keymap.set("n", "<leader>vm", function() newshell:toggle() end, {remap = false, silent = true, desc='zz:toggleterm:NewShellToggle'})
     end
 }
 

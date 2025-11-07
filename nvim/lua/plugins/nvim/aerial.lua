@@ -34,13 +34,13 @@ return {
             'Variable',
         },
         on_attach = function(bufnr)
-            vim.keymap.set('n', '{', '<cmd>AerialPrev<cr>', { buffer = bufnr})
-            vim.keymap.set('n', '}', '<cmd>AerialNext<cr>', { buffer = bufnr})
+            vim.keymap.set('n', '{', '<cmd>AerialPrev<cr>', { buffer = bufnr, desc='zz:aerial:Prev'})
+            vim.keymap.set('n', '}', '<cmd>AerialNext<cr>', { buffer = bufnr, desc='zz:aerial:Next'})
         end,
     },
     config = function(_, opts)
         require('aerial').setup(opts)
-        vim.keymap.set('n', '<leader>vo', '<cmd>AerialToggle!<cr>')
+        vim.keymap.set('n', '<leader>vo', '<cmd>AerialToggle!<cr>', {desc = 'zz:aerial:Toggle'})
     end,
 }
 

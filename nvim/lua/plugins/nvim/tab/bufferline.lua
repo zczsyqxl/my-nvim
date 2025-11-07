@@ -138,8 +138,8 @@ return {
                 },
             },
         })
-        vim.keymap.set('n', 'gb', '<cmd>BufferLinePick<cr>', {remap = false, silent=true})
-        vim.keymap.set('n', 'gB', '<cmd>BufferLinePickClose<cr>', {remap = false, silent=true})
+        vim.keymap.set('n', '<leader>bo', '<cmd>BufferLinePick<cr>', {remap = false, silent=true, desc='zz:bufferline:BufPick'})
+        vim.keymap.set('n', '<leader>bc', '<cmd>BufferLinePickClose<cr>', {remap = false, silent=true, desc='zz:bufferline:BufPickClose'})
         -- vim.keymap.set('n', '<leader>1', '<cmd>BufferLineGoToBuffer 1<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>2', '<cmd>BufferLineGoToBuffer 2<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>3', '<cmd>BufferLineGoToBuffer 3<cr>', {remap = false, silent=true})
@@ -150,16 +150,16 @@ return {
         -- vim.keymap.set('n', '<leader>8', '<cmd>BufferLineGoToBuffer 8<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>9', '<cmd>BufferLineGoToBuffer 9<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>-1', '<cmd>BufferLineGoToBuffer 0<cr>', {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>1', function() require('bufferline').go_to(1, true) end, {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>2', function() require('bufferline').go_to(2, true) end, {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>3', function() require('bufferline').go_to(3, true) end, {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>4', function() require('bufferline').go_to(4, true) end, {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>5', function() require('bufferline').go_to(5, true) end, {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>6', function() require('bufferline').go_to(6, true) end, {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>7', function() require('bufferline').go_to(7, true) end, {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>8', function() require('bufferline').go_to(8, true) end, {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>9', function() require('bufferline').go_to(9, true) end, {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>0', function() require('bufferline').go_to(-1, true) end, {remap = false, silent=true})
+        vim.keymap.set('n', '<leader>1', function() require('bufferline').go_to(1,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
+        vim.keymap.set('n', '<leader>2', function() require('bufferline').go_to(2,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
+        vim.keymap.set('n', '<leader>3', function() require('bufferline').go_to(3,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
+        vim.keymap.set('n', '<leader>4', function() require('bufferline').go_to(4,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
+        vim.keymap.set('n', '<leader>5', function() require('bufferline').go_to(5,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
+        vim.keymap.set('n', '<leader>6', function() require('bufferline').go_to(6,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
+        vim.keymap.set('n', '<leader>7', function() require('bufferline').go_to(7,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
+        vim.keymap.set('n', '<leader>8', function() require('bufferline').go_to(8,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
+        vim.keymap.set('n', '<leader>9', function() require('bufferline').go_to(9,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
+        vim.keymap.set('n', '<leader>0', function() require('bufferline').go_to(-1, true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
     end
 }
 

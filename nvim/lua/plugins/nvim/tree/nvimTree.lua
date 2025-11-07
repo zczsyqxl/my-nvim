@@ -13,8 +13,8 @@ return {
             require('nvim-tree').setup({
                 system_open = my_system_open
             })
-            vim.keymap.set('n', '<leader>vn', '<cmd>NvimTreeFindFileToggle<cr>', { remap=false, silent=true})
-            vim.keymap.set('n', '<leader>vf', '<cmd>NvimTreeFindFile<cr>', { remap=false, silent=true})
+            vim.keymap.set('n', '<leader>vn', '<cmd>NvimTreeFindFileToggle<cr>', { remap=false, silent=true, desc='zz:nvimtree:Toggle'})
+            vim.keymap.set('n', '<leader>vf', '<cmd>NvimTreeFindFile<cr>', { remap=false, silent=true, desc='zz:nvimtree:ToggleFile'})
         end
     }
 }

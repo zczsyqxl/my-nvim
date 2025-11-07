@@ -38,4 +38,4 @@ vim.keymap.set('n', 'z\'', function()
             MiniSessions.write(path .. '.vim', {})
         end
     )
-end, { remap = false, silent = true })
+end, { remap = false, silent = true, desc='zz:mini.sessions:WriteSession' })

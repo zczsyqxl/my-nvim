@@ -42,6 +42,6 @@ require('mini.surround').setup({
     }
 })
 
-vim.keymap.set('n', 'yss', 'ys_', { remap = true })
+vim.keymap.set('n', 'yss', 'ys_', {remap = true, desc='zz:mini.surround:AddLineSurround'})
 vim.keymap.del('x', 'ys')
-vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
+vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], {silent = true, desc='zz:mini.surround:AddVisSurround' })

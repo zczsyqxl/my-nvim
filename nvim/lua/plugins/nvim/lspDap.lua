@@ -95,16 +95,16 @@ return {
                         }
                     })
 
-                    vim.keymap.set('n', '<F4>', '<cmd>CMakeDebug<cr>', {remap = false, silent = true})
-                    vim.keymap.set('n', '<F5>', '<cmd>DapNew<cr>', {remap = false, silent = true})
-                    vim.keymap.set('n', '<S-F5>', '<cmd>DapTerminate<cr>', {remap = false, silent = true})
-                    vim.keymap.set('n', '<F6>', '<cmd>DapPause<cr>', {remap = false, silent = true})
-                    vim.keymap.set('n', '<F7>', '<cmd>DapContinue<cr>', {remap = false, silent = true})
-                    vim.keymap.set('n', '<S-F7>', '<cmd>DapTerminate<cr>', {remap = false, silent = true})
-                    vim.keymap.set('n', '<F8>', '<cmd>DapStepOver<cr>', {remap = false, silent = true})
-                    vim.keymap.set('n', '<F9>', '<cmd>DapToggleBreakpoint<cr>', {remap = false, silent = true})
-                    vim.keymap.set('n', '<F10>', '<cmd>DapStepInto<cr>', {remap = false, silent = true})
-                    vim.keymap.set('n', '<F11>', '<cmd>DapStepOut<cr>', {remap = false, silent = true})
+                    vim.keymap.set('n', '<F4>',   '<cmd>CMakeDebug<cr>',          {remap = false, silent = true, desc='zz:DAP:CmakeDebug'})
+                    vim.keymap.set('n', '<F5>',   '<cmd>DapNew<cr>',              {remap = false, silent = true, desc='zz:DAP:New'})
+                    vim.keymap.set('n', '<S-F5>', '<cmd>DapTerminate<cr>',        {remap = false, silent = true, desc='zz:DAP:Terminate'})
+                    vim.keymap.set('n', '<F6>',   '<cmd>DapPause<cr>',            {remap = false, silent = true, desc='zz:DAP:Pause'})
+                    vim.keymap.set('n', '<F7>',   '<cmd>DapContinue<cr>',         {remap = false, silent = true, desc='zz:DAP:Continue'})
+                    vim.keymap.set('n', '<S-F7>', '<cmd>DapTerminate<cr>',        {remap = false, silent = true, desc='zz:DAP:Terminate'})
+                    vim.keymap.set('n', '<F8>',   '<cmd>DapStepOver<cr>',         {remap = false, silent = true, desc='zz:DAP:StepOver'})
+                    vim.keymap.set('n', '<F9>',   '<cmd>DapToggleBreakpoint<cr>', {remap = false, silent = true, desc='zz:DAP:ToggleBreakpoint'})
+                    vim.keymap.set('n', '<F10>',  '<cmd>DapStepInto<cr>',         {remap = false, silent = true, desc='zz:DAP:StepInto'})
+                    vim.keymap.set('n', '<F11>',  '<cmd>DapStepOut<cr>',          {remap = false, silent = true, desc='zz:DAP:StepOut'})
                 end
             }
         },
@@ -162,11 +162,11 @@ return {
             dap.listeners.before.event_exited.dapui_config = function()
                 dapui.close()
             end
-            vim.keymap.set('n', '<F1>', function() require('dapui').open() end, {remap = false, silent = true})
-            vim.keymap.set('n', '<F2>', function() require('dapui').close() end, {remap = false, silent = true})
-            vim.keymap.set('n', '<F3>', function() require('dapui').toggle() end, {remap = false, silent = true})
-            vim.keymap.set('n', '<leader>va', function() require('dapui').toggle() end, {remap = false, silent = true})
-            vim.keymap.set('n', '<leader>vt', function() require('dapui').float_element('console',{position = 'center', title = 'dap-terminal-float'}) end, {remap = false, silent = true})
+            vim.keymap.set('n', '<F1>',       function() require('dapui').open() end,   {remap = false, silent = true, desc='zz:dapui:open'})
+            vim.keymap.set('n', '<F2>',       function() require('dapui').close() end,  {remap = false, silent = true, desc='zz:dapui:close'})
+            vim.keymap.set('n', '<F3>',       function() require('dapui').toggle() end, {remap = false, silent = true, desc='zz:dapui:toggle'})
+            vim.keymap.set('n', '<leader>va', function() require('dapui').toggle() end, {remap = false, silent = true, desc='zz:dapui:toggle'})
+            vim.keymap.set('n','<leader>vt',function() require('dapui').float_element('console',{position = 'center',title = 'dap-terminal-float'}) end,{remap = false,silent = true, desc='zz:dapui:FlotTerm'})
 
         end
     }

@@ -19,7 +19,7 @@ return {
             vim.treesitter.language.register(parser, 'llm') -- llm ↔ markdown
         end
         require("markview").setup(opts);
-        vim.keymap.set('n', '<leader>v.', '<cmd>Markview splitToggle<cr>', { remap = false})
+        vim.keymap.set('n', '<leader>v.', '<cmd>Markview splitToggle<cr>', { remap = false, desc='zz:markview:SplitToggle'})
     end,
 
 }

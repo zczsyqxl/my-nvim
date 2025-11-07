@@ -12,7 +12,7 @@ local function foldcolumn_toggle()
 	end
 end
 
-vim.keymap.set('n', '<leader>.', foldcolumn_toggle, {silent = true})
+vim.keymap.set('n', '<leader>.', foldcolumn_toggle, {silent = true, desc = 'zz:foldcolumn_toggle'})
 
 local function virtualedit_toggle()
 	if vim.o.virtualedit == '' then
@@ -24,7 +24,7 @@ local function virtualedit_toggle()
 	end
 end
 
-vim.keymap.set('n', "<leader>'", virtualedit_toggle, {silent = true})
+vim.keymap.set('n', "<leader>'", virtualedit_toggle, {silent = true, desc = 'zz:vitualedit_toggle'})
 
 
 -- local function replace_item()
@@ -56,5 +56,5 @@ local function toggle_quickfix_win()
 	end
 end
 
-vim.keymap.set('n', '<leader>`', toggle_quickfix_win, {silent = true})
+vim.keymap.set('n', '<leader>`', toggle_quickfix_win, {silent = true, desc='zz:toggle_quickfix_win'})
 

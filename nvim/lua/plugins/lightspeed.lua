@@ -18,6 +18,6 @@ return {
 		set_highlight("LightspeedCursor", "#000080", "#adff2f", false, false)
 		set_highlight("LightspeedLabelDistant", "#4170ff", "", false, true)
 
-		vim.keymap.set('', 's', '<Plug>Lightspeed_omni_s', {remap=true})
+		vim.keymap.set('', 's', '<Plug>Lightspeed_omni_s', {remap=true, desc='zz:LightSpeed:omni_s'})
 	end,
 }

@@ -61,13 +61,13 @@ return {
                 },
             },
         })
-        vim.keymap.set('n','<leader>vn', '<cmd>Neotree reveal toggle left reveal_force_cwd<cr>', {remap = false, silent = true})
-        vim.keymap.set('n','<leader>vd', '<cmd>Neotree <cr>', {remap = false, silent = true})
-        vim.keymap.set('n','<leader>vf', '<cmd>Neotree buffers toggle left reveal_force_cwd<cr>', {remap = false, silent = true})
-        vim.keymap.set('n','<leader>vg', '<cmd>Neotree git_status toggle left reveal_force_cwd<cr>', {remap = false, silent = true})
-        vim.keymap.set('n','<leader>vv', '<cmd>Neotree reveal toggle float reveal_force_cwd<cr>', {remap = false, silent = true})
-        vim.keymap.set('n','<leader>vb', '<cmd>Neotree buffers toggle float reveal_force_cwd<cr>', {remap = false, silent = true})
-        vim.keymap.set('n','<leader>vc', '<cmd>Neotree git_status toggle float reveal_force_cwd<cr>', {remap = false, silent = true})
+        vim.keymap.set('n','<leader>vn', '<cmd>Neotree reveal toggle left reveal_force_cwd<cr>', {remap = false, silent = true, desc='zz:neotree:ToggleLeft'})
+        vim.keymap.set('n','<leader>vd', '<cmd>Neotree <cr>', {remap = false, silent = true, desc='zz:neotree:FocusSidebar'})
+        vim.keymap.set('n','<leader>vf', '<cmd>Neotree buffers toggle left reveal_force_cwd<cr>', {remap = false, silent = true, desc='zz:neotree:ToggleBuf'})
+        vim.keymap.set('n','<leader>vg', '<cmd>Neotree git_status toggle left reveal_force_cwd<cr>', {remap = false, silent = true, desc='zz:neotree:ToggleGitSts'})
+        vim.keymap.set('n','<leader>vv', '<cmd>Neotree reveal toggle float reveal_force_cwd<cr>', {remap = false, silent = true, desc='zz:neotree:ToggleLeftFloat'})
+        vim.keymap.set('n','<leader>vb', '<cmd>Neotree buffers toggle float reveal_force_cwd<cr>', {remap = false, silent = true, desc='zz:neotree:ToggleBufFloat'})
+        vim.keymap.set('n','<leader>vc', '<cmd>Neotree git_status toggle float reveal_force_cwd<cr>', {remap = false, silent = true, desc='zz:neotree:ToggleGitStsFloat'})
     end,
     lazy = false, -- neo-tree will lazily load itself
 }
