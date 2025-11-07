@@ -27,16 +27,16 @@ end
 vim.keymap.set('n', "<leader>'", virtualedit_toggle, {silent = true})
 
 
-local function replace_item()
-	local old_word = vim.fn.expand('<cword>')
-	local new_word = vim.fn.input('Please input the new word: ')
-	vim.cmd(([[
-	%%s/%s/%s/gc
-	noh
-	]]):format(old_word, new_word))
-end
-
-vim.keymap.set('n', '<leader>r', replace_item, {silent = true, unique = false})
+-- local function replace_item()
+-- 	local old_word = vim.fn.expand('<cword>')
+-- 	local new_word = vim.fn.input('Please input the new word: ')
+-- 	vim.cmd(([[
+-- 	%%s/%s/%s/gc
+-- 	noh
+-- 	]]):format(old_word, new_word))
+-- end
+--
+-- vim.keymap.set('n', '<leader>r', replace_item, {silent = true, unique = false})
 
 
 quickfix_is_open = true
