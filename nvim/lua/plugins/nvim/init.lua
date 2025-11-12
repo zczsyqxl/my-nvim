@@ -9,7 +9,7 @@ else
         require('plugins.nvim.tab'),
         require('plugins.nvim.git'),
         require('plugins.nvim.grugFar'),
-        require('plugins.nvim.indentLine'),
+        require('plugins.nvim.indentline'),
         require('plugins.nvim.lspDap'),
         require('plugins.nvim.lualine'),
         require('plugins.nvim.markview'),
