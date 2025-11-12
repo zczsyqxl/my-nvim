@@ -74,6 +74,7 @@ return {
         vim.keymap.set('n', '<leader>fr', '<cmd>Telescope lsp_references<cr>',                {remap = false, silent = true, desc = 'zz:telescope:LspReferences'})
         -- vim.keymap.set('n', '<leader>fs', function() require('telescope.builtin').live_grep({ cwd = git_root() }) end, {remap = false, silent = true})
         vim.keymap.set('n', '<leader>fs', '<cmd>Telescope live_grep<cr>',                     {remap = false, silent = true, desc = 'zz:telescope:LiveGrep'})
+        vim.keymap.set('n', '<leader>fS', '<cmd>Telescope live_grep_args<cr>',                     {remap = false, silent = true, desc = 'zz:telescope:LiveGrepArgs'})
         vim.keymap.set('n', '<leader>ft', '<cmd>Telescope lsp_type_definitions<cr>',          {remap = false, silent = true, desc = 'zz:telescope:TypeDefinitions'})
         vim.keymap.set('n', '<leader>fv', '<cmd>Telescope vim_options<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:VimOptions'})
     end
