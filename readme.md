@@ -4,6 +4,8 @@
 
 ### Install rust
 * https://rust-lang.org/zh-CN/learn/get-started/
+* cargo install tree-sitter-cli
+
 
 ### Tree-Sitter
 * tree-sitter need to installed and the path shall be in environment

@@ -11,6 +11,7 @@ return {
             enable_hybrid_mode = true,
             linewise_hybrid_mode = true,
             filetypes = { 'markdown', 'llm'},
+            icon_provider = 'mini',
         },
     },
     config = function(_, opts)
