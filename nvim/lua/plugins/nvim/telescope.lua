@@ -56,6 +56,9 @@ return {
 
         -- vim.keymap.set('n', '<leader>f[', function() require('telescope.builtin').grep_string({ cwd = git_root() }) end, {remap = false, silent = true})
         vim.keymap.set('n', '<leader>f[', '<cmd>Telescope grep_string<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:GrepString'})
+        -- vim.keymap.set('n', '<leader>f]', function() require('telescope.builtin').live_grep({ cwd = git_root() }) end, {remap = false, silent = true})
+        vim.keymap.set('n', '<leader>f]', '<cmd>Telescope live_grep<cr>',                     {remap = false, silent = true, desc = 'zz:telescope:LiveGrep'})
+        vim.keymap.set('n', '<leader>fa', '<cmd>Telescope git_status<cr>',                    {remap = false, silent = true, desc = 'zz:telescope:GitStatus'})
         vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>',                       {remap = false, silent = true, desc = 'zz:telescope:Buffers'})
         vim.keymap.set('n', '<leader>fc', '<cmd>Telescope colorscheme<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:Colorscheme'})
         vim.keymap.set('n', '<leader>fd', '<cmd>Telescope diagnostics<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:Diagnostics'})
@@ -71,12 +74,14 @@ return {
         vim.keymap.set('n', '<leader>fm', '<cmd>Telescope keymaps<cr>',                       {remap = false, silent = true, desc = 'zz:telescope:Keymaps'})
         vim.keymap.set('n', '<leader>fn', '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', {remap = false, silent = true, desc = 'zz:telescope:LspDynWorksapceSymbols'})
         vim.keymap.set('n', '<leader>fo', '<cmd>Telescope lsp_outgoing_calls<cr>',            {remap = false, silent = true, desc = 'zz:telescope:LspOutgoingCalls'})
+        vim.keymap.set('n', '<leader>fp', '<cmd>Telescope git_bcommits<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:GitBcommit'})
+        vim.keymap.set('n', '<leader>fq', '<cmd>Telescope git_commits<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:GitCommit'})
         vim.keymap.set('n', '<leader>fr', '<cmd>Telescope lsp_references<cr>',                {remap = false, silent = true, desc = 'zz:telescope:LspReferences'})
-        -- vim.keymap.set('n', '<leader>fs', function() require('telescope.builtin').live_grep({ cwd = git_root() }) end, {remap = false, silent = true})
-        vim.keymap.set('n', '<leader>fs', '<cmd>Telescope live_grep<cr>',                     {remap = false, silent = true, desc = 'zz:telescope:LiveGrep'})
-        vim.keymap.set('n', '<leader>fS', '<cmd>Telescope live_grep_args<cr>',                     {remap = false, silent = true, desc = 'zz:telescope:LiveGrepArgs'})
+        vim.keymap.set('n', '<leader>fs', '<cmd>Telescope live_grep_args<cr>',                     {remap = false, silent = true, desc = 'zz:telescope:LiveGrepArgs'})
         vim.keymap.set('n', '<leader>ft', '<cmd>Telescope lsp_type_definitions<cr>',          {remap = false, silent = true, desc = 'zz:telescope:TypeDefinitions'})
+        vim.keymap.set('n', '<leader>fu', '<cmd>Telescope git_stash<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:GitStash'})
         vim.keymap.set('n', '<leader>fv', '<cmd>Telescope vim_options<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:VimOptions'})
+        vim.keymap.set('n', '<leader>fw', '<cmd>Telescope git_branches<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:GitBranches'})
     end
 }
 
