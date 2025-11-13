@@ -29,6 +29,42 @@ return {
                     -- }
                     -- dap.defaults.fallback.force_external_terminal = true
                     require('mason').setup()
+                    local pydap = nil
+                    if vim.fn.has('win32') == 1 then
+                        pydap = function(config)
+                            config.adapters = {
+                                type = "executable",
+                                command = "python",
+                                args = {
+                                    "-m",
+                                    "debugpy.adapter",
+                                }
+                            }
+                            config.configurations = {
+                                {
+                                    type = "python",
+                                    request = "launch",
+                                    name = "Launch Current File",
+                                    program = "${file}",  -- 调试当前文件
+                                    -- pythonPath = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/Scripts/python.exe",
+                                    console = "integratedTerminal",
+                                },
+                                {
+                                    type = "python",
+                                    request = "launch",
+                                    name = "Run Script With Args",
+                                    program = "${file}",
+                                    args = { "arg2", "arg2" },
+                                    -- pythonPath = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/Scripts/python.exe",
+                                    console = "integratedTerminal",
+                                },
+                            }
+                            -- print(vim.inspect(require("dap").adapters.python))
+                            -- print(vim.inspect(require("dap").configurations.c))
+                            require('mason-nvim-dap').default_setup(config)
+                        end
+                    end
+
                     require('mason-nvim-dap').setup({
                         -- ensure_installed = {'codelldb'},
                         handlers = {
@@ -60,51 +96,19 @@ return {
                             --     }
                             --     require('mason-nvim-dap').default_setup(config)
                             -- end,
-                            python = function(config)
-                                config.adapters = {
-                                    type = "executable",
-                                    command = "python",
-                                    args = {
-                                        "-m",
-                                        "debugpy.adapter",
-                                    }
-                                }
-                                config.configurations = {
-                                    {
-                                        type = "python",
-                                        request = "launch",
-                                        name = "Launch Current File",
-                                        program = "${file}",  -- 调试当前文件
-                                        -- pythonPath = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/Scripts/python.exe",
-                                        console = "integratedTerminal",
-                                    },
-                                    {
-                                        type = "python",
-                                        request = "launch",
-                                        name = "Run Script With Args",
-                                        program = "${file}",
-                                        args = { "arg2", "arg2" },
-                                        -- pythonPath = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/Scripts/python.exe",
-                                        console = "integratedTerminal",
-                                    },
-                                }
-                                -- print(vim.inspect(require("dap").adapters.python))
-                                -- print(vim.inspect(require("dap").configurations.c))
-                                require('mason-nvim-dap').default_setup(config)
-                            end,
+                            python = pydap,
                         }
                     })
 
                     vim.keymap.set('n', '<F4>',   '<cmd>CMakeDebug<cr>',          {remap = false, silent = true, desc='zz:DAP:CmakeDebug'})
                     vim.keymap.set('n', '<F5>',   '<cmd>DapNew<cr>',              {remap = false, silent = true, desc='zz:DAP:New'})
-                    vim.keymap.set('n', '<S-F5>', '<cmd>DapTerminate<cr>',        {remap = false, silent = true, desc='zz:DAP:Terminate'})
                     vim.keymap.set('n', '<F6>',   '<cmd>DapPause<cr>',            {remap = false, silent = true, desc='zz:DAP:Pause'})
                     vim.keymap.set('n', '<F7>',   '<cmd>DapContinue<cr>',         {remap = false, silent = true, desc='zz:DAP:Continue'})
-                    vim.keymap.set('n', '<S-F7>', '<cmd>DapTerminate<cr>',        {remap = false, silent = true, desc='zz:DAP:Terminate'})
                     vim.keymap.set('n', '<F8>',   '<cmd>DapStepOver<cr>',         {remap = false, silent = true, desc='zz:DAP:StepOver'})
                     vim.keymap.set('n', '<F9>',   '<cmd>DapToggleBreakpoint<cr>', {remap = false, silent = true, desc='zz:DAP:ToggleBreakpoint'})
                     vim.keymap.set('n', '<F10>',  '<cmd>DapStepInto<cr>',         {remap = false, silent = true, desc='zz:DAP:StepInto'})
                     vim.keymap.set('n', '<F11>',  '<cmd>DapStepOut<cr>',          {remap = false, silent = true, desc='zz:DAP:StepOut'})
+                    vim.keymap.set('n', '<F12>', '<cmd>DapTerminate<cr>',        {remap = false, silent = true, desc='zz:DAP:Terminate'})
                 end
             }
         },
