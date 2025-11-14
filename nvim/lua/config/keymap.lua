@@ -51,7 +51,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>to', '<cmd>tabonly<cr>',                    {remap = false, silent = true, desc='zz:N.TabOnly'})
     vim.keymap.set('n', '<leader>q','<cmd>q<cr>', {remap = false, silent = true, desc='zz:Quit'})
     vim.keymap.set('n', '<leader>Q','<cmd>qa<cr>', {remap = false, silent = true, desc='zz:QuitAll'})
-    vim.keymap.set('n', '<leader><tab>',function() 
+    vim.keymap.set('n', '<leader><tab>',function()
         vim.fn.system('start explorer /select,' .. vim.fn.fnamemodify(vim.fn.expand('%:p'), ':8'))
     end, {remap = false, silent = true, desc='zz:SystemOpen'})
     package.loaded["config.mylua.exkeymap"] = nil
@@ -71,7 +71,7 @@ else
     vim.keymap.set('n', 'zR', function() vscode.call('editor.unfoldAll') end, {remap = false, silent = true})
     vim.keymap.set('n', 'zR', function() vscode.call('editor.unfoldAll') end, {remap = false, silent = true})
 
-    -- view 
+    -- view
     vim.keymap.set('n', '<leader>;', function() vscode.call('editor.action.toggleWordWrap') end, {remap = false, silent = true})
 
     vim.keymap.set('n', '<leader>vf', function() vscode.call('workbench.files.action.showActiveFileInExplorer') end, {remap = false, silent = true})
