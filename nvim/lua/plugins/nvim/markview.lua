@@ -15,10 +15,6 @@ return {
         },
     },
     config = function(_, opts)
-        local ok, parser = pcall(vim.treesitter.language.get_lang, 'markdown')
-        if ok and parser then
-            vim.treesitter.language.register(parser, 'llm') -- llm ↔ markdown
-        end
         require("markview").setup(opts);
         vim.keymap.set('n', '<leader>v.', '<cmd>Markview splitToggle<cr>', { remap = false, desc='zz:markview:SplitToggle'})
     end,
