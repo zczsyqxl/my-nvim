@@ -11,11 +11,11 @@ return {
             },
         })
         local ls = require('luasnip')
-        vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-        vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-        vim.keymap.set({"i", "s"}, "<C-H>", function() ls.jump(-1) end, {silent = true})
+        vim.keymap.set({"i"}, "<A-j>", function() ls.expand() end, {silent = true, desc = 'zz:LuaSnip:expand'})
+        vim.keymap.set({"i", "s"}, "<A-l>", function() ls.jump( 1) end, {silent = true, desc = 'zz:LuaSnip:JumpNext'})
+        vim.keymap.set({"i", "s"}, "<A-h>", function() ls.jump(-1) end, {silent = true, desc = 'zz:LuaSnip:JumpPrev'})
 
-        vim.keymap.set({"i", "s"}, "<C-E>", function()
+        vim.keymap.set({"i", "s"}, "<A-k>", function()
             if ls.choice_active() then
                 ls.change_choice(1)
             end
