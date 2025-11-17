@@ -1,4 +1,10 @@
 if vim.g.vscode == nil then
+    if vim.fn.has('win32') ~= 0 then
+        vim.cmd[[
+             language time English_United States.1252
+         ]]
+
+    end
     vim.opt.autochdir = true
     vim.opt.foldmethod = 'syntax'
     vim.opt.foldcolumn = '4'

@@ -5,7 +5,6 @@ return {
         detection_methods = { "pattern" },
         patterns = {
             ".git",
-            "package.json",
             "Cargo.toml",
             "go.mod",
             "CMakeLists.txt",

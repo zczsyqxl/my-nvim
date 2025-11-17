@@ -21,5 +21,6 @@ else
         require('plugins.nvim.theme'),
         require('plugins.nvim.nvimScissors'),
         require('plugins.nvim.luaSnip'),
+        require('plugins.nvim.fwatch'),
     }
 end
