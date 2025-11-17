@@ -85,6 +85,8 @@ return {
         vim.keymap.set('n', '<leader>fu', '<cmd>Telescope git_stash<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:GitStash'})
         vim.keymap.set('n', '<leader>fv', '<cmd>Telescope vim_options<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:VimOptions'})
         vim.keymap.set('n', '<leader>fw', '<cmd>Telescope git_branches<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:GitBranches'})
+        vim.keymap.set('n', '<leader>fz', '<cmd>Telescope highlights<cr>',                   {remap = false, silent = true, desc = 'zz:telescope:Highlights'})
+        vim.api.nvim_set_hl(0, 'TelescopeMatching', { fg = '#adff2f', italic = true, bold = true})
     end
 }
 
