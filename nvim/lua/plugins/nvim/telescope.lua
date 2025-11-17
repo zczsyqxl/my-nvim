@@ -39,6 +39,9 @@ return {
                         '--exclude', '.git',
                         '--exclude', '.codechecker',
                     }
+                },
+                colorscheme = {
+                    enable_preview = true,
                 }
             }
         })
