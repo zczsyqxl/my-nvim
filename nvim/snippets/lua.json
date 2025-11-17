@@ -1,0 +1,1 @@
+{"lazy":{"prefix":"lazy","body":["return {","    \"${1:plugin}\",","    dependencies = \"${2:pluginDep}\", -- if using telescope","    config = function()","        require(\"${3:plugin}\").setup ({","            snippetDir = vim.fn.stdpath('config') .. '/snippets',","        })","    end,","}"]}}

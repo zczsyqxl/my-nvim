@@ -9,6 +9,7 @@ return {
             require('plugins.mini.diff')
             require('plugins.mini.sessions')
             require('plugins.mini.starter')
+            require('plugins.mini.snnipets')
         end
         require('plugins.mini.ai')
         require('plugins.mini.operators')
