@@ -20,5 +20,6 @@ else
         require('plugins.nvim.treesitter'),
         require('plugins.nvim.theme'),
         require('plugins.nvim.nvimScissors'),
+        require('plugins.nvim.luaSnip'),
     }
 end
