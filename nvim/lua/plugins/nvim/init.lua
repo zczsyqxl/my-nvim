@@ -18,5 +18,6 @@ else
         require('plugins.nvim.telescope'),
         require('plugins.nvim.toggleterm'),
         require('plugins.nvim.treesitter'),
+        require('plugins.nvim.theme'),
     }
 end

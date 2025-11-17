@@ -7,7 +7,7 @@ if vim.g.vscode == nil then
     set('LspGlobalVar',  { fg = '#adff2f', italic = false})   -- 亮黄
     set('LspLocalVar',   { fg = '#9cdcfe', italic = true }) -- 浅蓝
     set('LspMacro',      { fg = '#4170ff', italic = true }) -- 蓝
-
+    set('LspEnum',       { fg = '#40b070', italic = true }) -- green
 
     local function setMySyntaxHl()
         -- 1. 先关掉默认 link，防止被配色主题冲掉
@@ -16,6 +16,7 @@ if vim.g.vscode == nil then
         set('@lsp.typemod.variable.fileScope',   { link = 'LspGlobalVar'})
         set('@lsp.typemod.variable.functionScope',   { link = 'LspLocalVar'})
         set('@lsp.type.macro',   { link = 'LspMacro'})
+        set('@lsp.type.enumMember',   { link = 'LspEnum'})
         set('DiagnosticError',   { fg = '#d27319'})
     end
     setMySyntaxHl()
