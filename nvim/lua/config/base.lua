@@ -1,5 +1,5 @@
 if vim.g.vscode == nil then
-    vim.cmd('colorscheme bubblegum')
+    -- vim.cmd('colorscheme bubblegum')
     vim.opt.autochdir = true
     vim.opt.foldmethod = 'syntax'
     vim.opt.foldcolumn = '4'
