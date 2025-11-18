@@ -23,8 +23,17 @@ if vim.g.vscode == nil then
 		set_hl("LightspeedCursor", "#000080", "#adff2f", false, false)
 		set_hl("LightspeedLabelDistant", "#4170ff", "", false, true)
 
+        -- telescope
+        set_hl_full('TelescopeMatching', { fg = '#adff2f', italic = true, bold = true})
+
         -- MatchParen
         set_hl_full('MatchParen',  { fg = '#ffff00', italic = false, underdouble = true, bold = true, sp = '#FFFF00'}) -- sp -> underline color
+
+        -- coc
+        set_hl_full('CocInlayHint',  { fg='#2ac3de', bg='#292e42', italic = false,}) -- sp -> underline color
+        set_hl_full('CocPumDetail',  { fg='#617dbe', bg='NONE', italic = false, bold = false}) -- sp -> underline color
+        -- set_hl_full('NormalFloat',  {bg = '#000000'})
+        -- set_hl_full('CocFloatBorder',  {fg = '#5e81ac', bg = 'NONE', blend = 100,})
 
         -- LSP
         set_hl_full('LspGlobalVar',  { fg = '#adff2f', italic = false}) -- 亮黄
