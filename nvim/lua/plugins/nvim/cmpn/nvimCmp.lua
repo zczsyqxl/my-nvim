@@ -41,7 +41,7 @@ return {
                 { name = 'nvim_lsp' },
                 { name = 'buffer' },
                 -- { name = 'vsnip' }, -- For vsnip users.
-                -- { name = 'luasnip' }, -- For luasnip users.
+                { name = 'luasnip' }, -- For luasnip users.
                 -- { name = 'ultisnips' }, -- For ultisnips users.
                 -- { name = 'snippy' }, -- For snippy users.
             })
@@ -50,7 +50,7 @@ return {
         vim.lsp.config('clangd', {
             capalilities = capalilities
         })
-        vim.lsp.config('rust-analyzer', {
+        vim.lsp.config('rust_analyzer', {
             capalilities = capalilities
         })
         vim.lsp.config('lua-ls', {
@@ -60,7 +60,7 @@ return {
             capalilities = capalilities
         })
         vim.lsp.enable('clangd')
-        vim.lsp.enable('rust')
+        vim.lsp.enable('rust_analyzer')
         vim.lsp.enable('lua_ls')
         vim.lsp.enable('pyright')
     end

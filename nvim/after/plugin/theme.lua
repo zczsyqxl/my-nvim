@@ -1,23 +1,44 @@
 if vim.g.vscode == nil then
 -- 一次性写到 init.lua / colors.lua
-    local function set(group, opts)
+    local function set_hl_full(group, opts)
         vim.api.nvim_set_hl(0, group, opts)
     end
 
-    local function setMySyntaxHl()
-        -- 1. 先关掉默认 link，防止被配色主题冲掉
-        -- set_hl('@lsp.type.variable', {})               -- 清空默认 link
-        -- set_hl('@lsp.typemod.variable.fileScope',   {})
-        set('LspGlobalVar',  { fg = '#adff2f', italic = false})   -- 亮黄
-        set('LspLocalVar',   { fg = '#9cdcfe', italic = true }) -- 浅蓝
-        set('LspMacro',      { fg = '#4170ff', italic = true }) -- 蓝
-        set('LspEnum',       { fg = '#40b070', italic = true }) -- green
-        set('@lsp.typemod.variable.fileScope',   { link = 'LspGlobalVar'})
-        set('@lsp.typemod.variable.functionScope',   { link = 'LspLocalVar'})
-        set('@lsp.type.macro',   { link = 'LspMacro'})
-        set('@lsp.type.enumMember',   { link = 'LspEnum'})
-        set('DiagnosticError',   { fg = '#d27319'})
+
+    local function set_hl(g, fg, bg, bold, underline)
+        vim.api.nvim_set_hl(0, g, { fg = fg, bg = bg, bold = bold, underline = underline })
     end
+
+
+    local function setMySyntaxHl()
+        -- hop
+        set_hl('HopNextKey',  '#80dcfe', '', false, false)
+        set_hl('HopNextKey1', '#adff2f', '', false, false)
+        set_hl('HopNextKey2', '#1e90ff', '', false, false)
+        set_hl('HopPreview',  'white', '#191970', false, false)
+
+        -- lightspeed
+		set_hl("LightspeedMaskedChar", "#adff2f", "", false, false)
+		set_hl("LightspeedLabel", "#80dcfe", "", false, false)
+		set_hl("LightspeedCursor", "#000080", "#adff2f", false, false)
+		set_hl("LightspeedLabelDistant", "#4170ff", "", false, true)
+
+        -- MatchParen
+        set_hl_full('MatchParen',  { fg = '#ffff00', italic = false, underdouble = true, bold = true, sp = '#FFFF00'}) -- sp -> underline color
+
+        -- LSP
+        set_hl_full('LspGlobalVar',  { fg = '#adff2f', italic = false}) -- 亮黄
+        set_hl_full('LspLocalVar',   { fg = '#9cdcfe', italic = true }) -- 浅蓝
+        set_hl_full('LspMacro',      { fg = '#4170ff', italic = true }) -- 蓝
+        set_hl_full('LspEnum',       { fg = '#40b070', italic = true }) -- green
+        set_hl_full('DiagnosticError',   { fg = '#d27319'})
+
+        set_hl_full('@lsp.typemod.variable.fileScope',   { link = 'LspGlobalVar'})
+        set_hl_full('@lsp.typemod.variable.functionScope',   { link = 'LspLocalVar'})
+        set_hl_full('@lsp.type.macro',   { link = 'LspMacro'})
+        set_hl_full('@lsp.type.enumMember',   { link = 'LspEnum'})
+    end
+
     setMySyntaxHl()
 
     -- 3. 如果主题切换后仍生效，包一层自动命令
