@@ -35,6 +35,13 @@ if vim.g.vscode == nil then
         -- set_hl_full('NormalFloat',  {bg = '#000000'})
         -- set_hl_full('CocFloatBorder',  {fg = '#5e81ac', bg = 'NONE', blend = 100,})
 
+        --  diff
+        set_hl_full('DiffText',  { fg='#FFFF00', bg='#FF0000', italic = false, bold = false}) -- sp -> underline color
+        set_hl_full('DiffDelete',  { bg='#FF0000', italic = false, bold = false}) -- sp -> underline color
+        set_hl_full('DiffAdd',  { bg='#3333ff', italic = false, bold = false}) -- sp -> underline color
+        set_hl_full('DiffChange',  { bg='#000066', italic = false, bold = false}) -- sp -> underline color
+
+
         -- LSP
         set_hl_full('LspGlobalVar',  { fg = '#adff2f', italic = false}) -- 亮黄
         set_hl_full('LspLocalVar',   { fg = '#9cdcfe', italic = true }) -- 浅蓝
