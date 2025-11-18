@@ -12,5 +12,13 @@ return {
                 },
             },
         })
+        vim.keymap.set({'n', 'x'}, '<leader>ea', function()
+            require('scissors').addNewSnippet()
+        end, { desc = 'zz:Scissor:AddNewSnippet'})
+        vim.keymap.set({'n', 'x'}, '<leader>ee', function()
+            require('scissors').editSnippet()
+        end, { desc = 'zz:Scissor:EditSnippet'})
     end,
 }
+
+
