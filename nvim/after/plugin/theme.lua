@@ -20,7 +20,7 @@ if vim.g.vscode == nil then
         -- lightspeed
 		set_hl("LightspeedMaskedChar", "#adff2f", "", false, false)
 		set_hl("LightspeedLabel", "#80dcfe", "", false, false)
-		set_hl("LightspeedCursor", "#000080", "#adff2f", false, false)
+		set_hl("LightspeedCursor", "#191970", "#adff2f", false, false)
 		set_hl("LightspeedLabelDistant", "#4170ff", "", false, true)
 
         -- telescope
