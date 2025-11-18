@@ -1,7 +1,7 @@
 if vim.g.vscode then
     return {}
 else
-    local cmp = 'coc'
+    local cmp = 'nvimcmp'
     return {
         require(
             ({
