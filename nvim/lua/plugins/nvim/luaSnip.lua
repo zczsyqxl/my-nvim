@@ -11,17 +11,100 @@ return {
             },
         })
         local ls = require('luasnip')
+        local types = require('luasnip.util.types')
+
+        ls.setup({
+            ext_opts = {
+                [types.insertNode] = {
+                    -- these ext_opts are applied when the node is active (e.g. it has been
+                    -- jumped into, and not out yet).
+                    active = {
+                        -- highlight the text inside the node red.
+                        -- virt_text = {{"▶", "AcHolder"}},
+                        -- hl_group = "AcHolder"
+                    },
+                    -- these ext_opts are applied when the node is not active, but
+                    -- the snippet still is.
+                    passive = {
+                        -- add virtual text on the line of the node, behind all text.
+                        -- virt_text = {{"«", "InHolder"}},
+                        -- hl_group = "AcHolder"
+                    },
+                    -- visited or unvisited are applied when a node was/was not jumped into.
+                    visited = {
+                        hl_group = "ViHolder"
+                    },
+                    unvisited = {
+                        hl_group = "UnHolder"
+                    },
+                    snippet_passive = {},
+                },
+                [types.choiceNode] = {
+                    -- these ext_opts are applied when the node is active (e.g. it has been
+                    -- jumped into, and not out yet).
+                    active = {
+                        -- highlight the text inside the node red.
+                        -- virt_text = {{"▶", "ViHolder"}},
+                        -- hl_group = "ViHolder"
+                    },
+                    -- these ext_opts are applied when the node is not active, but
+                    -- the snippet still is.
+                    passive = {
+                        -- add virtual text on the line of the node, behind all text.
+                        -- virt_text = {{"«", "UnHolder"}},
+                        -- hl_group = "UnHolder"
+                    },
+                    -- visited or unvisited are applied when a node was/was not jumped into.
+                    visited = {
+                        hl_group = "ViHolder"
+                    },
+                    unvisited = {
+                        hl_group = "UnHolder"
+                    },
+                    snippet_passive = {},
+                },
+
+                [types.snippet] = {
+                    -- these ext_opts are applied when the node is active (e.g. it has been
+                    -- jumped into, and not out yet).
+                    active = {
+                        -- highlight the text inside the node red.
+                        -- virt_text = {{"▶", "ViHolder"}},
+                        -- hl_group = "ViHolder"
+                    },
+                    -- these ext_opts are applied when the node is not active, but
+                    -- the snippet still is.
+                    passive = {
+                        -- add virtual text on the line of the node, behind all text.
+                        -- virt_text = {{"«", "UnHolder"}},
+                        -- hl_group = "UnHolder"
+                    },
+                    -- visited or unvisited are applied when a node was/was not jumped into.
+                    visited = {
+                        -- hl_group = "ViHolder"
+                    },
+                    unvisited = {
+                        -- hl_group = "UnHolder"
+                    },
+                    snippet_passive = {},
+                }
+            }
+        })
+
         vim.keymap.set({"i"}, "<A-j>", function() ls.expand() end, {silent = true, desc = 'zz:LuaSnip:expand'})
         vim.keymap.set({"i", "s"}, "<A-l>", function() ls.jump( 1) end, {silent = true, desc = 'zz:LuaSnip:JumpNext'})
         vim.keymap.set({"i", "s"}, "<A-h>", function() ls.jump(-1) end, {silent = true, desc = 'zz:LuaSnip:JumpPrev'})
 
-        vim.keymap.set({"i", "s"}, "<A-k>", function()
+        vim.keymap.set({"i","s"}, "<A-n>", function()
             if ls.choice_active() then
                 ls.change_choice(1)
             end
-        end, {silent = true})
+        end, {silent = true, desc = 'zz:LuaSnip:ChangeChoiceNext'})
+
+        vim.keymap.set({"i","s"}, "<A-p>", function()
+            if ls.choice_active() then
+                ls.change_choice(-1)
+            end
+        end, {silent = true, desc = 'zz:LuaSnip:ChangeChoicePrev'})
     end
 }
-
-
-

@@ -17,6 +17,7 @@ if vim.g.vscode == nil then
         set_hl('HopNextKey2', '#1e90ff', '', false, false)
         set_hl('HopPreview',  'white', '#191970', false, false)
 
+
         -- lightspeed
 		set_hl("LightspeedMaskedChar", "#adff2f", "", false, false)
 		set_hl("LightspeedLabel", "#80dcfe", "", false, false)
@@ -34,6 +35,10 @@ if vim.g.vscode == nil then
         set_hl_full('CocPumDetail',  { fg='#617dbe', bg='NONE', italic = false, bold = false}) -- sp -> underline color
         -- set_hl_full('NormalFloat',  {bg = '#000000'})
         -- set_hl_full('CocFloatBorder',  {fg = '#5e81ac', bg = 'NONE', blend = 100,})
+
+        -- luasnip
+        set_hl_full('ViHolder', { fg = '#ffffff', bg = '#4170ff', sp = '#ffff00', underdouble = true})
+        set_hl_full('UnHolder', { fg = '#ffffff', bg = '#4170ff', sp = '#0000ff', underdouble = true})
 
         --  diff
         set_hl_full('DiffText',  { fg='#FFFF00', bg='#FF0000', italic = false, bold = false}) -- sp -> underline color

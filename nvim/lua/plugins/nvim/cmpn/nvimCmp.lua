@@ -1,4 +1,4 @@
-local snipEngine = 'mini'
+local snipEngine = 'luasnip'
 return {
     'hrsh7th/nvim-cmp',
     dependencies = {

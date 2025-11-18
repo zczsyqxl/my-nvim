@@ -8,7 +8,7 @@ return {
             editSnippetPopup = {
                 keymaps = {
                     -- if not mentioned otherwise, the keymaps apply to normal mode
-                    insertNextPlaceholder = "<C-i>", -- inserkkt & normal mode
+                    insertNextPlaceholder = "<C-B>", -- inserkkt & normal mode
                 },
             },
         })
