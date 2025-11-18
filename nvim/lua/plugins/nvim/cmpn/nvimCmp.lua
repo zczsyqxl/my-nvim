@@ -30,7 +30,6 @@ return {
                 expand = function(args)
                     -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
                     if snipEngine == 'luasnip' then
-                        print('llllll')
                         require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                         -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
                         -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
@@ -41,7 +40,6 @@ return {
                         local insert = MiniSnippets.config.expand.insert or MiniSnippets.default_insert
                         insert({ body = args.body }) -- Insert at cursor
                         cmp.resubscribe({ "TextChangedI", "TextChangedP" })
-                        print('mmmmmmm')
                         require("cmp.config").set_onetime({ sources = {} })
                     end
                 end,
