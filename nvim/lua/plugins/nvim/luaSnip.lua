@@ -20,22 +20,22 @@ return {
                     -- jumped into, and not out yet).
                     active = {
                         -- highlight the text inside the node red.
-                        -- virt_text = {{"▶", "AcHolder"}},
-                        -- hl_group = "AcHolder"
+                        -- virt_text = {{"▶", "ZZ.ViHolder"}},
+                        -- hl_group = "ZZ.ViHolder"
                     },
                     -- these ext_opts are applied when the node is not active, but
                     -- the snippet still is.
                     passive = {
                         -- add virtual text on the line of the node, behind all text.
-                        -- virt_text = {{"«", "InHolder"}},
-                        -- hl_group = "AcHolder"
+                        -- virt_text = {{"«", "ZZ.UnHolder"}},
+                        -- hl_group = "ZZ.UnHolder"
                     },
                     -- visited or unvisited are applied when a node was/was not jumped into.
                     visited = {
-                        hl_group = "ViHolder"
+                        hl_group = "ZZ.ViHolder"
                     },
                     unvisited = {
-                        hl_group = "UnHolder"
+                        hl_group = "ZZ.UnHolder"
                     },
                     snippet_passive = {},
                 },
@@ -44,22 +44,22 @@ return {
                     -- jumped into, and not out yet).
                     active = {
                         -- highlight the text inside the node red.
-                        -- virt_text = {{"▶", "ViHolder"}},
-                        -- hl_group = "ViHolder"
+                        -- virt_text = {{"▶", "ZZ.ViHolder"}},
+                        -- hl_group = "ZZ.ViHolder"
                     },
                     -- these ext_opts are applied when the node is not active, but
                     -- the snippet still is.
                     passive = {
                         -- add virtual text on the line of the node, behind all text.
-                        -- virt_text = {{"«", "UnHolder"}},
-                        -- hl_group = "UnHolder"
+                        -- virt_text = {{"«", "ZZ.UnHolder"}},
+                        -- hl_group = "ZZ.UnHolder"
                     },
                     -- visited or unvisited are applied when a node was/was not jumped into.
                     visited = {
-                        hl_group = "ViHolder"
+                        hl_group = "ZZ.ViHolder"
                     },
                     unvisited = {
-                        hl_group = "UnHolder"
+                        hl_group = "ZZ.UnHolder"
                     },
                     snippet_passive = {},
                 },
@@ -69,22 +69,22 @@ return {
                     -- jumped into, and not out yet).
                     active = {
                         -- highlight the text inside the node red.
-                        -- virt_text = {{"▶", "ViHolder"}},
-                        -- hl_group = "ViHolder"
+                        -- virt_text = {{"▶", "ZZ.ViHolder"}},
+                        -- hl_group = "ZZ.ViHolder"
                     },
                     -- these ext_opts are applied when the node is not active, but
                     -- the snippet still is.
                     passive = {
                         -- add virtual text on the line of the node, behind all text.
-                        -- virt_text = {{"«", "UnHolder"}},
-                        -- hl_group = "UnHolder"
+                        -- virt_text = {{"«", "ZZ.UnHolder"}},
+                        -- hl_group = "ZZ.UnHolder"
                     },
                     -- visited or unvisited are applied when a node was/was not jumped into.
                     visited = {
-                        -- hl_group = "ViHolder"
+                        -- hl_group = "ZZ.ViHolder"
                     },
                     unvisited = {
-                        -- hl_group = "UnHolder"
+                        -- hl_group = "ZZ.UnHolder"
                     },
                     snippet_passive = {},
                 }
