@@ -7,7 +7,7 @@ return {
     opts = {
         options = {
             globalstatus = true,
-            theme = 'onedark'
+            theme = 'ayu_dark'
         },
         extensions = {
             'nvim-tree',
