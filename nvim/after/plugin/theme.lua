@@ -55,6 +55,7 @@ if vim.g.vscode == nil then
         set_hl_full('DiagnosticError',   { fg = '#d27319'})
 
         set_hl_full('@lsp.typemod.variable.fileScope',   { link = 'LspGlobalVar'})
+        set_hl_full('@lsp.typemod.variable.globalScope',   { link = 'LspGlobalVar'})
         set_hl_full('@lsp.typemod.variable.functionScope',   { link = 'LspLocalVar'})
         set_hl_full('@lsp.type.macro',   { link = 'LspMacro'})
         set_hl_full('@lsp.type.enumMember',   { link = 'LspEnum'})
