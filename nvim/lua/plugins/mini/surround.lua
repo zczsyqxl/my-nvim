@@ -1,12 +1,14 @@
 require('mini.surround').setup({
+    n_lines = 35,
+    respect_selection_type = true,
     mappings = {
         add = 'ys', -- Add surrounding in Normal and Visual modes
         delete = 'ds', -- Delete surrounding
-        find = '\\f', -- Find surrounding (to the right)
-        find_left = '\\F', -- Find surrounding (to the left)
-        highlight = '\\h', -- Highlight surrounding
+        find = 'Sf', -- Find surrounding (to the right)
+        find_left = 'SF', -- Find surrounding (to the left)
+        highlight = 'Sh', -- Highlight surrounding
         replace = 'cs', -- Replace surrounding
-        update_n_lines = '\\n',
+        update_n_lines = 'Sn',
 
         suffix_last = 'l', -- Suffix to search with "prev" method
         suffix_next = 'n', -- Suffix to search with "next" method
@@ -17,13 +19,9 @@ require('mini.surround').setup({
             input = {'%/%* ().-() %*%/'},
             output = { left = '/* ', right = ' */' }
         },
-        ['*'] = {
-            input = {'\n%/%*\n().-()\n%*%/'},
-            output = { left = '\n/*\n', right = '\n*/' }
-        },
         ['#'] = {
-            input = {'\n%#if 0\n().-()\n%#endif'},
-            output = { left = '\n#if 0\n', right = '\n#endif' }
+            input = {'%#if 0().-()%#endif'},
+            output = { left = '#if 0', right = '#endif' }
         },
         -- ['*'] = {
         --     input = function()
