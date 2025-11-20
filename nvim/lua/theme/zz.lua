@@ -8,6 +8,7 @@ local function setMySyntaxHl()
     set_hl_full('ZZ.HopNextKey1',           {fg = '#adff2f', bg = '', bold = false, italic = false })
     set_hl_full('ZZ.HopNextKey2',           {fg = '#1e90ff', bg = '', bold = false, italic = false })
     set_hl_full('ZZ.HopPreview',            {fg = 'white',   bg = '#191970', bold = false, italic = false })
+    set_hl_full('ZZ.WinSeparator',          {fg = '#000000', bg = 'NONE'})
 
     -- lightspeed
     set_hl_full("ZZ.LightspeedMaskedChar",  {fg = "#adff2f", bg = "", bold = false, italic = false })
@@ -58,6 +59,7 @@ local function setMySyntaxHl()
     set_hl_full('ZZ.String',                {fg = '#ce9178' })
     set_hl_full('ZZ.DiagnosticError',       {fg = '#d27319' })
 
+    set_hl_full('WinSeparator',                        { link = 'ZZ.WinSeparator'})
     set_hl_full('DiffText',                            { link = 'ZZ.DiffText'  })
     set_hl_full('DiffDelete',                          { link = 'ZZ.DiffDelete'})
     set_hl_full('DiffAdd',                             { link = 'ZZ.DiffAdd'   })
