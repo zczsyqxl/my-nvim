@@ -3,7 +3,7 @@ vim.keymap.set('i', '<c-s>', '<esc>gUiwea', { remap = false, desc = 'zz:Uppercas
 vim.keymap.set('n', '\'', '`', { remap = false,desc='zz:exchange\'`'})
 vim.keymap.set('n', '`', '\'', { remap = false,desc='zz:exchange\'`'})
 vim.keymap.set('n', 'z;', '<cmd>w<cr>', { remap = false, desc='zz:WriteBuffer' })
-vim.keymap.set('n', '<space>', '$', { remap = false, desc='zz:GoToEndOfLine' })
+vim.keymap.set({'n', 'o'}, '<space>', '$', { remap = false, desc='zz:GoToEndOfLine' })
 
 vim.keymap.set({'n', 'v', 'x'}, '<leader>y', '"+y', {remap = false, desc='zz:YankToSysClipboard'})
 vim.keymap.set({'n', 'v', 'x'}, '<leader>p', '"+p', {remap = false, desc='zz:PasteFromSysClipboard'})
