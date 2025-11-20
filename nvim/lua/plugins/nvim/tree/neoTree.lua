@@ -7,6 +7,37 @@ return {
     },
     config = function()
         require('neo-tree').setup({
+            window = {
+                mappings = {
+                    ["O"]  = { "show_help", config = { title = "Order by", prefix_key = "O" } },
+                    ["Oc"] = "order_by_created",
+                    ["Od"] = "order_by_diagnostics",
+                    ["Og"] = "order_by_git_status",
+                    ["Om"] = "order_by_modified",
+                    ["On"] = "order_by_name",
+                    ["Os"] = "order_by_size",
+                    ["Ot"] = "order_by_type",
+                    ["oc"] = 'noop',
+                    ["od"] = 'noop',
+                    ["og"] = 'noop',
+                    ["om"] = 'noop',
+                    ["on"] = 'noop',
+                    ["os"] = 'noop',
+                    ["ot"] = 'noop',
+                    ['o'] = 'open',
+                    ['v'] = 'open_vsplit',
+                    ['S'] = 'noop',
+                    ['s'] = 'open_split',
+                    [",<tab>"] = {
+                        function(state)
+                            local node = state.tree:get_node()
+                            vim.fn.system('start ' .. node.path)
+                        end,
+                        desc = "System Open",
+                        nowait = true
+                    },
+                },
+            },
             filesystem = {
                 -- use_libuv_file_watcher = true,
                 bind_to_cwd = false, -- true creates a 2-way binding between vim's cwd and neo-tree's root
@@ -16,37 +47,6 @@ return {
                 -- },
                 follow_current_file = {
                     enabled = true,
-                },
-                window = {
-                    mappings = {
-                        ["O"]  = { "show_help", config = { title = "Order by", prefix_key = "O" } },
-                        ["Oc"] = "order_by_created",
-                        ["Od"] = "order_by_diagnostics",
-                        ["Og"] = "order_by_git_status",
-                        ["Om"] = "order_by_modified",
-                        ["On"] = "order_by_name",
-                        ["Os"] = "order_by_size",
-                        ["Ot"] = "order_by_type",
-                        ["oc"] = 'noop',
-                        ["od"] = 'noop',
-                        ["og"] = 'noop',
-                        ["om"] = 'noop',
-                        ["on"] = 'noop',
-                        ["os"] = 'noop',
-                        ["ot"] = 'noop',
-                        ['o'] = 'open',
-                        ['v'] = 'open_vsplit',
-                        ['S'] = 'noop',
-                        ['s'] = 'open_split',
-                        [",<tab>"] = {
-                            function(state)
-                                local node = state.tree:get_node()
-                                vim.fn.system('start ' .. node.path)
-                            end,
-                            desc = "System Open",
-                            nowait = true
-                        },
-                    },
                 },
             },
             event_handlers = {
