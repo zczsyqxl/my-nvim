@@ -1,7 +1,11 @@
 return {
     "folke/tokyonight.nvim",
-    opts = {},
-    config = function()
-        vim.cmd('colorscheme tokyonight-night')
+    opts = {
+        style = 'night',
+        terminal_colors = false,
+    },
+    config = function(_,opts)
+        require('tokyonight').setup(opts)
+        vim.cmd('colorscheme tokyonight')
     end
 }

@@ -8,6 +8,7 @@ return {
         options = {
             globalstatus = true,
             theme = 'ayu_dark'
+            -- theme = 'tokyonight-night',
         },
         extensions = {
             'nvim-tree',
