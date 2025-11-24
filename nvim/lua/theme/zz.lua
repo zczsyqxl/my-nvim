@@ -59,6 +59,7 @@ local function setMySyntaxHl()
     set_hl_full('ZZ.String',                {fg = '#ce9178' })
     set_hl_full('ZZ.DiagnosticError',       {fg = '#d27319' })
 
+    set_hl_full('MatchParen',                          { link = 'ZZ.MatchParen'})
     set_hl_full('WinSeparator',                        { link = 'ZZ.WinSeparator'})
     set_hl_full('DiffText',                            { link = 'ZZ.DiffText'  })
     set_hl_full('DiffDelete',                          { link = 'ZZ.DiffDelete'})
