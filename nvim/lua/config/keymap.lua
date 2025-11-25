@@ -22,7 +22,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', 'gh', '<c-w>d', {remap = true, silent = true, desc='zz:ShowDiagnosticHover'})
     -- vim.keymap.set('n', '<leader>vm', '<cmd>botright split term://zsh<cr>i', {remap = false, silent = true, desc='zz:N.ToggleTerm'})
 
-    vim.keymap.set('i', 'jk', '<esc>', { remap = false, desc = 'zz:escape' })
+    vim.keymap.set({'i', 's'}, 'jk', '<esc>', { remap = false, desc = 'zz:escape' })
     vim.keymap.set('i', '<c-l>', '<c-x>', {remap = true, silent = true, desc='zz:Complete'})
 
     vim.keymap.set('t', '<C-q>', [[<c-\><c-n>]], {remap = false, desc='zz:TerminalEscape'})
