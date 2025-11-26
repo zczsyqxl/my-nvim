@@ -7,6 +7,7 @@ return {
         indent = {
             enable = true,
         },
+        ensure_installed = { 'c', 'python', 'lua', 'rust', 'bash', 'c_sharp', 'cmake', 'cpp', 'diff', 'git_config', 'html', 'json', 'json5', 'make', 'ninja', 'ruby', 'sql', 'ssh_config', 'vim', 'vimdoc', 'yaml', 'latex' },
     },
     config = function(_, opts)
         require('nvim-treesitter.configs').setup(opts)

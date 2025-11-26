@@ -4,6 +4,31 @@ return {
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
         "nvim-tree/nvim-web-devicons", -- optional, but recommended
+        -- "3rd/image.nvim",
+        "antosha417/nvim-lsp-file-operations",
+        {
+            "s1n7ax/nvim-window-picker",
+            opts = {
+                highlights = {
+                    enabled = true,
+                    statusline = {
+                        focused = {
+                            fg = '#ffffff',
+                            bg = '#7aa2f7',
+                            bold = true,
+                        },
+                        unfocused = {
+                            fg = '#000000',
+                            bg = '#7aa2f7',
+                            bold = true,
+                        },
+                    },
+                },
+            },
+            config = function(_,opts)
+                require('window-picker').setup(opts)
+            end
+        },
     },
     config = function()
         require('neo-tree').setup({
@@ -71,3 +96,4 @@ return {
     end,
     lazy = false, -- neo-tree will lazily load itself
 }
+

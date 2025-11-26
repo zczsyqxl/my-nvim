@@ -14,6 +14,7 @@ if vim.g.vscode == nil then
     vim.opt.tildeop = true
     vim.opt.encoding = 'utf-8'
     vim.opt.grepprg = 'grep -n $*'
+    -- vim.o.winbar = " %f %m "
     -- if vim.fn.has('win32') ~= 0 then
         -- vim.opt.shada = ''
     -- end
