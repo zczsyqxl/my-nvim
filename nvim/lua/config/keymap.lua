@@ -101,5 +101,13 @@ else
     vim.keymap.set('', '<leader>do', function() vscode.call('git.revertSelectedRanges') end, {remap = false, silent = true})
     vim.keymap.set('', '<leader>dp', function() vscode.call('git.stageSelectedRanges') end, {remap = false, silent = true})
     vim.keymap.set('', '<leader>du', function() vscode.call('git.unstageSelectedRanges') end, {remap = false, silent = true})
+    vim.keymap.set('', '<leader>v.', function()
+        local ft = vim.bo.filetype
+        if ft == 'markdown' then
+            vscode.call('markdown-preview-enhanced.openPreviewToTheSide')
+        elseif ft == 'plantuml' then
+            vscode.call('plantuml.preview')
+        end
+    end, {remap = false, silent = true})
 end
 
