@@ -45,15 +45,21 @@ return {
                 end,
             },
             window = {
-                -- completion = cmp.config.window.bordered(),
-                -- documentation = cmp.config.window.bordered(),
+                completion = {
+                    winhighlight = "Normal:ZZ.NvimCmp.WinHighlight",
+                    -- border = 'bold', --[bold, double, none,rounded,shadow,signle,solid]
+                },
+                documentation = {
+                    winhighlight = "Normal:ZZ.NvimCmp.WinHighlight",
+                    -- border = 'rounded',
+                },
             },
             mapping = cmp.mapping.preset.insert({
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-Tab>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
-                ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                -- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 ['<Tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             sources = cmp.config.sources(tmeSources)

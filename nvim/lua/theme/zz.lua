@@ -3,6 +3,24 @@ local function set_hl_full(group, opts)
 end
 
 local function setMySyntaxHl()
+    -- Color
+    local zzBlack       = '#000000'
+    local zzBrightBlack = '#666666'
+    local zzRed         = '#cd3131'
+    local zzBrightRed   = '#F14c4c'
+    local zzGreen       = '#0d8c79'
+    local zzBrightGreen = '#23d18b'
+    local zzYellow      = '#e5e510'
+    local zzBrightYellow= '#F5f543'
+    local zzBlue        = '#2472c8'
+    local zzBrightBlue  = '#3b8eea'
+    local zzPurple      = '#bc3fbc'
+    local zzBrightPurple= '#d670d6'
+    local zzCyan        = '#11a8cd'
+    local zzBrightCyan  = '#a9b8db'
+    local zzWhite       = '#e5e5e5'
+    local zzBrightWhite = '#e5e5e5'
+
     -- hop
     set_hl_full('ZZ.HopNextKey',            {fg = '#80dcfe', bg = '', bold = false, italic = false })
     set_hl_full('ZZ.HopNextKey1',           {fg = '#adff2f', bg = '', bold = false, italic = false })
@@ -59,6 +77,12 @@ local function setMySyntaxHl()
     set_hl_full('ZZ.String',                {fg = '#ce9178' })
     set_hl_full('ZZ.DiagnosticError',       {fg = '#d27319' })
 
+    -- NvimCmp
+    set_hl_full('ZZ.NvimCmp.WinHighlight',             { bg = '#101010' })
+    set_hl_full('ZZ.NvimCmp.ItemAbbrMatch',            { fg = zzBrightBlue })
+    
+
+    set_hl_full('CmpItemAbbrMatch',                    { link = 'ZZ.NvimCmp.ItemAbbrMatch'})
     set_hl_full('MatchParen',                          { link = 'ZZ.MatchParen'})
     set_hl_full('WinSeparator',                        { link = 'ZZ.WinSeparator'})
     set_hl_full('DiffText',                            { link = 'ZZ.DiffText'  })
