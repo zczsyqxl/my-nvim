@@ -2,7 +2,6 @@
 
 
 ## Tree-sitter
-
 * tree-sitter cli need to installed and the path shall be in environment
 * TSInstall markdown markdown_inline c python lua rust bash c_sharp cmake cpp diff git_config html json json5 make ninja ruby sql ssh_config vim vimdoc yaml latex
 
@@ -18,8 +17,6 @@
 ### Node.js for tree-sitter.latex
 * https://nodejs.org/en/download/
 
-### Tree-Sitter
-* TSInstall markdown markdown_inline c python lua rust bash c_sharp cmake cpp diff git_config html json json5 make ninja ruby sql ssh_config vim vimdoc yaml latex
 
 ## Git
 * LazyGit need to be installed/copy

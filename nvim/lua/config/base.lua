@@ -3,7 +3,8 @@ if vim.g.vscode == nil then
         vim.cmd[[
              language time English_United States.1252
          ]]
-
+    else
+        vim.g.python3_host_prog = vim.fn.expand('~/.local/share/nvim/py3venv/bin/python')
     end
     vim.opt.autochdir = true
     vim.opt.foldmethod = 'syntax'
