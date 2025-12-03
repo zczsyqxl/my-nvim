@@ -80,8 +80,10 @@ local function setMySyntaxHl()
     -- NvimCmp
     set_hl_full('ZZ.NvimCmp.WinHighlight',             { bg = '#101010' })
     set_hl_full('ZZ.NvimCmp.ItemAbbrMatch',            { fg = zzBrightBlue })
-    
 
+
+    set_hl_full('RenderMarkdownCode',                  { bg = zzBlack })
+    set_hl_full('RenderMarkdownCodeInline',            { bg = zzBlack })
     set_hl_full('CmpItemAbbrMatch',                    { link = 'ZZ.NvimCmp.ItemAbbrMatch'})
     set_hl_full('MatchParen',                          { link = 'ZZ.MatchParen'})
     set_hl_full('WinSeparator',                        { link = 'ZZ.WinSeparator'})
