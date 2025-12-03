@@ -12,6 +12,7 @@ return {
             linewise_hybrid_mode = true,
             filetypes = { 'markdown', 'llm'},
             icon_provider = 'mini',
+            ignore_buftypes = {},  -- for llm buffers
         },
     },
     config = function(_, opts)

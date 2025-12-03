@@ -1,25 +1,15 @@
 return {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = {
-        {
-            "nvim-treesitter/nvim-treesitter",
-            branch = "main",
-            config = function()
-                vim.api.nvim_create_autocmd("FileType", {
-                    pattern = { "llm", "markdown" },
-                    callback = function()
-                        vim.treesitter.start(0, "markdown")
-                    end,
-                })
-            end,
-        },
-    }, -- if you use standalone mini plugins
+        "nvim-treesitter/nvim-treesitter",
+    },
     ft = { "markdown", "llm" },
 
     config = function()
         require("render-markdown").setup({
             completions = { lsp = { enabled = true } },
             restart_highlighter = true,
+            -- render_modes = true,
             heading = {
                 enabled = true,
                 sign = false,
@@ -53,7 +43,15 @@ return {
                 left_margin = 0,
                 highlight = "RenderMarkdownH1",
             },
-            code = { style = "normal" },
+            latex = {
+                enabled = true,
+                render_modes = true,
+                -- converter = 'latex2text',
+                -- hightlight = 'RenderMarkdownMath',
+                -- postion = 'below',
+                -- top_pad = 0,
+                -- bottom_pad = 0,
+            },
             bullet = {
                 -- Useful context to have when evaluating values.
                 -- | level | how deeply nested the list is, 1-indexed          |
