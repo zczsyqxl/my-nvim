@@ -1,5 +1,6 @@
 # Windows
 
+$$e=mc^2$$
 
 ## Tree-sitter
 * tree-sitter cli need to installed and the path shall be in environment
