@@ -73,6 +73,11 @@ return {
                 follow_current_file = {
                     enabled = true,
                 },
+                window = {
+                    mappings = {
+                        ['<leader>vp'] = 'image_wezterm',
+                    }
+                }
             },
             event_handlers = {
                 {
@@ -85,6 +90,15 @@ return {
                     end,
                 },
             },
+            commands = {
+                image_wezterm = function(state)
+                    local node = state.tree:get_node()
+                    if node.type == 'file' then
+                        require('image_preview').PreviewImage(node.path)
+                    end
+                end,
+            },
+
         })
         vim.keymap.set('n','<leader>vn', '<cmd>Neotree reveal toggle left reveal_force_cwd<cr>', {remap = false, silent = true, desc='zz:neotree:ToggleLeft'})
         vim.keymap.set('n','<leader>vf', '<cmd>Neotree <cr>', {remap = false, silent = true, desc='zz:neotree:FocusSidebar'})

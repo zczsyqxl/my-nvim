@@ -23,5 +23,6 @@ else
         require('plugins.nvim.luaSnip'),
         require('plugins.nvim.fwatch'),
         require('plugins.nvim.nvimColorizer'),
+        require('plugins.nvim.imagePreview'),
     }
 end
