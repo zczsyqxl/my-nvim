@@ -9,6 +9,12 @@
 >> ```
 >> 3. checkhealth.python need to be ok (guess)
 
+> [!Tip] T2. markdown-preview.nvim plugin install
+>> After Install, need to open .md file and, run vim command
+>> ```vim
+>> :call mkdp#util#install()
+>> ```
+
 > [!ERROR] E1. Use snippet to insert time, display time in chinese, althogh, the systme setting for time format is US To fix this problem
 >> Method1, add setting in nvim config script
 >> ```lua
