@@ -778,7 +778,7 @@ return {
                 render_modes = false,
             },
         })
-        vim.keymap.set('n', '<leader>v,', '<cmd>RenderMarkdown buf_toggle<cr>', { remap = false, desc='zz:markview:SplitToggle'})
-        vim.keymap.set('n', '<leader>v.', '<cmd>RenderMarkdown preview<cr>', { remap = false, desc='zz:markview:SplitToggle'})
+        vim.keymap.set('n', '<leader>v,', '<cmd>RenderMarkdown buf_toggle<cr>', { remap = false, desc='zz:RenderMD:Toggle'})
+        vim.keymap.set('n', '<leader>v.', '<cmd>RenderMarkdown preview<cr>', { remap = false, desc='zz:RenderMD:SplitToggle'})
     end,
 }

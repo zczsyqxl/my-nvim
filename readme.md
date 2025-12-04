@@ -34,7 +34,7 @@
 >>    end
 >> ```
 >> Method2, change system region setting
->> ![SysRegionSetting](images/2025-12-03-19-31-25.png)
+>> ![SysRegionSetting](assets/2025-12-03-19-31-25.png)
 
 > [!ERROR] E2. latex2text default output encoding is CP936, display in nvim in utf-8 is not corect 
 >> To ifx this problem, use **Method2** of **E1**
@@ -80,3 +80,4 @@
     * Dap
         * codelldb
         * debugpy
+
