@@ -23,7 +23,7 @@ else
         require('plugins.nvim.luaSnip'),
         require('plugins.nvim.fwatch'),
         require('plugins.nvim.nvimColorizer'),
-        require('plugins.nvim.image'),
+        -- require('plugins.nvim.image'),  -- Zhang,Yingqi: effect for markdown edit, not used for now
         require('plugins.nvim.imagePreview'),
     }
 end

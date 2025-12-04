@@ -11,8 +11,17 @@
 
 > [!Tip] T2. markdown-preview.nvim plugin install
 >> After Install, need to open .md file and, run vim command
+>> Because, lazy load, the final step is failed.
 >> ```vim
 >> :call mkdp#util#install()
+>> ```
+
+> [!tip] T3. image.nvim plugin (https://github.com/3rd/image.nvim)
+>> 1. only support in linux
+>> 2. in kitty performance is better than wezterm
+>> 3. need to install ImageMagick
+>> ```zsh
+>> sudo apt install imagemagick
 >> ```
 
 > [!ERROR] E1. Use snippet to insert time, display time in chinese, althogh, the systme setting for time format is US To fix this problem
