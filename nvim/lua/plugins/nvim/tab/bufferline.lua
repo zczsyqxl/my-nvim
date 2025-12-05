@@ -140,6 +140,7 @@ return {
         })
         vim.keymap.set('n', '<leader>eo', '<cmd>BufferLinePick<cr>', {remap = false, silent=true, desc='zz:bufferline:BufPick'})
         vim.keymap.set('n', '<leader>ec', '<cmd>BufferLinePickClose<cr>', {remap = false, silent=true, desc='zz:bufferline:BufPickClose'})
+        vim.keymap.set('n', '<leader>es', '<cmd>BufferLineCloseOthers<cr>', {remap = false, silent=true, desc='zz:bufferline:BufPickClose'})
         -- vim.keymap.set('n', '<leader>1', '<cmd>BufferLineGoToBuffer 1<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>2', '<cmd>BufferLineGoToBuffer 2<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>3', '<cmd>BufferLineGoToBuffer 3<cr>', {remap = false, silent=true})
