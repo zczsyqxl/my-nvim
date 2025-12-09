@@ -4,6 +4,7 @@ return {
         'lua';
         'yaml';
         'conf';
+        'toml';
     },
     config = function(_, opts)
         require("colorizer").setup(opts);
