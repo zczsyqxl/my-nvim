@@ -780,5 +780,8 @@ return {
         })
         vim.keymap.set('n', '<leader>v,', '<cmd>RenderMarkdown buf_toggle<cr>', { remap = false, desc='zz:RenderMD:Toggle'})
         vim.keymap.set('n', '<leader>v.', '<cmd>RenderMarkdown preview<cr>', { remap = false, desc='zz:RenderMD:SplitToggle'})
+        if vim.fn.has('win32') == 0 then
+            vim.env.PATH = vim.env.PATH .. ':' .. vim.g.python3_root_dir
+        end
     end,
 }

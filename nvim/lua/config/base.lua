@@ -5,6 +5,7 @@ if vim.g.vscode == nil then
          ]]
     else
         vim.g.python3_host_prog = vim.fn.expand('~/.local/share/nvim/py3venv/bin/python')
+        vim.g.python3_root_dir = vim.fn.expand('~/.local/share/nvim/py3venv/bin')
     end
     vim.opt.autochdir = true
     vim.opt.foldmethod = 'syntax'
