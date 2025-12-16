@@ -20,6 +20,20 @@ if vim.g.vscode == nil then
     -- if vim.fn.has('win32') ~= 0 then
         -- vim.opt.shada = ''
     -- end
+    --
+    if vim.env.ZELLIJ ~= nil then          -- 只在 Zellij 内生效
+        vim.g.clipboard = {                  -- 完全绕过自动检测
+            name = 'zellij-osc52',
+            copy = {
+                ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+                ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+            },
+            paste = {
+                ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+                ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+            },
+        }
+    end
 end
 
 vim.cmd('syntax on')
