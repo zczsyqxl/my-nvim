@@ -21,6 +21,15 @@ if vim.g.vscode == nil then
         -- vim.opt.shada = ''
     -- end
     --
+    -- local is_wsl = (function()
+    --     local f = io.open('/proc/version', 'r')
+    --     if not f then return false end
+    --     local ver = f:read('*a')
+    --     f:close()
+    --     return ver:match('[Mm]icrosoft') or ver:match('[Ww][Ss][Ll]')
+    -- end)()
+    --
+    -- if not is_wsl and vim.env.ZELLIJ ~= nil then          -- 只在 Zellij 内生效
     if vim.env.ZELLIJ ~= nil then          -- 只在 Zellij 内生效
         vim.g.clipboard = {                  -- 完全绕过自动检测
             name = 'zellij-osc52',
