@@ -7,8 +7,8 @@ return {
     ["Input:Resend"]      = { mode = {"n", "i"}, key = "<C-r>" },
 
     -- only works when "save_session = true"
-    ["Input:HistoryNext"] = { mode = {"n", "i"}, key = "<C-PageDown>" },
-    ["Input:HistoryPrev"] = { mode = {"n", "i"}, key = "<C-PageUp>" },
+    ["Input:HistoryNext"] = { mode = {"n", "i"}, key = "<C-right>" },
+    ["Input:HistoryPrev"] = { mode = {"n", "i"}, key = "<C-left>" },
 
     ["Input:ModelsNext"]  = { mode = {"n", "i"}, key = "<C-down>" },
     ["Input:ModelsPrev"]  = { mode = {"n", "i"}, key = "<C-up>" },
@@ -21,7 +21,7 @@ return {
     -- The keyboard mapping for the output and input windows in "float" style.
     ["Session:Open"]     = { mode = "n", key = "<leader>ac" },
     ["Session:Hide"]     = { mode = "n", key = "<esc>" },
-    ["Session:Close"]    = { mode = "n", key = "Q" },
+    ["Session:Close"]    = { mode = "n", key = "<leader>q" },
     ["Session:New"]      = { mode = "n", key = "<C-n>" },
     ["Session:History"]  = { mode = "n", key = "<C-h>" },
     -- ["Session:Models"]     = { mode = "i", key = "@" },
