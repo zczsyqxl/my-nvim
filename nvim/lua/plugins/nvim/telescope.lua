@@ -9,7 +9,7 @@ return {
         { 'nvim-telescope/telescope-ui-select.nvim' },
         { 
             'nvim-telescope/telescope-fzf-native.nvim', 
-            build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install'
+            build = 'cmake -S. -Bbuild -G Ninja -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install'
         }
 
     },
