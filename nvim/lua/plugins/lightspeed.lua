@@ -9,5 +9,8 @@ return {
 	config = function(_, opts)
 		require'lightspeed'.setup(opts)
 		vim.keymap.set('', 's', '<Plug>Lightspeed_omni_s', {remap=true, desc='zz:LightSpeed:omni_s'})
+        if vim.g.vscode == nil then
+            vim.keymap.set('n', 'S', '<Plug>Lightspeed_omni_gs', {remap=true, desc='zz:LightSpeed:omni_s'})
+        end
 	end,
 }
