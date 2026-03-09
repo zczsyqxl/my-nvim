@@ -29,10 +29,11 @@ local function setMySyntaxHl()
     set_hl_full('ZZ.WinSeparator',          {fg = '#000000', bg = 'NONE'})
 
     -- lightspeed
-    set_hl_full("ZZ.LightspeedMaskedChar",  {fg = "#adff2f", bg = "", bold = false, italic = false })
-    set_hl_full("ZZ.LightspeedLabel",       {fg = "#80dcfe", bg = "", bold = false, italic = false })
-    set_hl_full("ZZ.LightspeedCursor",      {fg = "#191970", bg = "#adff2f", bold = false, italic = false })
-    set_hl_full("ZZ.LightspeedLabelDistant",{fg = "#4170ff", bg = "", bold = false, italic = true })
+    set_hl_full("ZZ.LightspeedMaskedChar",     {fg = "#adff2f", bg = "",        bold = false, italic = false })
+    set_hl_full("ZZ.LightspeedLabel",          {fg = "#80dcfe", bg = "",        bold = false, italic = false })
+    set_hl_full("ZZ.LightspeedCursor",         {fg = "#191970", bg = "#adff2f", bold = false, italic = false })
+    set_hl_full("ZZ.LightspeedLabelDistant",   {fg = "#4170ff", bg = "",        bold = false, italic = true })
+    -- set_hl_full("ZZ.LightspeedUnlabeledMatch", {fg = "#e5e5e5", bg = "",        bold = false, italic = true })
 
     -- telescope
     set_hl_full('ZZ.TelescopeMatching',     {fg = '#adff2f', italic = true, bold = true })
@@ -100,6 +101,7 @@ local function setMySyntaxHl()
     set_hl_full("LightspeedLabel",                     { link = "ZZ.LightspeedLabel"       })
     set_hl_full("LightspeedCursor",                    { link = "ZZ.LightspeedCursor"      })
     set_hl_full("LightspeedLabelDistant",              { link = "ZZ.LightspeedLabelDistant"})
+    -- set_hl_full("LightspeedUnlabeledMatch",            { link = "ZZ.LightspeedUnlabeledMatch"})
     set_hl_full('CocInlayHint',                        { link = 'ZZ.CocInlayHint' })
     set_hl_full('CocPumDetail',                        { link = 'ZZ.CocPumDetail' })
     set_hl_full('@lsp.typemod.variable.fileScope',     { link = 'ZZ.LspGlobalVar' })
