@@ -51,7 +51,7 @@ return {
                     ["ot"] = 'noop',
                     ['o'] = 'open',
                     ['l'] = 'open',
-                    ['<c-l>'] = 'focus_preview',
+                    ['L'] = 'focus_preview',
                     ['h'] = 'open',
                     ['v'] = 'open_vsplit',
                     ['S'] = 'noop',
