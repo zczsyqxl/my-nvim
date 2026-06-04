@@ -92,6 +92,10 @@ else
 
     vim.keymap.set('', ']c',         function() vscode.call('workbench.action.compareEditor.nextChange') end, {remap = false, silent = true})
     vim.keymap.set('', '[c',         function() vscode.call('workbench.action.compareEditor.previousChange') end, {remap = false, silent = true})
+    vim.keymap.set('', ']f',         function() vscode.call('merge-conflict.next') end, {remap = false, silent = true})
+    vim.keymap.set('', '[f',         function() vscode.call('merge-conflict.previous') end, {remap = false, silent = true})
+    vim.keymap.set('', ']e',         function() vscode.call('merge.goToNextUnhandledConflict') end, {remap = false, silent = true})
+    vim.keymap.set('', '[e',         function() vscode.call('merge.goToPreviousUnhandledConflict') end, {remap = false, silent = true})
     vim.keymap.set('', ']g',         function() vscode.call('workbench.action.editor.nextChange') end, {remap = false, silent = true})
     vim.keymap.set('', '[g',         function() vscode.call('workbench.action.editor.previousChange') end, {remap = false, silent = true})
     vim.keymap.set('', '[d',         function() vscode.call('editor.action.marker.prev') end, {remap = false, silent = true})
