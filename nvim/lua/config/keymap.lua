@@ -90,6 +90,8 @@ else
 
     -- Git
 
+    vim.keymap.set('', ']a',         function() vscode.call('gitlens.annotations.nextChange') end, {remap = false, silent = true})
+    vim.keymap.set('', '[a',         function() vscode.call('gitlens.annotations.previousChange') end, {remap = false, silent = true})
     vim.keymap.set('', ']c',         function() vscode.call('workbench.action.compareEditor.nextChange') end, {remap = false, silent = true})
     vim.keymap.set('', '[c',         function() vscode.call('workbench.action.compareEditor.previousChange') end, {remap = false, silent = true})
     vim.keymap.set('', ']f',         function() vscode.call('merge-conflict.next') end, {remap = false, silent = true})
