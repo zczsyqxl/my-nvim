@@ -1,5 +1,6 @@
 {
   "LuaSnip": { "branch": "master", "commit": "5a1e39223db9a0498024a77b8441169d260c8c25" },
+  "aegis.nvim": { "branch": "master", "commit": "1bad001a55282eaddd6f5a4e8d027b6bf1179a4a" },
   "aerial.nvim": { "branch": "master", "commit": "645d108a5242ec7b378cbe643eb6d04d4223f034" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
   "cmake-tools.nvim": { "branch": "master", "commit": "ec3bc500aa1db11f16f6aa881af76871ed8e4de3" },
