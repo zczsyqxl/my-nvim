@@ -52,7 +52,7 @@ return {
                     ['o'] = 'open',
                     ['l'] = 'open',
                     ['L'] = 'focus_preview',
-                    ['h'] = 'open',
+                    ['h'] = 'close_node',
                     ['v'] = 'open_vsplit',
                     ['S'] = 'noop',
                     ['s'] = 'open_split',
