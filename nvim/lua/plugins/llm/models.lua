@@ -22,12 +22,12 @@ return {
     temperature = 0.3,
     top_p = 0.7,
   },
-  GLM = {
+  GLM_5_3 = {
     name = "GLM",
-    url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
-    model = "glm-4-flash",
+    url = "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
+    model = "glm-5.3",
     api_type = "zhipu",
-    max_tokens = 8000,
+    max_tokens = 100000,
     fetch_key = vim.env.GLM_KEY,
     temperature = 0.3,
     top_p = 0.7,

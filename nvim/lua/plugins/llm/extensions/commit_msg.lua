@@ -5,10 +5,10 @@ return {
   prompt = prompts.CommitMsg,
 
   opts = {
-    fetch_key = vim.env.CHAT_ANYWHERE_KEY,
-    url = "https://api.chatanywhere.tech/v1/chat/completions",
-    model = "gpt-4o-mini",
-    api_type = "openai",
+    url = "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
+    model = "glm-5.3",
+    api_type = "zhipu",
+    fetch_key = vim.env.GLM_KEY,
     enter_flexible_window = true,
     apply_visual_selection = false,
     win_opts = {

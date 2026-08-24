@@ -4,10 +4,10 @@ return {
   prompt = prompts.DocString,
   handler = tools.action_handler,
   opts = {
-    fetch_key = vim.env.GITHUB_TOKEN,
-    url = "https://models.inference.ai.azure.com/chat/completions",
-    model = "gpt-4o-mini",
-    api_type = "openai",
+    url = "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
+    model = "glm-5.3",
+    api_type = "zhipu",
+    fetch_key = vim.env.GLM_KEY,
     only_display_diff = true,
     templates = {
       lua = [[- For the Lua language, you should use the LDoc style.

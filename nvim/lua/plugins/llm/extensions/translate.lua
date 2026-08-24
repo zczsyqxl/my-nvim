@@ -6,10 +6,10 @@ return {
     -- url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
     -- model = "glm-4-flash",
     -- api_type = "zhipu",
-    fetch_key = vim.env.KIMI_KEY,
-    url = "https://api.moonshot.cn/v1/chat/completions",
-    model = "moonshot-v1-8k", -- "moonshot-v1-8k", "moonshot-v1-32k", "moonshot-v1-128k"
-    api_type = "openai",
+    url = "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
+    model = "glm-5.3",
+    api_type = "zhipu",
+    fetch_key = vim.env.GLM_KEY,
 
     -- args = [[return {url, "-s", "-N", "-X", "POST", "-H", "Content-Type: application/json", "-H", authorization, "-d", vim.fn.json_encode(body)}]],
     component_width = "60%",

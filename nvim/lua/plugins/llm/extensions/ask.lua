@@ -19,10 +19,10 @@ return {
     -- model = "gpt-4o-mini",
     -- api_type = "openai",
     -- fetch_key = vim.env.CHAT_ANYWHERE_KEY,
-    url = "https://api.moonshot.cn/v1/chat/completions",
-    model = "moonshot-v1-8k", -- "moonshot-v1-8k", "moonshot-v1-32k", "moonshot-v1-128k"
-    api_type = "openai",
-    fetch_key = vim.env.KIMI_KEY,
+    url = "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
+    model = "glm-5.3", -- "moonshot-v1-8k", "moonshot-v1-32k", "moonshot-v1-128k"
+    api_type = "zhipu",
+    fetch_key = vim.env.GLM_KEY,
     display = {
       mapping = {
         mode = "n",

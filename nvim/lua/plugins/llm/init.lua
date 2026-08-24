@@ -67,15 +67,9 @@ else
 
                     -- set models list
                     models = {
+                        models.GLM_5_3,
                         models.Kimi,
-                        models.DeepSeek,
-                        models.GithubModels,
-                        models.Chatanywhere,
-                        models.SiliconFlow,
-                        models.GLM,
-                        models.Ollama,
-                        models.Cloudflare,
-                        models.Dashscope,
+                        models.DeepSeek
                     },
                 }
                 for _, conf in pairs({ ui, extensions, keymaps }) do
