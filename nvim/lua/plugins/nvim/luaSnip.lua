@@ -94,7 +94,8 @@ return {
         -- vim.keymap.set({"i"}, "<A-i>", function() ls.expand() end, {silent = true, desc = 'zz:LuaSnip:expand'})
         vim.keymap.set({"i", "s"}, "<A-l>", function() ls.jump( 1) end, {silent = true, desc = 'zz:LuaSnip:JumpNext'})
         vim.keymap.set({"i", "s"}, "<A-h>", function() ls.jump(-1) end, {silent = true, desc = 'zz:LuaSnip:JumpPrev'})
-        vim.keymap.set({"s", "n"}, "<esc>", function() ls.unlink_current() end, {silent = true, desc = 'zz:LuaSnip:Cancel'})
+        -- vim.keymap.set({"i", "s", "n"}, "<A-o>", function() ls.unlink_current() end, {silent = true, desc = 'zz:LuaSnip:Cancel'})
+        vim.keymap.set({"n"}, "<esc>", function() ls.unlink_current() end, {silent = true, desc = 'zz:LuaSnip:Cancel'})
 
         vim.keymap.set({"i","s"}, "<A-j>", function()
             if ls.choice_active() then
