@@ -17,7 +17,7 @@ return {
                     italic = true,
                 },
                 pick = {
-                    fg = '#61AFEF',
+                    fg = '#adff2f',
                     bold = true,
                     italic = true,
                 },
