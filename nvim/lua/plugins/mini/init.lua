@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.nvim',
-    version = '*',
+    branch = 'main',
     config = function()
         if vim.g.vscode == nil then
             require('plugins.mini.icons')

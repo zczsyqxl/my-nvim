@@ -1,17 +1,20 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    tag = 'v0.10.0',
-    opts = {
-        highlight = {
-            enable = true,
-        },
-        indent = {
-            enable = true,
-        },
-        ensure_installed = { 'c', 'markdown', 'markdown_inline', 'python', 'lua', 'rust', 'bash', 'c_sharp', 'cmake', 'cpp', 'diff', 'git_config', 'html', 'json', 'json5', 'make', 'ninja', 'ruby', 'sql', 'ssh_config', 'vim', 'vimdoc', 'yaml', 'latex' },
-    },
-    config = function(_, opts)
-        require('nvim-treesitter.configs').setup(opts)
+    branch = 'main',
+    build = ':TSUpdate',
+    config = function()
+        require('nvim-treesitter').install {
+            'c', 'markdown', 'markdown_inline', 'python', 'lua', 'rust', 'bash',
+            'c_sharp', 'cmake', 'cpp', 'diff', 'git_config', 'html', 'json',
+            'json5', 'make', 'ninja', 'ruby', 'sql', 'ssh_config', 'vim',
+            'vimdoc', 'yaml', 'latex',
+        }
+        -- 新版不再自动开高亮,需显式启动
+        vim.api.nvim_create_autocmd('FileType', {
+            callback = function(args)
+                pcall(vim.treesitter.start, args.buf)
+            end,
+        })
         local ok, parser = pcall(vim.treesitter.language.get_lang, 'markdown')
         if ok and parser then
             vim.treesitter.language.register(parser, 'llm') -- llm ↔ markdown
