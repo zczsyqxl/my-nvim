@@ -548,8 +548,6 @@ return {
                 head = 'RenderMarkdownTableHead',
                 -- Highlight for everything else, main table rows and the line below.
                 row = 'RenderMarkdownTableRow',
-                -- Highlight for inline padding used to add back concealed space.
-                filler = 'RenderMarkdownTableFill',
                 -- Determines how the table as a whole is rendered.
                 -- | none   | { enabled = false }        |
                 -- | normal | { border_enabled = false } |
