@@ -1,10 +1,12 @@
 return {
-    'norcalli/nvim-colorizer.lua',
+    'catgoose/nvim-colorizer.lua', -- 活跃维护的 fork（原 norcalli 版已停更）
     opts = {
-        'lua';
-        'yaml';
-        'conf';
-        'toml';
+        filetypes = {
+            'lua',
+            'yaml',
+            'conf',
+            'toml',
+        },
     },
     config = function(_, opts)
         require("colorizer").setup(opts);
