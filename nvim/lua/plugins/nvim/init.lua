@@ -26,6 +26,7 @@ else
         -- require('plugins.nvim.image'),  -- Zhang,Yingqi: effect for markdown edit, not used for now
         require('plugins.nvim.imagePreview'),
         require('plugins.nvim.codecompanion'),
+        require('plugins.nvim.avante'),
         require('plugins.nvim.aegis'),
     }
 end

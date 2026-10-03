@@ -72,7 +72,17 @@ return {
     },
     config = function(_, opts)
         require('codecompanion').setup(opts)
-        vim.cmd([[cab cc CodeCompanion]])
+        vim.keymap.set({'n'}, '<leader>nn', '<cmd>CodeCompanion<cr>', {remap = false, desc='zz:ToggleWrap'})
+        vim.keymap.set({'n'}, '<leader>na', '<cmd>CodeCompanionAction<cr>', {remap = false, desc='zz:ToggleWrap'})
+        vim.keymap.set({'n'}, '<leader>nc', '<cmd>CodeCompanionChat Toggle<cr>', {remap = false, desc='zz:ToggleWrap'})
+        vim.keymap.set({'n'}, '<leader>ni', '<cmd>CodeCompanionCLI<cr>', {remap = false, desc='zz:ToggleWrap'})
+        vim.keymap.set({'n'}, '<leader>nw', '<cmd>CodeCompanionCmd<cr>', {remap = false, desc='zz:ToggleWrap'})
+        vim.cmd([[cab cn CodeCompanion]])
+        vim.cmd([[cab ca CodeCompanionAction]])
+        vim.cmd([[cab cc CodeCompanionChat]])
+        vim.cmd([[cab ci CodeCompanionCLI]])
+        vim.cmd([[cab cw CodeCompanionCmd]])
+        vim.cmd([[cab tl Toggle]])
     end,
 }
 

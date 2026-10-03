@@ -10,7 +10,7 @@ return {
     -- },
     config = function(_,opts)
         require('img-clip').setup(opts)
-        vim.keymap.set('n', '<leader>gp', '<cmd>PasteImage<cr>', {desc='ZZ:ImgClip:PasteImageFromSystemClipboard'})
+        vim.keymap.set('n', '<leader>ep', '<cmd>PasteImage<cr>', {desc='ZZ:ImgClip:PasteImageFromSystemClipboard'})
     end
 }
 

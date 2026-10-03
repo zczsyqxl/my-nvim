@@ -19,7 +19,7 @@ return {
     ["Output:Resend"]     = { mode = "n", key = "<C-r>" },
 
     -- The keyboard mapping for the output and input windows in "float" style.
-    ["Session:Open"]     = { mode = "n", key = "<leader>ac" },
+    ["Session:Open"]     = { mode = "n", key = "<leader>mc" },
     ["Session:Hide"]     = { mode = "n", key = "<esc>" },
     ["Session:Close"]    = { mode = "n", key = "<leader>q" },
     ["Session:New"]      = { mode = "n", key = "<C-n>" },

@@ -30,7 +30,7 @@ return {
             -- Only intended to be used for plugin development / debugging.
             log_runtime = false,
             -- Filetypes this plugin will run on.
-            file_types = { 'markdown', 'llm', 'codecompanion' },
+            file_types = { 'markdown', 'llm', 'codecompanion', "Avante" },
             -- Maximum file size (in MB) that this plugin will attempt to render.
             -- File larger than this will effectively be ignored.
             max_file_size = 10.0,
