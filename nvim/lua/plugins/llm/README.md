@@ -59,7 +59,7 @@ return {
         -- model = "glm-4-flash",
         -- max_tokens = 8000,
         -- fetch_key = function()
-        --   return vim.env.GLM_KEY
+        --   return vim.env.ZHIPUAI_API_KEY
         -- end,
 
         -- [[ kimi ]]
@@ -268,7 +268,7 @@ You must:
             handler = tools.qa_handler,
             opts = {
               fetch_key = function()
-                return vim.env.GLM_KEY
+                return vim.env.ZHIPUAI_API_KEY
               end,
               url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
               model = "glm-4-flash",
@@ -318,7 +318,7 @@ You must:
             -- prompt = "Translate the following text to English, please only return the translation",
             opts = {
               fetch_key = function()
-                return vim.env.GLM_KEY
+                return vim.env.ZHIPUAI_API_KEY
               end,
               url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
               model = "glm-4-flash",
@@ -333,7 +333,7 @@ You must:
             prompt = "Explain the following code, please only return the explanation, and answer in Chinese",
             opts = {
               fetch_key = function()
-                return vim.env.GLM_KEY
+                return vim.env.ZHIPUAI_API_KEY
               end,
               url = "https://open.bigmodel.cn/api/paas/v4/chat/completions",
               model = "glm-4-flash",

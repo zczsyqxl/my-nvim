@@ -7,7 +7,7 @@ return {
     url = "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
     model = "glm-5.3",
     api_type = "zhipu",
-    fetch_key = vim.env.GLM_KEY,
+    fetch_key = vim.env.ZHIPUAI_API_KEY,
     only_display_diff = true,
     templates = {
       lua = [[- For the Lua language, you should use the LDoc style.

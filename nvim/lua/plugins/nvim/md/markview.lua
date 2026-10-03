@@ -1,6 +1,6 @@
 return {
     'OXY2DEV/markview.nvim',
-    dependency = {
+    dependencies = {
         'nvim-treesitter/nvim-treesitter',
     },
     opts = {

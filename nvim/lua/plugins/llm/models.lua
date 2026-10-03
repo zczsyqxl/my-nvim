@@ -28,7 +28,7 @@ return {
     model = "glm-5.3",
     api_type = "zhipu",
     max_tokens = 100000,
-    fetch_key = vim.env.GLM_KEY,
+    fetch_key = vim.env.ZHIPUAI_API_KEY,
     temperature = 0.3,
     top_p = 0.7,
   },
