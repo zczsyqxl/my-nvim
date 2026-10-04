@@ -1,6 +1,5 @@
 return {
     'akinsho/toggleterm.nvim',
-    version = '*',
     config = function()
         local myshell
         if vim.fn.has('win32') == 1 then

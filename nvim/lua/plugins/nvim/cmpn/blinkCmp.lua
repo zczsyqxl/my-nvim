@@ -1,7 +1,6 @@
 return {
     "saghen/blink.cmp",
     dependencies = { "Kurama622/llm.nvim" },
-    version = "1.6.0",
     opts = {
         completion = {
             menu = {
