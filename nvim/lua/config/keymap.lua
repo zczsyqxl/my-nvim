@@ -43,9 +43,18 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>to', '<cmd>tabonly<cr>',                    {remap = false, silent = true, desc='zz:N.TabOnly'})
     vim.keymap.set('n', '<leader>q','<cmd>q<cr>', {remap = false, silent = true, desc='zz:Quit'})
     vim.keymap.set('n', '<leader>Q','<cmd>qa<cr>', {remap = false, silent = true, desc='zz:QuitAll'})
-    vim.keymap.set('n', '<leader><tab>',function()
-        vim.fn.system('start explorer /select,' .. vim.fn.fnamemodify(vim.fn.expand('%:p'), ':8'))
-    end, {remap = false, silent = true, desc='zz:SystemOpen'})
+    if vim.fn.has('win32') == 1 then
+        vim.keymap.set('n', '<leader><tab>', function()
+            local path = vim.fn.expand('%:p')
+            if path == '' then
+                vim.notify('Buffer has no file', vim.log.levels.WARN)
+                return
+            end
+            -- 'start' goes through ShellExecute which activates the window;
+            -- direct CreateProcess (jobstart list) opens explorer hidden
+            vim.fn.system('start explorer /select,"' .. path .. '"')
+        end, {remap = false, silent = true, desc='zz:SystemOpen'})
+    end
     package.loaded["config.mylua.exkeymap"] = nil
     require('config.mylua.exkeymap')
 else
