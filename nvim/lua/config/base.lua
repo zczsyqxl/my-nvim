@@ -13,7 +13,6 @@ if vim.g.vscode == nil then
     vim.opt.belloff = 'all'
     vim.opt.visualbell = false
     vim.opt.tildeop = true
-    vim.opt.encoding = 'utf-8'
     vim.opt.grepprg = 'grep -n $*'
     -- vim.o.winbar = " %f %m "
     -- if vim.fn.has('win32') ~= 0 then
@@ -59,7 +58,8 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.wrap = false
 vim.opt.textwidth = 9999
-vim.opt.fileencodings = 'ucs-bom,utf-8,gbk,cp936,latin1'
+-- cp936 是 gbk 的别名，写一个即可
+vim.opt.fileencodings = 'ucs-bom,utf-8,gbk,latin1'
 vim.opt.undofile = true
 
 

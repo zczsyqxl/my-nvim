@@ -35,8 +35,6 @@ return {
         end
 
         -- 设置 coc_user_config
-        vim.g.coc_user_config = vim.g.coc_user_config or {}
-
         vim.g.coc_user_config = {
             snippets = {
                 textmateSnippetsRoots = all_dirs

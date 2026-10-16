@@ -70,7 +70,6 @@ else
     vim.keymap.set('n', 'zC', function() vscode.call('editor.foldRecursively') end, {remap = false, silent = true})
     vim.keymap.set('n', 'zM', function() vscode.call('editor.foldAll') end, {remap = false, silent = true})
     vim.keymap.set('n', 'zR', function() vscode.call('editor.unfoldAll') end, {remap = false, silent = true})
-    vim.keymap.set('n', 'zR', function() vscode.call('editor.unfoldAll') end, {remap = false, silent = true})
 
     -- view
     vim.keymap.set('n', '<leader>;', function() vscode.call('editor.action.toggleWordWrap') end, {remap = false, silent = true})
