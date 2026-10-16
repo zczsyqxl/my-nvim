@@ -1,6 +1,6 @@
 {
     "runtime.version": "Lua 5.1",
-    "diagnostics.globals": ["vim", "MiniSessions"],
+    "diagnostics.globals": ["vim", "MiniSessions", "MiniSnippets", "MiniSurround"],
     "workspace.library": [
         "$VIMRUNTIME/lua"
     ]

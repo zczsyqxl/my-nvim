@@ -7,7 +7,7 @@ return {
     opts = {
         -- NOTE: The log_level is in `opts.opts`
         opts = {
-            log_level = "DEBUG", -- or "TRACE"
+            log_level = "ERROR", -- 排查问题时改 DEBUG（日志在 codecompanion.log）
         },
         adapters = {
             http = {
