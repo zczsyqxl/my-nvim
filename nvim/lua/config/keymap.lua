@@ -85,7 +85,7 @@ else
     vim.keymap.set('n', '<leader>q', function() vscode.call('workbench.action.closeActiveEditor') end, {remap = false, silent = true})
     vim.keymap.set('n', '<leader>Q', function() vscode.call('workbench.action.closeAllEditors') end, {remap = false, silent = true})
     vim.keymap.set('n', '<leader>C', function() vscode.call('workbench.action.closeEditorsInGroup') end, {remap = false, silent = true})
-    vim.keymap.set('n', '<leader>vl', function() vscode.call('lazygit.openLazygit') end, {remap = false, silent = true})
+    vim.keymap.set('n', '<leader>vu', function() vscode.call('lazygit.openLazygit') end, {remap = false, silent = true})
     -- Search
     vim.keymap.set('n', '<leader>f[', function() vscode.call('workbench.action.findInFiles') end, {remap = false, silent = true})
 
