@@ -39,7 +39,7 @@ vim.keymap.set('n', "<leader>'", virtualedit_toggle, {silent = true, desc = 'zz:
 -- vim.keymap.set('n', '<leader>r', replace_item, {silent = true, unique = false})
 
 
-quickfix_is_open = true
+quickfix_is_open = false
 quickfix_return_to_window = 0
 
 local function toggle_quickfix_win()

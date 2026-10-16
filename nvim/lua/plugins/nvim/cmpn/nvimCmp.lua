@@ -64,22 +64,5 @@ return {
             }),
             sources = cmp.config.sources(tmeSources)
         })
-        local capalilities = require('cmp_nvim_lsp').default_capabilities()
-        vim.lsp.config('clangd', {
-            capalilities = capalilities
-        })
-        vim.lsp.config('rust_analyzer', {
-            capalilities = capalilities
-        })
-        vim.lsp.config('lua-ls', {
-            capalilities = capalilities
-        })
-        vim.lsp.config('pyright', {
-            capalilities = capalilities
-        })
-        vim.lsp.enable('clangd')
-        vim.lsp.enable('rust_analyzer')
-        vim.lsp.enable('lua_ls')
-        vim.lsp.enable('pyright')
     end
 }
