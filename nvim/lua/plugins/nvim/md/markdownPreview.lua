@@ -6,6 +6,6 @@ return {
         vim.fn["mkdp#util#install"]()
     end,
     config = function()
-        vim.keymap.set('n', '<leader>v/', '<cmd>MarkdownPreviewToggle<cr>', { remap = false, desc='zz:markview:SplitToggle'})
+        vim.keymap.set('n', '<leader>v/', '<cmd>MarkdownPreviewToggle<cr>', { remap = false, desc='zz:MDPreview:Toggle'})
     end,
 }
