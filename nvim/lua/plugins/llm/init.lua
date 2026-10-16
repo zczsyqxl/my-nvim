@@ -90,7 +90,7 @@ else
                 { "<leader>md", mode = "v", "<cmd>LLMAppHandler DocString<cr>", desc = "zz:LLM:Generate a Docstring" },
                 { "<leader>mk", mode = { "v", "n" }, "<cmd>LLMAppHandler Ask<cr>", desc = "zz:LLM:Ask LLM" },
                 { "<leader>ma", mode = { "v", "n" }, "<cmd>LLMAppHandler AttachToChat<cr>", desc = "zz:LLM:Ask LLM (multi-turn)" },
-                { "<leader>mb", mode = { "v", "n" }, "<cmd>LLMAppHandler BashRunner<cr>", desc = "zz:LLM:bash runner" },
+                -- { "<leader>mb", mode = { "v", "n" }, "<cmd>LLMAppHandler BashRunner<cr>", desc = "zz:LLM:bash runner" }, -- 体验不佳，暂时关闭（2026-10-17）
                 { "<leader>mi", mode = { "v", "n" }, "<cmd>LLMAppHandler FormulaRecognition<cr>", desc = "zz:LLM:formula recognition" },
                 -- { "<leader>ap", mode = { "v", "n" }, "<cmd>LLMAppHandler Completion<cr>", desc = "zz:LLM:Code Completion" },
                 -- { "<leader>ao", mode = "x", "<cmd>LLMAppHandler OptimizeCode<cr>", desc = "zz:LLM:OptimizeCode" },

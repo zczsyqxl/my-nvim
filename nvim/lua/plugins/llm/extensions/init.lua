@@ -2,7 +2,7 @@ return {
   app_handler = {
     Ask = require("plugins.llm.extensions.ask"),
     AttachToChat = require("plugins.llm.extensions.attach_to_chat"),
-    BashRunner = require("plugins.llm.extensions.bash_runner"),
+    -- BashRunner = require("plugins.llm.extensions.bash_runner"), -- 体验不佳，暂时关闭（2026-10-17）
     CodeExplain = require("plugins.llm.extensions.code_explain"),
     CommitMsg = require("plugins.llm.extensions.commit_msg"),
     -- Completion = require("plugins.llm.extensions.completion"),
