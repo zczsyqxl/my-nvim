@@ -83,7 +83,7 @@ else
                 { "<leader>mt", mode = { "x", "n" }, "<cmd>LLMAppHandler WordTranslate<cr>", desc = "zz:LLM:Word Translate" },
                 { "<leader>me", mode = { "n", "v" }, "<cmd>LLMAppHandler CodeExplain<cr>", desc = "zz:LLM:Explain the Code" },
                 { "<leader>mT", mode = "n", "<cmd>LLMAppHandler Translate<cr>", desc = "zz:LLM:AI Translator" },
-                { "<leader>ma", mode = "x", "<cmd>LLMAppHandler TestCode<cr>", desc = "zz:LLM:Generate Test Cases" },
+                { "<leader>mA", mode = "x", "<cmd>LLMAppHandler TestCode<cr>", desc = "zz:LLM:Generate Test Cases" },
                 { "<leader>mo", mode = "x", "<cmd>LLMAppHandler OptimCompare<cr>", desc = "zz:LLM:Optimize the Code" },
                 { "<leader>mu", mode = "n", "<cmd>LLMAppHandler UserInfo<cr>", desc = "zz:LLM:Check Account Information" },
                 { "<leader>mg", mode = "n", "<cmd>LLMAppHandler CommitMsg<cr>", desc = "zz:LLM:Generate AI Commit Message" },
