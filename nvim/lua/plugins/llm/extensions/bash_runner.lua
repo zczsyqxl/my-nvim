@@ -35,7 +35,9 @@ return {
     },
     functions_tbl = {
       CodeRunner = function(code)
-        local filepath = "/tmp/script.sh"
+        -- tempname()：Linux 在 /tmp、Windows 在 %TEMP% 下生成唯一文件名，
+        -- 两平台都存在且可写（写死 /tmp 在 Windows 会落到当前盘符根目录，常失败）
+        local filepath = vim.fn.tempname()
 
         vim.notify(
           string.format("CodeRunner running...\n```bash\n%s\n```", code),

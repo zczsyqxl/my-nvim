@@ -24,11 +24,12 @@ return {
       action = function()
         local contents = vim.api.nvim_buf_get_lines(0, 0, -1, true)
 
-        local cmd = string.format('!git commit -m "%s"', table.concat(contents, '" -m "'))
-        cmd = (cmd:gsub(".", {
-          ["#"] = "\\#",
-        }))
-        vim.api.nvim_command(cmd)
+        -- 用 -F 从临时文件读提交信息：多行原样保留，且完全绕开
+        -- shell 引号转义（双引号/#/! 等字符在 cmd.exe 和 bash 下都不再需要处理）
+        local msgfile = vim.fn.tempname()
+        vim.fn.writefile(contents, msgfile)
+        vim.api.nvim_command('!git commit -F ' .. vim.fn.shellescape(msgfile))
+        os.remove(msgfile)
 
         -- just for lazygit
         vim.schedule(function()
