@@ -16,6 +16,7 @@ return {
         local tmeSources = {
             { name = 'nvim_lsp' },
             { name = 'buffer' },
+            { name = 'path' },
         }
 
         if snipEngine == 'luasnip' then
@@ -63,6 +64,22 @@ return {
                 ['<Tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             sources = cmp.config.sources(tmeSources)
+        })
+
+        -- `/` 搜索：用 buffer 内容补全
+        cmp.setup.cmdline('/', {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = { { name = 'buffer' } },
+        })
+
+        -- `:` 命令行：命令补全 + 文件路径补全
+        cmp.setup.cmdline(':', {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = cmp.config.sources({
+                { name = 'path' },
+            }, {
+                { name = 'cmdline' },
+            }),
         })
     end
 }
