@@ -1,13 +1,13 @@
 return {
     {
         'mason-org/mason-lspconfig.nvim',
-        opts = {},
+        -- ensure_installed 与 config/lsp.lua 的 vim.lsp.enable 列表保持一致，
+        -- 换新机器时缺的 server 自动安装（已装的跳过，不重复下载）
+        opts = { ensure_installed = { 'clangd', 'rust_analyzer', 'lua_ls', 'pyright' } },
         dependencies = {
-            {
-                {'neovim/nvim-lspconfig'},
-                {'mason-org/mason.nvim', opts={}, config=true},
-            },
-        }
+            'neovim/nvim-lspconfig',
+            { 'mason-org/mason.nvim', opts = {}, config = true },
+        },
     },
     {
         'rcarriga/nvim-dap-ui',

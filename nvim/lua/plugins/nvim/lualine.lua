@@ -32,7 +32,7 @@ return {
             }
         },
         extensions = {
-            'nvim-tree',
+            'neo-tree',
             'toggleterm',
             'mason'
         }
