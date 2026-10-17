@@ -1,4 +1,3 @@
-
 return {
 	'smoka7/hop.nvim',
     -- 键位提升到 spec 顶层 keys 才能懒加载（写在 config 里 lazy 看不见，会启动即加载）
