@@ -26,6 +26,13 @@ local function setMySyntaxHl()
     set_hl_full('ZZ.HopNextKey1',           {fg = '#adff2f', bg = '', bold = false, italic = false })
     set_hl_full('ZZ.HopNextKey2',           {fg = '#1e90ff', bg = '', bold = false, italic = false })
     set_hl_full('ZZ.HopPreview',            {fg = 'white',   bg = '#191970', bold = false, italic = false })
+    set_hl_full('ZZ.HopUnmatched',          {fg = '#4c5372' })
+
+    -- leap
+    set_hl_full('ZZ.LeapBackdrop',          {fg = '#4c5372' })              -- 变灰，与 ZZ.HopUnmatched 同色
+    set_hl_full('ZZ.LeapLabel',             {fg = '#ccff66', bold = true }) -- 标签无底色
+    set_hl_full('ZZ.LeapMatch',             {fg = '#c0caf5', bg = '#3d59a1' }) -- traversal 高亮（取自 tokyonight night 的 Search，双端一致）
+
     set_hl_full('ZZ.WinSeparator',          {fg = '#000000', bg = 'NONE'})
 
     -- lightspeed
@@ -97,6 +104,10 @@ local function setMySyntaxHl()
     set_hl_full('HopNextKey1',                         { link = 'ZZ.HopNextKey1'           })
     set_hl_full('HopNextKey2',                         { link = 'ZZ.HopNextKey2'           })
     set_hl_full('HopPreview',                          { link = 'ZZ.HopPreview'            })
+    set_hl_full('HopUnmatched',                         { link = 'ZZ.HopUnmatched'          }) -- hop 变灰
+    set_hl_full('LeapBackdrop',                         { link = 'ZZ.LeapBackdrop'          }) -- leap 变灰
+    set_hl_full('LeapLabel',                            { link = 'ZZ.LeapLabel'             }) -- leap 标签
+    set_hl_full('LeapMatch',                            { link = 'ZZ.LeapMatch'             }) -- leap traversal
     set_hl_full("LightspeedMaskedChar",                { link = "ZZ.LightspeedMaskedChar"  })
     set_hl_full("LightspeedLabel",                     { link = "ZZ.LightspeedLabel"       })
     set_hl_full("LightspeedCursor",                    { link = "ZZ.LightspeedCursor"      })

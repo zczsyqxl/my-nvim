@@ -35,6 +35,10 @@ return {
         { ',r', mode = 'o', function() require('flash').remote() end, desc = 'zz:Flash:Remote (operator)' },
     },
     opts = {
+        -- 标签池：顺序 = 分配优先级，前面的字符给离光标近的目标
+        -- 默认 'asdfghjklqwertyuiopzxcvbnm'（26 键，home row 优先）；
+        -- 此处 22 键版，剔除上排远端的 u i o p，减到最顺手的一批
+        labels = 'asdfghjklzxcvbnmqwerty',
         modes = { search = { enabled = true } },
         label = { uppercase = false },
     },

@@ -3,13 +3,13 @@
 -- 只有下面列表里列出的才生效；改完重启 nvim 即可。
 --
 -- 键位占用（leader = ,）：
---   hop        <leader>w b j k J K s z   ,x ,X
+--   hop        <leader>w b j k J K s z
 --   lightspeed s  S
 --   flash      s  S   ,s ,w ,b ,j ,k ,r   + / ? 搜索标签
---   leap       s  S
+--   leap       s  S   ,x ,X（单向+traversal）  gk（Visitor 远程操作）
 -- s 键三家共用（lightspeed/flash/leap 互相别同开）；
 -- hop 全是 , 前缀，可与任一家同开——与 flash 同开时 ,s ,w ,b ,j ,k 被 flash 覆盖。
-local engines = { 'hop','lightspeed' }
+local engines = { 'hop','leap' }
 
 local specs = {}
 for _, name in ipairs(engines) do

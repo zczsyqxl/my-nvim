@@ -1,6 +1,8 @@
 return {
 	'smoka7/hop.nvim',
     -- 键位提升到 spec 顶层 keys 才能懒加载（写在 config 里 lazy 看不见，会启动即加载）
+	-- 变灰高亮 ZZ.HopUnmatched 在 theme/zz.lua / zzvs.lua（hop 默认 #666666，
+	-- 其定义带 default=true，不会覆盖 theme 里先定义好的组）
 	keys = {
 		-- { '<leader>f', function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.AFTER_CURSOR, current_line_only = true }) end, mode = {'n','v','o'}, desc = 'zz:hop:hint_char1.f' },
 		-- { '<leader>F', function() require('hop').hint_char1({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR, current_line_only = true }) end, mode = {'n','v','o'}, desc = 'zz:hop:hint_char1.F' },
@@ -16,9 +18,8 @@ return {
 		-- { '<leader>x', function() require('hop').hint_char2() end, mode = {'n','v','o'}, desc = 'zz:hop:hint_char2' },
 		{ '<leader>z', function() require('hop').hint_patterns() end, mode = {'n','v','o'}, desc = 'zz:hop:hint_patterns' },
 		-- { ',a', function() require('hop').hint_anywhere() end, mode = {'n','v','o'}, desc = 'zz:hop:hint_anywhere' },
-		-- hop-yank 是 hop.nvim 自带模块（lua/hop-yank/）
-		{ ',x', function() require('hop-yank').yank_char1() end, mode = {'n','v','o'}, desc = 'zz:hop:hopyank.yank_char1' },
-		{ ',X', function() require('hop-yank').paste_char1() end, mode = {'n','v','o'}, desc = 'zz:hop:hopyank.paste_char1' },
+		-- hop-yank（,x/,X 远程 yank/paste，lua/hop-yank/）已撤：远程操作由
+		-- leap 的 Visitor（gk）接管，,x/,X 改给 leap 单向搜索 + traversal
 	},
 	opts = {
 		uppercase_labels = true,
