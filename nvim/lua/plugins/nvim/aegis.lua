@@ -4,5 +4,5 @@ return {
     opts = {
         timeout = 1,
         maxkeys = 10,
-    }
+    },
 }

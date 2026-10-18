@@ -1,3 +1,3 @@
 require('mini.bracketed').setup({
-    comment = {suffix = '/'},
+    comment = { suffix = '/' },
 })

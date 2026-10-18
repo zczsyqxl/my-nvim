@@ -40,18 +40,18 @@ return {
                     elseif snipEngine == 'mini' then
                         local insert = MiniSnippets.config.expand.insert or MiniSnippets.default_insert
                         insert({ body = args.body }) -- Insert at cursor
-                        cmp.resubscribe({ "TextChangedI", "TextChangedP" })
-                        require("cmp.config").set_onetime({ sources = {} })
+                        cmp.resubscribe({ 'TextChangedI', 'TextChangedP' })
+                        require('cmp.config').set_onetime({ sources = {} })
                     end
                 end,
             },
             window = {
                 completion = {
-                    winhighlight = "Normal:ZZ.NvimCmp.WinHighlight",
+                    winhighlight = 'Normal:ZZ.NvimCmp.WinHighlight',
                     -- border = 'bold', --[bold, double, none,rounded,shadow,signle,solid]
                 },
                 documentation = {
-                    winhighlight = "Normal:ZZ.NvimCmp.WinHighlight",
+                    winhighlight = 'Normal:ZZ.NvimCmp.WinHighlight',
                     -- border = 'rounded',
                 },
             },
@@ -63,7 +63,7 @@ return {
                 -- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 ['<Tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
-            sources = cmp.config.sources(tmeSources)
+            sources = cmp.config.sources(tmeSources),
         })
 
         -- `/` search: complete from buffer contents
@@ -81,5 +81,5 @@ return {
                 { name = 'cmdline' },
             }),
         })
-    end
+    end,
 }

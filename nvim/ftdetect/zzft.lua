@@ -1,5 +1,5 @@
-vim.filetype.add({extension = {
+vim.filetype.add({ extension = {
     stl = 'plantuml',
     wsd = 'plantuml',
-    puml = 'plantuml'
-}})
+    puml = 'plantuml',
+} })

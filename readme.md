@@ -90,7 +90,7 @@ Treesitter parsers auto-installed by the config:
 
 ```
 c, cpp, c_sharp, cmake, bash, python, lua, rust, ruby, sql,
-markdown, markdown_inline, latex, html, css-related, json, json5, yaml,
+markdown, markdown_inline, latex, html, json, json5, yaml,
 make, ninja, diff, git_config, ssh_config, vim, vimdoc
 ```
 

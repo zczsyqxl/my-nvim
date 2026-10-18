@@ -22,17 +22,17 @@ return {
                 },
             },
             options = {
-                mode = "buffers", -- set to "tabs" to only show tabpages instead
+                mode = 'buffers', -- set to "tabs" to only show tabpages instead
                 style_preset = bufferline.style_preset.default, --bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
                 themable = true, --| false, -- allows highlight groups to be overriden i.e. sets highlights as default
                 -- numbers = 'both', --"none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
                 numbers = function(opts)
                     return string.format('%s·%s', opts.ordinal, opts.lower(opts.id))
                 end,
-                close_command = "bdelete! %d",       -- can be a string | function, | false see "Mouse actions"
-                right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
-                left_mouse_command = "buffer %d",    -- can be a string | function, | false see "Mouse actions"
-                middle_mouse_command = nil,          -- can be a string | function, | false see "Mouse actions"
+                close_command = 'bdelete! %d', -- can be a string | function, | false see "Mouse actions"
+                right_mouse_command = 'bdelete! %d', -- can be a string | function | false, see "Mouse actions"
+                left_mouse_command = 'buffer %d', -- can be a string | function, | false see "Mouse actions"
+                middle_mouse_command = nil, -- can be a string | function, | false see "Mouse actions"
                 indicator = {
                     icon = '▎', -- this should be omitted if indicator style is not 'icon'
                     style = 'icon', --'icon' | 'underline' | 'none',
@@ -64,8 +64,8 @@ return {
                 diagnostics_indicator = function(count, level, diagnostics_dict, context)
                     _ = diagnostics_dict
                     _ = context
-                    local icon = level:match("error") and " " or " "
-                    return "[" .. icon .. count .. "]"
+                    local icon = level:match('error') and ' ' or ' '
+                    return '[' .. icon .. count .. ']'
                 end,
                 -- NOTE: this will be called a lot so don't do any heavy processing here
                 -- custom_filter = function(buf_number, buf_numbers)
@@ -89,11 +89,11 @@ return {
                 -- end,
                 offsets = {
                     {
-                        filetype = "neo-tree",
+                        filetype = 'neo-tree',
                         text = 'File Explorer', --"File Explorer" | function ,
-                        text_align = 'left',--"left" | "center" | "right"
-                        separator = true
-                    }
+                        text_align = 'left', --"left" | "center" | "right"
+                        separator = true,
+                    },
                 },
                 color_icons = true, --true | false, -- whether or not to add the filetype icon highlights
                 -- get_element_icon = function(element)
@@ -124,7 +124,7 @@ return {
                 hover = {
                     enabled = true,
                     delay = 200,
-                    reveal = {'close'}
+                    reveal = { 'close' },
                 },
                 -- sort_by = 'insert_after_current' |'insert_at_end' | 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
                 --     -- add custom logic
@@ -133,13 +133,13 @@ return {
                 --     return modified_a > modified_b
                 -- end,
                 pick = {
-                    alphabet = "abcdefghijklmopqrstuvwxyz1234567890",
+                    alphabet = 'abcdefghijklmopqrstuvwxyz1234567890',
                 },
             },
         })
-        vim.keymap.set('n', '<leader>eo', '<cmd>BufferLinePick<cr>', {remap = false, silent=true, desc='zz:bufferline:BufPick'})
-        vim.keymap.set('n', '<leader>ec', '<cmd>BufferLinePickClose<cr>', {remap = false, silent=true, desc='zz:bufferline:BufPickClose'})
-        vim.keymap.set('n', '<leader>es', '<cmd>BufferLineCloseOthers<cr>', {remap = false, silent=true, desc='zz:bufferline:BufCloseOthers'})
+        vim.keymap.set('n', '<leader>eo', '<cmd>BufferLinePick<cr>', { remap = false, silent = true, desc = 'zz:bufferline:BufPick' })
+        vim.keymap.set('n', '<leader>ec', '<cmd>BufferLinePickClose<cr>', { remap = false, silent = true, desc = 'zz:bufferline:BufPickClose' })
+        vim.keymap.set('n', '<leader>es', '<cmd>BufferLineCloseOthers<cr>', { remap = false, silent = true, desc = 'zz:bufferline:BufCloseOthers' })
         -- vim.keymap.set('n', '<leader>1', '<cmd>BufferLineGoToBuffer 1<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>2', '<cmd>BufferLineGoToBuffer 2<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>3', '<cmd>BufferLineGoToBuffer 3<cr>', {remap = false, silent=true})
@@ -150,16 +150,35 @@ return {
         -- vim.keymap.set('n', '<leader>8', '<cmd>BufferLineGoToBuffer 8<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>9', '<cmd>BufferLineGoToBuffer 9<cr>', {remap = false, silent=true})
         -- vim.keymap.set('n', '<leader>-1', '<cmd>BufferLineGoToBuffer 0<cr>', {remap = false, silent=true})
-        vim.keymap.set('n', '<leader>1', function() require('bufferline').go_to(1,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-        vim.keymap.set('n', '<leader>2', function() require('bufferline').go_to(2,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-        vim.keymap.set('n', '<leader>3', function() require('bufferline').go_to(3,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-        vim.keymap.set('n', '<leader>4', function() require('bufferline').go_to(4,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-        vim.keymap.set('n', '<leader>5', function() require('bufferline').go_to(5,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-        vim.keymap.set('n', '<leader>6', function() require('bufferline').go_to(6,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-        vim.keymap.set('n', '<leader>7', function() require('bufferline').go_to(7,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-        vim.keymap.set('n', '<leader>8', function() require('bufferline').go_to(8,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-        vim.keymap.set('n', '<leader>9', function() require('bufferline').go_to(9,  true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-        vim.keymap.set('n', '<leader>0', function() require('bufferline').go_to(-1, true) end, {remap = false, silent=true ,desc='zz:bufferline:GoToBufNum'})
-    end
+        vim.keymap.set('n', '<leader>1', function()
+            require('bufferline').go_to(1, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+        vim.keymap.set('n', '<leader>2', function()
+            require('bufferline').go_to(2, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+        vim.keymap.set('n', '<leader>3', function()
+            require('bufferline').go_to(3, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+        vim.keymap.set('n', '<leader>4', function()
+            require('bufferline').go_to(4, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+        vim.keymap.set('n', '<leader>5', function()
+            require('bufferline').go_to(5, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+        vim.keymap.set('n', '<leader>6', function()
+            require('bufferline').go_to(6, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+        vim.keymap.set('n', '<leader>7', function()
+            require('bufferline').go_to(7, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+        vim.keymap.set('n', '<leader>8', function()
+            require('bufferline').go_to(8, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+        vim.keymap.set('n', '<leader>9', function()
+            require('bufferline').go_to(9, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+        vim.keymap.set('n', '<leader>0', function()
+            require('bufferline').go_to(-1, true)
+        end, { remap = false, silent = true, desc = 'zz:bufferline:GoToBufNum' })
+    end,
 }
-

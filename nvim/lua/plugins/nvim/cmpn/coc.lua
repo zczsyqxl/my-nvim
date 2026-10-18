@@ -3,11 +3,9 @@ return {
     branch = 'release',
     config = function()
         vim.keymap.set('i', '<cr>', function()
-            return vim.fn['coc#pum#visible']() ~= 0
-                and vim.fn['coc#pum#confirm']()
-                or vim.api.nvim_replace_termcodes('<c-g>u<cr>', true, true, true)
-        end, { expr = true, silent = true, remap = false, desc='zz:coc:confirm'})
-        vim.keymap.set('i', '<c-]>', 'coc#refresh()', {expr = true, silent = true, desc='zz:coc:Refresh'})
+            return vim.fn['coc#pum#visible']() ~= 0 and vim.fn['coc#pum#confirm']() or vim.api.nvim_replace_termcodes('<c-g>u<cr>', true, true, true)
+        end, { expr = true, silent = true, remap = false, desc = 'zz:coc:confirm' })
+        vim.keymap.set('i', '<c-]>', 'coc#refresh()', { expr = true, silent = true, desc = 'zz:coc:Refresh' })
 
         -- get the snippets root directory
         local root = string.gsub(vim.fn.stdpath('config'), '\\', '/') .. '/snippets/snippets'
@@ -19,7 +17,9 @@ return {
             if handle then
                 while true do
                     local name, type = vim.loop.fs_scandir_next(handle)
-                    if not name then break end
+                    if not name then
+                        break
+                    end
                     if type == 'directory' then
                         table.insert(dirs, path .. '/' .. name)
                     end
@@ -29,7 +29,7 @@ return {
         end
 
         -- collect the root itself and all first-level subdirectories
-        local all_dirs = {root}
+        local all_dirs = { root }
         for _, dir in ipairs(list_dirs(root)) do
             table.insert(all_dirs, dir)
         end
@@ -37,12 +37,8 @@ return {
         -- set coc_user_config
         vim.g.coc_user_config = {
             snippets = {
-                textmateSnippetsRoots = all_dirs
-            }
+                textmateSnippetsRoots = all_dirs,
+            },
         }
-
-    end
+    end,
 }
-
-
-

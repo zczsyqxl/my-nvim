@@ -1,7 +1,7 @@
 return {
     'stevearc/aerial.nvim',
     opts = {
-        backends = {'lsp','treesitter','markdown','asciidoc','man'},
+        backends = { 'lsp', 'treesitter', 'markdown', 'asciidoc', 'man' },
         layout = {
             default_direction = 'prefer_right',
         },
@@ -34,14 +34,12 @@ return {
             'Variable',
         },
         on_attach = function(bufnr)
-            vim.keymap.set('n', '{', '<cmd>AerialPrev<cr>', { buffer = bufnr, desc='zz:aerial:Prev'})
-            vim.keymap.set('n', '}', '<cmd>AerialNext<cr>', { buffer = bufnr, desc='zz:aerial:Next'})
+            vim.keymap.set('n', '{', '<cmd>AerialPrev<cr>', { buffer = bufnr, desc = 'zz:aerial:Prev' })
+            vim.keymap.set('n', '}', '<cmd>AerialNext<cr>', { buffer = bufnr, desc = 'zz:aerial:Next' })
         end,
     },
     config = function(_, opts)
         require('aerial').setup(opts)
-        vim.keymap.set('n', '<leader>vo', '<cmd>AerialToggle!<cr>', {desc = 'zz:aerial:Toggle'})
+        vim.keymap.set('n', '<leader>vo', '<cmd>AerialToggle!<cr>', { desc = 'zz:aerial:Toggle' })
     end,
 }
-
-

@@ -90,7 +90,7 @@ LSP/DAP 的二进制由 Mason 自动管理，无需手动安装。
 
 ```
 c, cpp, c_sharp, cmake, bash, python, lua, rust, ruby, sql,
-markdown, markdown_inline, latex, html, css 相关, json, json5, yaml,
+markdown, markdown_inline, latex, html, json, json5, yaml,
 make, ninja, diff, git_config, ssh_config, vim, vimdoc
 ```
 

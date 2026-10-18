@@ -1,34 +1,32 @@
 return {
-    "yetone/avante.nvim",
+    'yetone/avante.nvim',
     -- To build from source, run `make BUILD_FROM_SOURCE=true`
     -- ⚠️ This build line must be kept!
-    build = vim.fn.has("win32") ~= 0
-    and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
-    or "make",
-    event = "VeryLazy",
+    build = vim.fn.has('win32') ~= 0 and 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' or 'make',
+    event = 'VeryLazy',
     version = false, -- never set this to "*"! Never!
     ---@module 'avante'
     ---@type avante.Config
     opts = {
         -- add any options here
         -- for example
-        provider = "opencode",
+        provider = 'opencode',
         providers = {
             glm = {
-                endpoint = "https://open.bigmodel.cn/api/coding/paas/v4",
-                api_key_name = "ZHIPUAI_API_KEY",
-                model = "glm-5.3-flash",
+                endpoint = 'https://open.bigmodel.cn/api/coding/paas/v4',
+                api_key_name = 'ZHIPUAI_API_KEY',
+                model = 'glm-5.3-flash',
                 timeout = 30000, -- Timeout in milliseconds
                 extra_request_body = {
                     temperature = 1,
                     max_tokens = 131072,
                 },
-            }
+            },
         },
         acp_providers = {
-            ["opencode"] = {
-                command = "opencode",
-                args = { "acp" },
+            ['opencode'] = {
+                command = 'opencode',
+                args = { 'acp' },
             },
         },
         windows = {
@@ -38,8 +36,8 @@ return {
         },
     },
     dependencies = {
-        "nvim-lua/plenary.nvim",
-        "MunifTanjim/nui.nvim",
-        { "ColinKennedy/mega.cmdparse", dependencies = { "ColinKennedy/mega.logging" } },
+        'nvim-lua/plenary.nvim',
+        'MunifTanjim/nui.nvim',
+        { 'ColinKennedy/mega.cmdparse', dependencies = { 'ColinKennedy/mega.logging' } },
     },
 }

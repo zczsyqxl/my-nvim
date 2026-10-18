@@ -6,15 +6,15 @@ return {
             local my_system_open = {}
             if vim.fn.has('win32') == 1 then
                 my_system_open = {
-                    cmd = "cmd",
-                    args = {"/c", "start", ""},
+                    cmd = 'cmd',
+                    args = { '/c', 'start', '' },
                 }
             end
             require('nvim-tree').setup({
-                system_open = my_system_open
+                system_open = my_system_open,
             })
-            vim.keymap.set('n', '<leader>vn', '<cmd>NvimTreeFindFileToggle<cr>', { remap=false, silent=true, desc='zz:nvimtree:Toggle'})
-            vim.keymap.set('n', '<leader>vf', '<cmd>NvimTreeFindFile<cr>', { remap=false, silent=true, desc='zz:nvimtree:ToggleFile'})
-        end
-    }
+            vim.keymap.set('n', '<leader>vn', '<cmd>NvimTreeFindFileToggle<cr>', { remap = false, silent = true, desc = 'zz:nvimtree:Toggle' })
+            vim.keymap.set('n', '<leader>vf', '<cmd>NvimTreeFindFile<cr>', { remap = false, silent = true, desc = 'zz:nvimtree:ToggleFile' })
+        end,
+    },
 }

@@ -1,28 +1,28 @@
 return {
-    "saghen/blink.cmp",
-    dependencies = { "Kurama622/llm.nvim" },
+    'saghen/blink.cmp',
+    dependencies = { 'Kurama622/llm.nvim' },
     opts = {
         completion = {
             menu = {
                 scrollbar = false,
-                border = "rounded",
-                winhighlight = "Normal:BlinkCmpMenu,FloatBorder:FloatBorder",
+                border = 'rounded',
+                winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:FloatBorder',
 
                 draw = {
                     components = {
                         kind_icon = {
                             ellipsis = false,
                             text = function(ctx)
-                                if ctx.item.kind_name == "llm" then
-                                    return " "
+                                if ctx.item.kind_name == 'llm' then
+                                    return ' '
                                 else
                                     return ctx.kind_icon
                                 end
                             end,
 
                             highlight = function(ctx)
-                                if ctx.item.kind_name == "llm" then
-                                    return "BlinkCmpKindSnippet"
+                                if ctx.item.kind_name == 'llm' then
+                                    return 'BlinkCmpKindSnippet'
                                 else
                                     return ctx.kind_hl
                                 end
@@ -37,27 +37,27 @@ return {
                     -- },
                 },
             },
-            documentation = { window = { border = "rounded" } },
+            documentation = { window = { border = 'rounded' } },
             trigger = {
                 prefetch_on_insert = false,
                 show_on_blocked_trigger_characters = {},
             },
         },
-        signature = { window = { border = "single" } },
+        signature = { window = { border = 'single' } },
 
         keymap = {
-            preset = "default",
-            ["<C-y>"] = {
+            preset = 'default',
+            ['<C-y>'] = {
                 function(cmp)
-                    cmp.show({ providers = { "llm" } })
+                    cmp.show({ providers = { 'llm' } })
                 end,
             },
-            ["<CR>"] = { "select_and_accept", "fallback" },
+            ['<CR>'] = { 'select_and_accept', 'fallback' },
         },
 
         sources = {
             -- if you want to use auto-complete
-            default = { "lsp", "path", "snippets", "buffer", "llm" },
+            default = { 'lsp', 'path', 'snippets', 'buffer', 'llm' },
             per_filetype = {
                 -- optionally inherit from the `default` sources
                 llm = { inherit_defaults = false },

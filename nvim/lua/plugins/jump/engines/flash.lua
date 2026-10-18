@@ -19,24 +19,80 @@ return {
     --   hop's ,z duplicates s; ,J/,K vertical jumps are covered by ,j/,k +
     --   relative line numbers, not migrated
     keys = {
-        { 's', mode = { 'n', 'v', 'o' }, function() require('flash').jump() end, desc = 'zz:Flash:Jump' },
-        { 'S', mode = { 'n', 'v', 'o' }, function() require('flash').jump() end, desc = 'zz:Flash:Jump' },
-        { ',s', mode = { 'n', 'v', 'o' }, function()
-            require('flash').jump({ search = { mode = 'fuzzy' } })
-        end, desc = 'zz:Flash:fuzzy jump' },
-        { ',w', mode = { 'n', 'v', 'o' }, function()
-            require('flash').jump({ search = { mode = function(pat) return [[\<]] .. pat end, forward = true } })
-        end, desc = 'zz:Flash:words.after' },
-        { ',b', mode = { 'n', 'v', 'o' }, function()
-            require('flash').jump({ search = { mode = function(pat) return [[\<]] .. pat end, forward = false } })
-        end, desc = 'zz:Flash:words.before' },
-        { ',j', mode = { 'n', 'v', 'o' }, function()
-            require('flash').jump({ pattern = [[^.]], search = { mode = 'search', forward = true }, prompt = { enabled = false } })
-        end, desc = 'zz:Flash:lines.after' },
-        { ',k', mode = { 'n', 'v', 'o' }, function()
-            require('flash').jump({ pattern = [[^.]], search = { mode = 'search', forward = false }, prompt = { enabled = false } })
-        end, desc = 'zz:Flash:lines.before' },
-        { ',r', mode = 'o', function() require('flash').remote() end, desc = 'zz:Flash:Remote (operator)' },
+        {
+            's',
+            mode = { 'n', 'v', 'o' },
+            function()
+                require('flash').jump()
+            end,
+            desc = 'zz:Flash:Jump',
+        },
+        {
+            'S',
+            mode = { 'n', 'v', 'o' },
+            function()
+                require('flash').jump()
+            end,
+            desc = 'zz:Flash:Jump',
+        },
+        {
+            ',s',
+            mode = { 'n', 'v', 'o' },
+            function()
+                require('flash').jump({ search = { mode = 'fuzzy' } })
+            end,
+            desc = 'zz:Flash:fuzzy jump',
+        },
+        {
+            ',w',
+            mode = { 'n', 'v', 'o' },
+            function()
+                require('flash').jump({ search = {
+                    mode = function(pat)
+                        return [[\<]] .. pat
+                    end,
+                    forward = true,
+                } })
+            end,
+            desc = 'zz:Flash:words.after',
+        },
+        {
+            ',b',
+            mode = { 'n', 'v', 'o' },
+            function()
+                require('flash').jump({ search = {
+                    mode = function(pat)
+                        return [[\<]] .. pat
+                    end,
+                    forward = false,
+                } })
+            end,
+            desc = 'zz:Flash:words.before',
+        },
+        {
+            ',j',
+            mode = { 'n', 'v', 'o' },
+            function()
+                require('flash').jump({ pattern = [[^.]], search = { mode = 'search', forward = true }, prompt = { enabled = false } })
+            end,
+            desc = 'zz:Flash:lines.after',
+        },
+        {
+            ',k',
+            mode = { 'n', 'v', 'o' },
+            function()
+                require('flash').jump({ pattern = [[^.]], search = { mode = 'search', forward = false }, prompt = { enabled = false } })
+            end,
+            desc = 'zz:Flash:lines.before',
+        },
+        {
+            ',r',
+            mode = 'o',
+            function()
+                require('flash').remote()
+            end,
+            desc = 'zz:Flash:Remote (operator)',
+        },
     },
     opts = {
         -- Label pool: order = assignment priority, earlier chars go to targets closer to the cursor.

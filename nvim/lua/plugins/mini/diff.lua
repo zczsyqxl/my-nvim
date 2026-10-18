@@ -7,5 +7,5 @@ require('mini.diff').setup({
         goto_prev = '[g',
         goto_next = ']g',
         goto_last = ']G',
-    }
+    },
 })

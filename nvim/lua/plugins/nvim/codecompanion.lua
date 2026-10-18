@@ -1,33 +1,33 @@
 return {
-    "olimorris/codecompanion.nvim",
+    'olimorris/codecompanion.nvim',
     dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
+        'nvim-lua/plenary.nvim',
+        'nvim-treesitter/nvim-treesitter',
     },
     opts = {
         -- NOTE: The log_level is in `opts.opts`
         opts = {
-            log_level = "ERROR", -- set to DEBUG when debugging (log: codecompanion.log)
+            log_level = 'ERROR', -- set to DEBUG when debugging (log: codecompanion.log)
         },
         adapters = {
             http = {
                 zhipuai = function()
-                    return require("codecompanion.adapters").extend("openai_compatible", {
-                        name = "zhipuai",
-                        formatted_name = "Zhipu GLM (Coding Plan)",
+                    return require('codecompanion.adapters').extend('openai_compatible', {
+                        name = 'zhipuai',
+                        formatted_name = 'Zhipu GLM (Coding Plan)',
                         env = {
-                            api_key = "ZHIPUAI_API_KEY",
+                            api_key = 'ZHIPUAI_API_KEY',
                             -- NOTE: the Coding Plan must use its dedicated endpoint, not the generic /api/paas/v4
-                            url = "https://open.bigmodel.cn/api/coding/paas/v4",
-                            chat_url = "/chat/completions",
-                            models_endpoint = "/models",
+                            url = 'https://open.bigmodel.cn/api/coding/paas/v4',
+                            chat_url = '/chat/completions',
+                            models_endpoint = '/models',
                         },
                         opts = {
                             vision = true, -- glm-5.3-flash is multimodal, can process images
                         },
                         schema = {
                             model = {
-                                default = "glm-5.3-flash",
+                                default = 'glm-5.3-flash',
                             },
                         },
                     })
@@ -48,35 +48,35 @@ return {
         interactions = {
             chat = {
                 adapter = {
-                    name = "opencode",
+                    name = 'opencode',
                     -- model = "zhipuai-coding-plan/glm-5.3",
                 },
             },
             cli = {
-                agent = "opencode",
+                agent = 'opencode',
                 agents = {
                     opencode = {
-                        cmd = "opencode",
+                        cmd = 'opencode',
                         args = {},
-                        description = "OpenCode TUI"
+                        description = 'OpenCode TUI',
                     },
                 },
             },
             inline = {
-                adapter = "zhipuai",
+                adapter = 'zhipuai',
             },
             cmd = {
-                adapter = "zhipuai",
+                adapter = 'zhipuai',
             },
         },
     },
     config = function(_, opts)
         require('codecompanion').setup(opts)
-        vim.keymap.set({'n'}, '<leader>nn', '<cmd>CodeCompanion<cr>', {remap = false, desc='zz:CC:Chat'})
-        vim.keymap.set({'n'}, '<leader>na', '<cmd>CodeCompanionAction<cr>', {remap = false, desc='zz:CC:Action'})
-        vim.keymap.set({'n'}, '<leader>nc', '<cmd>CodeCompanionChat Toggle<cr>', {remap = false, desc='zz:CC:Chat Toggle'})
-        vim.keymap.set({'n'}, '<leader>ni', '<cmd>CodeCompanionCLI<cr>', {remap = false, desc='zz:CC:CLI'})
-        vim.keymap.set({'n'}, '<leader>nw', '<cmd>CodeCompanionCmd<cr>', {remap = false, desc='zz:CC:Cmd'})
+        vim.keymap.set({ 'n' }, '<leader>nn', '<cmd>CodeCompanion<cr>', { remap = false, desc = 'zz:CC:Chat' })
+        vim.keymap.set({ 'n' }, '<leader>na', '<cmd>CodeCompanionAction<cr>', { remap = false, desc = 'zz:CC:Action' })
+        vim.keymap.set({ 'n' }, '<leader>nc', '<cmd>CodeCompanionChat Toggle<cr>', { remap = false, desc = 'zz:CC:Chat Toggle' })
+        vim.keymap.set({ 'n' }, '<leader>ni', '<cmd>CodeCompanionCLI<cr>', { remap = false, desc = 'zz:CC:CLI' })
+        vim.keymap.set({ 'n' }, '<leader>nw', '<cmd>CodeCompanionCmd<cr>', { remap = false, desc = 'zz:CC:Cmd' })
         vim.cmd([[cab cn CodeCompanion]])
         vim.cmd([[cab ca CodeCompanionAction]])
         vim.cmd([[cab cc CodeCompanionChat]])
@@ -85,5 +85,3 @@ return {
         vim.cmd([[cab tl Toggle]])
     end,
 }
-
-

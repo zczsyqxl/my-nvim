@@ -3,12 +3,32 @@ return {
     branch = 'main',
     build = ':TSUpdate',
     config = function()
-        require('nvim-treesitter').install {
-            'c', 'markdown', 'markdown_inline', 'python', 'lua', 'rust', 'bash',
-            'c_sharp', 'cmake', 'cpp', 'diff', 'git_config', 'html', 'json',
-            'json5', 'make', 'ninja', 'ruby', 'sql', 'ssh_config', 'vim',
-            'vimdoc', 'yaml', 'latex',
-        }
+        require('nvim-treesitter').install({
+            'c',
+            'markdown',
+            'markdown_inline',
+            'python',
+            'lua',
+            'rust',
+            'bash',
+            'c_sharp',
+            'cmake',
+            'cpp',
+            'diff',
+            'git_config',
+            'html',
+            'json',
+            'json5',
+            'make',
+            'ninja',
+            'ruby',
+            'sql',
+            'ssh_config',
+            'vim',
+            'vimdoc',
+            'yaml',
+            'latex',
+        })
         -- new versions no longer enable highlighting automatically; start it explicitly
         vim.api.nvim_create_autocmd('FileType', {
             callback = function(args)

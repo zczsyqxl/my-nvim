@@ -6,7 +6,6 @@ else
     dir = nil
 end
 
-
 require('mini.sessions').setup({
 
     directory = dir,
@@ -16,26 +15,23 @@ require('mini.sessions').setup({
         pre = {
             write = function()
                 vim.cmd('Neotree close')
-            end
+            end,
         },
     },
 })
 
-vim.keymap.set('n', 'z\'', function()
+vim.keymap.set('n', "z'", function()
     vim.cmd('wa')
 
-    vim.ui.input(
-        {
-            prompt = 'Save session to: ',
-            default = (vim.v.this_session ~='' and vim.fn.fnamemodify(vim.v.this_session, ':t:r')) or [[Session]],
-            completion = 'file',
-        },
-        function(path)
-            if not path or path == '' then
-                vim.api.nvim_echo({{'No session name provided', 'WarningMsg'}}, false, {})
-                return
-            end
-            MiniSessions.write(path .. '.vim', {})
+    vim.ui.input({
+        prompt = 'Save session to: ',
+        default = (vim.v.this_session ~= '' and vim.fn.fnamemodify(vim.v.this_session, ':t:r')) or [[Session]],
+        completion = 'file',
+    }, function(path)
+        if not path or path == '' then
+            vim.api.nvim_echo({ { 'No session name provided', 'WarningMsg' } }, false, {})
+            return
         end
-    )
-end, { remap = false, silent = true, desc='zz:mini.sessions:WriteSession' })
+        MiniSessions.write(path .. '.vim', {})
+    end)
+end, { remap = false, silent = true, desc = 'zz:mini.sessions:WriteSession' })

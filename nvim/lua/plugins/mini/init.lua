@@ -15,5 +15,5 @@ return {
         require('plugins.mini.operators')
         require('plugins.mini.surround')
         require('plugins.mini.align')
-    end
+    end,
 }

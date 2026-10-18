@@ -1,0 +1,6 @@
+indent_type = "Spaces"
+indent_width = 4
+column_width = 999          # keep one-liner keymaps; tighten to 120 later if wanted
+quote_style = "AutoPreferSingle"
+call_parentheses = "Always"
+collapse_simple_statement = "Never"

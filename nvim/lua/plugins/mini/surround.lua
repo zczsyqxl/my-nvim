@@ -16,12 +16,12 @@ require('mini.surround').setup({
     custom_surroundings = {
         -- Make `)` insert parts with spaces. `input` pattern stays the same.
         ['/'] = {
-            input = {'%/%* ().-() %*%/'},
-            output = { left = '/* ', right = ' */' }
+            input = { '%/%* ().-() %*%/' },
+            output = { left = '/* ', right = ' */' },
         },
         ['#'] = {
-            input = {'%#if 0().-()%#endif'},
-            output = { left = '#if 0', right = '#endif' }
+            input = { '%#if 0().-()%#endif' },
+            output = { left = '#if 0', right = '#endif' },
         },
         -- ['*'] = {
         --     input = function()
@@ -37,9 +37,9 @@ require('mini.surround').setup({
         -- },
 
         -- Use function to compute surrounding info
-    }
+    },
 })
 
-vim.keymap.set('n', 'yss', 'ys_', {remap = true, desc='zz:mini.surround:AddLineSurround'})
+vim.keymap.set('n', 'yss', 'ys_', { remap = true, desc = 'zz:mini.surround:AddLineSurround' })
 vim.keymap.del('x', 'ys')
-vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], {silent = true, desc='zz:mini.surround:AddVisSurround' })
+vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true, desc = 'zz:mini.surround:AddVisSurround' })

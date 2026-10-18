@@ -10,7 +10,7 @@
 -- s is shared by lightspeed/flash/leap (don't enable two of them at once);
 -- hop is all <leader>-prefixed and can coexist with any of them -- with flash
 -- enabled, ,s ,w ,b ,j ,k are shadowed by flash.
-local engines = { 'hop','leap' }
+local engines = { 'hop', 'leap' }
 
 local specs = {}
 for _, name in ipairs(engines) do
