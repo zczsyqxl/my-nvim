@@ -1,5 +1,5 @@
 return {
-    'catgoose/nvim-colorizer.lua', -- 活跃维护的 fork（原 norcalli 版已停更）
+    'catgoose/nvim-colorizer.lua', -- actively maintained fork (the original norcalli version is unmaintained)
     opts = {
         filetypes = {
             'lua',

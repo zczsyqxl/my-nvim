@@ -1,8 +1,9 @@
 return {
     {
         'mason-org/mason-lspconfig.nvim',
-        -- ensure_installed 与 config/lsp.lua 的 vim.lsp.enable 列表保持一致，
-        -- 换新机器时缺的 server 自动安装（已装的跳过，不重复下载）
+        -- keep ensure_installed in sync with the vim.lsp.enable list in
+        -- config/lsp.lua; on a new machine missing servers install automatically
+        -- (already-installed ones are skipped, no duplicate downloads)
         opts = { ensure_installed = { 'clangd', 'rust_analyzer', 'lua_ls', 'pyright' } },
         dependencies = {
             'neovim/nvim-lspconfig',
@@ -45,7 +46,7 @@ return {
                                     type = "python",
                                     request = "launch",
                                     name = "Launch Current File",
-                                    program = "${file}",  -- 调试当前文件
+                                    program = "${file}",  -- debug the current file
                                     -- pythonPath = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/Scripts/python.exe",
                                     console = "integratedTerminal",
                                 },
@@ -91,7 +92,7 @@ return {
                             --             end,
                             --             cwd = '${workspaceFolder}',
                             --             stopOnEntry = false,
-                            --             console = "externalTerminal",  -- <== 关键
+                            --             console = "externalTerminal",  -- <== key
                             --         },
                             --     }
                             --     require('mason-nvim-dap').default_setup(config)

@@ -1,6 +1,7 @@
 return {
 	'ggandor/lightspeed.nvim',
-    -- 键位提升到 spec 顶层 keys 才能懒加载（写在 config 里 lazy 看不见，会启动即加载）
+    -- keys must live at spec top level for lazy loading (inside config lazy.nvim
+    -- can't see them and the plugin would load at startup)
 	keys = function()
 		local keys = {
 			{ 's', '<Plug>Lightspeed_omni_s', mode = {'n','v','o'}, remap = true, desc = 'zz:LightSpeed:omni_s' },

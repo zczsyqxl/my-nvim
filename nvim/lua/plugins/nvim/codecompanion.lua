@@ -7,7 +7,7 @@ return {
     opts = {
         -- NOTE: The log_level is in `opts.opts`
         opts = {
-            log_level = "ERROR", -- 排查问题时改 DEBUG（日志在 codecompanion.log）
+            log_level = "ERROR", -- set to DEBUG when debugging (log: codecompanion.log)
         },
         adapters = {
             http = {
@@ -17,13 +17,13 @@ return {
                         formatted_name = "Zhipu GLM (Coding Plan)",
                         env = {
                             api_key = "ZHIPUAI_API_KEY",
-                            -- NOTE: Coding Plan 必须用专用端点,不能用通用端点 /api/paas/v4
+                            -- NOTE: the Coding Plan must use its dedicated endpoint, not the generic /api/paas/v4
                             url = "https://open.bigmodel.cn/api/coding/paas/v4",
                             chat_url = "/chat/completions",
                             models_endpoint = "/models",
                         },
                         opts = {
-                            vision = true, -- glm-5.3-flash 支持多模态,可处理图片
+                            vision = true, -- glm-5.3-flash is multimodal, can process images
                         },
                         schema = {
                             model = {

@@ -9,10 +9,10 @@ return {
         end, { expr = true, silent = true, remap = false, desc='zz:coc:confirm'})
         vim.keymap.set('i', '<c-]>', 'coc#refresh()', {expr = true, silent = true, desc='zz:coc:Refresh'})
 
-        -- 获取 snippets 根目录
+        -- get the snippets root directory
         local root = string.gsub(vim.fn.stdpath('config'), '\\', '/') .. '/snippets/snippets'
 
-        -- 遍历 root 下的所有目录
+        -- list all directories under root
         local function list_dirs(path)
             local dirs = {}
             local handle = vim.loop.fs_scandir(path)
@@ -28,13 +28,13 @@ return {
             return dirs
         end
 
-        -- 获取根目录本身和所有一级子目录
+        -- collect the root itself and all first-level subdirectories
         local all_dirs = {root}
         for _, dir in ipairs(list_dirs(root)) do
             table.insert(all_dirs, dir)
         end
 
-        -- 设置 coc_user_config
+        -- set coc_user_config
         vim.g.coc_user_config = {
             snippets = {
                 textmateSnippetsRoots = all_dirs

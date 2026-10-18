@@ -1,6 +1,6 @@
 local tools = require("llm.tools")
 
--- 跨平台：Windows 用 PowerShell（pwsh），其他平台用 bash
+-- cross-platform: PowerShell (pwsh) on Windows, bash on other platforms
 local is_win = vim.fn.has('win32') == 1
 local script_lang = is_win and 'PowerShell' or 'bash'
 
@@ -13,12 +13,14 @@ return {
   opts = {
     url = "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
     model = "glm-5.3",
-    -- 必须用 openai 后端：llm.nvim 的 zhipu 后端没实现 function-calling，
-    -- 而本 handler 的 CodeRunner 工具依赖它（智谱端点本身支持 OpenAI 格式 tools，已实测）
+    -- must use the openai backend: llm.nvim's zhipu backend doesn't implement
+    -- function-calling, but this handler's CodeRunner tool depends on it
+    -- (the zhipu endpoint itself supports OpenAI-style tools, verified)
     api_type = "openai",
     fetch_key = vim.env.ZHIPUAI_API_KEY,
-    -- 注意：不能设 enable_thinking=false——openai 后端会原样透传，
-    -- glm-5.3 是永远思考模型，拒绝关闭（错误码 1210），默认档即可
+    -- NOTE: don't set enable_thinking=false -- the openai backend passes it through
+    -- as-is; glm-5.3 is an always-thinking model that rejects disabling it (error
+    -- code 1210), keep the default profile
     max_tokens = 4096,
 
     -- url = "http://localhost:11434/api/chat",
@@ -46,8 +48,9 @@ return {
     },
     functions_tbl = {
       CodeRunner = function(code)
-        -- tempname()：Linux 在 /tmp、Windows 在 %TEMP% 下生成唯一文件名，
-        -- 两平台都存在且可写（写死 /tmp 在 Windows 会落到当前盘符根目录，常失败）
+        -- tempname(): generates a unique file under /tmp on Linux, %TEMP% on Windows;
+        -- both exist and are writable (hardcoding /tmp on Windows lands on the current
+        -- drive's root, which often fails)
         local filepath = vim.fn.tempname() .. (is_win and '.ps1' or '')
 
         vim.notify(
@@ -61,8 +64,10 @@ return {
           file:close()
           local script_result
           if is_win then
-            -- -Command + UTF-8 前置：保证中文输出不乱码（-NoProfile 下控制台默认 OEM 编码）
-            -- -ExecutionPolicy Bypass：绕过默认脚本执行策略，否则 -File/*.ps1 会被拦
+            -- -Command + UTF-8 prefix: keeps Chinese output from garbling (under
+            --   -NoProfile the console defaults to OEM encoding)
+            -- -ExecutionPolicy Bypass: skips the default script execution policy,
+            --   otherwise -File/*.ps1 would be blocked
             script_result = vim.system({
               'pwsh', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
               '-Command',

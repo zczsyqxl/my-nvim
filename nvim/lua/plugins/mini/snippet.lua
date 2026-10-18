@@ -21,9 +21,10 @@ function M.setup()
         },
     })
 
-    -- mini 的会话映射只在 Insert 模式创建（源码里写死 'i'），
-    -- 这里补 Normal 模式的 stop：有活跃会话才停止，否则保持 C-c 原生行为。
-    -- （llm.nvim 的 C-c 取消是 buffer 局部映射，优先级更高，不受影响。）
+    -- mini's session mappings are only created in Insert mode (hardcoded 'i' in
+    -- the source), so add a Normal-mode stop here: stop only if a session is
+    -- active, otherwise pass through to native C-c.
+    -- (llm.nvim's C-c cancel is a buffer-local mapping with higher priority, unaffected.)
     vim.keymap.set('n', '<C-c>', function()
         local ms = require('mini.snippets')
         if ms.session.get() ~= nil then

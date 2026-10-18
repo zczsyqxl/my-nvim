@@ -24,8 +24,9 @@ return {
       action = function()
         local contents = vim.api.nvim_buf_get_lines(0, 0, -1, true)
 
-        -- 用 -F 从临时文件读提交信息：多行原样保留，且完全绕开
-        -- shell 引号转义（双引号/#/! 等字符在 cmd.exe 和 bash 下都不再需要处理）
+        -- Read the commit message from a temp file via -F: multi-line text is
+        -- preserved verbatim and shell quoting is fully bypassed (chars like
+        -- " # ! need no special handling under cmd.exe or bash)
         local msgfile = vim.fn.tempname()
         vim.fn.writefile(contents, msgfile)
         vim.api.nvim_command('!git commit -F ' .. vim.fn.shellescape(msgfile))

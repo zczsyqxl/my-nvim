@@ -4,10 +4,12 @@ return {
         local fwatch = require('fwatch')
         local sn_dir = vim.fn.stdpath('config') .. '/snippets/snippets'
 
-        -- 双引擎并存：LuaSnip（cmp 弹窗路径）精确重载变化的文件；
-        -- mini.snippets（C-j/C-l 路径）没有单文件重载 API，整体重 setup
-        -- （复用 plugins.mini.snippet 的配置，保证 mappings 不漂移）。
-        -- scissors 只热重载 LuaSnip，所以 mini 与外部修改（git pull 等）都靠这里。
+        -- Dual snippet engines coexist: LuaSnip (cmp popup path) precisely reloads
+        -- the changed file; mini.snippets (C-j/C-l path) has no per-file reload API,
+        -- so it re-runs the whole setup instead (reusing plugins.mini.snippet's
+        -- config so mappings don't drift).
+        -- scissors only hot-reloads LuaSnip, so mini and external edits (git pull etc.)
+        -- both rely on this watcher.
         fwatch.watch(sn_dir, {
             recursive = true,
             on_event = function(path, events)

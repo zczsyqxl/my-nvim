@@ -27,9 +27,9 @@ if vim.g.vscode == nil then
     --     return ver:match('[Mm]icrosoft') or ver:match('[Ww][Ss][Ll]')
     -- end)()
     --
-    -- if not is_wsl and vim.env.ZELLIJ ~= nil then          -- 只在 Zellij 内生效
-    if vim.env.ZELLIJ ~= nil then          -- 只在 Zellij 内生效
-        vim.g.clipboard = {                  -- 完全绕过自动检测
+    -- if not is_wsl and vim.env.ZELLIJ ~= nil then          -- only inside Zellij
+    if vim.env.ZELLIJ ~= nil then          -- only inside Zellij
+        vim.g.clipboard = {                  -- fully bypass auto-detection
             name = 'zellij-osc52',
             copy = {
                 ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
@@ -58,7 +58,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.wrap = false
 vim.opt.textwidth = 9999
--- cp936 是 gbk 的别名，写一个即可
+-- cp936 is an alias of gbk, listing one is enough
 vim.opt.fileencodings = 'ucs-bom,utf-8,gbk,latin1'
 vim.opt.undofile = true
 

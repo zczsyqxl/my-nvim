@@ -1,12 +1,12 @@
-# 统一文本文件行尾为 LF（仓库与工作区均保持 LF）
+# Normalize text files to LF (LF in both the repo and the working tree)
 * text=auto eol=lf
 
-# Windows 脚本保持 CRLF（cmd/PowerShell 需要）
+# Windows scripts keep CRLF (needed by cmd/PowerShell)
 *.bat text eol=crlf
 *.cmd text eol=crlf
 *.ps1 text eol=crlf
 
-# 二进制文件不做任何转换
+# Binary files: no conversion of any kind
 *.png binary
 *.jpg binary
 *.gif binary

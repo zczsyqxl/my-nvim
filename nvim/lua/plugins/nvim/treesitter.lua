@@ -9,7 +9,7 @@ return {
             'json5', 'make', 'ninja', 'ruby', 'sql', 'ssh_config', 'vim',
             'vimdoc', 'yaml', 'latex',
         }
-        -- 新版不再自动开高亮,需显式启动
+        -- new versions no longer enable highlighting automatically; start it explicitly
         vim.api.nvim_create_autocmd('FileType', {
             callback = function(args)
                 pcall(vim.treesitter.start, args.buf)

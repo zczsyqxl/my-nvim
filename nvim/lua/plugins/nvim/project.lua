@@ -1,7 +1,7 @@
 return {
     "ahmedkhalf/project.nvim",
     opts = {
-        manual_mode = false,          -- 全自动
+        manual_mode = false,          -- fully automatic
         detection_methods = { "pattern" },
         patterns = {
             ".git",
@@ -11,13 +11,13 @@ return {
             '.project',
             '.cproject',
         },
-        -- 下面两行是“钉死” cwd 的关键
-        silent_chdir = true,          -- 切目录时不刷屏
-        scope_chdir = "global",       -- 全局生效，所有窗口共享
+        -- the two lines below are the key to "pinning" the cwd
+        silent_chdir = true,          -- no noise when changing directory
+        scope_chdir = "global",       -- global scope, shared by all windows
     },
     config = function(_, opts)
         require("project_nvim").setup(opts)
-        -- 自动触发一次，保证启动时就在项目根
+        -- trigger once automatically so we start at the project root
         vim.schedule(function() vim.cmd("silent! ProjectRoot") end)
     end,
 }

@@ -1,83 +1,503 @@
-> [!Tip] T1. Render-markdown.nvim plugin, preview latex in markdown documents
->> 1. need to install tree-sitter.latex parser
->> ```vim
->> :TSInstall latex
->> ```
->> 2. need to install latex2text
->> ```python
->> python -m pip install pylatexenc
->> ```
->> 3. checkhealth.python need to be ok (guess)
+# my-nvim
 
-> [!Tip] T2. markdown-preview.nvim plugin install
->> After Install, need to open .md file and, run vim command
->> Because, lazy load, the final step is failed.
->> ```vim
->> :call mkdp#util#install()
->> ```
+**English** | [简体中文](README.zh-CN.md)
 
-> [!tip] T3. image.nvim plugin (https://github.com/3rd/image.nvim)
->> 1. only support in linux
->> 2. in kitty performance is better than wezterm
->> 3. need to install ImageMagick
->> ```zsh
->> sudo apt install imagemagick
->> ```
+![Platforms](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)
+![Neovim](https://img.shields.io/badge/Neovim-%E2%89%A5%200.11-green)
+![Plugin manager](https://img.shields.io/badge/manager-lazy.nvim-orange)
 
-> [!ERROR] E1. Use snippet to insert time, display time in chinese, althogh, the systme setting for time format is US To fix this problem
->> Method1, add setting in nvim config script
->> ```lua
->>    if vim.fn.has('win32') ~= 0 then
->>        vim.cmd[[
->>             language time English_United States.1252
->>         ]]
->>    end
->> ```
->> Method2, change system region setting
->> ![SysRegionSetting](assets/2025-12-03-19-31-25.png)
+A personal, **cross-platform** (Windows / Linux) Neovim configuration, built around three ideas:
 
-> [!ERROR] E2. latex2text default output encoding is CP936, display in nvim in utf-8 is not corect 
->> To ifx this problem, use **Method2** of **E1**
+1. **Speed first** — aggressive lazy-loading, carefully pruned startup work, a keymap layout optimized for minimal keystrokes (leader = `,`).
+2. **Swappable engines** — completion, snippets, file tree, tabline, colorscheme, markdown renderer and jump motions are all behind tiny selector tables. Trying a different engine is a one-word edit.
+3. **Batteries for daily work** — LSP + DAP + CMake, rich markdown authoring (rendering, live browser preview, image paste), git workflow, and AI/LLM assistance wired into the editor.
 
+It also doubles as the Neovim backend for [VSCode-Neovim](https://github.com/vscode-neovim/vscode-neovim): most plugin specs and keymaps have a `vim.g.vscode` branch, with a dedicated VSCode theme file.
 
-## Tree-sitter
+> Developed and daily-driven on **Neovim 0.13-dev (nightly)** on both Windows 11 and Linux; the `main`-branch `nvim-treesitter` and `vim.lsp.enable()` APIs require **Neovim ≥ 0.11**.
+
+## Table of Contents
+
+- [✨ Highlights](#-highlights)
+- [📦 Requirements & Installation](#-requirements--installation)
+- [🧰 External Dependencies](#-external-dependencies)
+- [🗂 Directory Structure](#-directory-structure)
+- [🔌 Plugin Catalog](#-plugin-catalog)
+- [🔀 Engine Selector Pattern](#-engine-selector-pattern)
+- [🗺 Plugin Dependency Graph](#-plugin-dependency-graph)
+- [⌨️ Keymaps](#%EF%B8%8F-keymaps)
+- [🤖 AI / LLM Setup](#-ai--llm-setup)
+- [🪟 Windows & Encoding Notes](#-windows--encoding-notes)
+- [🩺 Troubleshooting](#-troubleshooting)
+- [🙏 Acknowledgements](#-acknowledgements)
+
+## ✨ Highlights
+
+- **Cross-platform by construction**: every platform difference lives in a `has('win32')` branch — shell (`pwsh` vs `zsh`), build commands, paths, even the markdown-preview installer (deterministic System32 `curl.exe` + `tar.exe` download instead of the flaky PowerShell script).
+- **Dual snippet engines coexisting**: `LuaSnip` powers the nvim-cmp popup path, `mini.snippets` powers the manual `C-j` / `C-l` expansion path — fed from the **same** VSCode-style snippet files, hot-reloaded by `fwatch.nvim` and edited in-place with `nvim-scissors`.
+- **Pluggable jump engines**: hop and leap are currently enabled (`,`-prefixed hints + `s`/`S` labeled jumps); flash and lightspeed specs are kept as ready-to-switch alternates.
+- **AI everywhere, provider-agnostic**: `llm.nvim` with a dozen custom app handlers (translate, explain, docstring, commit message, formula recognition…), `codecompanion.nvim` on the GLM Coding Plan endpoint, and `avante.nvim` over the `opencode` ACP — all key-driven from the `,m` / `,n` prefixes.
+- **Personal highlight theme**: `lua/theme/zz.lua` defines a `ZZ.*` palette (hop/leap/lightspeed labels, LSP semantic tokens, diff, rainbow delimiters…) that is re-applied on every colorscheme switch, so it survives theme changes on both platforms.
+- **Discoverable keymaps**: every custom mapping carries a `zz:`-prefixed `desc`; press `,fm` (Telescope keymaps) to browse them all.
+
+## 📦 Requirements & Installation
+
+Requirements:
+
+- **Neovim ≥ 0.11** (nightly recommended; daily-tested on 0.13-dev)
+- **Git**
+- A Nerd Font in your terminal (devicons everywhere)
+
+The repo root holds the config in its `nvim/` subdirectory; clone it directly to your config location:
+
+```bash
+# Linux / macOS
+git clone https://github.com/<you>/my-nvim.git ~/.config/nvim
+
+# Windows (PowerShell)
+git clone https://github.com/<you>/my-nvim.git "$env:LOCALAPPDATA\nvim"
+```
+
+First launch:
+
+1. `lazy.nvim` bootstraps itself automatically.
+2. Treesitter parsers from the curated list (see [treesitter spec](nvim/lua/plugins/nvim/treesitter.lua)) install on first run — `tree-sitter-cli` must be in `PATH`.
+3. Mason installs missing LSP servers (`clangd`, `rust-analyzer`, `lua-language-server`, `pyright`) and DAP adapters (`debugpy`, optionally `codelldb`).
+4. `lazy-lock.json` pins every plugin commit; use `:Lazy restore` for a reproducible install.
+
+Uninstall = delete the clone plus `~/.local/share/nvim` (Linux) / `%LOCALAPPDATA%\nvim-data` (Windows).
+
+## 🧰 External Dependencies
+
+| Tool | Used by | Notes |
+| --- | --- | --- |
+| [Git](https://git-scm.com) | lazy.nvim, git tooling | required |
+| [fd](https://github.com/sharkdp/fd) | Telescope `find_files` | in `PATH` |
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | Telescope `live_grep` | in `PATH` |
+| [lazygit](https://github.com/jesseduffield/lazygit/releases) | `,vu` lazygit.nvim | binary in `PATH` |
+| [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/releases) | parser compilation | via `cargo install tree-sitter-cli` or the GitHub release; in `PATH` |
+| [Node.js](https://nodejs.org) | some tree-sitter parsers (e.g. latex) | in `PATH` |
+| CMake + Ninja | `telescope-fzf-native` build | build step runs `cmake -G Ninja` |
+| [PowerShell 7 (`pwsh`)](https://aka.ms/powershell) | toggleterm shell on Windows | |
+| [pylatexenc](https://pypi.org/project/pylatexenc/) | LaTeX rendering in render-markdown | `python -m pip install pylatexenc` (`:checkhealth` python must be OK) |
+| [ImageMagick](https://imagemagick.org) | image.nvim (Linux, currently disabled) | `sudo apt install imagemagick` |
+| [yazi](https://github.com/sxyazi/yazi) (optional) | `,vy` floating file manager | |
+| [opencode](https://opencode.ai) (optional) | codecompanion CLI/chat, avante ACP | CLI in `PATH` |
+
+LSP/DAP binaries are managed by Mason automatically — nothing to install manually.
+
+Treesitter parsers auto-installed by the config:
+
+```
+c, cpp, c_sharp, cmake, bash, python, lua, rust, ruby, sql,
+markdown, markdown_inline, latex, html, css-related, json, json5, yaml,
+make, ninja, diff, git_config, ssh_config, vim, vimdoc
+```
+
+## 🗂 Directory Structure
+
+```
+my-nvim/
+├── README.md                    # this file
+├── README.zh-CN.md              # 中文版
+├── .luarc.json                  # lua-language-server config (globals: MiniSessions/MiniSnippets/MiniSurround)
+├── assets/                      # screenshots for docs
+└── nvim/                        # ← the actual stdpath('config') content
+    ├── init.lua                 # entry: reload + require('config')
+    ├── lazy-lock.json           # pinned plugin commits (reproducible installs)
+    ├── coc-settings.json        # for the (alternate) coc.nvim engine
+    ├── fdetect/zzft.lua         # *.stl / *.wsd / *.puml → plantuml
+    ├── after/plugin/init.lua    # loads theme/zz.lua (nvim) or zzvs.lua (VSCode)
+    ├── colors/                  # ~1900 vendored classic vim colorschemes (Telescope ,fc playground)
+    ├── snippets/                # VSCode-style snippet collection (shared by LuaSnip & mini.snippets)
+    │   ├── package.json
+    │   └── snippets/            # friendly-snippets layout + own global.json
+    └── lua/
+        ├── config/
+        │   ├── init.lua         # module reload chain
+        │   ├── base.lua         # options, encoding, clipboard (Zellij osc52), platform branches
+        │   ├── lazy.lua         # lazy.nvim bootstrap + setup (leader = ,)
+        │   ├── lsp.lua          # native vim.lsp.enable (independent of completion engine)
+        │   ├── keymap.lua       # base + VSCode-Neovim keymaps
+        │   └── mylua/           # extra keymaps (quickfix/foldcolumn toggles), helpers
+        ├── theme/
+        │   ├── zz.lua           # personal ZZ.* highlight palette (Neovim)
+        │   └── zzvs.lua         # reduced palette for VSCode-Neovim
+        └── plugins/
+            ├── nvim/            # main spec list (init.lua) + per-plugin specs
+            │   ├── cmpn/        # completion engine selector: nvimCmp | blinkCmp | coc
+            │   ├── tree/        # file tree selector: neoTree | nvimTree
+            │   ├── tab/         # tabline selector: bufferline | barbar | tabby
+            │   ├── theme/       # colorscheme selector: tokyonight | onedark | catppuccin
+            │   └── md/          # markdown suite: renderer selector + preview + images
+            ├── mini/            # one file per mini.nvim module
+            ├── jump/            # jump engine selector + engines/ (hop/leap/flash/lightspeed)
+            └── llm/             # llm.nvim setup + models/prompts/ui/keymaps/extensions
+```
+
+## 🔌 Plugin Catalog
+
+The default set is committed below; alternates stay installed-ready behind selectors (see next section). Spec file paths are given relative to `nvim/lua/`.
+
+### Core & Appearance
+
+| Plugin | Purpose | Spec |
+| --- | --- | --- |
+| [lazy.nvim](https://github.com/folke/lazy.nvim) | plugin manager | `config/lazy.lua` |
+| [tokyonight.nvim](https://github.com/folke/tokyonight.nvim) | colorscheme (**active**, `night` style) | `plugins/nvim/theme/tokyonight.lua` |
+| [onedark.nvim](https://github.com/navarasu/onedark.nvim) | colorscheme (alternate) | `plugins/nvim/theme/onedark.lua` |
+| [catppuccin/nvim](https://github.com/catppuccin/nvim) | colorscheme (alternate) | `plugins/nvim/theme/nvim.lua` |
+| [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | statusline (global status, tokyonight theme) | `plugins/nvim/lualine.lua` |
+| [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | tabline (**active**, slope style, LSP diagnostics) | `plugins/nvim/tab/bufferline.lua` |
+| [barbar.nvim](https://github.com/romgrk/barbar.nvim) | tabline (alternate) | `plugins/nvim/tab/barbar.lua` |
+| [tabby.nvim](https://github.com/nanozuki/tabby.nvim) | tabline (alternate) | `plugins/nvim/tab/tabby.lua` |
+| [mini.starter](https://github.com/echasnovski/mini.nvim) | start screen (sessions + recent files) | `plugins/mini/starter.lua` |
+| [mini.icons](https://github.com/echasnovski/mini.nvim) | icon provider (used by render-markdown, grug-far…) | `plugins/mini/icons.lua` |
+| [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | filetype icons | dependency |
+| [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) | indent guides + active scope | `plugins/nvim/indentline.lua` |
+| [rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim) | rainbow parentheses (treesitter) | dependency of indentline |
+| [nvim-colorizer.lua](https://github.com/catgoose/nvim-colorizer.lua) | color hex/rgb preview (maintained fork) | `plugins/nvim/nvimColorizer.lua` |
+| [aegis.nvim](https://github.com/aekasitt/aegis.nvim) | keystroke latency/counter (`:AegisToggle`) | `plugins/nvim/aegis.lua` |
+
+### File & Project Navigation
+
+| Plugin | Purpose | Spec |
+| --- | --- | --- |
+| [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) | file explorer (**active**; buffers & git-status sources too) | `plugins/nvim/tree/neoTree.lua` |
+| [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua) | file explorer (alternate) | `plugins/nvim/tree/nvimTree.lua` |
+| [nvim-window-picker](https://github.com/s1n7ax/nvim-window-picker) | window picker for neo-tree splits | dependency |
+| [nvim-lsp-file-operations](https://github.com/antosha417/nvim-lsp-file-operations) | rename/move files via LSP from the tree | dependency |
+| [project.nvim](https://github.com/ahmedkhalf/project.nvim) | auto-root-detection (`pattern`: `.git`, `Cargo.toml`, `CMakeLists.txt`…) + global cwd pinning | `plugins/nvim/project.lua` |
+| [aerial.nvim](https://github.com/stevearc/aerial.nvim) | symbol outline (lsp + treesitter + markdown backends) | `plugins/nvim/aerial.lua` |
+| [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | floating terminals (shell, yazi; cmake executor/runner) | `plugins/nvim/toggleterm.lua` |
+
+### Fuzzy Finding & Search
+
+| Plugin | Purpose | Spec |
+| --- | --- | --- |
+| [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | fuzzy finder for everything (`,f` prefix) | `plugins/nvim/telescope.lua` |
+| [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim) | C fzf sorter (built with cmake/ninja) | dependency |
+| [telescope-file-browser.nvim](https://github.com/nvim-telescope/telescope-file-browser.nvim) | file browser picker | dependency |
+| [telescope-live-grep-args.nvim](https://github.com/nvim-telescope/telescope-live-grep-args.nvim) | live grep with arguments | dependency |
+| [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) | `vim.ui.select` backend | dependency |
+| [telescope-dap.nvim](https://github.com/nvim-telescope/telescope-dap.nvim) | DAP sessions/frames/breakpoints picker | dependency |
+| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | find & replace (project- or file-scoped, `, [`/`,`]`/`,{`/`,}`) | `plugins/nvim/grugFar.lua` |
+
+### Completion & Snippets
+
+| Plugin | Purpose | Spec |
+| --- | --- | --- |
+| [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | completion engine (**active**; LSP/buffer/path + `/` and `:` cmdline sources) | `plugins/nvim/cmpn/nvimCmp.lua` |
+| [blink.cmp](https://github.com/Saghen/blink.cmp) | completion engine (alternate; integrates llm.nvim ghost completions) | `plugins/nvim/cmpn/blinkCmp.lua` |
+| [coc.nvim](https://github.com/neoclide/coc.nvim) | completion engine (alternate; `coc-settings.json` included) | `plugins/nvim/cmpn/coc.lua` |
+| [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) / [cmp-buffer](https://github.com/hrsh7th/cmp-buffer) / [cmp-path](https://github.com/hrsh7th/cmp-path) / [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline) | nvim-cmp sources | dependencies |
+| [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | snippet engine, cmp-popup path (`A-l`/`A-h` jump) | `plugins/nvim/luaSnip.lua` |
+| [mini.snippets](https://github.com/echasnovski/mini.nvim) | snippet engine, manual path (`C-j` expand, `C-l`/`C-h` jump) | `plugins/mini/snippet.lua` |
+| [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip) / [cmp-mini-snippets](https://github.com/abeldekat/cmp-mini-snippets) | bridge each engine into nvim-cmp | dependencies |
+| [nvim-scissors](https://github.com/chrisgrieser/nvim-scissors) | add/edit snippets on the fly (`,ea` / `,ee`); patched to hot-reload mini.snippets too | `plugins/nvim/nvimScissors.lua` |
+| [fwatch.nvim](https://github.com/rktjmp/fwatch.nvim) | file watcher: hot-reloads snippets on external edits (git pull…) | `plugins/nvim/fwatch.lua` |
+
+### Motions & Text Editing
+
+| Plugin | Purpose | Spec |
+| --- | --- | --- |
+| [mini.ai](https://github.com/echasnovski/mini.nvim) | enhanced text objects (`iarb()`…) | `plugins/mini/ai.lua` |
+| [mini.surround](https://github.com/echasnovski/mini.nvim) | surround ops (`ys`/`ds`/`cs`, custom `/* */` and `#if 0` pairs) | `plugins/mini/surround.lua` |
+| [mini.operators](https://github.com/echasnovski/mini.nvim) | evaluate/exchange/replace/sort/multiply operators | `plugins/mini/operators.lua` |
+| [mini.align](https://github.com/echasnovski/mini.nvim) | align/split with preview (`gA`) | `plugins/mini/align.lua` |
+| [mini.comment](https://github.com/echasnovski/mini.nvim) | commenting | `plugins/mini/comment.lua` |
+| [mini.bracketed](https://github.com/echasnovski/mini.nvim) | `[x`/`]x` traversal for everything | `plugins/mini/bracketed.lua` |
+| [mini.diff](https://github.com/echasnovski/mini.nvim) | hunk ops (`gl`/`gL` apply/reset, `[g`/`]g` navigate) | `plugins/mini/diff.lua` |
+| [hop.nvim](https://github.com/smoka7/hop.nvim) | jump engine (**active**): `,w`/`,b` words, `,j`/`,k` lines, `,J`/`,K` vertical, `,s` char, `,z` pattern | `plugins/jump/engines/hop.lua` |
+| [leap.nvim](https://codeberg.org/andyg/leap.nvim) | jump engine (**active**): `s`/`S` labeled jump, `,x`/`,X` one-way traversal, `gk` Visitor remote ops, `o`-mode `z`/`x`/`Z`/`X` | `plugins/jump/engines/leap.lua` |
+| [flash.nvim](https://github.com/folke/flash.nvim) | jump engine (alternate; hop+lightspeed superset mapping) | `plugins/jump/engines/flash.lua` |
+| [lightspeed.nvim](https://github.com/ggandor/lightspeed.nvim) | jump engine (alternate, archived upstream) | `plugins/jump/engines/lightspeed.lua` |
+| [vim-repeat](https://github.com/tpope/vim-repeat) | `.` repeat for plugin maps | dependency of leap |
+
+### Git
+
+| Plugin | Purpose | Spec |
+| --- | --- | --- |
+| [lazygit.nvim](https://github.com/kdheepak/lazygit.nvim) | lazygit in a floating window (`,vu`); opens from AI commit flow too | `plugins/nvim/lazygit.lua` |
+| [diffview.nvim](https://github.com/sindrets/diffview.nvim) | git diff / file history UI (`,do`/`,dc`/`,dr`/`,dh`) | `plugins/nvim/diffview.lua` |
+
+### Markdown Suite
+
+| Plugin | Purpose | Spec |
+| --- | --- | --- |
+| [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | in-editor markdown rendering (**active** renderer; LaTeX via `latex2text`, extensive tuning) | `plugins/nvim/md/renderMarkdown.lua` |
+| [markview.nvim](https://github.com/OXY2DEV/markview.nvim) | markdown renderer (alternate, hybrid-mode) | `plugins/nvim/md/markview.lua` |
+| [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | live browser preview (`,v/`); **custom deterministic build** — Windows downloads the prebuilt binary with System32 `curl.exe`/`tar.exe` (the stock PowerShell installer is bypassed) | `plugins/nvim/md/markdownPreview.lua` |
+| [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | paste images from clipboard into markdown (`,ep`, Windows) | `plugins/nvim/md/imgClip.lua` |
+| [image_preview.nvim](https://github.com/adelarsq/image_preview.nvim) | preview image files in neo-tree (`,vp`) | `plugins/nvim/imagePreview.lua` |
+| [image.nvim](https://github.com/3rd/image.nvim) | in-terminal image rendering (Linux-only, currently disabled) | `plugins/nvim/md/image.lua` |
+
+### LSP · DAP · Build
+
+| Plugin | Purpose | Spec |
+| --- | --- | --- |
+| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP server configs (native `vim.lsp.enable`: clangd, rust-analyzer, lua_ls, pyright) | `config/lsp.lua` |
+| [mason.nvim](https://github.com/mason-org/mason.nvim) / [mason-lspconfig](https://github.com/mason-org/mason-lspconfig.nvim) | tool installer; auto-installs the LSP list above | `plugins/nvim/lspDap.lua` |
+| [nvim-dap](https://github.com/mfussenegger/nvim-dap) / [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) / [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim) / [nvim-nio](https://github.com/nvim-neotest/nvim-nio) | debugging; custom debugpy adapter on Windows; `F1–F12` keymaps | `plugins/nvim/lspDap.lua` |
+| [cmake-tools.nvim](https://github.com/Civitasv/cmake-tools.nvim) | CMake build/run/debug from the editor (`,c` prefix; executor/runner via toggleterm) | `plugins/nvim/cmake.lua` |
+| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (`main` branch) | parsing/highlighting/folding; `llm`↔markdown & `zsh`↔bash filetype registration | `plugins/nvim/treesitter.lua` |
+
+### AI / LLM
+
+| Plugin | Purpose | Spec |
+| --- | --- | --- |
+| [llm.nvim](https://github.com/Kurama622/llm.nvim) | chat + custom app handlers (`,m` prefix): translate, explain, docstring, test generation, code optimization, commit messages, formula recognition, account info…; multi-provider model table | `plugins/llm/` |
+| [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) | AI assistant (`,n` prefix) on the GLM Coding Plan endpoint + `opencode` CLI agent | `plugins/nvim/codecompanion.lua` |
+| [avante.nvim](https://github.com/yetone/avante.nvim) | Cursor-like AI sidebar over the `opencode` ACP | `plugins/nvim/avante.lua` |
+
+Dependencies of the AI stack: [plenary.nvim](https://github.com/nvim-lua/plenary.nvim), [nui.nvim](https://github.com/MunifTanjim/nui.nvim), [mega.cmdparse](https://github.com/ColinKennedy/mega.cmdparse) (+ mega.logging).
+
+## 🔀 Engine Selector Pattern
+
+Several "slots" in this config are one-word switches. Each slot directory has an `init.lua` that maps a local variable to exactly one spec file:
+
+```lua
+-- plugins/nvim/cmpn/init.lua
+local cmp = 'nvimcmp'          -- 'nvimcmp' | 'blinkcmp' | anything else → coc
+-- plugins/nvim/tree/init.lua
+local tree = 'neo'             -- 'neo' → neo-tree | anything else → nvim-tree
+-- plugins/nvim/tab/init.lua
+local tab  = 'buf'             -- 'buf' → bufferline | 'barbar' | 'tabby'
+-- plugins/nvim/theme/init.lua
+local theme = 'tokyonight'     -- 'tokyonight' | 'onedark' | 'nvim' (catppuccin)
+-- plugins/nvim/md/init.lua
+local md = 'render'            -- 'render' → render-markdown | 'markview'
+-- plugins/jump/init.lua
+local engines = { 'hop', 'leap' }   -- list: hop / leap / flash / lightspeed
+-- plugins/nvim/cmpn/nvimCmp.lua (snippet source inside nvim-cmp)
+local snipEngine = 'luasnip'   -- 'luasnip' | 'mini'
+```
+
+Change a word, restart Neovim — done. The alternate specs are deliberately **not dead code**: they keep working keymaps and highlights (the `ZZ.*` theme covers hop, leap, flash-class labels, lightspeed, cmp, coc…), so switching engines never leaves you with broken UI.
+
+```mermaid
+flowchart LR
+    subgraph slots["Selector slots (one word each)"]
+        direction LR
+        CMP["cmpn/init.lua<br/><b>cmp = 'nvimcmp'</b>"]
+        TREE["tree/init.lua<br/><b>tree = 'neo'</b>"]
+        TAB["tab/init.lua<br/><b>tab = 'buf'</b>"]
+        THEME["theme/init.lua<br/><b>theme = 'tokyonight'</b>"]
+        MD["md/init.lua<br/><b>md = 'render'</b>"]
+        JUMP["jump/init.lua<br/><b>engines = {'hop','leap'}</b>"]
+        SNIP["cmpn/nvimCmp.lua<br/><b>snipEngine = 'luasnip'</b>"]
+    end
+
+    CMP -->|"nvimcmp"| C1[nvim-cmp]
+    CMP -->|"blinkcmp"| C2[blink.cmp]
+    CMP -->|"else"| C3[coc.nvim]
+    TREE -->|"neo"| T1[neo-tree]
+    TREE -->|"else"| T2[nvim-tree]
+    TAB -->|"buf"| B1[bufferline]
+    TAB -->|"barbar"| B2[barbar]
+    TAB -->|"else"| B3[tabby]
+    THEME --> TH1[tokyonight]
+    THEME --> TH2[onedark]
+    THEME --> TH3[catppuccin]
+    MD --> M1[render-markdown]
+    MD --> M2[markview]
+    JUMP --> J1[hop]
+    JUMP --> J2[leap]
+    JUMP -.->|alternate| J3[flash]
+    JUMP -.->|alternate| J4[lightspeed]
+    SNIP --> S1[LuaSnip]
+    SNIP --> S2[mini.snippets]
+
+    style slots fill:#1f2335,stroke:#7aa2f7
+```
+
+## 🗺 Plugin Dependency Graph
+
+Startup chain and the notable inter-plugin relationships:
+
+```mermaid
+flowchart TD
+    INIT["init.lua"] --> CFG["config/init.lua"]
+    CFG --> BASE["base.lua<br/>options · encoding · clipboard"]
+    CFG --> LAZY["lazy.lua<br/>bootstrap + { import = 'plugins' }"]
+    CFG --> LSP["lsp.lua<br/>vim.lsp.enable"]
+    CFG --> KM["keymap.lua<br/>nvim + vscode branches"]
+    AFT["after/plugin/init.lua"] --> ZZ["theme/zz.lua (nvim)<br/>theme/zzvs.lua (vscode)"]
+
+    LAZY --> P1["plugins/nvim/init.lua"]
+    LAZY --> P2["plugins/mini/init.lua"]
+    LAZY --> P3["plugins/jump/init.lua"]
+    LAZY --> P4["plugins/llm/init.lua"]
+
+    %% completion & snippets
+    CMPC[nvim-cmp] --> CNL[cmp-nvim-lsp] --> LSPC[nvim-lspconfig]
+    CMPC --> CBUF[cmp-buffer] & CPATH[cmp-path] & CCMD[cmp-cmdline]
+    CMPC --> CLS[cmp_luasnip] --> LS[LuaSnip]
+    CMPC --> CMS[cmp-mini-snippets] --> MINIS[mini.snippets]
+    SCISS[nvim-scissors] --> TELE[telescope.nvim]
+    SCISS -.patches reload.-> LS
+    FW[fwatch.nvim] -- "watch snippets dir" --> LS
+    FW -- "re-setup on change" --> MINIS
+
+    %% fuzzy finding / navigation
+    TELE --> PLEN[plenary.nvim]
+    TELE --> FZF[fzf-native<br/>cmake+ninja build]
+    TELE --> FB[file-browser] & LGA[live-grep-args] & UIS[ui-select] & TDAP[telescope-dap]
+    LG[LazyGit] --> TELE
+    AER[aerial.nvim] --> TS[nvim-treesitter]
+    AER -.->|backend| LSPC
+
+    %% tree / ui
+    NEO[neo-tree] --> PLEN & NUI[nui.nvim] & DEV[nvim-web-devicons]
+    NEO --> WP[window-picker] & LSPFO[lsp-file-operations]
+    NEO -- ",vp" --> IMGPRE[image_preview]
+    LUAL[lualine] --> DEV & MINI[mini.nvim]
+    BUFL[bufferline] --> DEV
+    RM[render-markdown] --> TS
+    RM -.icons.-> MINI
+    IBL[indent-blankline] --> RBD[rainbow-delimiters]
+    RBD --> TS
+    GRGF[grug-far] -.icons.-> MINI
+
+    %% git
+    DIFFV[diffview.nvim]
+    MINID[mini.diff]
+
+    %% lsp/dap/build
+    MASONL[mason-lspconfig] --> MASON[mason.nvim] & LSPC
+    DAPUI[nvim-dap-ui] --> NIO[nvim-nio] & DAP[nvim-dap]
+    DAP --> MNDAP[mason-nvim-dap] --> MASON
+    CMAKE[cmake-tools] --> PLEN
+    CMAKE -- "executor/runner" --> TOGG[toggleterm]
+    CMAKE -- F4 debug --> DAP
+
+    %% ai
+    LLM[llm.nvim] --> PLEN & NUI
+    CC[codecompanion] --> PLEN & TS
+    AV[avante] --> PLEN & NUI & MEGA[mega.cmdparse<br/>+ mega.logging]
+    BLINK[blink.cmp] -.completion source.-> LLM
+
+    %% jump engines highlights
+    ZZ -. ZZ.* groups .-> HOP[hop] & LEAP[leap]
+```
+
+## ⌨️ Keymaps
+
+Leader is `,` (and `maplocalleader` too). Every custom map has a `zz:`-prefixed description — browse them all with **`,fm`**.
+
+Core editor:
+
+| Key | Mode | Action |
+| --- | --- | --- |
+| `jk` | i / s | Esc |
+| `<C-s>` | i | UPPERCASE the word just typed |
+| `z;` | n | `:w` save |
+| `'` ↔ `` ` `` | n | marks and jump-marks keys swapped |
+| `<Space>` | n / o / x | end of line |
+| `<leader>y` / `<leader>p` / `<leader>P` | n / v / x | system-clipboard yank / paste |
+| `<Backspace>` | n | clear search highlight |
+| `<leader>;` | n | toggle wrap |
+| `<leader>\e` / `<leader>\s` / `<leader>\S` | n | edit config / source config / `Lazy reload` from register `l` |
+| `<C-h/j/k/l>` | n | window navigation |
+| `<leader>tn tj tt tk tc to` | n | tab new / next / goto-N / prev / close / only |
+| `<leader>q` / `<leader>Q` | n | quit / quit all |
+| `<leader><Tab>` | n | (Windows) reveal current file in Explorer |
+| `<leader>.` / `<leader>'` / comma+backtick | n | toggle foldcolumn / virtualedit / quickfix |
+| `gh` | n | diagnostic hover |
+
+Prefix map:
+
+| Prefix | Domain | Highlights |
+| --- | --- | --- |
+| `,f` | Telescope | `ff` files · `fg` git files · `fb` buffers · `f[`/`f]` grep string / live grep · `fs` live grep w/ args · `fq`/`fp`/`fw`/`fa`/`fu` git commits/bcommits/branches/status/stash · `fk`/`fl`/`fi`/`fo`/`fn`/`fr`/`ft` symbols & references · `fd` diagnostics · `fc` colorschemes · `fm` keymaps · `fz` highlights · `fv` vim options |
+| `,v` | UI toggles | `vn` neo-tree · `vf` focus sidebar · `vg`/`vd` buffers/git tree · `vv`/`vb`/`vc` float variants · `vo` aerial · `vp` image preview · `vm` terminal · `vy` yazi · `vu` lazygit · `va` DAP UI · `vt` DAP console · `v,`/`v.` render-markdown toggle/preview · `v/` markdown-preview browser |
+| `,d` | diffview | `do` open · `dc` close · `dr` refresh · `dh` file history |
+| `,m` | llm.nvim | `mc` chat · `mt`/`mT` translate word/text · `me` explain code · `mA` test cases · `mo` optimize & compare · `mg` AI commit message · `md` docstring · `mk`/`ma` ask / attach to chat · `mi` formula recognition · `mu` account info |
+| `,n` | codecompanion | `nn` chat · `na` action palette · `nc` chat toggle · `ni` opencode CLI · `nw` command gen |
+| `,c` | cmake | `cb`/`cB`/`cc`/`cg`/`cr`/`cR` build/build-file/clean/generate/run/run-file · `cs*` selects (preset/type/target/kit/…) |
+| `,e` | snippets & buffers | `ea`/`ee` scissors add/edit snippet · `ep` paste image (Windows) · `eo`/`ec`/`es` bufferline pick/close-pick/close-others · `,1`–`,9`,`0` go to buffer N |
+| `,[` `]` `{` `}` | grug-far | cword-in-file / in-file / cword-in-project / in-project |
+| `,w b j k J K s z` | hop | word/line/vertical/char/pattern hints |
+| `s` `S` `,x` `,X` `gk` | leap | jump / all-windows / one-way traversal / Visitor remote ops |
+| `F1`–`F12` | DAP | `F4` CMakeDebug · `F5` new · `F7` continue · `F8` over · `F9` breakpoint · `F10` into · `F11` out · `F12` terminate |
+
+Snippets in insert mode: `<C-j>` expand (mini.snippets), `<C-l>`/`<C-h>` jump next/prev, `<C-c>` stop session; LuaSnip (cmp path): `<A-l>`/`<A-h>` jump, `<A-j>`/`<A-k>` cycle choice nodes.
+Surround (mini.surround): `ys`/`ds`/`cs` add/delete/replace, `Sf`/`SF`/`Sh` find/highlight.
+Hunks (mini.diff): `gl`/`gL` apply/reset, `[g`/`]g`/`[G`/`]G` navigate.
+
+## 🤖 AI / LLM Setup
+
+All AI features are optional and key-driven; each reads its API key from an environment variable. Fill in what you have:
+
+| Env var | Provider / usage |
+| --- | --- |
+| `ZHIPUAI_API_KEY` | Zhipu **GLM Coding Plan** — llm.nvim default model (`glm-5.3`), codecompanion adapter, avante `glm` provider |
+| `KIMI_KEY` | Moonshot Kimi (`moonshot-v1-128k`) |
+| `DEEPSEEK_TOKEN` | DeepSeek (`deepseek-chat`) |
+| `OPENROUTER_KEY` | OpenRouter |
+| `GITHUB_TOKEN` | GitHub Models |
+| `SILICONFLOW_TOKEN` | SiliconFlow (also used by the `,mu` balance check) |
+| `TAVILY_TOKEN` | llm.nvim `web_search` tool |
+| `LOCAL_LLM_KEY` | local Ollama |
+
+Model definitions live in [`nvim/lua/plugins/llm/models.lua`](nvim/lua/plugins/llm/models.lua); custom prompts in `prompts.lua`; app handlers (one file each) in `extensions/`. The `,mg` commit-message flow is end-to-end: it reads `git diff --staged`, generates a Conventional Commit message in a floating window, commits via `git commit -F <tempfile>` (no shell-quoting issues), then opens lazygit.
+
+## 🪟 Windows & Encoding Notes
+
+- **Time locale**: `language time English_United States.1252` is set on Windows so time-based snippet insertions don't render in Chinese (see [Troubleshooting](#-troubleshooting), E1).
+- **File encodings**: `fileencodings = ucs-bom,utf-8,gbk,latin1` — gb2312/gbk files open correctly; cp936 is listed via its gbk alias.
+- **Clipboard in Zellij** (Linux): when `$ZELLIJ` is set, an explicit `osc52` clipboard provider bypasses broken auto-detection inside the multiplexer.
+- **Python provider** (Linux): expected at `~/.local/share/nvim/py3venv` (see `config/base.lua`).
+- **markdown-preview build**: uses Windows' own System32 `curl.exe` + `tar.exe` with retries — immune to the pwsh5/pwsh7 environment issues of the stock installer; on Linux it runs the plugin's `install.sh`.
+- **Shell**: toggleterm uses `pwsh` on Windows, `zsh` elsewhere; the AI BashRunner extension likewise writes `pwsh` vs `bash` scripts per platform.
+
+## 🩺 Troubleshooting
+
+**T1 · LaTeX rendering in markdown (render-markdown.nvim)**
+
+1. Install the latex treesitter parser: `:TSInstall latex` (needs `tree-sitter-cli` + Node.js).
+2. Install the converter: `python -m pip install pylatexenc`.
+3. `:checkhealth` python must be green.
+
+**T2 · markdown-preview.nvim binary**
+
+This config builds it automatically with a custom `build` function (prebuilt release download on Windows). If you ever need the manual fallback: open a `.md` file and run `:call mkdp#util#install()` (the lazy-loaded context can make the automatic step fail once).
+
+**T3 · image.nvim (currently disabled)**
+
+1. Linux only. 2. Best inside kitty (better than wezterm). 3. Requires ImageMagick: `sudo apt install imagemagick`.
+
+**E1 · Inserted time shows in Chinese although the OS time format is US**
+
+Method 1 — set the time locale in the config (already in `config/base.lua`):
+
+```lua
+if vim.fn.has('win32') ~= 0 then
+    vim.cmd [[ language time English_United States.1252 ]]
+end
+```
+
+Method 2 — change the system region setting (also fixes E2):
+
+![Windows region setting](assets/2025-12-03-19-31-25.png)
+
+**E2 · latex2text outputs CP936, garbled in Neovim's UTF-8**
+
+Use Method 2 of E1 (system region setting) — it makes `latex2text` emit UTF-8.
+
+**N1 · Nightly (0.13-dev): forward-search labels invisible with flash**
+
+On nvim 0.13-dev, the incsearch redraw of `/` doesn't render `virt_text`, so flash's search labels are invisible for forward search (`?` backward is fine). `set noic` works around it; stable releases are unaffected. Details in the [flash engine spec](nvim/lua/plugins/jump/engines/flash.lua).
+
+## 🙏 Acknowledgements
+
+Built on the shoulders of the Neovim ecosystem — in particular:
+
+- [folke](https://github.com/folke) — lazy.nvim, tokyonight, flash
+- [echasnovski](https://github.com/echasnovski) — the mini.nvim library
+- [nvim-telescope](https://github.com/nvim-telescope), [nvim-treesitter](https://github.com/nvim-treesitter) and the LSP community
+- [Kurama622/llm.nvim](https://github.com/Kurama622/llm.nvim) and [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) for the AI integration surface
+
 ---
-* tree-sitter cli need to installed and the path shall be in environment
-* TSInstall markdown markdown_inline c python lua rust bash c_sharp cmake cpp diff git_config html json json5 make ninja ruby sql ssh_config vim vimdoc yaml latex
 
-### tree-sitter-cli for tree-sitter.latex
-#### Option1: Install rust
-* https://rust-lang.org/zh-CN/learn/get-started/
-* cargo install tree-sitter-cli
-
-#### Option2: Github
-* https://github.com/tree-sitter/tree-sitter/releases
-* Copy and set path environment variable
-
-### Node.js for tree-sitter.latex
-* https://nodejs.org/en/download/
-
-## Git
-* LazyGit need to be installed/copy
-    * https://github.com/jesseduffield/lazygit/releases
-
-## Telescope
-* fd need to be installed/copy, and shall be located in environment path
-    * https://github.com/sharkdp/fd
-* rg need to be installed/copy, and shall be located in environment path 
-    * https://github.com/BurntSushi/ripgrep
-    
-## Lsp/Dap/Tree-sitter
-* cland need to be installed
-* python need to be installed
-* Mason
-    * LSP
-        * clangd
-        * rust-analyzer
-        * lua-language-server
-        * yaml-language-server
-        * pyright
-    * Dap
-        * codelldb
-        * debugpy
-
+License: personal configuration, not yet published under a license. If this is ever open-sourced, it will most likely be MIT.

@@ -66,13 +66,13 @@ return {
             sources = cmp.config.sources(tmeSources)
         })
 
-        -- `/` 搜索：用 buffer 内容补全
+        -- `/` search: complete from buffer contents
         cmp.setup.cmdline('/', {
             mapping = cmp.mapping.preset.cmdline(),
             sources = { { name = 'buffer' } },
         })
 
-        -- `:` 命令行：命令补全 + 文件路径补全
+        -- `:` cmdline: command completion + file path completion
         cmp.setup.cmdline(':', {
             mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources({

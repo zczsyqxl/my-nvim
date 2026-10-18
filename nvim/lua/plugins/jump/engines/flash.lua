@@ -1,19 +1,23 @@
 return {
     'folke/flash.nvim',
-    -- / ? 搜索标签靠 search.lua 在 setup 时注册的 CmdlineEnter autocmd 驱动，
-    -- 只有 keys 触发 lazy-load 的话，新会话没按过 s 等键插件就不加载，/ 没标签。
-    -- VeryLazy 在 UI 就绪后加载，autocmd 常驻，不占启动耗时。
-    -- 注意：nvim 0.13-dev nightly 上 / 前向搜索的 incsearch 重绘不渲染 virt_text，
-    -- 标签看不见（? 向后正常）；set noic 可绕过，稳定版无此问题。
+    -- / and ? search labels are driven by a CmdlineEnter autocmd registered in
+    -- search.lua at setup time; with keys-only lazy loading, a fresh session that
+    -- never pressed s etc. wouldn't load the plugin and / would get no labels.
+    -- VeryLazy loads after the UI is ready, keeps the autocmd alive, costs no startup time.
+    -- NOTE: on nvim 0.13-dev nightly the incsearch redraw of / forward search doesn't
+    -- render virt_text, so labels are invisible (? backward works fine); set noic
+    -- works around it, stable releases are unaffected.
     event = 'VeryLazy',
-    -- 归一替换 hop + lightspeed：
-    --   s     ← lightspeed omni_s（字符跳转，输入即正则；flash 默认就是跨窗口）
-    --   S     ← 保留键位（与 s 等价，flash 默认已 multi_window）
-    --   ,s    ← fuzzy 跳转：打目标词里任意散字符过滤，适合首字符很常见的目标
-    --   ,w/,b ← hop hint_words：输一个字母，标签打在词首
-    --   ,j/,k ← hop hint_lines：pattern ^. 标签打在每行行首，无需输入直接选标签
-    --   ,r    ← hop-yank 的远程操作替代：y ,r <目标> / d ,r <目标>
-    --   hop 的 ,z 与 s 重复；,J/,K 垂直跳由 ,j/,k + 相对行号覆盖，不迁移
+    -- Drop-in replacement for hop + lightspeed:
+    --   s     <- lightspeed omni_s (char jump, input is a regex; flash is cross-window by default)
+    --   S     <- key kept (equivalent to s; flash already defaults to multi_window)
+    --   ,s    <- fuzzy jump: type scattered chars of the target word to filter,
+    --            good when the target's first char is very common
+    --   ,w/,b <- hop hint_words: type one letter, labels land on word starts
+    --   ,j/,k <- hop hint_lines: pattern ^. labels on every line head, pick one directly, no typing
+    --   ,r    <- hop-yank's replacement for remote ops: y ,r <target> / d ,r <target>
+    --   hop's ,z duplicates s; ,J/,K vertical jumps are covered by ,j/,k +
+    --   relative line numbers, not migrated
     keys = {
         { 's', mode = { 'n', 'v', 'o' }, function() require('flash').jump() end, desc = 'zz:Flash:Jump' },
         { 'S', mode = { 'n', 'v', 'o' }, function() require('flash').jump() end, desc = 'zz:Flash:Jump' },
@@ -35,9 +39,9 @@ return {
         { ',r', mode = 'o', function() require('flash').remote() end, desc = 'zz:Flash:Remote (operator)' },
     },
     opts = {
-        -- 标签池：顺序 = 分配优先级，前面的字符给离光标近的目标
-        -- 默认 'asdfghjklqwertyuiopzxcvbnm'（26 键，home row 优先）；
-        -- 此处 22 键版，剔除上排远端的 u i o p，减到最顺手的一批
+        -- Label pool: order = assignment priority, earlier chars go to targets closer to the cursor.
+        -- Default is 'asdfghjklqwertyuiopzxcvbnm' (26 keys, home row first);
+        -- this 22-key version drops u i o p from the far top row, keeping the comfiest set
         labels = 'asdfghjklzxcvbnmqwerty',
         modes = { search = { enabled = true } },
         label = { uppercase = false },

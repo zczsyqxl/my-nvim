@@ -1,47 +1,54 @@
 return {
-	-- leap 已从 GitHub 迁至 Codeberg（GitHub 仓库被作者清空只留 README，装上去是空目录）
+	-- leap moved from GitHub to Codeberg (the GitHub repo was emptied by its author,
+	-- leaving only a README; installing from there yields an empty dir)
 	url = 'https://codeberg.org/andyg/leap.nvim.git',
 	name = 'leap.nvim',
-	-- leap 是 lightspeed 同作者的继任者：输两个字符过滤 + 标签跳转
-	-- vim-repeat 支持 . 重复上一次 leap
+	-- leap is the same author's successor to lightspeed: type two chars to filter + label jump
+	-- vim-repeat lets . repeat the last leap
 	dependencies = { 'tpope/vim-repeat' },
-	-- 官方建议不用 lazy keys：plugin/ 只建轻量 Plug 映射，主模块按下时才 require，
-	-- 自身已懒加载；且 keys 首次触发若在 op-pending（yz/dz）可能丢 operator（#84）
+	-- Upstream recommends against lazy keys: plugin/ only creates lightweight Plug
+	-- mappings and requires the main module on demand, so it lazy-loads itself;
+	-- also a keys-only first trigger in op-pending (yz/dz) may drop the operator (#84)
 	lazy = false,
 	opts = {
-		-- 标签池：顺序 = 分配优先级（前面的字符给离光标近的目标），33 键；
-		-- 每个字符都是字面标签——'/' 无特殊含义（leap 默认串里也含 '/' 和 '?'）
+		-- Label pool: order = assignment priority (earlier chars go to targets closer
+		-- to the cursor), 33 keys; every char is a literal label -- '/' has no special
+		-- meaning (leap's default string also contains '/' and '?')
 		labels = "asdfjklghqweruioptyzxcvmbn;',./[]",
-		-- safe_labels = ''：关闭 autojump——不自动跳最近匹配，永远显式按标签
-		-- （全部走上面的池子；代价：唯一匹配也要补按一下它的标签）
+		-- safe_labels = '': disables autojump -- never auto-jump to the nearest match,
+		-- always confirm with an explicit label (everything goes through the pool above;
+		-- the cost: even a unique match needs one extra label press)
 		safe_labels = '',
 	},
 	config = function(_, opts)
-		-- 高亮集中在 theme/zz.lua（nvim）/ zzvs.lua（vscode）：
-		--   ZZ.LeapBackdrop（变灰 #4c5372，与 hop 同色）/ ZZ.LeapLabel（无底色绿字）
-		-- 这里 setup 前提前 require 是时序需要：leap 的 backdrop 注册是 setup 时
-		-- 的一次性判断（LeapBackdrop 组已定义才启用），而 theme 文件平时由
-		-- after/plugin 加载、晚于 setup。require 有缓存，after/plugin 那次变空操作
+		-- Highlights live in theme/zz.lua (nvim) / zzvs.lua (vscode):
+		--   ZZ.LeapBackdrop (dimmed #4c5372, same color as hop) / ZZ.LeapLabel (green fg, no bg).
+		-- Requiring it here before setup is an ordering need: leap's backdrop registration
+		-- is a one-time check at setup (only enabled if the LeapBackdrop group already exists),
+		-- while theme files are normally loaded by after/plugin, later than setup.
+		-- require is cached, so the after/plugin call becomes a no-op.
 		require(vim.g.vscode and 'theme.zzvs' or 'theme.zz')
 		require('leap').setup(opts)
 		local map = vim.keymap.set
-		-- normal/visual 跳转：s/S（visual 的 s 原生是 v_c 替换，被占有等价命令）
+		-- normal/visual jump: s/S (visual's native s is v_c substitute, and an equivalent command exists)
 		map({ 'n', 'v' }, 's', '<Plug>(leap)', { desc = 'zz:Leap:Jump' })
 		map({ 'n', 'v' }, 'S', '<Plug>(leap-from-window)', { desc = 'zz:Leap:AllWindows' })
-		-- 单向搜索（traversal 需单向会话，双向的 s 按了 enter 会话即结束）：
-		--   ,x ab<enter><enter>... 连续遍历匹配，<backspace> 回退；
-		--   s{char}<enter> 跳最近匹配（跨行 f/t）、s<enter> 重复上次搜索
+		-- One-way search (traversal needs a one-way session; with bidirectional s,
+		-- pressing enter ends the session):
+		--   ,x ab<enter><enter>... walks matches, <backspace> steps back;
+		--   s{char}<enter> jumps to the nearest match (multiline f/t), s<enter> repeats the last search
 		map({ 'n', 'v' }, ',x', '<Plug>(leap-forward)', { desc = 'zz:Leap:fwd' })
 		map({ 'n', 'v' }, ',X', '<Plug>(leap-backward)', { desc = 'zz:Leap:bwd' })
-		-- operator 后（y/d/c… 接 motion）：复刻 lightspeed 的 z/x/Z/X，
-		-- 避开 surround 的 ys/ds/cs；normal 的 z/x 原生行为不受影响（zz/zt/zb 完好）
-		--   前向：z 不含目标字符(t式)  x 含(f式)；后向：X 含目标  Z 不含
+		-- After an operator (y/d/c... + motion): replicate lightspeed's z/x/Z/X,
+		-- avoiding surround's ys/ds/cs; normal-mode z/x keep native behavior (zz/zt/zb intact).
+		--   Forward: z excludes the target char (t-style), x includes it (f-style);
+		--   backward: X includes the target, Z excludes it
 		map('o', 'z', '<Plug>(leap-forward-next-to)', { desc = 'zz:Leap:fwd-excl' })
 		map('o', 'x', '<Plug>(leap-forward)', { desc = 'zz:Leap:fwd-incl' })
 		map('o', 'X', '<Plug>(leap-backward-next-to)', { desc = 'zz:Leap:bwd-incl' })
 		map('o', 'Z', '<Plug>(leap-backward)', { desc = 'zz:Leap:bwd-excl' })
-		-- Visitor mode（远程操作，gs 被 mini.operators 的 sort 占用，改 gk）：
-		--   gk{leap}y = 远程 yank；2gk{leap} 按行选；y1gk{leap} = yank 远程一行
+		-- Visitor mode (remote ops; gs is taken by mini.operators' sort, so use gk):
+		--   gk{leap}y = remote yank; 2gk{leap} selects by line; y1gk{leap} = yank one remote line
 		map({ 'n', 'v', 'o' }, 'gk', '<Plug>(leap-visit)', { desc = 'zz:Leap:Visit' })
 	end,
 }

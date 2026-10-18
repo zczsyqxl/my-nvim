@@ -13,9 +13,10 @@ return {
             },
         })
 
-        -- scissors 保存后只会热重载 LuaSnip（引擎列表硬编码，不认识 mini.snippets）。
-        -- 这里包一层 reload_file：它保存时顺手重 setup mini，清掉缓存，
-        -- 这样 ,ee 保存后 C-j 路径也立即生效（缓存策略不变，展开依旧走缓存）。
+        -- scissors only hot-reloads LuaSnip on save (its engine list is hardcoded
+        -- and unaware of mini.snippets). Wrap reload_file: on save it also re-setups
+        -- mini, clearing the cache, so the C-j path takes effect right after ,ee
+        -- saves (cache strategy unchanged; expansion still goes through the cache).
         local loaders = require('luasnip.loaders')
         if not loaders._zz_mini_patched then
             local orig = loaders.reload_file

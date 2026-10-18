@@ -1,14 +1,15 @@
--- 跳转引擎选择器：hop / lightspeed / flash / leap
--- 引擎 spec 在 engines/ 子目录（无 init.lua，lazy 不会自动导入），
--- 只有下面列表里列出的才生效；改完重启 nvim 即可。
+-- Jump engine selector: hop / lightspeed / flash / leap
+-- Engine specs live in engines/ (no init.lua there, so lazy.nvim won't auto-import);
+-- only the engines listed below take effect. Restart nvim after editing.
 --
--- 键位占用（leader = ,）：
+-- Keymap usage (leader = ,):
 --   hop        <leader>w b j k J K s z
 --   lightspeed s  S
---   flash      s  S   ,s ,w ,b ,j ,k ,r   + / ? 搜索标签
---   leap       s  S   ,x ,X（单向+traversal）  gk（Visitor 远程操作）
--- s 键三家共用（lightspeed/flash/leap 互相别同开）；
--- hop 全是 , 前缀，可与任一家同开——与 flash 同开时 ,s ,w ,b ,j ,k 被 flash 覆盖。
+--   flash      s  S   ,s ,w ,b ,j ,k ,r   + / ? search labels
+--   leap       s  S   ,x ,X (one-way + traversal)  gk (Visitor remote ops)
+-- s is shared by lightspeed/flash/leap (don't enable two of them at once);
+-- hop is all <leader>-prefixed and can coexist with any of them -- with flash
+-- enabled, ,s ,w ,b ,j ,k are shadowed by flash.
 local engines = { 'hop','leap' }
 
 local specs = {}

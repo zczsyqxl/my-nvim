@@ -1,17 +1,17 @@
 return {
     "yetone/avante.nvim",
-    -- 如果您想从源代码构建，请执行 `make BUILD_FROM_SOURCE=true`
-    -- ⚠️ 一定要加上这一行配置！！！！！
+    -- To build from source, run `make BUILD_FROM_SOURCE=true`
+    -- ⚠️ This build line must be kept!
     build = vim.fn.has("win32") ~= 0
     and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
     or "make",
     event = "VeryLazy",
-    version = false, -- 永远不要将此值设置为 "*"！永远不要！
+    version = false, -- never set this to "*"! Never!
     ---@module 'avante'
     ---@type avante.Config
     opts = {
-        -- 在此处添加任何选项
-        -- 例如
+        -- add any options here
+        -- for example
         provider = "opencode",
         providers = {
             glm = {
