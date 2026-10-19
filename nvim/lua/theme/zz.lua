@@ -22,7 +22,7 @@ local zzBrightWhite = '#e5e5e5'
 
 local function setNvimSyntaxHl()
 
-    set_hl_full('ZZ.WinSeparator', { fg = '#000000', bg = 'NONE' })
+    set_hl_full('ZZ.WinSeparator', { fg = '#3b4261', bold = true, bg = 'NONE' })
     -- telescope
     set_hl_full('ZZ.TelescopeMatching', { fg = '#adff2f', italic = true, bold = true })
 
@@ -108,15 +108,15 @@ local function setMySyntaxHl()
     -- hop
     set_hl_full('ZZ.HopNextKey', { fg = '#adff2f', bg = '', bold = false, italic = false })
     set_hl_full('ZZ.HopNextKey1', { fg = '#adff2f', bg = '', bold = false, italic = false })
-    set_hl_full('ZZ.HopNextKey2', { fg = '#1e90ff', bg = '', bold = false, italic = false })
+    set_hl_full('ZZ.HopNextKey2', { fg = '#7aa2f7', bg = '', bold = false, italic = false })
     set_hl_full('ZZ.HopPreview', { fg = 'white', bg = '#191970', bold = false, italic = false })
     set_hl_full('ZZ.HopUnmatched', { fg = '#4c5372' })
 
     -- leap
     set_hl_full('ZZ.LeapBackdrop', { fg = '#4c5372' }) -- dimmed, same color as ZZ.HopUnmatched
     set_hl_full('ZZ.LeapLabel', { fg = '#adff2f', bold = true }) -- labels without background
-    set_hl_full('ZZ.LeapLabelDimmed', { fg = '#1e90ff' }) -- preview/next-round label dot (leap auto-derives it from LeapLabel otherwise, see engines/leap.lua)
-    set_hl_full('ZZ.LeapLabelPreview', { fg = '#1e90ff' }) -- inactive labels of the preview phase (first input char), brightened to LeapLabel once confirmed -- via the beacons patch in engines/leap.lua
+    set_hl_full('ZZ.LeapLabelDimmed', { fg = '#7aa2f7' }) -- preview/next-round label dot (leap auto-derives it from LeapLabel otherwise, see engines/leap.lua)
+    set_hl_full('ZZ.LeapLabelPreview', { fg = '#7aa2f7' }) -- inactive labels of the preview phase (first input char), brightened to LeapLabel once confirmed -- via the beacons patch in engines/leap.lua
     set_hl_full('ZZ.LeapMatch', { fg = '#c0caf5', bg = '#3d59a1' }) -- traversal highlight (taken from tokyonight night's Search, consistent on both platforms)
 
     -- lightspeed
