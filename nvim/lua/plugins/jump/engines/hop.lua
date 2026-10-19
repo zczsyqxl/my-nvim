@@ -2,7 +2,7 @@ return {
     'smoka7/hop.nvim',
     -- keys must live at spec top level for lazy loading (inside config lazy.nvim
     -- can't see them and the plugin would load at startup)
-    -- Dimmed-highlight ZZ.HopUnmatched lives in theme/zz.lua / zzvs.lua (hop's default
+    -- Dimmed-highlight ZZ.HopUnmatched lives in theme/zz.lua (hop's default
     -- is #666666; its definition uses default=true, so it won't override groups the
     -- theme defined first)
     keys = {

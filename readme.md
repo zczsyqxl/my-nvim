@@ -107,7 +107,7 @@ my-nvim/
     ├── lazy-lock.json           # pinned plugin commits (reproducible installs)
     ├── coc-settings.json        # for the (alternate) coc.nvim engine
     ├── fdetect/zzft.lua         # *.stl / *.wsd / *.puml → plantuml
-    ├── after/plugin/init.lua    # loads theme/zz.lua (nvim) or zzvs.lua (VSCode)
+    ├── after/plugin/init.lua    # loads theme/zz.lua (single palette, vim.g.vscode-guarded)
     ├── colors/                  # ~1900 vendored classic vim colorschemes (Telescope ,fc playground)
     ├── snippets/                # VSCode-style snippet collection (shared by LuaSnip & mini.snippets)
     │   ├── package.json
@@ -121,8 +121,7 @@ my-nvim/
         │   ├── keymap.lua       # base + VSCode-Neovim keymaps
         │   └── mylua/           # extra keymaps (quickfix/foldcolumn toggles), helpers
         ├── theme/
-        │   ├── zz.lua           # personal ZZ.* highlight palette (Neovim)
-        │   └── zzvs.lua         # reduced palette for VSCode-Neovim
+        │   └── zz.lua           # personal ZZ.* highlight palette (nvim-only groups behind a vim.g.vscode guard)
         └── plugins/
             ├── nvim/            # main spec list (init.lua) + per-plugin specs
             │   ├── cmpn/        # completion engine selector: nvimCmp | blinkCmp | coc
@@ -322,7 +321,7 @@ flowchart TD
     CFG --> LAZY["lazy.lua<br/>bootstrap + { import = 'plugins' }"]
     CFG --> LSP["lsp.lua<br/>vim.lsp.enable"]
     CFG --> KM["keymap.lua<br/>nvim + vscode branches"]
-    AFT["after/plugin/init.lua"] --> ZZ["theme/zz.lua (nvim)<br/>theme/zzvs.lua (vscode)"]
+    AFT["after/plugin/init.lua"] --> ZZ["theme/zz.lua<br/>(vim.g.vscode guard)"]
 
     LAZY --> P1["plugins/nvim/init.lua"]
     LAZY --> P2["plugins/mini/init.lua"]

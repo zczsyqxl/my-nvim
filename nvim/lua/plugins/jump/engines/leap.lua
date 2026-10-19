@@ -12,22 +12,23 @@ return {
     lazy = false,
     opts = {
         -- Label pool: order = assignment priority (earlier chars go to targets closer
-        -- to the cursor), 33 keys; every char is a literal label -- '/' has no special
-        -- meaning (leap's default string also contains '/' and '?')
-        labels = "asdfjklghqweruioptyzxcvmbn;',./[]",
+        -- to the cursor), 28 keys (' ' , . [ ] dropped by design); every char is a
+        -- literal label -- '/' has no special meaning (leap's default string also
+        -- contains '/' and '?')
+        labels = "asdfjklghqweruioptyzxcvmbn;/",
         -- safe_labels = '': disables autojump -- never auto-jump to the nearest match,
         -- always confirm with an explicit label (everything goes through the pool above;
         -- the cost: even a unique match needs one extra label press)
         safe_labels = '',
     },
     config = function(_, opts)
-        -- Highlights live in theme/zz.lua (nvim) / zzvs.lua (vscode):
-        --   ZZ.LeapBackdrop (dimmed #4c5372, same color as hop) / ZZ.LeapLabel (green fg, no bg).
+        -- Highlights live in theme/zz.lua:
+        --   ZZ.LeapBackdrop (dimmed #4c5372, same color as hop) / ZZ.LeapLabel (yellow fg, no bg).
         -- Requiring it here before setup is an ordering need: leap's backdrop registration
         -- is a one-time check at setup (only enabled if the LeapBackdrop group already exists),
         -- while theme files are normally loaded by after/plugin, later than setup.
         -- require is cached, so the after/plugin call becomes a no-op.
-        require(vim.g.vscode and 'theme.zzvs' or 'theme.zz')
+        require('theme.zz')
 
         -- LeapLabelDimmed (the dimmed dots of concealed/preview labels) is not a
         -- configurable group: leap re-derives it from LeapLabel inside

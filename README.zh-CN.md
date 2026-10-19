@@ -107,7 +107,7 @@ my-nvim/
     ├── lazy-lock.json           # 插件 commit 锁定（可复现安装）
     ├── coc-settings.json        # 备选引擎 coc.nvim 使用
     ├── fdetect/zzft.lua         # *.stl / *.wsd / *.puml → plantuml
-    ├── after/plugin/init.lua    # 加载 theme/zz.lua（nvim）或 zzvs.lua（VSCode）
+    ├── after/plugin/init.lua    # 加载 theme/zz.lua（单一调色板，vim.g.vscode 守卫分流）
     ├── colors/                  # 约 1900 个第三方经典 vim 配色（Telescope ,fc 试衣间）
     ├── snippets/                # VSCode 风格片段库（LuaSnip 与 mini.snippets 共用）
     │   ├── package.json
@@ -121,8 +121,7 @@ my-nvim/
         │   ├── keymap.lua       # 基础 + VSCode-Neovim 键位
         │   └── mylua/           # 扩展键位（quickfix/foldcolumn 开关）、小工具
         ├── theme/
-        │   ├── zz.lua           # 个人 ZZ.* 高亮调色板（Neovim）
-        │   └── zzvs.lua         # VSCode-Neovim 精简版调色板
+        │   └── zz.lua           # 个人 ZZ.* 高亮调色板（nvim 独享组由 vim.g.vscode 守卫分流）
         └── plugins/
             ├── nvim/            # 主 spec 清单（init.lua）+ 各插件 spec
             │   ├── cmpn/        # 补全引擎选择器：nvimCmp | blinkCmp | coc
@@ -322,7 +321,7 @@ flowchart TD
     CFG --> LAZY["lazy.lua<br/>引导 + { import = 'plugins' }"]
     CFG --> LSP["lsp.lua<br/>vim.lsp.enable"]
     CFG --> KM["keymap.lua<br/>nvim 与 vscode 分支"]
-    AFT["after/plugin/init.lua"] --> ZZ["theme/zz.lua（nvim）<br/>theme/zzvs.lua（vscode）"]
+    AFT["after/plugin/init.lua"] --> ZZ["theme/zz.lua<br/>（vim.g.vscode 守卫）"]
 
     LAZY --> P1["plugins/nvim/init.lua"]
     LAZY --> P2["plugins/mini/init.lua"]

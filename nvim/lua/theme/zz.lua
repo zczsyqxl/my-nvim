@@ -2,48 +2,27 @@ local function set_hl_full(group, opts)
     vim.api.nvim_set_hl(0, group, opts)
 end
 
-local function setMySyntaxHl()
-    -- Color
-    local zzBlack = '#000000'
-    local zzBrightBlack = '#666666'
-    local zzRed = '#cd3131'
-    local zzBrightRed = '#F14c4c'
-    local zzGreen = '#0d8c79'
-    local zzBrightGreen = '#23d18b'
-    local zzYellow = '#e5e510'
-    local zzBrightYellow = '#F5f543'
-    local zzBlue = '#2472c8'
-    local zzBrightBlue = '#3b8eea'
-    local zzPurple = '#bc3fbc'
-    local zzBrightPurple = '#d670d6'
-    local zzCyan = '#11a8cd'
-    local zzBrightCyan = '#a9b8db'
-    local zzWhite = '#e5e5e5'
-    local zzBrightWhite = '#e5e5e5'
+-- Color
+local zzBlack = '#000000'
+local zzBrightBlack = '#666666'
+local zzRed = '#cd3131'
+local zzBrightRed = '#F14c4c'
+local zzGreen = '#0d8c79'
+local zzBrightGreen = '#23d18b'
+local zzYellow = '#e5e510'
+local zzBrightYellow = '#F5f543'
+local zzBlue = '#2472c8'
+local zzBrightBlue = '#3b8eea'
+local zzPurple = '#bc3fbc'
+local zzBrightPurple = '#d670d6'
+local zzCyan = '#11a8cd'
+local zzBrightCyan = '#a9b8db'
+local zzWhite = '#e5e5e5'
+local zzBrightWhite = '#e5e5e5'
 
-    -- hop
-    set_hl_full('ZZ.HopNextKey', { fg = '#80dcfe', bg = '', bold = false, italic = false })
-    set_hl_full('ZZ.HopNextKey1', { fg = '#adff2f', bg = '', bold = false, italic = false })
-    set_hl_full('ZZ.HopNextKey2', { fg = '#1e90ff', bg = '', bold = false, italic = false })
-    set_hl_full('ZZ.HopPreview', { fg = 'white', bg = '#191970', bold = false, italic = false })
-    set_hl_full('ZZ.HopUnmatched', { fg = '#4c5372' })
-
-    -- leap
-    set_hl_full('ZZ.LeapBackdrop', { fg = '#4c5372' }) -- dimmed, same color as ZZ.HopUnmatched
-    set_hl_full('ZZ.LeapLabel', { fg = '#ccff66', bold = true }) -- labels without background
-    set_hl_full('ZZ.LeapLabelDimmed', { fg = '#61AFEF' }) -- preview/next-round label dot (leap auto-derives it from LeapLabel otherwise, see engines/leap.lua)
-    set_hl_full('ZZ.LeapLabelPreview', { fg = '#61AFEF' }) -- inactive labels of the preview phase (first input char), brightened to LeapLabel once confirmed -- via the beacons patch in engines/leap.lua
-    set_hl_full('ZZ.LeapMatch', { fg = '#c0caf5', bg = '#3d59a1' }) -- traversal highlight (taken from tokyonight night's Search, consistent on both platforms)
+local function setNvimSyntaxHl()
 
     set_hl_full('ZZ.WinSeparator', { fg = '#000000', bg = 'NONE' })
-
-    -- lightspeed
-    set_hl_full('ZZ.LightspeedMaskedChar', { fg = '#adff2f', bg = '', bold = false, italic = false })
-    set_hl_full('ZZ.LightspeedLabel', { fg = '#80dcfe', bg = '', bold = false, italic = false })
-    set_hl_full('ZZ.LightspeedCursor', { fg = '#191970', bg = '#adff2f', bold = false, italic = false })
-    set_hl_full('ZZ.LightspeedLabelDistant', { fg = '#4170ff', bg = '', bold = false, italic = true })
-    -- set_hl_full("ZZ.LightspeedUnlabeledMatch", {fg = "#e5e5e5", bg = "",        bold = false, italic = true })
-
     -- telescope
     set_hl_full('ZZ.TelescopeMatching', { fg = '#adff2f', italic = true, bold = true })
 
@@ -93,6 +72,8 @@ local function setMySyntaxHl()
 
     set_hl_full('RenderMarkdownCode', { bg = zzBlack })
     set_hl_full('RenderMarkdownCodeInline', { bg = zzBlack })
+
+    -- Links
     set_hl_full('CmpItemAbbrMatch', { link = 'ZZ.NvimCmp.ItemAbbrMatch' })
     set_hl_full('MatchParen', { link = 'ZZ.MatchParen' })
     set_hl_full('WinSeparator', { link = 'ZZ.WinSeparator' })
@@ -100,22 +81,7 @@ local function setMySyntaxHl()
     set_hl_full('DiffDelete', { link = 'ZZ.DiffDelete' })
     set_hl_full('DiffAdd', { link = 'ZZ.DiffAdd' })
     set_hl_full('DiffChange', { link = 'ZZ.DiffChange' })
-    set_hl_full('TelescopeMatching', { link = 'zz.TelescopeMatching' })
-    set_hl_full('HopNextKey', { link = 'ZZ.HopNextKey' })
-    set_hl_full('HopNextKey1', { link = 'ZZ.HopNextKey1' })
-    set_hl_full('HopNextKey2', { link = 'ZZ.HopNextKey2' })
-    set_hl_full('HopPreview', { link = 'ZZ.HopPreview' })
-    set_hl_full('HopUnmatched', { link = 'ZZ.HopUnmatched' }) -- hop dimmed
-    set_hl_full('LeapBackdrop', { link = 'ZZ.LeapBackdrop' }) -- leap dimmed
-    set_hl_full('LeapLabel', { link = 'ZZ.LeapLabel' }) -- leap labels
-    set_hl_full('LeapLabelDimmed', { link = 'ZZ.LeapLabelDimmed' }) -- leap preview/next-round dot
-    set_hl_full('LeapLabelPreview', { link = 'ZZ.LeapLabelPreview' }) -- leap inactive preview labels
-    set_hl_full('LeapMatch', { link = 'ZZ.LeapMatch' }) -- leap traversal
-    set_hl_full('LightspeedMaskedChar', { link = 'ZZ.LightspeedMaskedChar' })
-    set_hl_full('LightspeedLabel', { link = 'ZZ.LightspeedLabel' })
-    set_hl_full('LightspeedCursor', { link = 'ZZ.LightspeedCursor' })
-    set_hl_full('LightspeedLabelDistant', { link = 'ZZ.LightspeedLabelDistant' })
-    -- set_hl_full("LightspeedUnlabeledMatch",            { link = "ZZ.LightspeedUnlabeledMatch"})
+    set_hl_full('TelescopeMatching', { link = 'ZZ.TelescopeMatching' })
     set_hl_full('CocInlayHint', { link = 'ZZ.CocInlayHint' })
     set_hl_full('CocPumDetail', { link = 'ZZ.CocPumDetail' })
     set_hl_full('@lsp.typemod.variable.fileScope', { link = 'ZZ.LspGlobalVar' })
@@ -131,6 +97,51 @@ local function setMySyntaxHl()
     set_hl_full('Type', { link = 'ZZ.Type' })
     set_hl_full('String', { link = 'ZZ.String' })
     set_hl_full('DiagnosticError', { link = 'ZZ.DiagnosticError' })
+end
+
+local function setMySyntaxHl()
+
+    if vim.g.vscode == nil then
+        setNvimSyntaxHl()
+    end
+
+    -- hop
+    set_hl_full('ZZ.HopNextKey', { fg = '#adff2f', bg = '', bold = false, italic = false })
+    set_hl_full('ZZ.HopNextKey1', { fg = '#adff2f', bg = '', bold = false, italic = false })
+    set_hl_full('ZZ.HopNextKey2', { fg = '#1e90ff', bg = '', bold = false, italic = false })
+    set_hl_full('ZZ.HopPreview', { fg = 'white', bg = '#191970', bold = false, italic = false })
+    set_hl_full('ZZ.HopUnmatched', { fg = '#4c5372' })
+
+    -- leap
+    set_hl_full('ZZ.LeapBackdrop', { fg = '#4c5372' }) -- dimmed, same color as ZZ.HopUnmatched
+    set_hl_full('ZZ.LeapLabel', { fg = '#adff2f', bold = true }) -- labels without background
+    set_hl_full('ZZ.LeapLabelDimmed', { fg = '#1e90ff' }) -- preview/next-round label dot (leap auto-derives it from LeapLabel otherwise, see engines/leap.lua)
+    set_hl_full('ZZ.LeapLabelPreview', { fg = '#1e90ff' }) -- inactive labels of the preview phase (first input char), brightened to LeapLabel once confirmed -- via the beacons patch in engines/leap.lua
+    set_hl_full('ZZ.LeapMatch', { fg = '#c0caf5', bg = '#3d59a1' }) -- traversal highlight (taken from tokyonight night's Search, consistent on both platforms)
+
+    -- lightspeed
+    set_hl_full('ZZ.LightspeedMaskedChar', { fg = '#adff2f', bg = '', bold = false, italic = false })
+    set_hl_full('ZZ.LightspeedLabel', { fg = '#80dcfe', bg = '', bold = false, italic = false })
+    set_hl_full('ZZ.LightspeedCursor', { fg = '#191970', bg = '#adff2f', bold = false, italic = false })
+    set_hl_full('ZZ.LightspeedLabelDistant', { fg = '#4170ff', bg = '', bold = false, italic = true })
+    -- set_hl_full("ZZ.LightspeedUnlabeledMatch", {fg = "#e5e5e5", bg = "",        bold = false, italic = true })
+
+    -- Links
+    set_hl_full('HopNextKey', { link = 'ZZ.HopNextKey' })
+    set_hl_full('HopNextKey1', { link = 'ZZ.HopNextKey1' })
+    set_hl_full('HopNextKey2', { link = 'ZZ.HopNextKey2' })
+    set_hl_full('HopPreview', { link = 'ZZ.HopPreview' })
+    set_hl_full('HopUnmatched', { link = 'ZZ.HopUnmatched' }) -- hop dimmed
+    set_hl_full('LeapBackdrop', { link = 'ZZ.LeapBackdrop' }) -- leap dimmed
+    set_hl_full('LeapLabel', { link = 'ZZ.LeapLabel' }) -- leap labels
+    set_hl_full('LeapLabelDimmed', { link = 'ZZ.LeapLabelDimmed' }) -- leap preview/next-round dot
+    set_hl_full('LeapLabelPreview', { link = 'ZZ.LeapLabelPreview' }) -- leap inactive preview labels
+    set_hl_full('LeapMatch', { link = 'ZZ.LeapMatch' }) -- leap traversal
+    set_hl_full('LightspeedMaskedChar', { link = 'ZZ.LightspeedMaskedChar' })
+    set_hl_full('LightspeedLabel', { link = 'ZZ.LightspeedLabel' })
+    set_hl_full('LightspeedCursor', { link = 'ZZ.LightspeedCursor' })
+    set_hl_full('LightspeedLabelDistant', { link = 'ZZ.LightspeedLabelDistant' })
+    -- set_hl_full("LightspeedUnlabeledMatch",            { link = "ZZ.LightspeedUnlabeledMatch"})
 end
 
 setMySyntaxHl()
