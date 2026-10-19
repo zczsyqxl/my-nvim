@@ -15,7 +15,8 @@ local function setMySyntaxHl()
     set_hl_full('ZZ.HopUnmatched', { fg = '#4c5372' })
     set_hl_full('ZZ.LeapBackdrop', { fg = '#4c5372' })
     set_hl_full('ZZ.LeapLabel', { fg = '#ccff66', bold = true })
-    set_hl_full('ZZ.LeapLabelDimmed', { fg = '#8f7f52' }) -- preview/next-round label dot (leap auto-derives it from LeapLabel otherwise, see engines/leap.lua)
+    set_hl_full('ZZ.LeapLabelDimmed', { fg = '#61AFEF' }) -- preview/next-round label dot (leap auto-derives it from LeapLabel otherwise, see engines/leap.lua)
+    set_hl_full('ZZ.LeapLabelPreview', { fg = '#61AFEF' }) -- inactive labels of the preview phase (first input char), brightened to LeapLabel once confirmed -- via the beacons patch in engines/leap.lua
     set_hl_full('ZZ.LeapMatch', { fg = '#c0caf5', bg = '#3d59a1' })
 
     set_hl_full('HopNextKey', { link = 'ZZ.HopNextKey' })
@@ -30,6 +31,7 @@ local function setMySyntaxHl()
     set_hl_full('LeapBackdrop', { link = 'ZZ.LeapBackdrop' })
     set_hl_full('LeapLabel', { link = 'ZZ.LeapLabel' })
     set_hl_full('LeapLabelDimmed', { link = 'ZZ.LeapLabelDimmed' })
+    set_hl_full('LeapLabelPreview', { link = 'ZZ.LeapLabelPreview' })
     set_hl_full('LeapMatch', { link = 'ZZ.LeapMatch' })
 end
 

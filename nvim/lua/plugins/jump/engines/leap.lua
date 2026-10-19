@@ -51,6 +51,31 @@ return {
             vim.api.nvim_set_hl(0, 'LeapLabelDimmed', { link = 'ZZ.LeapLabelDimmed' })
         end
 
+        -- Preview-phase (inactive) labels share LeapLabel with active ones -- leap
+        -- has no third group for them. main.lua captures beacons.set_beacons as a
+        -- local at require time (main.lua:6), so this wrapper must be installed
+        -- before require('leap') for its capture to pick up the patched version.
+        -- kwargs.phase == 1 is the preview pass (labels shown after the first
+        -- input char), == 2 the confirmed pass, nil other paths. After the original
+        -- run, rewrite the label group in each beacon's extmark virt_text, so
+        -- inactive labels render as ZZ.LeapLabelPreview (see theme files).
+        local beacons = require('leap.beacons')
+        if not beacons._zz_preview_patched then
+            local orig_set = beacons.set_beacons
+            beacons.set_beacons = function(targets, kwargs)
+                orig_set(targets, kwargs)
+                if kwargs.phase == 1 then
+                    for _, t in ipairs(targets) do
+                        local vt = t.beacon and t.beacon[2] and t.beacon[2].virt_text
+                        if vt and vt[1] and vt[1][2] == 'LeapLabel' then
+                            vt[1][2] = 'LeapLabelPreview'
+                        end
+                    end
+                end
+            end
+            beacons._zz_preview_patched = true
+        end
+
         require('leap').setup(opts)
         local map = vim.keymap.set
         -- normal/visual jump: s/S (visual's native s is v_c substitute, and an equivalent command exists)
