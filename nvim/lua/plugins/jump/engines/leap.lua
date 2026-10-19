@@ -28,6 +28,29 @@ return {
         -- while theme files are normally loaded by after/plugin, later than setup.
         -- require is cached, so the after/plugin call becomes a no-op.
         require(vim.g.vscode and 'theme.zzvs' or 'theme.zz')
+
+        -- LeapLabelDimmed (the dimmed dots of concealed/preview labels) is not a
+        -- configurable group: leap re-derives it from LeapLabel inside
+        -- highlight.init (on module load and on every ColorScheme), and its public
+        -- init_hl() only recomputes the same derivation. To pin it to our own
+        -- group, wrap init -- the metatable dispatcher in leap/init.lua resolves
+        -- `leap.init_hl` and the ColorScheme autocmd through this same table
+        -- field, so every call path lands here. Must be installed before
+        -- require('leap') so the module-level init is covered too. Same pattern
+        -- as the scissors patch (_zz_mini_patched) elsewhere in this config.
+        local hl = require('leap.highlight')
+        if not hl._zz_dimmed_patched then
+            local orig_init = hl.init
+            hl.init = function(self, force)
+                orig_init(self, force)
+                vim.api.nvim_set_hl(0, 'LeapLabelDimmed', { link = 'ZZ.LeapLabelDimmed' })
+            end
+            hl._zz_dimmed_patched = true
+            -- leap's module-level init may have run before this patch (if some
+            -- other plugin required leap first); catch that up now
+            vim.api.nvim_set_hl(0, 'LeapLabelDimmed', { link = 'ZZ.LeapLabelDimmed' })
+        end
+
         require('leap').setup(opts)
         local map = vim.keymap.set
         -- normal/visual jump: s/S (visual's native s is v_c substitute, and an equivalent command exists)

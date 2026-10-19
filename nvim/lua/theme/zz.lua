@@ -31,6 +31,7 @@ local function setMySyntaxHl()
     -- leap
     set_hl_full('ZZ.LeapBackdrop', { fg = '#4c5372' }) -- dimmed, same color as ZZ.HopUnmatched
     set_hl_full('ZZ.LeapLabel', { fg = '#ccff66', bold = true }) -- labels without background
+    set_hl_full('ZZ.LeapLabelDimmed', { fg = '#8f7f52' }) -- preview/next-round label dot (leap auto-derives it from LeapLabel otherwise, see engines/leap.lua)
     set_hl_full('ZZ.LeapMatch', { fg = '#c0caf5', bg = '#3d59a1' }) -- traversal highlight (taken from tokyonight night's Search, consistent on both platforms)
 
     set_hl_full('ZZ.WinSeparator', { fg = '#000000', bg = 'NONE' })
@@ -106,6 +107,7 @@ local function setMySyntaxHl()
     set_hl_full('HopUnmatched', { link = 'ZZ.HopUnmatched' }) -- hop dimmed
     set_hl_full('LeapBackdrop', { link = 'ZZ.LeapBackdrop' }) -- leap dimmed
     set_hl_full('LeapLabel', { link = 'ZZ.LeapLabel' }) -- leap labels
+    set_hl_full('LeapLabelDimmed', { link = 'ZZ.LeapLabelDimmed' }) -- leap preview/next-round dot
     set_hl_full('LeapMatch', { link = 'ZZ.LeapMatch' }) -- leap traversal
     set_hl_full('LightspeedMaskedChar', { link = 'ZZ.LightspeedMaskedChar' })
     set_hl_full('LightspeedLabel', { link = 'ZZ.LightspeedLabel' })
