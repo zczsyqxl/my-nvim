@@ -377,7 +377,7 @@ flowchart TD
     BLINK[blink.cmp] -.补全源.-> LLM
 
     %% 跳转引擎高亮
-    ZZ -. ZZ.* 高亮组 .-> HOP[hop] & LEAP[leap]
+    ZZ -.->|"ZZ.* 高亮组"| HOP[hop] & LEAP[leap]
 ```
 
 ## ⌨️ 键位

@@ -377,7 +377,7 @@ flowchart TD
     BLINK[blink.cmp] -.completion source.-> LLM
 
     %% jump engines highlights
-    ZZ -. ZZ.* groups .-> HOP[hop] & LEAP[leap]
+    ZZ -.->|"ZZ.* groups"| HOP[hop] & LEAP[leap]
 ```
 
 ## ⌨️ Keymaps
