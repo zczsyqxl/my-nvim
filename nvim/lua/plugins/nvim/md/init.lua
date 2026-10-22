@@ -1,8 +1,6 @@
 local md = 'render'
 local imgclip = nil
-if vim.fn.has('win32') ~= 0 then
-    imgclip = require('plugins.nvim.md.imgClip')
-end
+imgclip = require('plugins.nvim.md.imgClip')
 return {
     require(({
         markview = 'plugins.nvim.md.markview',

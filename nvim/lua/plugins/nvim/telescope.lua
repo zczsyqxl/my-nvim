@@ -44,6 +44,7 @@ return {
     },
     config = function()
         local actions = require('telescope.actions')
+        local fd = vim.fn.executable('fd') == 1 and 'fd' or 'fdfind'
         require('telescope').setup({
             defaults = {
                 mappings = {
@@ -64,7 +65,7 @@ return {
             pickers = {
                 find_files = {
                     find_command = {
-                        'fd',
+                        fd,
                         '--type',
                         'f',
                         '--no-ignore',

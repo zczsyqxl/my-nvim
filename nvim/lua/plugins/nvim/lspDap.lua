@@ -51,7 +51,9 @@ return {
                     --     args = {'-NoExit'},
                     -- }
                     -- dap.defaults.fallback.force_external_terminal = true
-                    require('mason').setup()
+                    -- mason.nvim is already set up by the lazy dependency
+                    -- ({ 'mason-org/mason.nvim', config = true }); calling setup()
+                    -- again re-registers the default registries.
                     local pydap = nil
                     if vim.fn.has('win32') == 1 then
                         pydap = function(config)

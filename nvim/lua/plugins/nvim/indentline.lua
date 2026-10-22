@@ -4,7 +4,7 @@ return {
         'hiphish/rainbow-delimiters.nvim',
     },
     -- lazy: attach per buffer when the first file buffer is read
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = 'VeryLazy',
     main = 'ibl',
     opts = {
         -- show_current_context = true,
