@@ -1,10 +1,13 @@
 return {
     'sindrets/diffview.nvim',
-    config = function()
-        vim.keymap.set('n', '<leader>do', '<cmd>DiffviewOpen<cr>', { remap = false, silent = true, desc = 'zz:diffview:Open' })
-        vim.keymap.set('n', '<leader>dc', '<cmd>DiffviewClose<cr>', { remap = false, silent = true, desc = 'zz:diffview:Close' })
-        vim.keymap.set('n', '<leader>dr', '<cmd>DiffviewRefresh<cr>', { remap = false, silent = true, desc = 'zz:diffview:Refresh' })
-        vim.keymap.set('n', '<leader>dh', '<cmd>DiffviewFileHistory %<cr>', { remap = false, silent = true, desc = 'zz:diffview:fileHistory' })
-        vim.keymap.set('x', '<leader>dh', ":'<,'>DiffviewFileHistory %<cr>", { remap = false, silent = true, desc = 'zz:diffview:fileHistory[range]' })
-    end,
+    -- lazy-load on the diffview keys AND on any :Diffview* command (mappings
+    -- exist at startup, plugin loads on first press; config not needed)
+    cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewRefresh', 'DiffviewFileHistory', 'DiffviewLog' },
+    keys = {
+        { '<leader>do', '<cmd>DiffviewOpen<cr>', desc = 'zz:diffview:Open' },
+        { '<leader>dc', '<cmd>DiffviewClose<cr>', desc = 'zz:diffview:Close' },
+        { '<leader>dr', '<cmd>DiffviewRefresh<cr>', desc = 'zz:diffview:Refresh' },
+        { '<leader>dh', '<cmd>DiffviewFileHistory %<cr>', mode = 'n', desc = 'zz:diffview:fileHistory' },
+        { '<leader>dh', ":'<,'>DiffviewFileHistory %<cr>", mode = 'x', desc = 'zz:diffview:fileHistory[range]' },
+    },
 }

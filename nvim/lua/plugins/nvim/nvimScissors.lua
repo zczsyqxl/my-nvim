@@ -1,6 +1,12 @@
 return {
     'chrisgrieser/nvim-scissors',
     dependencies = 'nvim-telescope/telescope.nvim', -- if using telescope
+    -- lazy-load on the snippet-edit keys (stubs: config installs the real
+    -- function mappings once the plugin loads)
+    keys = {
+        { '<leader>ea', mode = { 'n', 'x' }, desc = 'zz:Scissor:AddNewSnippet' },
+        { '<leader>ee', mode = { 'n', 'x' }, desc = 'zz:Scissor:EditSnippet' },
+    },
     config = function()
         require('scissors').setup({
             snippetDir = vim.fn.stdpath('config') .. '/snippets',

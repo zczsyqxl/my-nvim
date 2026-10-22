@@ -4,7 +4,14 @@ return {
         'nvim-treesitter/nvim-treesitter',
         'mini.nvim',
     },
-    -- ft = { "markdown", "llm" },
+    -- lazy: a markdown buffer is the natural first-time trigger; once loaded the
+    -- internal file_types list (llm/codecompanion/Avante...) keeps working as before
+    ft = { 'markdown', 'llm', 'codecompanion', 'Avante' },
+    keys = {
+        -- stubs so the two toggle keys (--set by config on load) work anywhere
+        { '<leader>v,', desc = 'zz:RenderMD:Toggle' },
+        { '<leader>v.', desc = 'zz:RenderMD:SplitToggle' },
+    },
 
     config = function()
         require('render-markdown').setup({

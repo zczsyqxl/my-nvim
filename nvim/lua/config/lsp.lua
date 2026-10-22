@@ -1,16 +1,9 @@
 -- LSP client setup, independent of the completion engine (nvim-cmp/blink/coc).
 -- Runs at startup so diagnostics/hover work before entering insert mode.
-local capabilities
-local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if ok then
-    capabilities = cmp_nvim_lsp.default_capabilities()
-end
-
-local servers = { 'clangd', 'rust_analyzer', 'lua_ls', 'pyright' }
-for _, server in ipairs(servers) do
-    vim.lsp.config(server, {
-        capabilities = capabilities,
-    })
-end
-
-vim.lsp.enable(servers)
+--
+-- NOTE: no `require('cmp_nvim_lsp')` here. It used to retroactively load the
+-- entire nvim-cmp stack on startup (~65ms, lazy.nvim requires-hook). nvim's
+-- builtin default capabilities already cover snippetSupport/resolveSupport/
+-- labelDetails; the completion engine merges the rest itself when it loads
+-- (see plugins.nvim.cmpn.nvimCmp).
+vim.lsp.enable({ 'clangd', 'rust_analyzer', 'lua_ls', 'pyright' })

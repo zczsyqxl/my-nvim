@@ -1,0 +1,147 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "my-nvim 插件启动流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "docs/plugin-startup.html",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": { "label": "编辑器 / 界面入口" },
+        "backend": { "label": "配置与插件" },
+        "messagebus": { "label": "调度 / 触发分发" }
+      }
+    }
+  },
+  "lanes": [
+    { "id": "flow", "label": "启动主链" },
+    { "id": "defer", "label": "延迟加载 · 按需触发" }
+  ],
+  "phases": [
+    { "id": "startup", "label": "Neovim 启动", "fromCol": 0, "toCol": 1 },
+    { "id": "guidance", "label": "lazy.nvim 引导", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "loading", "label": "插件加载与就绪", "fromCol": 4, "toCol": 5 }
+  ],
+  "groups": [
+    { "id": "deferGroup", "label": "事件与交互触发（延迟加载）", "lane": "defer", "fromCol": 4, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["init", "base", "boot", "setup", "eager", "ready"],
+  "nodes": [
+    {
+      "id": "init",
+      "lane": "flow",
+      "col": 0,
+      "type": "frontend",
+      "label": "init.lua",
+      "sublabel": "入口 require('config')",
+      "width": 118
+    },
+    {
+      "id": "base",
+      "lane": "flow",
+      "col": 1,
+      "type": "backend",
+      "label": "config.base",
+      "sublabel": "平台分支 · 基础选项",
+      "width": 118
+    },
+    {
+      "id": "boot",
+      "lane": "flow",
+      "col": 2,
+      "type": "backend",
+      "label": "config.lazy",
+      "sublabel": "bootstrap lazy.nvim",
+      "tag": "缺失时 clone stable",
+      "width": 118
+    },
+    {
+      "id": "setup",
+      "lane": "flow",
+      "col": 3,
+      "type": "messagebus",
+      "label": "lazy.setup",
+      "sublabel": "spec = { import 'plugins' }",
+      "tag": "注册全部加载触发器",
+      "width": 118
+    },
+    {
+      "id": "eager",
+      "lane": "flow",
+      "col": 4,
+      "type": "frontend",
+      "label": "启动即载插件",
+      "sublabel": "tokyonight · neo-tree · mini",
+      "width": 118
+    },
+    {
+      "id": "ready",
+      "lane": "flow",
+      "col": 5,
+      "type": "frontend",
+      "label": "启动完成",
+      "sublabel": "config.lsp · config.keymap",
+      "tag": "mini.starter 首页",
+      "width": 118
+    },
+    {
+      "id": "evt",
+      "lane": "defer",
+      "col": 4,
+      "type": "backend",
+      "label": "event 触发",
+      "sublabel": "VeryLazy / InsertEnter",
+      "width": 118
+    },
+    {
+      "id": "ix",
+      "lane": "defer",
+      "col": 5,
+      "type": "backend",
+      "label": "cmd · keys · ft",
+      "sublabel": "llm.nvim · hop · cmake-tools",
+      "width": 118
+    }
+  ],
+  "edges": [
+    { "id": "init-base", "from": "init", "to": "base", "variant": "default" },
+    { "id": "base-boot", "from": "base", "to": "boot", "variant": "default" },
+    { "id": "boot-setup", "from": "boot", "to": "setup", "variant": "default" },
+    { "id": "setup-eager", "from": "setup", "to": "eager", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "id": "eager-ready", "from": "eager", "to": "ready", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "id": "eager-evt", "from": "eager", "to": "evt", "variant": "dashed", "role": "branch", "fromSide": "bottom" },
+    { "id": "eager-ix", "from": "eager", "to": "ix", "variant": "dashed", "role": "branch", "fromSide": "bottom", "toSide": "top" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "启动链",
+      "items": [
+        "init.lua → config.base → config.lazy",
+        "import 'plugins'：nvim · mini · llm · jump · zyq",
+        "setup 返回后 config.lsp → config.keymap"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "懒加载触发映射",
+      "items": [
+        "VeryLazy：avante · imagePreview · imgClip",
+        "InsertEnter：nvim-cmp（cmp 选择器）",
+        "cmd：llm.nvim · aegis · markdown-preview",
+        "keys / ft：hop · lazygit · cmake-tools"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "引擎选择器（一词切换）",
+      "items": [
+        "theme: tokyonight ｜ tree: neo-tree ｜ tab: bufferline",
+        "cmp: nvim-cmp（备选 blink / coc）",
+        "jump: hop + leap（flash / lightspeed 备用）"
+      ]
+    }
+  ]
+}

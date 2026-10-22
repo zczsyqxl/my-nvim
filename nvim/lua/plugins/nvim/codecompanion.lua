@@ -70,13 +70,19 @@ return {
             },
         },
     },
+    -- lazy-load on first use (saves ~65ms of startup time)
+    cmd = { 'CodeCompanion', 'CodeCompanionAction', 'CodeCompanionChat', 'CodeCompanionCLI', 'CodeCompanionCmd' },
+    keys = {
+        { '<leader>nn', '<cmd>CodeCompanion<cr>', desc = 'zz:CC:Chat' },
+        { '<leader>na', '<cmd>CodeCompanionAction<cr>', desc = 'zz:CC:Action' },
+        { '<leader>nc', '<cmd>CodeCompanionChat Toggle<cr>', desc = 'zz:CC:Chat Toggle' },
+        { '<leader>ni', '<cmd>CodeCompanionCLI<cr>', desc = 'zz:CC:CLI' },
+        { '<leader>nw', '<cmd>CodeCompanionCmd<cr>', desc = 'zz:CC:Cmd' },
+    },
     config = function(_, opts)
         require('codecompanion').setup(opts)
-        vim.keymap.set({ 'n' }, '<leader>nn', '<cmd>CodeCompanion<cr>', { remap = false, desc = 'zz:CC:Chat' })
-        vim.keymap.set({ 'n' }, '<leader>na', '<cmd>CodeCompanionAction<cr>', { remap = false, desc = 'zz:CC:Action' })
-        vim.keymap.set({ 'n' }, '<leader>nc', '<cmd>CodeCompanionChat Toggle<cr>', { remap = false, desc = 'zz:CC:Chat Toggle' })
-        vim.keymap.set({ 'n' }, '<leader>ni', '<cmd>CodeCompanionCLI<cr>', { remap = false, desc = 'zz:CC:CLI' })
-        vim.keymap.set({ 'n' }, '<leader>nw', '<cmd>CodeCompanionCmd<cr>', { remap = false, desc = 'zz:CC:Cmd' })
+        -- the cmd-line abbreviations still live here: they are only usable once
+        -- a CodeCompanion command exists anyway (after first lazy load)
         vim.cmd([[cab cn CodeCompanion]])
         vim.cmd([[cab ca CodeCompanionAction]])
         vim.cmd([[cab cc CodeCompanionChat]])

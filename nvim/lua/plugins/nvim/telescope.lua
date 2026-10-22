@@ -11,6 +11,37 @@ return {
             build = 'cmake -S. -Bbuild -G Ninja -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install',
         },
     },
+    -- lazy-load on use: :Telescope command + all the <leader>f keymaps below
+    -- create their mappings at startup but only load the plugin on first press.
+    cmd = 'Telescope',
+    keys = {
+        { '<leader>f[', '<cmd>Telescope grep_string<cr>', desc = 'zz:telescope:GrepString' },
+        { '<leader>f]', '<cmd>Telescope live_grep<cr>', desc = 'zz:telescope:LiveGrep' },
+        { '<leader>fa', '<cmd>Telescope git_status<cr>', desc = 'zz:telescope:GitStatus' },
+        { '<leader>fb', '<cmd>Telescope buffers<cr>', desc = 'zz:telescope:Buffers' },
+        { '<leader>fc', '<cmd>Telescope colorscheme<cr>', desc = 'zz:telescope:Colorscheme' },
+        { '<leader>fd', '<cmd>Telescope diagnostics<cr>', desc = 'zz:telescope:Diagnostics' },
+        { '<leader>fe', '<cmd>Telescope file_browser<cr>', desc = 'zz:telescope:FileBrowser' },
+        { '<leader>ff', '<cmd>Telescope find_files<cr>', desc = 'zz:telescope:FindFiles' },
+        { '<leader>fg', '<cmd>Telescope git_files<cr>', desc = 'zz:telescope:GitFiles' },
+        { '<leader>fh', '<cmd>Telescope help_tags<cr>', desc = 'zz:telescope:HelpTags' },
+        { '<leader>fi', '<cmd>Telescope lsp_incoming_calls<cr>', desc = 'zz:telescope:LspIncompingCalls' },
+        { '<leader>fj', '<cmd>Telescope jump_lists<cr>', desc = 'zz:telescope:JumpList' },
+        { '<leader>fk', '<cmd>Telescope lsp_document_symbols<cr>', desc = 'zz:telescope:LspDocSymbols' },
+        { '<leader>fl', '<cmd>Telescope lsp_workspace_symbols<cr>', desc = 'zz:telescope:LspWorkspaceSymbols' },
+        { '<leader>fm', '<cmd>Telescope keymaps<cr>', desc = 'zz:telescope:Keymaps' },
+        { '<leader>fn', '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', desc = 'zz:telescope:LspDynWorksapceSymbols' },
+        { '<leader>fo', '<cmd>Telescope lsp_outgoing_calls<cr>', desc = 'zz:telescope:LspOutgoingCalls' },
+        { '<leader>fp', '<cmd>Telescope git_bcommits<cr>', desc = 'zz:telescope:GitBcommit' },
+        { '<leader>fq', '<cmd>Telescope git_commits<cr>', desc = 'zz:telescope:GitCommit' },
+        { '<leader>fr', '<cmd>Telescope lsp_references<cr>', desc = 'zz:telescope:LspReferences' },
+        { '<leader>fs', '<cmd>Telescope live_grep_args<cr>', desc = 'zz:telescope:LiveGrepArgs' },
+        { '<leader>ft', '<cmd>Telescope lsp_type_definitions<cr>', desc = 'zz:telescope:TypeDefinitions' },
+        { '<leader>fu', '<cmd>Telescope git_stash<cr>', desc = 'zz:telescope:GitStash' },
+        { '<leader>fv', '<cmd>Telescope vim_options<cr>', desc = 'zz:telescope:VimOptions' },
+        { '<leader>fw', '<cmd>Telescope git_branches<cr>', desc = 'zz:telescope:GitBranches' },
+        { '<leader>fz', '<cmd>Telescope highlights<cr>', desc = 'zz:telescope:Highlights' },
+    },
     config = function()
         local actions = require('telescope.actions')
         require('telescope').setup({
@@ -55,40 +86,5 @@ return {
         require('telescope').load_extension('ui-select')
         require('telescope').load_extension('dap')
         require('telescope').load_extension('lazygit')
-
-        -- local function git_root()
-        --     local git_dir = vim.fs.find('.git', { upward = true, type = 'directory' })[1]
-        --     return git_dir and vim.fs.dirname(git_dir) or vim.loop.cwd()
-        -- end
-
-        -- vim.keymap.set('n', '<leader>f[', function() require('telescope.builtin').grep_string({ cwd = git_root() }) end, {remap = false, silent = true})
-        vim.keymap.set('n', '<leader>f[', '<cmd>Telescope grep_string<cr>', { remap = false, silent = true, desc = 'zz:telescope:GrepString' })
-        -- vim.keymap.set('n', '<leader>f]', function() require('telescope.builtin').live_grep({ cwd = git_root() }) end, {remap = false, silent = true})
-        vim.keymap.set('n', '<leader>f]', '<cmd>Telescope live_grep<cr>', { remap = false, silent = true, desc = 'zz:telescope:LiveGrep' })
-        vim.keymap.set('n', '<leader>fa', '<cmd>Telescope git_status<cr>', { remap = false, silent = true, desc = 'zz:telescope:GitStatus' })
-        vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { remap = false, silent = true, desc = 'zz:telescope:Buffers' })
-        vim.keymap.set('n', '<leader>fc', '<cmd>Telescope colorscheme<cr>', { remap = false, silent = true, desc = 'zz:telescope:Colorscheme' })
-        vim.keymap.set('n', '<leader>fd', '<cmd>Telescope diagnostics<cr>', { remap = false, silent = true, desc = 'zz:telescope:Diagnostics' })
-        vim.keymap.set('n', '<leader>fe', '<cmd>Telescope file_browser<cr>', { remap = false, silent = true, desc = 'zz:telescope:FileBrowser' })
-        -- vim.keymap.set('n', '<leader>ff', function() require('telescope.builtin').find_files({ cwd = git_root() }) end, {remap = false, silent = true})
-        vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { remap = false, silent = true, desc = 'zz:telescope:FindFiles' })
-        vim.keymap.set('n', '<leader>fg', '<cmd>Telescope git_files<cr>', { remap = false, silent = true, desc = 'zz:telescope:GitFiles' })
-        vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { remap = false, silent = true, desc = 'zz:telescope:HelpTags' })
-        vim.keymap.set('n', '<leader>fi', '<cmd>Telescope lsp_incoming_calls<cr>', { remap = false, silent = true, desc = 'zz:telescope:LspIncompingCalls' })
-        vim.keymap.set('n', '<leader>fj', '<cmd>Telescope jump_lists<cr>', { remap = false, silent = true, desc = 'zz:telescope:JumpList' })
-        vim.keymap.set('n', '<leader>fk', '<cmd>Telescope lsp_document_symbols<cr>', { remap = false, silent = true, desc = 'zz:telescope:LspDocSymbols' })
-        vim.keymap.set('n', '<leader>fl', '<cmd>Telescope lsp_workspace_symbols<cr>', { remap = false, silent = true, desc = 'zz:telescope:LspWorkspaceSymbols' })
-        vim.keymap.set('n', '<leader>fm', '<cmd>Telescope keymaps<cr>', { remap = false, silent = true, desc = 'zz:telescope:Keymaps' })
-        vim.keymap.set('n', '<leader>fn', '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', { remap = false, silent = true, desc = 'zz:telescope:LspDynWorksapceSymbols' })
-        vim.keymap.set('n', '<leader>fo', '<cmd>Telescope lsp_outgoing_calls<cr>', { remap = false, silent = true, desc = 'zz:telescope:LspOutgoingCalls' })
-        vim.keymap.set('n', '<leader>fp', '<cmd>Telescope git_bcommits<cr>', { remap = false, silent = true, desc = 'zz:telescope:GitBcommit' })
-        vim.keymap.set('n', '<leader>fq', '<cmd>Telescope git_commits<cr>', { remap = false, silent = true, desc = 'zz:telescope:GitCommit' })
-        vim.keymap.set('n', '<leader>fr', '<cmd>Telescope lsp_references<cr>', { remap = false, silent = true, desc = 'zz:telescope:LspReferences' })
-        vim.keymap.set('n', '<leader>fs', '<cmd>Telescope live_grep_args<cr>', { remap = false, silent = true, desc = 'zz:telescope:LiveGrepArgs' })
-        vim.keymap.set('n', '<leader>ft', '<cmd>Telescope lsp_type_definitions<cr>', { remap = false, silent = true, desc = 'zz:telescope:TypeDefinitions' })
-        vim.keymap.set('n', '<leader>fu', '<cmd>Telescope git_stash<cr>', { remap = false, silent = true, desc = 'zz:telescope:GitStash' })
-        vim.keymap.set('n', '<leader>fv', '<cmd>Telescope vim_options<cr>', { remap = false, silent = true, desc = 'zz:telescope:VimOptions' })
-        vim.keymap.set('n', '<leader>fw', '<cmd>Telescope git_branches<cr>', { remap = false, silent = true, desc = 'zz:telescope:GitBranches' })
-        vim.keymap.set('n', '<leader>fz', '<cmd>Telescope highlights<cr>', { remap = false, silent = true, desc = 'zz:telescope:Highlights' })
     end,
 }

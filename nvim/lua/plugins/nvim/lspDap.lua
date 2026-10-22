@@ -1,9 +1,13 @@
 return {
     {
         'mason-org/mason-lspconfig.nvim',
+        -- lazy: LSP itself runs on vim.lsp.enable + nvim's builtin runtime
+        -- configs, mason/mason-lspconfig are only needed to (re)install
+        -- missing servers -- defer them past first draw
         -- keep ensure_installed in sync with the vim.lsp.enable list in
         -- config/lsp.lua; on a new machine missing servers install automatically
         -- (already-installed ones are skipped, no duplicate downloads)
+        event = 'VeryLazy',
         opts = { ensure_installed = { 'clangd', 'rust_analyzer', 'lua_ls', 'pyright' } },
         dependencies = {
             'neovim/nvim-lspconfig',
@@ -12,6 +16,24 @@ return {
     },
     {
         'rcarriga/nvim-dap-ui',
+        -- lazy-load the whole debug stack on the F1-F12 debug keys: mappings
+        -- exist at startup, nvim-dap/nvim-dap-ui/mason-* only load on first
+        -- press; :Dap* commands get lazy shims too
+        cmd = { 'DapNew', 'DapContinue', 'DapPause', 'DapStepOver', 'DapStepInto', 'DapStepOut', 'DapTerminate', 'DapToggleBreakpoint' },
+        keys = {
+            { '<F4>', desc = 'zz:DAP:CmakeDebug' },
+            { '<F5>', desc = 'zz:DAP:New' },
+            { '<F6>', desc = 'zz:DAP:Pause' },
+            { '<F7>', desc = 'zz:DAP:Continue' },
+            { '<F8>', desc = 'zz:DAP:StepOver' },
+            { '<F9>', desc = 'zz:DAP:ToggleBreakpoint' },
+            { '<F10>', desc = 'zz:DAP:StepInto' },
+            { '<F11>', desc = 'zz:DAP:StepOut' },
+            { '<F12>', desc = 'zz:DAP:Terminate' },
+            { '<F1>', desc = 'zz:dapui:open' },
+            { '<F2>', desc = 'zz:dapui:close' },
+            { '<F3>', desc = 'zz:dapui:toggle' },
+        },
         dependencies = {
             { 'nvim-neotest/nvim-nio' },
             {
@@ -23,7 +45,7 @@ return {
                 opts = {},
                 config = function()
                     local dap = require('dap')
-                    dap.set_log_level('DEBUG')
+                    -- dap.set_log_level('DEBUG') -- verbose dap log every session, removed for perf
                     -- dap.defaults.fallback.external_terminal = {
                     --     command = [[pwsh]],
                     --     args = {'-NoExit'},

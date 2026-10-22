@@ -1,5 +1,13 @@
 return {
     'MagicDuck/grug-far.nvim',
+    -- lazy-load on the search/replace keys (stubs: config installs the real
+    -- function mappings once the plugin loads)
+    keys = {
+        { '<leader>[', mode = { 'n', 'v' }, desc = 'zz:grugfar:SearchCWordInCurFile' },
+        { '<leader>]', mode = 'n', desc = 'zz:grugfar:SearchInCurFile' },
+        { '<leader>{', mode = { 'n', 'v' }, desc = 'zz:grugfar:SearchCWordInCWD' },
+        { '<leader>}', mode = 'n', desc = 'zz:grugfar:SearchInCWD' },
+    },
     config = function()
         require('grug-far').setup({
             icons = {

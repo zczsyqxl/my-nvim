@@ -13,6 +13,12 @@ return {
     event = 'InsertEnter',
     config = function()
         local cmp = require('cmp')
+        -- merge the cmp-specific LSP capabilities now that the engine loads;
+        -- must stay off the startup path (see config/lsp.lua)
+        local capok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+        if capok then
+            vim.lsp.config('*', { capabilities = cmp_nvim_lsp.default_capabilities() })
+        end
         local tmeSources = {
             { name = 'nvim_lsp' },
             { name = 'buffer' },

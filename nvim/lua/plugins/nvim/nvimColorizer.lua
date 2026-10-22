@@ -1,5 +1,7 @@
 return {
     'catgoose/nvim-colorizer.lua', -- actively maintained fork (the original norcalli version is unmaintained)
+    -- lazy: colorize only matters for these filetypes
+    ft = { 'lua', 'yaml', 'conf', 'toml' },
     opts = {
         filetypes = {
             'lua',

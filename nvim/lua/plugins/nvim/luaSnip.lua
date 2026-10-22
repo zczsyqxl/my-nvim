@@ -1,5 +1,8 @@
 return {
     'L3MON4D3/LuaSnip',
+    -- lazy: snippets are only needed in insert mode (expand/jump keymaps are
+    -- insert/select mode); grug-far-style first-press path covered by the event
+    event = 'InsertEnter',
     -- follow latest release.
     -- install jsregexp (optional!).
     build = 'make install_jsregexp',

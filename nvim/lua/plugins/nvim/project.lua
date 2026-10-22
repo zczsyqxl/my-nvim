@@ -1,5 +1,7 @@
 return {
     'ahmedkhalf/project.nvim',
+    -- lazy: root auto-detection only has to happen shortly after startup
+    event = 'VeryLazy',
     opts = {
         manual_mode = false, -- fully automatic
         detection_methods = { 'pattern' },

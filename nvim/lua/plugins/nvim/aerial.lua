@@ -1,5 +1,9 @@
 return {
     'stevearc/aerial.nvim',
+    -- lazy-load on the outline toggle key (mapping exists at startup)
+    keys = {
+        { '<leader>vo', '<cmd>AerialToggle!<cr>', desc = 'zz:aerial:Toggle' },
+    },
     opts = {
         backends = { 'lsp', 'treesitter', 'markdown', 'asciidoc', 'man' },
         layout = {
@@ -40,6 +44,5 @@ return {
     },
     config = function(_, opts)
         require('aerial').setup(opts)
-        vim.keymap.set('n', '<leader>vo', '<cmd>AerialToggle!<cr>', { desc = 'zz:aerial:Toggle' })
     end,
 }

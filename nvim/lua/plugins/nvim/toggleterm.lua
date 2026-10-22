@@ -1,5 +1,11 @@
 return {
     'akinsho/toggleterm.nvim',
+    -- lazy-load on the terminal/yazi toggle keys (stubs: config installs the
+    -- real function mappings once the plugin loads)
+    keys = {
+        { '<leader>vm', desc = 'zz:toggleterm:NewShellToggle' },
+        { '<leader>vy', desc = 'zz:toggleterm:NewShellToggle' },
+    },
     config = function()
         local myshell
         if vim.fn.has('win32') == 1 then
