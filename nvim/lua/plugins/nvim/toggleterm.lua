@@ -16,6 +16,15 @@ return {
 
         require('toggleterm').setup({
             shell = myshell,
+            -- 浮窗大小：每次打开时按当前终端尺寸的 85% 计算
+            float_opts = {
+                width = function()
+                    return math.floor(vim.o.columns * 1.0)
+                end,
+                height = function()
+                    return math.floor(vim.o.lines * 0.85)
+                end,
+            },
         })
 
         local Terminal = require('toggleterm.terminal').Terminal
