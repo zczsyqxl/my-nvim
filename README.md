@@ -72,7 +72,7 @@ Uninstall = delete the clone plus `~/.local/share/nvim` (Linux) / `%LOCALAPPDATA
 | Tool | Used by | Notes |
 | --- | --- | --- |
 | [Git](https://git-scm.com) | lazy.nvim, git tooling | required |
-| [fd](https://github.com/sharkdp/fd) | Telescope `find_files` | in `PATH` |
+| [fd](https://github.com/sharkdp/fd) | Telescope `find_files` | in `PATH`; Ubuntu/Debian installs it as `fdfind` (auto-detected by the config) |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) | Telescope `live_grep` | in `PATH` |
 | [lazygit](https://github.com/jesseduffield/lazygit/releases) | `,vu` lazygit.nvim | binary in `PATH` |
 | [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/releases) | parser compilation | via `cargo install tree-sitter-cli` or the GitHub release; in `PATH` |
@@ -168,7 +168,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | [nvim-lsp-file-operations](https://github.com/antosha417/nvim-lsp-file-operations) | rename/move files via LSP from the tree | dependency |
 | [project.nvim](https://github.com/ahmedkhalf/project.nvim) | auto-root-detection (`pattern`: `.git`, `Cargo.toml`, `CMakeLists.txt`…) + global cwd pinning | `plugins/nvim/project.lua` |
 | [aerial.nvim](https://github.com/stevearc/aerial.nvim) | symbol outline (lsp + treesitter + markdown backends) | `plugins/nvim/aerial.lua` |
-| [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | floating terminals (shell, yazi; cmake executor/runner) | `plugins/nvim/toggleterm.lua` |
+| [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | floating terminals (shell, yazi — 100% width / 85% height; cmake executor/runner) | `plugins/nvim/toggleterm.lua` |
 
 ### Fuzzy Finding & Search
 
@@ -227,7 +227,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | in-editor markdown rendering (**active** renderer; LaTeX via `latex2text`, extensive tuning) | `plugins/nvim/md/renderMarkdown.lua` |
 | [markview.nvim](https://github.com/OXY2DEV/markview.nvim) | markdown renderer (alternate, hybrid-mode) | `plugins/nvim/md/markview.lua` |
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | live browser preview (`,v/`); **custom deterministic build** — Windows downloads the prebuilt binary with System32 `curl.exe`/`tar.exe` (the stock PowerShell installer is bypassed) | `plugins/nvim/md/markdownPreview.lua` |
-| [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | paste images from clipboard into markdown (`,ep`, Windows) | `plugins/nvim/md/imgClip.lua` |
+| [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | paste images from clipboard into markdown (loads on all platforms; the `,ep` keymap is Windows-only) | `plugins/nvim/md/imgClip.lua` |
 | [image_preview.nvim](https://github.com/adelarsq/image_preview.nvim) | preview image files in neo-tree (`,vp`) | `plugins/nvim/imagePreview.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | in-terminal image rendering (Linux-only, currently disabled) | `plugins/nvim/md/image.lua` |
 
@@ -414,7 +414,7 @@ Prefix map:
 | `,m` | llm.nvim | `mc` chat · `mt`/`mT` translate word/text · `me` explain code · `mA` test cases · `mo` optimize & compare · `mg` AI commit message · `md` docstring · `mk`/`ma` ask / attach to chat · `mi` formula recognition · `mu` account info |
 | `,n` | codecompanion | `nn` chat · `na` action palette · `nc` chat toggle · `ni` opencode CLI · `nw` command gen |
 | `,c` | cmake | `cb`/`cB`/`cc`/`cg`/`cr`/`cR` build/build-file/clean/generate/run/run-file · `cs*` selects (preset/type/target/kit/…) |
-| `,e` | snippets & buffers | `ea`/`ee` scissors add/edit snippet · `ep` paste image (Windows) · `eo`/`ec`/`es` bufferline pick/close-pick/close-others · `,1`–`,9`,`0` go to buffer N |
+| `,e` | snippets & buffers | `ea`/`ee` scissors add/edit snippet · `ep` paste image (Windows only) · `eo`/`ec`/`es` bufferline pick/close-pick/close-others · `,1`–`,9`,`0` go to buffer N |
 | `,[` `]` `{` `}` | grug-far | cword-in-file / in-file / cword-in-project / in-project |
 | `,w b j k J K s z` | hop | word/line/vertical/char/pattern hints |
 | `s` `S` `,x` `,X` `gk` | leap | jump / all-windows / one-way traversal / Visitor remote ops |
@@ -465,6 +465,16 @@ This config builds it automatically with a custom `build` function (prebuilt rel
 **T3 · image.nvim (currently disabled)**
 
 1. Linux only. 2. Best inside kitty (better than wezterm). 3. Requires ImageMagick: `sudo apt install imagemagick`.
+
+**T4 · Telescope: `fzf extension doesn't exist or isn't installed`**
+
+`telescope-fzf-native.nvim` failed to compile (no `build/libfzf.so`). Rebuild it with `:Lazy build telescope-fzf-native.nvim` (cmake + ninja required), confirm `build/libfzf.so` exists in the plugin directory, then restart Neovim.
+
+**T5 · Mason install fails or hangs**
+
+- `Could not find executable "npm"` — Neovim started with a trimmed `PATH` (e.g. via a desktop launcher). Launch it from a shell so `/usr/bin` (node/npm) is visible, or fix the launcher's `PATH`.
+- Downloads crawl / `Installation was aborted` — slow or blocked access to GitHub releases; export `HTTPS_PROXY` / `HTTP_PROXY` (both cases) before starting Neovim. Install one package at a time.
+- `Lockfile exists, installation is already running in another process (pid: xxx)` — another Neovim instance is installing the same package. Close the extra instance first; if that pid is gone, clear leftovers with `rm -rf ~/.local/share/nvim/mason/staging/*`. Use `:MasonInstall --force` only to bypass a stale lock.
 
 **E1 · Inserted time shows in Chinese although the OS time format is US**
 

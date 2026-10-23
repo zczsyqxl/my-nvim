@@ -72,7 +72,7 @@ git clone https://github.com/<you>/my-nvim.git "$env:LOCALAPPDATA\nvim"
 | 工具 | 被谁使用 | 说明 |
 | --- | --- | --- |
 | [Git](https://git-scm.com) | lazy.nvim、git 工具链 | 必需 |
-| [fd](https://github.com/sharkdp/fd) | Telescope `find_files` | 需在 `PATH` |
+| [fd](https://github.com/sharkdp/fd) | Telescope `find_files` | 需在 `PATH`；Ubuntu/Debian 二进制名为 `fdfind`（配置自动检测） |
 | [ripgrep](https://github.com/BurntSushi/ripgrep) | Telescope `live_grep` | 需在 `PATH` |
 | [lazygit](https://github.com/jesseduffield/lazygit/releases) | `,vu` lazygit.nvim | 二进制放入 `PATH` |
 | [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/releases) | 解析器编译 | `cargo install tree-sitter-cli` 或下载 GitHub release；需在 `PATH` |
@@ -168,7 +168,7 @@ my-nvim/
 | [nvim-lsp-file-operations](https://github.com/antosha417/nvim-lsp-file-operations) | 文件树里重命名/移动联动 LSP | 依赖 |
 | [project.nvim](https://github.com/ahmedkhalf/project.nvim) | 项目根自动识别（`pattern`：`.git`、`Cargo.toml`、`CMakeLists.txt`…）+ 全局 cwd 钉死 | `plugins/nvim/project.lua` |
 | [aerial.nvim](https://github.com/stevearc/aerial.nvim) | 符号大纲（lsp + treesitter + markdown 后端） | `plugins/nvim/aerial.lua` |
-| [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | 浮动终端（shell、yazi；cmake 执行器/运行器） | `plugins/nvim/toggleterm.lua` |
+| [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | 浮动终端（shell、yazi —— 100% 宽 / 85% 高；cmake 执行器/运行器） | `plugins/nvim/toggleterm.lua` |
 
 ### 模糊查找与搜索
 
@@ -227,7 +227,7 @@ my-nvim/
 | [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | 编辑器内 Markdown 渲染（**当前启用**；LaTeX 走 `latex2text`，深度调优） | `plugins/nvim/md/renderMarkdown.lua` |
 | [markview.nvim](https://github.com/OXY2DEV/markview.nvim) | Markdown 渲染器（备选，hybrid 模式） | `plugins/nvim/md/markview.lua` |
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | 浏览器实时预览（`,v/`）；**自定义确定性构建** —— Windows 用 System32 `curl.exe`/`tar.exe` 下载预编译产物（绕开原版 PowerShell 安装器的坑） | `plugins/nvim/md/markdownPreview.lua` |
-| [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | 剪贴板贴图进 markdown（`,ep`，Windows） | `plugins/nvim/md/imgClip.lua` |
+| [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | 剪贴板贴图进 markdown（全平台加载；`,ep` 绑定仅 Windows） | `plugins/nvim/md/imgClip.lua` |
 | [image_preview.nvim](https://github.com/adelarsq/image_preview.nvim) | neo-tree 里预览图片文件（`,vp`） | `plugins/nvim/imagePreview.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | 终端内图片渲染（仅 Linux，当前停用） | `plugins/nvim/md/image.lua` |
 
@@ -414,7 +414,7 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 | `,m` | llm.nvim | `mc` 聊天 · `mt`/`mT` 翻译词/文 · `me` 解释代码 · `mA` 生成测试 · `mo` 优化对比 · `mg` AI 提交信息 · `md` 文档字符串 · `mk`/`ma` 提问 / 附到聊天 · `mi` 公式识别 · `mu` 账户信息 |
 | `,n` | codecompanion | `nn` 聊天 · `na` 动作面板 · `nc` 聊天开关 · `ni` opencode CLI · `nw` 命令生成 |
 | `,c` | cmake | `cb`/`cB`/`cc`/`cg`/`cr`/`cR` 构建/构建本文件/清理/生成/运行/运行本文件 · `cs*` 各类选择（preset/type/target/kit/…） |
-| `,e` | 片段与 buffer | `ea`/`ee` scissors 增/改片段 · `ep` 贴图（Windows） · `eo`/`ec`/`es` bufferline 选择/选关/关其他 · `,1`–`,9`,`0` 跳到第 N 个 buffer |
+| `,e` | 片段与 buffer | `ea`/`ee` scissors 增/改片段 · `ep` 贴图（仅 Windows） · `eo`/`ec`/`es` bufferline 选择/选关/关其他 · `,1`–`,9`,`0` 跳到第 N 个 buffer |
 | `,[` `]` `{` `}` | grug-far | 本文件光标词 / 本文件 / 全项目光标词 / 全项目 |
 | `,w b j k J K s z` | hop | 词/行/垂直/字符/模式提示跳转 |
 | `s` `S` `,x` `,X` `gk` | leap | 跳转 / 全窗口 / 单向遍历 / Visitor 远程操作 |
@@ -465,6 +465,16 @@ hunk（mini.diff）：`gl`/`gL` 应用/还原，`[g`/`]g`/`[G`/`]G` 导航。
 **T3 · image.nvim（当前停用）**
 
 1. 仅 Linux。2. kitty 里性能最好（优于 wezterm）。3. 需要 ImageMagick：`sudo apt install imagemagick`。
+
+**T4 · Telescope：`fzf extension doesn't exist or isn't installed`**
+
+`telescope-fzf-native.nvim` 未编译成功（没有 `build/libfzf.so`）。执行 `:Lazy build telescope-fzf-native.nvim` 重新编译（需要 cmake + ninja），确认插件目录下存在 `build/libfzf.so` 后重启 Neovim。
+
+**T5 · Mason 安装失败或卡住**
+
+- `Could not find executable "npm"` —— Neovim 从裁剪过 `PATH` 的环境启动（如桌面快捷方式）。改从 shell 启动以保证能看到 `/usr/bin`（node/npm），或修正启动器的 `PATH`。
+- 下载极慢 / `Installation was aborted` —— GitHub release 通道慢或不通；启动 Neovim 前 export `HTTPS_PROXY` / `HTTP_PROXY`（大小写都设）。一次只装一个包。
+- `Lockfile exists, installation is already running in another process (pid: xxx)` —— 另一个 Neovim 实例正在安装同一个包。先关掉多余实例；若该 pid 已不存在，用 `rm -rf ~/.local/share/nvim/mason/staging/*` 清理残留。`:MasonInstall --force` 仅用于绕过已失效的锁。
 
 **E1 · 插入时间显示为中文，尽管系统时间格式是美式**
 
