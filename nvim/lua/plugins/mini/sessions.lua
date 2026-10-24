@@ -14,7 +14,11 @@ require('mini.sessions').setup({
         -- Before successful action
         pre = {
             write = function()
-                vim.cmd('Neotree close')
+                pcall(function()
+                    for _, p in ipairs(Snacks.picker.get({ source = 'explorer' })) do
+                        p:close()
+                    end
+                end)
             end,
         },
     },

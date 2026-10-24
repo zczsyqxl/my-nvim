@@ -3,10 +3,40 @@ return {
     -- lazy-load on the search/replace keys (stubs: config installs the real
     -- function mappings once the plugin loads)
     keys = {
-        { '<leader>[', mode = { 'n', 'v' }, desc = 'zz:grugfar:SearchCWordInCurFile' },
-        { '<leader>]', mode = 'n', desc = 'zz:grugfar:SearchInCurFile' },
-        { '<leader>{', mode = { 'n', 'v' }, desc = 'zz:grugfar:SearchCWordInCWD' },
-        { '<leader>}', mode = 'n', desc = 'zz:grugfar:SearchInCWD' },
+        {
+            '<leader>rf', mode = { 'n', 'v' }, function()
+                require('grug-far').open({
+                    prefills = {
+                        search = vim.fn.expand('<cword>'),
+                        paths = vim.fn.expand('%'),
+                    },
+                    startInInsertMode = false,
+                }) end, desc = 'zz:grugfar:SearchCWordInCurFile'
+        },
+        {
+            '<leader>rd', mode = 'n', function()
+                require('grug-far').open({
+                    prefills = {
+                        paths = vim.fn.expand('%'),
+                    },
+                })
+            end, desc = 'zz:grugfar:SearchInCurFile'
+        },
+        {
+            '<leader>rs', mode = { 'n', 'v' }, function()
+                require('grug-far').open({
+                    prefills = {
+                        search = vim.fn.expand('<cword>'),
+                    },
+                    startInInsertMode = false,
+                })
+            end, desc = 'zz:grugfar:SearchCWordInCWD'
+        },
+        {
+            '<leader>ra', mode = 'n', function()
+                require('grug-far').open({})
+            end, desc = 'zz:grugfar:SearchInCWD'
+        },
     },
     config = function()
         require('grug-far').setup({
@@ -19,32 +49,5 @@ return {
                 syncFile = { n = '<localleader>z' },
             },
         })
-        vim.keymap.set({ 'n', 'v' }, '<leader>[', function()
-            require('grug-far').open({
-                prefills = {
-                    search = vim.fn.expand('<cword>'),
-                    paths = vim.fn.expand('%'),
-                },
-                startInInsertMode = false,
-            })
-        end, { remap = false, silent = true, desc = 'zz:grugfar:SearchCWordInCurFile' })
-        vim.keymap.set({ 'n' }, '<leader>]', function()
-            require('grug-far').open({
-                prefills = {
-                    paths = vim.fn.expand('%'),
-                },
-            })
-        end, { remap = false, silent = true, desc = 'zz:grugfar:SearchInCurFile' })
-        vim.keymap.set({ 'n', 'v' }, '<leader>{', function()
-            require('grug-far').open({
-                prefills = {
-                    search = vim.fn.expand('<cword>'),
-                },
-                startInInsertMode = false,
-            })
-        end, { remap = false, silent = true, desc = 'zz:grugfar:SearchCWordInCWD' })
-        vim.keymap.set({ 'n' }, '<leader>}', function()
-            require('grug-far').open({})
-        end, { remap = false, silent = true, desc = 'zz:grugfar:SearchInCWD' })
     end,
 }

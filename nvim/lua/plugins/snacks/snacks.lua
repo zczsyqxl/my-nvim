@@ -4,16 +4,16 @@ return {
     lazy = false,
     ---@type snacks.Config
     opts = {
-        bigfile = { enabled = true },
         dashboard = require('plugins.snacks.dashboard'),
+        picker = require('plugins.snacks.picker'),
+        indent = require('plugins.snacks.indent'),
+        bigfile = { enabled = true },
         explorer = { enabled = true },
-        indent = { enabled = true },
         input = { enabled = true },
         notifier = {
             enabled = true,
             timeout = 3000,
         },
-        picker = { enabled = true },
         quickfile = { enabled = true },
         scope = { enabled = true },
         scroll = { enabled = true },
@@ -32,7 +32,7 @@ return {
         { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
         { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
         { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
-        { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
+        { "<leader>vn", function() Snacks.explorer() end, desc = "File Explorer" },
         -- find
         { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
         { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
@@ -40,21 +40,7 @@ return {
         { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
         { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
         { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
-        -- git
-        { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
-        { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
-        { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
-        { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
-        { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
-        { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
-        { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
-        -- gh
-        { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub Issues (open)" },
-        { "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub Issues (all)" },
-        { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub Pull Requests (open)" },
-        { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub Pull Requests (all)" },
         -- Grep
-        { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
         { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
         { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
         { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
@@ -80,6 +66,19 @@ return {
         { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
         { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
         { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+        -- git
+        { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
+        { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+        { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
+        { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
+        { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+        { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
+        { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
+        -- gh
+        { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub Issues (open)" },
+        { "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub Issues (all)" },
+        { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub Pull Requests (open)" },
+        { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub Pull Requests (all)" },
         -- LSP
         { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
         { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
@@ -91,8 +90,8 @@ return {
         { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
         { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
         -- Other
-        { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
-        { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
+        { "<leader>[",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+        { "<leader>]",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
         { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
         { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
         { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
@@ -143,7 +142,7 @@ return {
                         dd(...)
                     end
                 else
-                    vim.print = _G.dd 
+                    vim.print = _G.dd
                 end
 
                 -- Create some toggle mappings

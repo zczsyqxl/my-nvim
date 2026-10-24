@@ -32,7 +32,6 @@ return {
             },
         },
         extensions = {
-            'neo-tree',
             'toggleterm',
             'mason',
         },

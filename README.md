@@ -11,10 +11,13 @@ A personal, **cross-platform** (Windows / Linux) Neovim configuration, built aro
 1. **Speed first** — aggressive lazy-loading, carefully pruned startup work, a keymap layout optimized for minimal keystrokes (leader = `,`).
 2. **Swappable engines** — completion, snippets, file tree, tabline, colorscheme, markdown renderer and jump motions are all behind tiny selector tables. Trying a different engine is a one-word edit.
 3. **Batteries for daily work** — LSP + DAP + CMake, rich markdown authoring (rendering, live browser preview, image paste), git workflow, and AI/LLM assistance wired into the editor.
+require('grug-far').open({})
 
 It also doubles as the Neovim backend for [VSCode-Neovim](https://github.com/vscode-neovim/vscode-neovim): most plugin specs and keymaps have a `vim.g.vscode` branch, with a dedicated VSCode theme file.
 
 > Developed and daily-driven on **Neovim 0.13-dev (nightly)** on both Windows 11 and Linux; the `main`-branch `nvim-treesitter` and `vim.lsp.enable()` APIs require **Neovim ≥ 0.11**.
+require('grug-far').open({})
+require('grug-far').open({})
 
 ## Table of Contents
 
