@@ -25,6 +25,8 @@ local function setNvimSyntaxHl()
     set_hl_full('ZZ.WinSeparator', { fg = '#3b4261', bold = true, bg = 'NONE' })
     -- telescope
     set_hl_full('ZZ.TelescopeMatching', { fg = '#adff2f', italic = true, bold = true })
+    -- snacks
+    set_hl_full('ZZ.SnacksPickerMatch', { fg = '#adff2f', italic = true, bold = true })
 
     -- MatchParen
     set_hl_full('ZZ.MatchParen', { fg = '#ffff00', italic = false, underdouble = true, bold = true, sp = '#FFFF00' }) -- sp -> underline color
@@ -82,6 +84,7 @@ local function setNvimSyntaxHl()
     set_hl_full('DiffAdd', { link = 'ZZ.DiffAdd' })
     set_hl_full('DiffChange', { link = 'ZZ.DiffChange' })
     set_hl_full('TelescopeMatching', { link = 'ZZ.TelescopeMatching' })
+    set_hl_full('SnacksPickerMatch', { link = 'ZZ.SnacksPickerMatch' })
     set_hl_full('CocInlayHint', { link = 'ZZ.CocInlayHint' })
     set_hl_full('CocPumDetail', { link = 'ZZ.CocPumDetail' })
     set_hl_full('@lsp.typemod.variable.fileScope', { link = 'ZZ.LspGlobalVar' })

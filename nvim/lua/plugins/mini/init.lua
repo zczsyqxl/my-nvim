@@ -8,7 +8,7 @@ return {
             require('plugins.mini.comment')
             require('plugins.mini.diff')
             require('plugins.mini.sessions')
-            require('plugins.mini.starter')
+            -- require('plugins.mini.starter')
             require('plugins.mini.snippet')
         end
         require('plugins.mini.ai')

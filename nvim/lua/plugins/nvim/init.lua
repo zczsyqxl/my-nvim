@@ -15,7 +15,7 @@ else
         require('plugins.nvim.lualine'),
         require('plugins.nvim.md'),
         require('plugins.nvim.project'),
-        require('plugins.nvim.telescope'),
+        -- require('plugins.nvim.telescope'),
         require('plugins.nvim.toggleterm'),
         require('plugins.nvim.treesitter'),
         require('plugins.nvim.theme'),
