@@ -81,7 +81,24 @@ return {
         local map = vim.keymap.set
         -- normal/visual jump: s/S (visual's native s is v_c substitute, and an equivalent command exists)
         map({ 'n', 'v' }, 's', '<Plug>(leap)', { desc = 'zz:Leap:Jump' })
-        map({ 'n', 'v' }, 'S', '<Plug>(leap-from-window)', { desc = 'zz:Leap:AllWindows' })
+        -- S: 跨窗口 leap。上游 <Plug>(leap-from-window) 硬编码排除所有浮窗
+        -- (leap/user.lua get_enterable_windows 的 config.relative == ""，为挡
+        -- 诊断 hover 弹窗 #137)，snacks explorer(浮窗) 因此进不去。改传显式
+        -- 窗口列表：复刻原判据 + 白名单 snacks picker 的列表窗。
+        map({ 'n', 'v' }, 'S', function()
+            local cur = vim.api.nvim_get_current_win()
+            local wins = {}
+            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                if win ~= cur then
+                    local cfg = vim.api.nvim_win_get_config(win)
+                    local ft = vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+                    if cfg.focusable and (cfg.relative == '' or ft == 'snacks_picker_list') then
+                        wins[#wins + 1] = win
+                    end
+                end
+            end
+            require('leap').leap({ target_windows = wins })
+        end, { desc = 'zz:Leap:AllWindows+Picker' })
         -- One-way search (traversal needs a one-way session; with bidirectional s,
         -- pressing enter ends the session):
         --   ,x ab<enter><enter>... walks matches, <backspace> steps back;

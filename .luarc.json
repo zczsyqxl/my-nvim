@@ -1,6 +1,6 @@
 {
     "runtime.version": "LuaJIT",
-    "workspace.ignoreDir": ["docs","doc"],
+    "workspace.ignoreDir": ["docs", "doc"],
     "workspace.library": [
         "$VIMRUNTIME/lua",
         "${3rd}/luv/library",

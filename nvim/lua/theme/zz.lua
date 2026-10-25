@@ -42,7 +42,7 @@ local function setNvimSyntaxHl()
     --  diff
     set_hl_full('ZZ.DiffText', { fg = '#FFFF00', bg = '#000066', italic = false, bold = true }) -- sp -> underline color
     set_hl_full('ZZ.DiffDelete', { bg = '#FF0000', italic = false, bold = false }) -- sp -> underline color
-    set_hl_full('ZZ.DiffAdd', { bg = '#3333ff', italic = false, bold = false }) -- sp -> underline color
+    set_hl_full('ZZ.DiffAdd', { bg = '#23273a', italic = false, bold = false }) -- sp -> underline color
     set_hl_full('ZZ.DiffChange', { bg = '#000066', italic = false, bold = false }) -- sp -> underline color
 
     -- Rainbow

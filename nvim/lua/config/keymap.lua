@@ -53,8 +53,6 @@ if vim.g.vscode == nil then
             vim.fn.system('start explorer /select,"' .. path .. '"')
         end, { remap = false, silent = true, desc = 'zz:SystemOpen' })
     end
-    package.loaded['config.mylua.exkeymap'] = nil
-    require('config.mylua.exkeymap')
 else
     local vscode = require('vscode')
 
