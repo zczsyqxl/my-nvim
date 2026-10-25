@@ -20,19 +20,35 @@ return {
         -- exist at startup, nvim-dap/nvim-dap-ui/mason-* only load on first
         -- press; :Dap* commands get lazy shims too
         cmd = { 'DapNew', 'DapContinue', 'DapPause', 'DapStepOver', 'DapStepInto', 'DapStepOut', 'DapTerminate', 'DapToggleBreakpoint' },
+        -- real mappings live in keys{} only: lazy loads the whole debug stack
+        -- on first press, then runs the rhs (single source of truth; also
+        -- fixes <leader>vd/<leader>vt not existing before the first load)
         keys = {
-            { '<F4>', desc = 'zz:DAP:CmakeDebug' },
-            { '<F5>', desc = 'zz:DAP:New' },
-            { '<F6>', desc = 'zz:DAP:Pause' },
-            { '<F7>', desc = 'zz:DAP:Continue' },
-            { '<F8>', desc = 'zz:DAP:StepOver' },
-            { '<F9>', desc = 'zz:DAP:ToggleBreakpoint' },
-            { '<F10>', desc = 'zz:DAP:StepInto' },
-            { '<F11>', desc = 'zz:DAP:StepOut' },
-            { '<F12>', desc = 'zz:DAP:Terminate' },
-            { '<F1>', desc = 'zz:dapui:open' },
-            { '<F2>', desc = 'zz:dapui:close' },
-            { '<F3>', desc = 'zz:dapui:toggle' },
+            -- extra opts (silent/remap/nowait) in entries are forwarded verbatim
+            -- to the final vim.keymap.set by lazy's keys handler
+            { '<F4>', '<cmd>CMakeDebug<cr>', silent = true, desc = 'zz:DAP:CmakeDebug' },
+            { '<F5>', '<cmd>DapNew<cr>', silent = true, desc = 'zz:DAP:New' },
+            { '<F6>', '<cmd>DapPause<cr>', silent = true, desc = 'zz:DAP:Pause' },
+            { '<F7>', '<cmd>DapContinue<cr>', silent = true, desc = 'zz:DAP:Continue' },
+            { '<F8>', '<cmd>DapStepOver<cr>', silent = true, desc = 'zz:DAP:StepOver' },
+            { '<F9>', '<cmd>DapToggleBreakpoint<cr>', silent = true, desc = 'zz:DAP:ToggleBreakpoint' },
+            { '<F10>', '<cmd>DapStepInto<cr>', silent = true, desc = 'zz:DAP:StepInto' },
+            { '<F11>', '<cmd>DapStepOut<cr>', silent = true, desc = 'zz:DAP:StepOut' },
+            { '<F12>', '<cmd>DapTerminate<cr>', silent = true, desc = 'zz:DAP:Terminate' },
+            { '<F1>', function() require('dapui').open() end, silent = true, desc = 'zz:dapui:open' },
+            { '<F2>', function() require('dapui').close() end, silent = true, desc = 'zz:dapui:close' },
+            { '<F3>', function() require('dapui').toggle() end, silent = true, desc = 'zz:dapui:toggle' },
+            { '<leader>vd', function() require('dapui').toggle() end, silent = true, desc = 'zz:dapui:toggle' },
+            {
+                '<leader>vt',
+                function()
+                    -- FloatElementArgs "required" fields have runtime defaults; false positive
+                    ---@diagnostic disable-next-line: missing-fields
+                    require('dapui').float_element('console', { position = 'center', title = 'dap-terminal-float' })
+                end,
+                silent = true,
+                desc = 'zz:dapui:FlotTerm',
+            },
         },
         dependencies = {
             { 'nvim-neotest/nvim-nio' },
@@ -128,15 +144,6 @@ return {
                         },
                     })
 
-                    vim.keymap.set('n', '<F4>', '<cmd>CMakeDebug<cr>', { remap = false, silent = true, desc = 'zz:DAP:CmakeDebug' })
-                    vim.keymap.set('n', '<F5>', '<cmd>DapNew<cr>', { remap = false, silent = true, desc = 'zz:DAP:New' })
-                    vim.keymap.set('n', '<F6>', '<cmd>DapPause<cr>', { remap = false, silent = true, desc = 'zz:DAP:Pause' })
-                    vim.keymap.set('n', '<F7>', '<cmd>DapContinue<cr>', { remap = false, silent = true, desc = 'zz:DAP:Continue' })
-                    vim.keymap.set('n', '<F8>', '<cmd>DapStepOver<cr>', { remap = false, silent = true, desc = 'zz:DAP:StepOver' })
-                    vim.keymap.set('n', '<F9>', '<cmd>DapToggleBreakpoint<cr>', { remap = false, silent = true, desc = 'zz:DAP:ToggleBreakpoint' })
-                    vim.keymap.set('n', '<F10>', '<cmd>DapStepInto<cr>', { remap = false, silent = true, desc = 'zz:DAP:StepInto' })
-                    vim.keymap.set('n', '<F11>', '<cmd>DapStepOut<cr>', { remap = false, silent = true, desc = 'zz:DAP:StepOut' })
-                    vim.keymap.set('n', '<F12>', '<cmd>DapTerminate<cr>', { remap = false, silent = true, desc = 'zz:DAP:Terminate' })
                 end,
             },
         },
@@ -203,23 +210,6 @@ return {
             dap.listeners.before.event_exited.dapui_config = function()
                 dapui.close()
             end
-            vim.keymap.set('n', '<F1>', function()
-                require('dapui').open()
-            end, { remap = false, silent = true, desc = 'zz:dapui:open' })
-            vim.keymap.set('n', '<F2>', function()
-                require('dapui').close()
-            end, { remap = false, silent = true, desc = 'zz:dapui:close' })
-            vim.keymap.set('n', '<F3>', function()
-                require('dapui').toggle()
-            end, { remap = false, silent = true, desc = 'zz:dapui:toggle' })
-            vim.keymap.set('n', '<leader>vd', function()
-                require('dapui').toggle()
-            end, { remap = false, silent = true, desc = 'zz:dapui:toggle' })
-            vim.keymap.set('n', '<leader>vt', function()
-                -- FloatElementArgs "required" fields have runtime defaults; false positive
-                ---@diagnostic disable-next-line: missing-fields
-                require('dapui').float_element('console', { position = 'center', title = 'dap-terminal-float' })
-            end, { remap = false, silent = true, desc = 'zz:dapui:FlotTerm' })
         end,
     },
 }

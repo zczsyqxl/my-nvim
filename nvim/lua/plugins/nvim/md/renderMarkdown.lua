@@ -8,9 +8,11 @@ return {
     -- internal file_types list (llm/codecompanion/Avante...) keeps working as before
     ft = { 'markdown', 'llm', 'codecompanion', 'Avante' },
     keys = {
-        -- stubs so the two toggle keys (--set by config on load) work anywhere
-        { '<leader>e,', desc = 'zz:RenderMD:Toggle' },
-        { '<leader>e.', desc = 'zz:RenderMD:SplitToggle' },
+        -- real rhs directly in keys{}: lazy loads the plugin on first press,
+        -- then executes the command (single source of truth, no config-time
+        -- duplicate mappings)
+        { '<leader>e,', '<cmd>RenderMarkdown buf_toggle<cr>', silent = true, desc = 'zz:RenderMD:Toggle' },
+        { '<leader>e.', '<cmd>RenderMarkdown preview<cr>', silent = true, desc = 'zz:RenderMD:SplitToggle' },
     },
 
     config = function()
@@ -783,8 +785,6 @@ return {
                 render_modes = false,
             },
         })
-        vim.keymap.set('n', '<leader>e,', '<cmd>RenderMarkdown buf_toggle<cr>', { remap = false, desc = 'zz:RenderMD:Toggle' })
-        vim.keymap.set('n', '<leader>e.', '<cmd>RenderMarkdown preview<cr>', { remap = false, desc = 'zz:RenderMD:SplitToggle' })
         if vim.fn.has('win32') == 0 then
             vim.env.PATH = vim.env.PATH .. ':' .. vim.g.python3_root_dir
         end
