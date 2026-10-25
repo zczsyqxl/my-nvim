@@ -1,7 +1,10 @@
 return {
     'ahmedkhalf/project.nvim',
-    -- lazy: root auto-detection only has to happen shortly after startup
-    event = 'VeryLazy',
+    -- start plugin: BufEnter/VimEnter autocmds must be registered before the
+    -- startup buffer arrives, otherwise the first file never gets chdir'd.
+    -- (on_buf_enter early-returns on the pre-VimEnter BufEnter, but its
+    -- VimEnter autocmd catches the startup buffer instead.)
+    lazy = false,
     opts = {
         manual_mode = false, -- fully automatic
         detection_methods = { 'pattern' },
@@ -19,9 +22,5 @@ return {
     },
     config = function(_, opts)
         require('project_nvim').setup(opts)
-        -- trigger once automatically so we start at the project root
-        vim.schedule(function()
-            vim.cmd('silent! ProjectRoot')
-        end)
     end,
 }

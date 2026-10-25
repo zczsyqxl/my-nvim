@@ -41,6 +41,20 @@ if vim.g.vscode == nil then
             },
         }
     end
+
+    -- `nvim <dir>` keeps pwd at the shell's cwd by design, and project.nvim
+    -- cannot fix it (netrw buffers are nofile, rejected by its is_file gate).
+    -- Chdir to the directory ourselves; project.nvim takes over from the
+    -- first real file opened inside it.
+    vim.api.nvim_create_autocmd('VimEnter', {
+        once = true,
+        callback = function()
+            local arg = vim.fn.argv(0)
+            if arg ~= '' and vim.fn.isdirectory(arg) == 1 then
+                vim.api.nvim_set_current_dir(vim.fn.fnamemodify(arg, ':p'))
+            end
+        end,
+    })
 end
 
 vim.cmd('syntax on')
