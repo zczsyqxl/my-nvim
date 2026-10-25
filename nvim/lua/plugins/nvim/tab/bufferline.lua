@@ -89,7 +89,11 @@ return {
                 -- end,
                 offsets = {
                     {
-                        filetype = 'neo-tree',
+                        -- snacks explorer 的布局 preset="sidebar" 本身就是真左侧
+                        -- split（layout.lua: position ~= "float" → split），根窗口
+                        -- 的 buffer filetype 是 "snacks_layout_box"（普通 picker 是
+                        -- 浮窗布局、不产生普通窗口，不会误触发本 offset）
+                        filetype = 'snacks_layout_box',
                         text = 'File Explorer', --"File Explorer" | function ,
                         text_align = 'left', --"left" | "center" | "right"
                         separator = true,

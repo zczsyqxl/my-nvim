@@ -24,9 +24,12 @@ if vim.g.vscode == nil then
     vim.keymap.set('i', '<c-l>', '<c-x>', { remap = true, silent = true, desc = 'zz:Complete' })
 
     vim.keymap.set('t', '<C-q>', [[<c-\><c-n>]], { remap = false, desc = 'zz:TerminalEscape' })
+    vim.keymap.set('t', '<esc><esc>', [[<c-\><c-n>]], { remap = false, desc = 'zz:TerminalEscape' })
     -- vim.keymap.set('t', 'jk', [[<c-\><c-n>]], {remap = false, desc='zz:TerminalEscape'})
     vim.keymap.set('t', '<C-y>', function()
-        local char = vim.fn.nr2char(vim.fn.getchar())
+        -- getcharstr() 恒返回 string（getchar() 对特殊键返回 string 会导致
+        -- nr2char 类型不匹配乃至运行时报错），且直接给出字符本身无需转换
+        local char = vim.fn.getcharstr()
         return '<C-\\><C-N>"' .. char .. 'pi'
     end, { expr = true, desc = 'zz:Paste from register in terminal mode' })
     vim.keymap.set('n', '<c-h>', '<c-w>h', { remap = false, desc = 'zz:N.GotoLeftWin' })

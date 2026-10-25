@@ -3,9 +3,18 @@ if vim.g.vscode == nil then
         vim.cmd([[
              language time English_United States.1252
          ]])
+        -- 默认 shell 用 pwsh（:h shell-powershell 官方推荐块）：
+        -- 影响 :!cmd / :make / :grep / :terminal / snacks terminal(<c-/>)
+        vim.o.shell = 'pwsh'
+        vim.o.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+        vim.o.shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
+        vim.o.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+        vim.o.shellquote = ''
+        vim.o.shellxquote = ''
     else
         vim.g.python3_host_prog = vim.fn.expand('~/.local/share/nvim/py3venv/bin/python')
         vim.g.python3_root_dir = vim.fn.expand('~/.local/share/nvim/py3venv/bin')
+        vim.o.shell = 'zsh'
     end
     vim.opt.foldmethod = 'syntax'
     vim.opt.foldcolumn = '4'
@@ -50,7 +59,9 @@ if vim.g.vscode == nil then
         once = true,
         callback = function()
             local arg = vim.fn.argv(0)
-            if arg ~= '' and vim.fn.isdirectory(arg) == 1 then
+            -- argv() 的类型标注是 string|string[]（无索引调用才返回列表），
+            -- type 检查既收窄类型，也天然跳过意外的列表值
+            if type(arg) == 'string' and arg ~= '' and vim.fn.isdirectory(arg) == 1 then
                 vim.api.nvim_set_current_dir(vim.fn.fnamemodify(arg, ':p'))
             end
         end,
