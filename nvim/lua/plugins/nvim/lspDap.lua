@@ -44,7 +44,7 @@ return {
                 },
                 opts = {},
                 config = function()
-                    local dap = require('dap')
+                    -- local dap = require('dap')
                     -- dap.set_log_level('DEBUG') -- verbose dap log every session, removed for perf
                     -- dap.defaults.fallback.external_terminal = {
                     --     command = [[pwsh]],
@@ -90,6 +90,9 @@ return {
                         end
                     end
 
+                    -- ensure_installed/automatic_installation 由插件默认值提供
+                    --(missing-fields 为类型标注风格误报,同 avante 案例)
+                    ---@diagnostic disable-next-line: missing-fields
                     require('mason-nvim-dap').setup({
                         -- ensure_installed = {'codelldb'},
                         handlers = {
@@ -138,6 +141,8 @@ return {
             },
         },
         config = function()
+            -- dapui 声明的必填字段(wrap/icons/...)运行时与默认值合并,误报(同 avante 案例)
+            ---@diagnostic disable-next-line: missing-fields
             require('dapui').setup({
                 layouts = {
                     {
@@ -179,15 +184,21 @@ return {
                 },
             })
             local dap, dapui = require('dap'), require('dapui')
+            -- nvim-dap 的 listeners 用 setmetatable 动态自建(dap.lua:124),
+            -- LuaLS 无法静态解析,下面 4 处访问逐行压制
+            ---@diagnostic disable-next-line: undefined-field
             dap.listeners.before.attach.dapui_config = function()
                 dapui.open()
             end
+            ---@diagnostic disable-next-line: undefined-field
             dap.listeners.before.launch.dapui_config = function()
                 dapui.open()
             end
+            ---@diagnostic disable-next-line: undefined-field
             dap.listeners.before.event_terminated.dapui_config = function()
                 dapui.close()
             end
+            ---@diagnostic disable-next-line: undefined-field
             dap.listeners.before.event_exited.dapui_config = function()
                 dapui.close()
             end
@@ -204,6 +215,8 @@ return {
                 require('dapui').toggle()
             end, { remap = false, silent = true, desc = 'zz:dapui:toggle' })
             vim.keymap.set('n', '<leader>vt', function()
+                -- FloatElementArgs 的必填字段运行时有默认值,误报
+                ---@diagnostic disable-next-line: missing-fields
                 require('dapui').float_element('console', { position = 'center', title = 'dap-terminal-float' })
             end, { remap = false, silent = true, desc = 'zz:dapui:FlotTerm' })
         end,

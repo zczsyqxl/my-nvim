@@ -25,6 +25,7 @@ return {
         local loaders = require('luasnip.loaders')
         if not loaders._zz_mini_patched then
             local orig = loaders.reload_file
+            ---@diagnostic disable-next-line: duplicate-set-field -- 有意包装 LuaSnip 的 reload_file(补丁本体)
             loaders.reload_file = function(path)
                 local res = orig(path)
                 pcall(function()

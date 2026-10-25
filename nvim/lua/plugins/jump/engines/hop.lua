@@ -13,64 +13,78 @@ return {
         {
             '<leader>w',
             function()
-                require('hop').hint_words({ direction = require('hop.hint').HintDirection.AFTER_CURSOR })
+                -- 无 direction = 双向跳转(hop 的运行时语义,window.lua:245 起 nil 走双向);
+                -- hop 的 Options 类型把 direction 误标为必填(defaults.lua:2),与此不符
+                ---@diagnostic disable-next-line: missing-fields
+                require('hop').hint_words({})
             end,
             mode = { 'n', 'v', 'o' },
             desc = 'zz:hop:hint_words.after',
         },
+        -- {
+        --     '<leader>b',
+        --     function()
+        --         require('hop').hint_words({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR })
+        --     end,
+        --     mode = { 'n', 'v', 'o' },
+        --     desc = 'zz:hop:hint_words.before',
+        -- },
         {
-            '<leader>b',
+            '<leader>l',
             function()
-                require('hop').hint_words({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR })
-            end,
-            mode = { 'n', 'v', 'o' },
-            desc = 'zz:hop:hint_words.before',
-        },
-        {
-            '<leader>j',
-            function()
-                require('hop').hint_lines({ direction = require('hop.hint').HintDirection.AFTER_CURSOR })
+                -- 无 direction = 双向跳转(hop 的运行时语义,window.lua:245 起 nil 走双向);
+                -- hop 的 Options 类型把 direction 误标为必填(defaults.lua:2),与此不符
+                ---@diagnostic disable-next-line: missing-fields
+                require('hop').hint_lines({})
             end,
             mode = { 'n', 'v', 'o' },
             desc = 'zz:hop:hint_lines.after',
         },
+        -- {
+        --     '<leader>k',
+        --     function()
+        --         require('hop').hint_lines({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR })
+        --     end,
+        --     mode = { 'n', 'v', 'o' },
+        --     desc = 'zz:hop:hint_lines.before',
+        -- },
         {
-            '<leader>k',
+            '<leader>L',
             function()
-                require('hop').hint_lines({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR })
-            end,
-            mode = { 'n', 'v', 'o' },
-            desc = 'zz:hop:hint_lines.before',
-        },
-        {
-            '<leader>J',
-            function()
-                require('hop').hint_vertical({ direction = require('hop.hint').HintDirection.AFTER_CURSOR })
+                -- 无 direction = 双向跳转(hop 的运行时语义,window.lua:245 起 nil 走双向);
+                -- hop 的 Options 类型把 direction 误标为必填(defaults.lua:2),与此不符
+                ---@diagnostic disable-next-line: missing-fields
+                require('hop').hint_vertical({})
             end,
             mode = { 'n', 'v', 'o' },
             desc = 'zz:hop:hint_vertical.after',
         },
-        {
-            '<leader>K',
-            function()
-                require('hop').hint_vertical({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR })
-            end,
-            mode = { 'n', 'v', 'o' },
-            desc = 'zz:hop:hint_vertical.before',
-        },
+        -- {
+        --     '<leader>K',
+        --     function()
+        --         require('hop').hint_vertical({ direction = require('hop.hint').HintDirection.BEFORE_CURSOR })
+        --     end,
+        --     mode = { 'n', 'v', 'o' },
+        --     desc = 'zz:hop:hint_vertical.before',
+        -- },
         {
             '<leader>s',
             function()
-                require('hop').hint_char1()
+                -- 无 direction = 双向跳转(hop 的运行时语义,window.lua:245 起 nil 走双向);
+                -- hop 的 Options 类型把 direction 误标为必填(defaults.lua:2),与此不符
+                ---@diagnostic disable-next-line: missing-fields
+                require('hop').hint_char1({})
             end,
             mode = { 'n', 'v', 'o' },
             desc = 'zz:hop:hint_char1',
         },
         -- { '<leader>x', function() require('hop').hint_char2() end, mode = {'n','v','o'}, desc = 'zz:hop:hint_char2' },
         {
-            '<leader>z',
+            '<leader>S',
             function()
-                require('hop').hint_patterns()
+                -- 同 ,s:无 direction = 双向,hop 类型误标必填
+                ---@diagnostic disable-next-line: missing-fields
+                require('hop').hint_patterns({})
             end,
             mode = { 'n', 'v', 'o' },
             desc = 'zz:hop:hint_patterns',

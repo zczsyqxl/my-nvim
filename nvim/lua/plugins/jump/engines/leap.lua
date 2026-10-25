@@ -42,6 +42,7 @@ return {
         local hl = require('leap.highlight')
         if not hl._zz_dimmed_patched then
             local orig_init = hl.init
+            ---@diagnostic disable-next-line: duplicate-set-field -- 有意包装 leap 的 highlight.init(补丁本体)
             hl.init = function(self, force)
                 orig_init(self, force)
                 vim.api.nvim_set_hl(0, 'LeapLabelDimmed', { link = 'ZZ.LeapLabelDimmed' })
@@ -63,6 +64,7 @@ return {
         local beacons = require('leap.beacons')
         if not beacons._zz_preview_patched then
             local orig_set = beacons.set_beacons
+            ---@diagnostic disable-next-line: duplicate-set-field -- 有意包装 leap 的 set_beacons(补丁本体)
             beacons.set_beacons = function(targets, kwargs)
                 orig_set(targets, kwargs)
                 if kwargs.phase == 1 then

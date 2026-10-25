@@ -1,9 +1,3 @@
 {
-    "runtime.version": "LuaJIT",
-    "workspace.ignoreDir": ["docs", "doc"],
-    "workspace.library": [
-        "$VIMRUNTIME/lua",
-        "${3rd}/luv/library",
-        "$LOCALAPPDATA/nvim-data/lazy"
-    ]
+    "workspace.ignoreDir": ["docs", "doc"]
 }
