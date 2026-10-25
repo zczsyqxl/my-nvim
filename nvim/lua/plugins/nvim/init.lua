@@ -10,7 +10,6 @@ else
         require('plugins.nvim.grugFar'),
         require('plugins.nvim.rainbow'),
         require('plugins.nvim.lspDap'),
-        require('plugins.nvim.lazydev'),
         require('plugins.nvim.lualine'),
         require('plugins.nvim.md'),
         require('plugins.nvim.project'),
