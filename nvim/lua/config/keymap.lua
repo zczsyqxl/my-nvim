@@ -13,7 +13,6 @@ vim.keymap.set({ 'n', 'v', 'x' }, '<leader>[p', '"+[p', { remap = false, desc = 
 vim.keymap.set('n', '<backspace>', '<cmd>noh<cr>', { remap = false, silent = true, desc = 'zz:RemoveHighlight' })
 
 if vim.g.vscode == nil then
-    vim.keymap.set('n', '<leader>;', '<cmd>set wrap!<cr>', { remap = false, desc = 'zz:ToggleWrap' })
     vim.keymap.set('n', '<leader>\\e', '<cmd>vsplit $MYVIMRC<cr>', { remap = false, desc = 'zz:EditVimConfig' })
     vim.keymap.set('n', '<leader>\\s', '<cmd>source $MYVIMRC<cr>', { remap = false, desc = 'zz:SourceVimConfig' })
     vim.keymap.set('n', '<leader>\\S', '<cmd>exe "Lazy reload " . @l<cr>', { remap = false, silent = false, desc = 'zz:LazyReloadFromReg-l' })
