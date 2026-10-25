@@ -21,8 +21,9 @@ return {
     },
     -- animate scopes. Enabled by default for Neovim >= 0.10
     -- Works on older versions but has to trigger redraws during animation.
-    -- (原插件的 ---@class/@field 类型注释已删除:那些是插件源码里的类型声明,
-    --  拷贝进用户配置会与源码重复定义触发 duplicate-doc-field)
+    -- (the plugin's ---@class/@field type comments were removed: they are type
+    --  declarations from the plugin source; copying them into user config
+    --  re-declares them and triggers duplicate-doc-field)
     -- style: * out: animate outwards from the cursor
     --        * up_down: animate up or down based on the cursor position
     --        * down / up: animate downwards / upwards from the cursor
@@ -35,7 +36,7 @@ return {
             total = 500, -- maximum duration
         },
     },
-    -- scope 配置块(原 ---@class 类型声明注释已删:与插件源码重复定义)
+    -- scope block (original ---@class declaration removed: duplicates plugin source)
     scope = {
         enabled = true, -- enable highlighting the current scope
         priority = 200,
@@ -63,8 +64,8 @@ return {
         },
     },
     -- filter for buffers to enable indent guides
-    -- (插件调用时传 buf, win 两个实参;这里只用 buf,省略未用形参即可,
-    --  Lua 会自动忽略多余实参,避免 unused-local)
+    -- (the plugin calls filter(buf, win); we only use buf — drop the unused
+    --  parameter, Lua ignores extra args, avoids unused-local)
     ---@param buf number
     filter = function(buf)
         return vim.g.snacks_indent ~= false and vim.b[buf].snacks_indent ~= false and vim.bo[buf].buftype == ""

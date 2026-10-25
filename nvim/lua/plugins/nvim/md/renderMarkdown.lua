@@ -9,8 +9,8 @@ return {
     ft = { 'markdown', 'llm', 'codecompanion', 'Avante' },
     keys = {
         -- stubs so the two toggle keys (--set by config on load) work anywhere
-        { '<leader>v,', desc = 'zz:RenderMD:Toggle' },
-        { '<leader>v.', desc = 'zz:RenderMD:SplitToggle' },
+        { '<leader>e,', desc = 'zz:RenderMD:Toggle' },
+        { '<leader>e.', desc = 'zz:RenderMD:SplitToggle' },
     },
 
     config = function()

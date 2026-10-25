@@ -34,8 +34,9 @@ return {
         extensions = {
             'toggleterm',
             'mason',
-            -- neo-tree 替代品：focus 进 snacks explorer/picker 浮窗时，
-            -- 底部状态栏整组替换为极简版（只剩左侧一格显示当前目录）
+            -- neo-tree replacement: when focus enters a snacks explorer/picker float,
+            -- the whole bottom statusline swaps to a minimal one (single left
+            -- segment showing the current directory)
             {
                 filetypes = { 'snacks_picker_list', 'snacks_picker_input' },
                 sections = {

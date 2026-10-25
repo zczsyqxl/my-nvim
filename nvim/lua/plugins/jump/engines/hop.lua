@@ -13,8 +13,9 @@ return {
         {
             '<leader>w',
             function()
-                -- 无 direction = 双向跳转(hop 的运行时语义,window.lua:245 起 nil 走双向);
-                -- hop 的 Options 类型把 direction 误标为必填(defaults.lua:2),与此不符
+                -- no direction = bidirectional jump (hop runtime semantics; nil
+                -- falls through the direction branches, window.lua:245+);
+                -- hop's Options type wrongly marks direction as required (defaults.lua:2)
                 ---@diagnostic disable-next-line: missing-fields
                 require('hop').hint_words({})
             end,
@@ -32,8 +33,9 @@ return {
         {
             '<leader>l',
             function()
-                -- 无 direction = 双向跳转(hop 的运行时语义,window.lua:245 起 nil 走双向);
-                -- hop 的 Options 类型把 direction 误标为必填(defaults.lua:2),与此不符
+                -- no direction = bidirectional jump (hop runtime semantics; nil
+                -- falls through the direction branches, window.lua:245+);
+                -- hop's Options type wrongly marks direction as required (defaults.lua:2)
                 ---@diagnostic disable-next-line: missing-fields
                 require('hop').hint_lines({})
             end,
@@ -51,8 +53,9 @@ return {
         {
             '<leader>L',
             function()
-                -- 无 direction = 双向跳转(hop 的运行时语义,window.lua:245 起 nil 走双向);
-                -- hop 的 Options 类型把 direction 误标为必填(defaults.lua:2),与此不符
+                -- no direction = bidirectional jump (hop runtime semantics; nil
+                -- falls through the direction branches, window.lua:245+);
+                -- hop's Options type wrongly marks direction as required (defaults.lua:2)
                 ---@diagnostic disable-next-line: missing-fields
                 require('hop').hint_vertical({})
             end,
@@ -70,8 +73,9 @@ return {
         {
             '<leader>s',
             function()
-                -- 无 direction = 双向跳转(hop 的运行时语义,window.lua:245 起 nil 走双向);
-                -- hop 的 Options 类型把 direction 误标为必填(defaults.lua:2),与此不符
+                -- no direction = bidirectional jump (hop runtime semantics; nil
+                -- falls through the direction branches, window.lua:245+);
+                -- hop's Options type wrongly marks direction as required (defaults.lua:2)
                 ---@diagnostic disable-next-line: missing-fields
                 require('hop').hint_char1({})
             end,
@@ -82,7 +86,7 @@ return {
         {
             '<leader>S',
             function()
-                -- 同 ,s:无 direction = 双向,hop 类型误标必填
+                -- same as ,s: no direction = bidirectional; hop's type wrongly marks it required
                 ---@diagnostic disable-next-line: missing-fields
                 require('hop').hint_patterns({})
             end,

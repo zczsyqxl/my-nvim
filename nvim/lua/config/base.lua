@@ -3,8 +3,8 @@ if vim.g.vscode == nil then
         vim.cmd([[
              language time English_United States.1252
          ]])
-        -- 默认 shell 用 pwsh（:h shell-powershell 官方推荐块）：
-        -- 影响 :!cmd / :make / :grep / :terminal / snacks terminal(<c-/>)
+        -- Default shell: pwsh (official recommended block from :h shell-powershell):
+        -- affects :!cmd / :make / :grep / :terminal / snacks terminal (<c-/>)
         vim.o.shell = 'pwsh'
         vim.o.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
         vim.o.shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
@@ -59,8 +59,8 @@ if vim.g.vscode == nil then
         once = true,
         callback = function()
             local arg = vim.fn.argv(0)
-            -- argv() 的类型标注是 string|string[]（无索引调用才返回列表），
-            -- type 检查既收窄类型，也天然跳过意外的列表值
+            -- argv() is annotated string|string[] (only index-less calls return a list);
+            -- the type check narrows the type and also skips unexpected list values
             if type(arg) == 'string' and arg ~= '' and vim.fn.isdirectory(arg) == 1 then
                 vim.api.nvim_set_current_dir(vim.fn.fnamemodify(arg, ':p'))
             end

@@ -1,6 +1,6 @@
 return {
     enabled = true,
-    -- 列表在上、输入框在下（自带 reverse=true 列表倒序，telescope 经典交互）
+    -- list on top, input at the bottom (reverse=true inverts the list, classic telescope UX)
     -- layout = {
     --     preset = function()
     --         return vim.o.columns >= 120 and 'telescope' or 'vertical'
@@ -8,18 +8,22 @@ return {
     -- },
     sources = {
         explorer = {
-            -- preview = "main": 预览显示在主窗口（右侧正常 buffer 区域，关闭
-            -- explorer 后恢复原 buffer），而不是 sidebar 底部的小窗格
-            -- （preset 内置的是 height=0.4 的底部窗）。
-            -- hidden: 预览默认隐藏（避免 nvim <dir> 启动时盖住 dashboard），
-            -- 在 explorer 里按 P（toggle_preview）按需开启。
-            -- win.preview: 预览浮层的样式（尺寸走默认=铺满主窗口）。
-            -- border 可选: nvim 原生 "none"/"single"/"double"/"rounded"/"solid"/
-            -- "shadow"，snacks 特有单边 "left"/"right"/"top"/"bottom"/
-            -- "top_bottom"，留白 "hpad"/"vpad"，或 8 字符串/8 元素表自定义。
-            -- 注意：源级覆盖必须挂在 picker.sources.explorer 下（见
-            -- snacks/picker/config/init.lua 的合并表），顶层 opts.explorer
-            -- 是模块配置位，picker 的源解析不读它。
+            -- preview = "main": show the preview in the main window (the normal
+            -- buffer area on the right; the original buffer is restored after
+            -- closing the explorer) instead of the small pane at the sidebar
+            -- bottom (the preset ships a height=0.4 bottom window).
+            -- hidden: the preview starts hidden (keeps the dashboard uncovered
+            -- on nvim <dir> startup); press P (toggle_preview) in the explorer
+            -- to show it on demand.
+            -- win.preview: preview float styling (size stays default = fill
+            -- the main window). border options: nvim native "none"/"single"/
+            -- "double"/"rounded"/"solid"/"shadow", snacks-only single-side
+            -- "left"/"right"/"top"/"bottom"/"top_bottom", padding "hpad"/
+            -- "vpad", or a custom 8-char string / 8-item table.
+            -- NOTE: source-level overrides must live under
+            -- picker.sources.explorer (see the merge table in
+            -- snacks/picker/config/init.lua); the top-level opts.explorer is
+            -- the MODULE slot — the picker's source resolution never reads it.
             layout = { preset = 'sidebar', preview = 'main', hidden = { 'preview' } },
             win = {
                 preview = {

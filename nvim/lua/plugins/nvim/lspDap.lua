@@ -90,8 +90,8 @@ return {
                         end
                     end
 
-                    -- ensure_installed/automatic_installation 由插件默认值提供
-                    --(missing-fields 为类型标注风格误报,同 avante 案例)
+                    -- ensure_installed/automatic_installation come from plugin defaults
+                    -- (missing-fields is an annotation-style false positive, see avante case)
                     ---@diagnostic disable-next-line: missing-fields
                     require('mason-nvim-dap').setup({
                         -- ensure_installed = {'codelldb'},
@@ -141,7 +141,8 @@ return {
             },
         },
         config = function()
-            -- dapui 声明的必填字段(wrap/icons/...)运行时与默认值合并,误报(同 avante 案例)
+            -- dapui's "required" fields (wrap/icons/...) merge with defaults at runtime;
+            -- false positive (avante case)
             ---@diagnostic disable-next-line: missing-fields
             require('dapui').setup({
                 layouts = {
@@ -184,8 +185,8 @@ return {
                 },
             })
             local dap, dapui = require('dap'), require('dapui')
-            -- nvim-dap 的 listeners 用 setmetatable 动态自建(dap.lua:124),
-            -- LuaLS 无法静态解析,下面 4 处访问逐行压制
+            -- nvim-dap builds listeners dynamically with setmetatable (dap.lua:124);
+            -- LuaLS can't resolve them statically — suppress each of the 4 accesses below
             ---@diagnostic disable-next-line: undefined-field
             dap.listeners.before.attach.dapui_config = function()
                 dapui.open()
@@ -211,11 +212,11 @@ return {
             vim.keymap.set('n', '<F3>', function()
                 require('dapui').toggle()
             end, { remap = false, silent = true, desc = 'zz:dapui:toggle' })
-            vim.keymap.set('n', '<leader>va', function()
+            vim.keymap.set('n', '<leader>vd', function()
                 require('dapui').toggle()
             end, { remap = false, silent = true, desc = 'zz:dapui:toggle' })
             vim.keymap.set('n', '<leader>vt', function()
-                -- FloatElementArgs 的必填字段运行时有默认值,误报
+                -- FloatElementArgs "required" fields have runtime defaults; false positive
                 ---@diagnostic disable-next-line: missing-fields
                 require('dapui').float_element('console', { position = 'center', title = 'dap-terminal-float' })
             end, { remap = false, silent = true, desc = 'zz:dapui:FlotTerm' })

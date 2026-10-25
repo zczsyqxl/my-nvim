@@ -26,8 +26,9 @@ if vim.g.vscode == nil then
     vim.keymap.set('t', '<esc><esc>', [[<c-\><c-n>]], { remap = false, desc = 'zz:TerminalEscape' })
     -- vim.keymap.set('t', 'jk', [[<c-\><c-n>]], {remap = false, desc='zz:TerminalEscape'})
     vim.keymap.set('t', '<C-y>', function()
-        -- getcharstr() 恒返回 string（getchar() 对特殊键返回 string 会导致
-        -- nr2char 类型不匹配乃至运行时报错），且直接给出字符本身无需转换
+        -- getcharstr() always returns a string (getchar() returns a string for special
+        -- keys, which breaks nr2char typing and can even error at runtime);
+        -- it yields the character itself, no conversion needed
         local char = vim.fn.getcharstr()
         return '<C-\\><C-N>"' .. char .. 'pi'
     end, { expr = true, desc = 'zz:Paste from register in terminal mode' })

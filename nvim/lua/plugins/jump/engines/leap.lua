@@ -42,7 +42,7 @@ return {
         local hl = require('leap.highlight')
         if not hl._zz_dimmed_patched then
             local orig_init = hl.init
-            ---@diagnostic disable-next-line: duplicate-set-field -- 有意包装 leap 的 highlight.init(补丁本体)
+            ---@diagnostic disable-next-line: duplicate-set-field -- intentionally wraps leap's highlight.init (the patch itself)
             hl.init = function(self, force)
                 orig_init(self, force)
                 vim.api.nvim_set_hl(0, 'LeapLabelDimmed', { link = 'ZZ.LeapLabelDimmed' })
@@ -64,7 +64,7 @@ return {
         local beacons = require('leap.beacons')
         if not beacons._zz_preview_patched then
             local orig_set = beacons.set_beacons
-            ---@diagnostic disable-next-line: duplicate-set-field -- 有意包装 leap 的 set_beacons(补丁本体)
+            ---@diagnostic disable-next-line: duplicate-set-field -- intentionally wraps leap's set_beacons (the patch itself)
             beacons.set_beacons = function(targets, kwargs)
                 orig_set(targets, kwargs)
                 if kwargs.phase == 1 then
@@ -83,10 +83,12 @@ return {
         local map = vim.keymap.set
         -- normal/visual jump: s/S (visual's native s is v_c substitute, and an equivalent command exists)
         map({ 'n', 'v' }, 's', '<Plug>(leap)', { desc = 'zz:Leap:Jump' })
-        -- S: 跨窗口 leap。上游 <Plug>(leap-from-window) 硬编码排除所有浮窗
-        -- (leap/user.lua get_enterable_windows 的 config.relative == ""，为挡
-        -- 诊断 hover 弹窗 #137)，snacks explorer(浮窗) 因此进不去。改传显式
-        -- 窗口列表：复刻原判据 + 白名单 snacks picker 的列表窗。
+        -- S: cross-window leap. Upstream <Plug>(leap-from-window) hard-excludes
+        -- all floating windows (leap/user.lua get_enterable_windows checks
+        -- config.relative == "", meant to keep diagnostic hover popups out, #137),
+        -- so the snacks explorer float is unreachable. Pass an explicit window
+        -- list instead: replicate the original predicate + whitelist the
+        -- snacks picker list window.
         map({ 'n', 'v' }, 'S', function()
             local cur = vim.api.nvim_get_current_win()
             local wins = {}

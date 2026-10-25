@@ -89,10 +89,11 @@ return {
                 -- end,
                 offsets = {
                     {
-                        -- snacks explorer 的布局 preset="sidebar" 本身就是真左侧
-                        -- split（layout.lua: position ~= "float" → split），根窗口
-                        -- 的 buffer filetype 是 "snacks_layout_box"（普通 picker 是
-                        -- 浮窗布局、不产生普通窗口，不会误触发本 offset）
+                        -- the snacks explorer layout preset="sidebar" is a real left
+                        -- split (layout.lua: position ~= "float" → split); the root
+                        -- window's buffer filetype is "snacks_layout_box" (regular
+                        -- pickers use floating layouts, create no normal window,
+                        -- and never trigger this offset)
                         filetype = 'snacks_layout_box',
                         text = 'File Explorer', --"File Explorer" | function ,
                         text_align = 'left', --"left" | "center" | "right"

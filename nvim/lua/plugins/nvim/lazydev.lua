@@ -1,13 +1,14 @@
 return {
     'folke/lazydev.nvim',
-    ft = 'lua', -- 只在编辑 lua 文件时加载
+    ft = 'lua', -- only load when editing lua files
     opts = {
         library = {
-            -- luv 类型：文件里出现 vim.uv 才加载
+            -- luv types: injected only when vim.uv appears in the buffer
             { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-            -- 插件库按需注入（path 写插件名，lazydev 自动解析安装路径）：
-            -- words = buffer 内容匹配到才注入 → 不再整库扫描 →
-            -- 跨插件模块撞名歧义消失（avante.llm / _toggleterm 等元凶不再进 library）
+            -- Plugin libraries injected on demand (path = plugin name; lazydev
+            -- resolves the installed path). words = inject only when matched
+            -- in the buffer → no whole-library scanning → cross-plugin module
+            -- name ambiguity is gone (avante.llm / _toggleterm never enter the library)
             { path = 'snacks.nvim', words = { 'Snacks' } },
             { path = 'mini.nvim', words = { 'Mini' } },
             { path = 'toggleterm.nvim', words = { 'toggleterm' } },

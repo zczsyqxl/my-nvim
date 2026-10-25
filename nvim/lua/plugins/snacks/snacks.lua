@@ -32,7 +32,7 @@ return {
         { "<leader>vh", function() Snacks.notifier.hide() end, desc = "zz:snacks:Dismiss All Notifications" },
         { "<leader>vn", function() Snacks.explorer() end, desc = "zz:snacks:File Explorer" },
         { "<leader>vs", function() Snacks.scratch() end, desc = "zz:snacks:Toggle Scratch Buffer" },
-        { "<leader>vd", function() Snacks.scratch.select() end, desc = "zz:snacks:Select Scratch Buffer" },
+        { "<leader>vf", function() Snacks.scratch.select() end, desc = "zz:snacks:Select Scratch Buffer" },
         { "<leader>vu", function() Snacks.lazygit() end, desc = "zz:snacks:Lazygit" },
         { "<leader>v[", function() Snacks.zen() end, desc = "zz:snacks:Toggle Zen Mode" },
         { "<leader>v]", function() Snacks.zen.zoom() end, desc = "zz:snacks:Toggle Zoom" },
@@ -136,8 +136,10 @@ return {
 
                 -- Override print to use snacks for `:=` command
                 if vim.fn.has("nvim-0.11") == 1 then
-                    -- 有意覆盖 nvim 内部实现(runtime editor.lua 的 vim._print)，
-                    -- 把 `:=` 的输出路由进 Snacks——官方 snacks 示例的标准写法
+                    -- intentionally override nvim's internal implementation
+                    -- (runtime editor.lua's vim._print), routing `:=` output
+                    -- through Snacks — the standard pattern from the official
+                    -- snacks example
                     ---@diagnostic disable-next-line: duplicate-set-field
                     vim._print = function(_, ...)
                         dd(...)

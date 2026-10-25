@@ -7,7 +7,7 @@ return {
     version = false, -- never set this to "*"! Never!
     ---@module 'avante'
     ---@type avante.Config
-    ---@diagnostic disable-next-line: missing-fields -- opts 与 avante 内部 defaults 深度合并,缺省字段为合法覆盖写法
+    ---@diagnostic disable-next-line: missing-fields -- opts are deep-merged with avante's internal defaults; omitted fields are a legal override style
     opts = {
         -- add any options here
         -- for example
