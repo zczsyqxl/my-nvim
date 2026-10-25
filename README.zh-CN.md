@@ -34,11 +34,11 @@
 ## ✨ 特性
 
 - **结构性跨平台**：所有平台差异都收敛在 `has('win32')` 分支里 —— shell（`pwsh` vs `zsh`）、build 命令、路径，甚至 markdown-preview 的安装器（用系统自带的 System32 `curl.exe` + `tar.exe` 做确定性下载，绕开坑很多的 PowerShell 安装脚本）。
-- **双代码片段引擎并存**：`LuaSnip` 走 nvim-cmp 弹窗路径，`mini.snippets` 走手动 `C-j` / `C-l` 展开路径 —— 两者读**同一套** VSCode 风格片段文件，由 `fwatch.nvim` 热重载，用 `nvim-scissors` 就地增删改。
+- **双代码片段引擎并存**：`LuaSnip` 走 nvim-cmp 弹窗路径，`mini.snippets` 走手动 `C-j` / `C-l` 展开路径 —— 两者读**同一套** VSCode 风格片段文件，用 `nvim-scissors` 就地增删改（保存钩子会同时热重载两个引擎）。
 - **可插拔跳转引擎**：当前启用 hop + leap（`,` 前缀提示 + `s`/`S` 标签跳转）；flash 和 lightspeed 的 spec 作为随时可切的备胎保留。
 - **AI 无处不在、供应商无关**：`llm.nvim` 带十几个自定义 app handler（翻译、解释、文档字符串、提交信息、公式识别……），`codecompanion.nvim` 走 GLM Coding Plan 专用端点，`avante.nvim` 走 `opencode` ACP —— 全部由 `,m` / `,n` 前缀驱动。
 - **个人高亮主题**：`lua/theme/zz.lua` 定义了一套 `ZZ.*` 调色板（hop/leap/lightspeed 标签、LSP 语义 token、diff、彩虹括号……），并挂在 `ColorScheme` 自动命令上重新应用，主题怎么换都不丢，双端一致。
-- **键位可发现**：所有自定义映射都带 `zz:` 前缀的 `desc`；按 `,fm`（Telescope keymaps）即可全部浏览。
+- **键位可发现**：所有自定义映射都带 `zz:` 前缀的 `desc`；按 `,fk`（snacks picker 键位表）即可全部浏览。
 
 ## 📦 环境要求与安装
 
@@ -72,12 +72,11 @@ git clone https://github.com/<you>/my-nvim.git "$env:LOCALAPPDATA\nvim"
 | 工具 | 被谁使用 | 说明 |
 | --- | --- | --- |
 | [Git](https://git-scm.com) | lazy.nvim、git 工具链 | 必需 |
-| [fd](https://github.com/sharkdp/fd) | Telescope `find_files` | 需在 `PATH`；Ubuntu/Debian 二进制名为 `fdfind`（配置自动检测） |
-| [ripgrep](https://github.com/BurntSushi/ripgrep) | Telescope `live_grep` | 需在 `PATH` |
-| [lazygit](https://github.com/jesseduffield/lazygit/releases) | `,vu` lazygit.nvim | 二进制放入 `PATH` |
+| [fd](https://github.com/sharkdp/fd) | snacks picker `files` | 需在 `PATH`；Ubuntu/Debian 二进制名为 `fdfind`（配置自动检测） |
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | snacks picker `grep` | 需在 `PATH` |
+| [lazygit](https://github.com/jesseduffield/lazygit/releases) | `,vu` snacks lazygit | 二进制放入 `PATH` |
 | [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/releases) | 解析器编译 | `cargo install tree-sitter-cli` 或下载 GitHub release；需在 `PATH` |
 | [Node.js](https://nodejs.org) | 部分 tree-sitter 解析器（如 latex） | 需在 `PATH` |
-| CMake + Ninja | `telescope-fzf-native` 构建 | build 步骤会跑 `cmake -G Ninja` |
 | [PowerShell 7 (`pwsh`)](https://aka.ms/powershell) | Windows 上 toggleterm 的 shell | |
 | [pylatexenc](https://pypi.org/project/pylatexenc/) | render-markdown 的 LaTeX 渲染 | `python -m pip install pylatexenc`（`:checkhealth` 的 python 项须正常） |
 | [ImageMagick](https://imagemagick.org) | image.nvim（Linux，当前停用） | `sudo apt install imagemagick` |
@@ -100,7 +99,7 @@ make, ninja, diff, git_config, ssh_config, vim, vimdoc
 my-nvim/
 ├── README.md                    # 英文版说明
 ├── README.zh-CN.md              # 本文件
-├── .luarc.json                  # lua-language-server 配置（globals: MiniSessions/MiniSnippets/MiniSurround）
+├── .luarc.json                  # LuaLS：全量插件 library（$LOCALAPPDATA + ~/.local/share 双平台）、pathStrict 防模块撞名
 ├── assets/                      # 文档用截图
 └── nvim/                        # ← 实际的 stdpath('config') 内容
     ├── init.lua                 # 入口：reload + require('config')
@@ -108,7 +107,7 @@ my-nvim/
     ├── coc-settings.json        # 备选引擎 coc.nvim 使用
     ├── fdetect/zzft.lua         # *.stl / *.wsd / *.puml → plantuml
     ├── after/plugin/init.lua    # 加载 theme/zz.lua（单一调色板，vim.g.vscode 守卫分流）
-    ├── colors/                  # 约 1900 个第三方经典 vim 配色（Telescope ,fc 试衣间）
+    ├── colors/                  # 约 1900 个第三方经典 vim 配色（picker `,ov` 试衣间）
     ├── snippets/                # VSCode 风格片段库（LuaSnip 与 mini.snippets 共用）
     │   ├── package.json
     │   └── snippets/            # friendly-snippets 布局 + 自有 global.json
@@ -125,7 +124,6 @@ my-nvim/
         └── plugins/
             ├── nvim/            # 主 spec 清单（init.lua）+ 各插件 spec
             │   ├── cmpn/        # 补全引擎选择器：nvimCmp | blinkCmp | coc
-            │   ├── tree/        # 文件树选择器：neoTree | nvimTree
             │   ├── tab/         # 标签栏选择器：bufferline | barbar | tabby
             │   ├── theme/       # 配色选择器：tokyonight | onedark | catppuccin
             │   └── md/          # Markdown 全家桶：渲染器选择 + 预览 + 图片
@@ -150,11 +148,10 @@ my-nvim/
 | [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | 标签栏（**当前启用**，slope 风格，LSP 诊断） | `plugins/nvim/tab/bufferline.lua` |
 | [barbar.nvim](https://github.com/romgrk/barbar.nvim) | 标签栏（备选） | `plugins/nvim/tab/barbar.lua` |
 | [tabby.nvim](https://github.com/nanozuki/tabby.nvim) | 标签栏（备选） | `plugins/nvim/tab/tabby.lua` |
-| [mini.starter](https://github.com/echasnovski/mini.nvim) | 启动屏（会话 + 最近文件） | `plugins/mini/starter.lua` |
-| [mini.icons](https://github.com/echasnovski/mini.nvim) | 图标提供者（render-markdown、grug-far 等在用） | `plugins/mini/icons.lua` |
-| [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | 文件类型图标 | 依赖 |
-| [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) | 缩进线 + 光标所在作用域 | `plugins/nvim/indentline.lua` |
-| [rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim) | 彩虹括号（treesitter） | indentline 依赖 |
+| [snacks.nvim](https://github.com/folke/snacks.nvim) | dashboard · explorer · picker · notifier · zen/zoom · scratch · statuscolumn · 缩进线 · words（`,v`/`,f`/`,o` 前缀） | `plugins/snacks/*` |
+| [mini.icons](https://github.com/echasnovski/mini.nvim) | 图标提供者（render-markdown、grug-far、snacks picker 等在用） | `plugins/mini/icons.lua` |
+| [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | 文件类型图标（lualine、bufferline） | 依赖 |
+| [rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim) | 彩虹括号（treesitter） | `plugins/nvim/rainbow.lua` |
 | [nvim-colorizer.lua](https://github.com/catgoose/nvim-colorizer.lua) | 颜色值预览（活跃维护 fork） | `plugins/nvim/nvimColorizer.lua` |
 | [aegis.nvim](https://github.com/aekasitt/aegis.nvim) | 击键延迟/计数测量（`:AegisToggle`） | `plugins/nvim/aegis.lua` |
 
@@ -162,10 +159,7 @@ my-nvim/
 
 | 插件 | 用途 | Spec |
 | --- | --- | --- |
-| [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) | 文件树（**当前启用**；同时支持 buffers 与 git-status 源） | `plugins/nvim/tree/neoTree.lua` |
-| [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua) | 文件树（备选） | `plugins/nvim/tree/nvimTree.lua` |
-| [nvim-window-picker](https://github.com/s1n7ax/nvim-window-picker) | neo-tree 分屏用窗口选择器 | 依赖 |
-| [nvim-lsp-file-operations](https://github.com/antosha417/nvim-lsp-file-operations) | 文件树里重命名/移动联动 LSP | 依赖 |
+| [snacks.nvim](https://github.com/folke/snacks.nvim) — explorer | 文件树侧栏（`,vn`；按 `P` 在主窗口预览） | `plugins/snacks/picker.lua` |
 | [project.nvim](https://github.com/ahmedkhalf/project.nvim) | 项目根自动识别（`pattern`：`.git`、`Cargo.toml`、`CMakeLists.txt`…）+ 全局 cwd 钉死 | `plugins/nvim/project.lua` |
 | [aerial.nvim](https://github.com/stevearc/aerial.nvim) | 符号大纲（lsp + treesitter + markdown 后端） | `plugins/nvim/aerial.lua` |
 | [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | 浮动终端（shell、yazi —— 100% 宽 / 85% 高；cmake 执行器/运行器） | `plugins/nvim/toggleterm.lua` |
@@ -174,13 +168,8 @@ my-nvim/
 
 | 插件 | 用途 | Spec |
 | --- | --- | --- |
-| [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) | 万物模糊查找（`,f` 前缀） | `plugins/nvim/telescope.lua` |
-| [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim) | C 版 fzf 排序器（cmake/ninja 构建） | 依赖 |
-| [telescope-file-browser.nvim](https://github.com/nvim-telescope/telescope-file-browser.nvim) | 文件浏览器 picker | 依赖 |
-| [telescope-live-grep-args.nvim](https://github.com/nvim-telescope/telescope-live-grep-args.nvim) | 带参数 live grep | 依赖 |
-| [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) | `vim.ui.select` 后端 | 依赖 |
-| [telescope-dap.nvim](https://github.com/nvim-telescope/telescope-dap.nvim) | DAP 会话/帧/断点 picker | 依赖 |
-| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 查找替换（项目级或文件级，`,[`/`,]`/`,{`/`,}`） | `plugins/nvim/grugFar.lua` |
+| [snacks.nvim](https://github.com/folke/snacks.nvim) — picker | 万物模糊查找（`,f` 前缀；telescope 风格布局，列表在上） | `plugins/snacks/picker.lua` |
+| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 查找替换（`,rd`/`,ra` 文件/项目级，`,rs`/`,rf` 光标词变体） | `plugins/nvim/grugFar.lua` |
 
 ### 补全与代码片段
 
@@ -193,8 +182,7 @@ my-nvim/
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | 片段引擎，cmp 弹窗路径（`A-l`/`A-h` 跳转） | `plugins/nvim/luaSnip.lua` |
 | [mini.snippets](https://github.com/echasnovski/mini.nvim) | 片段引擎，手动路径（`C-j` 展开、`C-l`/`C-h` 跳转） | `plugins/mini/snippet.lua` |
 | [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip) / [cmp-mini-snippets](https://github.com/abeldekat/cmp-mini-snippets) | 把两个引擎分别接入 nvim-cmp | 依赖 |
-| [nvim-scissors](https://github.com/chrisgrieser/nvim-scissors) | 随手增改片段（`,ea` / `,ee`）；已打补丁让 mini.snippets 也热重载 | `plugins/nvim/nvimScissors.lua` |
-| [fwatch.nvim](https://github.com/rktjmp/fwatch.nvim) | 文件监听：外部修改（git pull 等）触发热重载 | `plugins/nvim/fwatch.lua` |
+| [nvim-scissors](https://github.com/chrisgrieser/nvim-scissors) | 随手增改片段（`,za` / `,ze`）；已打补丁让 mini.snippets 也热重载 | `plugins/nvim/nvimScissors.lua` |
 
 ### 移动与文本编辑
 
@@ -206,7 +194,7 @@ my-nvim/
 | [mini.align](https://github.com/echasnovski/mini.nvim) | 带预览的对齐/拆分（`gA`） | `plugins/mini/align.lua` |
 | [mini.comment](https://github.com/echasnovski/mini.nvim) | 注释 | `plugins/mini/comment.lua` |
 | [mini.bracketed](https://github.com/echasnovski/mini.nvim) | 万物 `[x`/`]x` 遍历 | `plugins/mini/bracketed.lua` |
-| [mini.diff](https://github.com/echasnovski/mini.nvim) | hunk 操作（`gl`/`gL` 应用/还原，`[g`/`]g` 导航） | `plugins/mini/diff.lua` |
+| [mini.diff](https://github.com/echasnovski/mini.nvim) | hunk 操作（`gy`/`gY` 应用/还原，`[g`/`]g` 导航） | `plugins/mini/diff.lua` |
 | [hop.nvim](https://github.com/smoka7/hop.nvim) | 跳转引擎（**当前启用**）：`,w`/`,b` 词、`,j`/`,k` 行、`,J`/`,K` 垂直、`,s` 字符、`,z` 模式 | `plugins/jump/engines/hop.lua` |
 | [leap.nvim](https://codeberg.org/andyg/leap.nvim) | 跳转引擎（**当前启用**）：`s`/`S` 标签跳转、`,x`/`,X` 单向遍历、`gk` Visitor 远程操作、`o` 模式 `z`/`x`/`Z`/`X` | `plugins/jump/engines/leap.lua` |
 | [flash.nvim](https://github.com/folke/flash.nvim) | 跳转引擎（备选；hop+lightspeed 超集映射） | `plugins/jump/engines/flash.lua` |
@@ -217,7 +205,7 @@ my-nvim/
 
 | 插件 | 用途 | Spec |
 | --- | --- | --- |
-| [lazygit.nvim](https://github.com/kdheepak/lazygit.nvim) | 浮窗 lazygit（`,vu`）；AI 提交流程也会拉起 | `plugins/nvim/lazygit.lua` |
+| [snacks.nvim](https://github.com/folke/snacks.nvim) — lazygit | 浮窗 lazygit（`,vu`）；AI 提交流程也会拉起 | `plugins/snacks/snacks.lua` |
 | [diffview.nvim](https://github.com/sindrets/diffview.nvim) | git diff / 文件历史界面（`,do`/`,dc`/`,dr`/`,dh`) | `plugins/nvim/diffview.lua` |
 
 ### Markdown 全家桶
@@ -228,7 +216,6 @@ my-nvim/
 | [markview.nvim](https://github.com/OXY2DEV/markview.nvim) | Markdown 渲染器（备选，hybrid 模式） | `plugins/nvim/md/markview.lua` |
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | 浏览器实时预览（`,v/`）；**自定义确定性构建** —— Windows 用 System32 `curl.exe`/`tar.exe` 下载预编译产物（绕开原版 PowerShell 安装器的坑） | `plugins/nvim/md/markdownPreview.lua` |
 | [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | 剪贴板贴图进 markdown（全平台加载；`,ep` 绑定仅 Windows） | `plugins/nvim/md/imgClip.lua` |
-| [image_preview.nvim](https://github.com/adelarsq/image_preview.nvim) | neo-tree 里预览图片文件（`,vp`） | `plugins/nvim/imagePreview.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | 终端内图片渲染（仅 Linux，当前停用） | `plugins/nvim/md/image.lua` |
 
 ### LSP · DAP · 构建
@@ -258,8 +245,6 @@ AI 栈依赖：[plenary.nvim](https://github.com/nvim-lua/plenary.nvim)、[nui.n
 ```lua
 -- plugins/nvim/cmpn/init.lua
 local cmp = 'nvimcmp'          -- 'nvimcmp' | 'blinkcmp' | 其他 → coc
--- plugins/nvim/tree/init.lua
-local tree = 'neo'             -- 'neo' → neo-tree | 其他 → nvim-tree
 -- plugins/nvim/tab/init.lua
 local tab  = 'buf'             -- 'buf' → bufferline | 'barbar' | 'tabby'
 -- plugins/nvim/theme/init.lua
@@ -279,7 +264,6 @@ flowchart LR
     subgraph slots["选择器插槽（每个一个单词）"]
         direction LR
         CMP["cmpn/init.lua<br/><b>cmp = 'nvimcmp'</b>"]
-        TREE["tree/init.lua<br/><b>tree = 'neo'</b>"]
         TAB["tab/init.lua<br/><b>tab = 'buf'</b>"]
         THEME["theme/init.lua<br/><b>theme = 'tokyonight'</b>"]
         MD["md/init.lua<br/><b>md = 'render'</b>"]
@@ -290,8 +274,6 @@ flowchart LR
     CMP -->|"nvimcmp"| C1[nvim-cmp]
     CMP -->|"blinkcmp"| C2[blink.cmp]
     CMP -->|"else"| C3[coc.nvim]
-    TREE -->|"neo"| T1[neo-tree]
-    TREE -->|"else"| T2[nvim-tree]
     TAB -->|"buf"| B1[bufferline]
     TAB -->|"barbar"| B2[barbar]
     TAB -->|"else"| B3[tabby]
@@ -333,29 +315,20 @@ flowchart TD
     CMPC --> CBUF[cmp-buffer] & CPATH[cmp-path] & CCMD[cmp-cmdline]
     CMPC --> CLS[cmp_luasnip] --> LS[LuaSnip]
     CMPC --> CMS[cmp-mini-snippets] --> MINIS[mini.snippets]
-    SCISS[nvim-scissors] --> TELE[telescope.nvim]
+    SCISS[nvim-scissors] --> SNACKS[snacks.nvim]
     SCISS -.补丁 reload.-> LS
-    FW[fwatch.nvim] -- "监听 snippets 目录" --> LS
-    FW -- "变更后重 setup" --> MINIS
 
     %% 模糊查找 / 导航
-    TELE --> PLEN[plenary.nvim]
-    TELE --> FZF[fzf-native<br/>cmake+ninja 构建]
-    TELE --> FB[file-browser] & LGA[live-grep-args] & UIS[ui-select] & TDAP[telescope-dap]
-    LG[LazyGit] --> TELE
+    SNACKS --> PLEN[plenary.nvim]
     AER[aerial.nvim] --> TS[nvim-treesitter]
     AER -.->|后端| LSPC
 
-    %% 文件树 / UI
-    NEO[neo-tree] --> PLEN & NUI[nui.nvim] & DEV[nvim-web-devicons]
-    NEO --> WP[window-picker] & LSPFO[lsp-file-operations]
-    NEO -- ",vp" --> IMGPRE[image_preview]
-    LUAL[lualine] --> DEV & MINI[mini.nvim]
+    %% UI
+    LUAL[lualine] --> DEV[nvim-web-devicons] & MINI[mini.nvim]
     BUFL[bufferline] --> DEV
     RM[render-markdown] --> TS
     RM -.图标.-> MINI
-    IBL[indent-blankline] --> RBD[rainbow-delimiters]
-    RBD --> TS
+    RBD[rainbow-delimiters] --> TS
     GRGF[grug-far] -.图标.-> MINI
 
     %% git
@@ -371,7 +344,7 @@ flowchart TD
     CMAKE -- "F4 调试" --> DAP
 
     %% ai
-    LLM[llm.nvim] --> PLEN & NUI
+    LLM[llm.nvim] --> PLEN & NUI[nui.nvim]
     CC[codecompanion] --> PLEN & TS
     AV[avante] --> PLEN & NUI & MEGA[mega.cmdparse<br/>+ mega.logging]
     BLINK[blink.cmp] -.补全源.-> LLM
@@ -382,7 +355,7 @@ flowchart TD
 
 ## ⌨️ 键位
 
-Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 前缀的描述 —— 按 **`,fm`** 可全部浏览。
+Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 前缀的描述 —— 按 **`,fk`**（snacks picker 键位表）可全部浏览。
 
 基础编辑：
 
@@ -391,38 +364,44 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 | `jk` | i / s | Esc |
 | `<C-s>` | i | 把刚输入的单词转大写 |
 | `z;` | n | `:w` 保存 |
+| `z'` | n | 保存命名会话（mini.sessions） |
 | `'` ↔ `` ` `` | n | 交换 mark 与 jump-mark 键 |
 | `<Space>` | n / o / x | 行尾 |
 | `<leader>y` / `<leader>p` / `<leader>P` | n / v / x | 系统剪贴板复制 / 粘贴 |
 | `<Backspace>` | n | 清除搜索高亮 |
-| `<leader>;` | n | 切换换行 |
 | `<leader>\e` / `<leader>\s` / `<leader>\S` | n | 编辑配置 / 重载配置 / 从寄存器 `l` 执行 `Lazy reload` |
 | `<C-h/j/k/l>` | n | 窗口导航 |
 | `<leader>tn tj tt tk tc to` | n | 标签页 新建/下一个/跳N/上一个/关闭/只留此页 |
 | `<leader>q` / `<leader>Q` | n | 退出 / 全部退出 |
 | `<leader><Tab>` | n | （Windows）在资源管理器中定位当前文件 |
-| `<leader>.` / `<leader>'` / 逗号+反引号 | n | 切换 foldcolumn / virtualedit / quickfix |
+| `<leader>.` / `<leader>N` | n | snacks 草稿本 / Neovim 新闻 |
 | `gh` | n | 诊断浮窗 |
+| `gd` `gl` `gf` `gp` `gt` | n | LSP：定义 / 声明 / 引用 / 实现 / 类型 |
+| `gi` / `go` | n | LSP 入参 / 出参调用 |
+| `]]` / `[[` | n / t | 下一个 / 上一个 LSP 词引用 |
 
 前缀速查：
 
 | 前缀 | 领域 | 要点 |
 | --- | --- | --- |
-| `,f` | Telescope | `ff` 文件 · `fg` git 文件 · `fb` buffer · `f[`/`f]` grep 光标词 / live grep · `fs` 带参 live grep · `fq`/`fp`/`fw`/`fa`/`fu` git 提交/本文件提交/分支/状态/stash · `fk`/`fl`/`fi`/`fo`/`fn`/`fr`/`ft` 符号与引用 · `fd` 诊断 · `fc` 配色 · `fm` 键位 · `fz` 高亮组 · `fv` vim 选项 |
-| `,v` | UI 开关 | `vn` neo-tree · `vf` 聚焦侧栏 · `vg`/`vd` buffers/git 树 · `vv`/`vb`/`vc` 浮窗变体 · `vo` aerial · `vp` 图片预览 · `vm` 终端 · `vy` yazi · `vu` lazygit · `va` DAP UI · `vt` DAP 控制台 · `v,`/`v.` render-markdown 开关/预览 · `v/` markdown-preview 浏览器 |
+| `,f` | snacks picker | `ff` 文件 · `fg` git 文件 · `fb` buffer · `fr` 最近 · `fp` 项目 · `f[`/`f]` grep / grep 已开 buffer · `fw` grep 光标词 · `fd`/`fe` 诊断 · `f,`/`f.` LSP 符号 / 工作区符号 · `fl` 本 buffer 行 · `fk` 键位 · `fm` 标记 · `fu` undo · `fj` 跳转 · `fo` loclist · `fq` quickfix · `fs` 恢复会话 · `fx` 命令 · `f;` 命令历史 · `fv` 通知历史 |
+| `,g` | git（snacks） | `gg`/`gl` log · `gb` 分支 · `gs` 状态 · `gd` diff hunks · `gf` 文件 log · `gh` stash · `gi`/`gI` GitHub issues · `gp`/`gP` GitHub PRs |
+| `,v` | UI 与浮窗 | `vn` explorer · `vm` 终端 · `vy` yazi · `vu` lazygit · `vs`/`vf` 草稿本 开/选 · `vd` DAP UI · `v[`/`v]` zen/zoom · `va` 通知历史 · `vh` 关闭所有通知 · `vo` aerial · `v/` markdown-preview 浏览器 |
+| `,o` | 选项开关（snacks） | `os` 拼写 · `ow` 换行 · `or` 相对行号 · `od` 诊断 · `ol` 行号 · `ot` treesitter · `ob` 背景 · `oh` inlay hints · `oi` 缩进线 · `om` dim · `ov` 配色 |
 | `,d` | diffview | `do` 打开 · `dc` 关闭 · `dr` 刷新 · `dh` 文件历史 |
 | `,m` | llm.nvim | `mc` 聊天 · `mt`/`mT` 翻译词/文 · `me` 解释代码 · `mA` 生成测试 · `mo` 优化对比 · `mg` AI 提交信息 · `md` 文档字符串 · `mk`/`ma` 提问 / 附到聊天 · `mi` 公式识别 · `mu` 账户信息 |
 | `,n` | codecompanion | `nn` 聊天 · `na` 动作面板 · `nc` 聊天开关 · `ni` opencode CLI · `nw` 命令生成 |
 | `,c` | cmake | `cb`/`cB`/`cc`/`cg`/`cr`/`cR` 构建/构建本文件/清理/生成/运行/运行本文件 · `cs*` 各类选择（preset/type/target/kit/…） |
-| `,e` | 片段与 buffer | `ea`/`ee` scissors 增/改片段 · `ep` 贴图（仅 Windows） · `eo`/`ec`/`es` bufferline 选择/选关/关其他 · `,1`–`,9`,`0` 跳到第 N 个 buffer |
-| `,[` `]` `{` `}` | grug-far | 本文件光标词 / 本文件 / 全项目光标词 / 全项目 |
-| `,w b j k J K s z` | hop | 词/行/垂直/字符/模式提示跳转 |
-| `s` `S` `,x` `,X` `gk` | leap | 跳转 / 全窗口 / 单向遍历 / Visitor 远程操作 |
+| `,e` | buffer 与文件 | `eo`/`ec`/`es` bufferline 选择/选关/关其他 · `,1`–`,9`,`0` 跳到第 N 个 buffer · `ed` 删 buffer · `er` 重命名文件 · `e,`/`e.` render-markdown 开关/预览 · `ep` 贴图（仅 Windows） |
+| `,z` | 片段 | `za` 新增 · `ze` 编辑 |
+| `,r` | grug-far | `rd`/`ra` 本文件 / 当前目录替换 · `rs`/`rf` 光标词变体 |
+| `,w` `,l` `,L` `,s` `,S` | hop | 词 / 行 / 垂直 / 字符 / 模式提示跳转 |
+| `s` `S` `,x` `,X` `gk` | leap | 跳转 / 全窗口（含 explorer 浮窗） / 单向遍历 / Visitor 远程操作 |
 | `F1`–`F12` | DAP | `F4` CMakeDebug · `F5` 新会话 · `F7` 继续 · `F8` 单步过 · `F9` 断点 · `F10` 单步入 · `F11` 步出 · `F12` 终止 |
 
 插入模式片段：`<C-j>` 展开（mini.snippets），`<C-l>`/`<C-h>` 前后跳转，`<C-c>` 结束会话；LuaSnip（cmp 路径）：`<A-l>`/`<A-h>` 跳转，`<A-j>`/`<A-k>` 切换 choice 节点。
 包围（mini.surround）：`ys`/`ds`/`cs` 增/删/换，`Sf`/`SF`/`Sh` 查找/高亮。
-hunk（mini.diff）：`gl`/`gL` 应用/还原，`[g`/`]g`/`[G`/`]G` 导航。
+hunk（mini.diff）：`gy`/`gY` 应用/还原，`gygy` 应用光标处 hunk，`[g`/`]g`/`[G`/`]G` 导航。
 
 ## 🤖 AI / LLM 配置
 
@@ -466,11 +445,7 @@ hunk（mini.diff）：`gl`/`gL` 应用/还原，`[g`/`]g`/`[G`/`]G` 导航。
 
 1. 仅 Linux。2. kitty 里性能最好（优于 wezterm）。3. 需要 ImageMagick：`sudo apt install imagemagick`。
 
-**T4 · Telescope：`fzf extension doesn't exist or isn't installed`**
-
-`telescope-fzf-native.nvim` 未编译成功（没有 `build/libfzf.so`）。执行 `:Lazy build telescope-fzf-native.nvim` 重新编译（需要 cmake + ninja），确认插件目录下存在 `build/libfzf.so` 后重启 Neovim。
-
-**T5 · Mason 安装失败或卡住**
+**T4 · Mason 安装失败或卡住**
 
 - `Could not find executable "npm"` —— Neovim 从裁剪过 `PATH` 的环境启动（如桌面快捷方式）。改从 shell 启动以保证能看到 `/usr/bin`（node/npm），或修正启动器的 `PATH`。
 - 下载极慢 / `Installation was aborted` —— GitHub release 通道慢或不通；启动 Neovim 前 export `HTTPS_PROXY` / `HTTP_PROXY`（大小写都设）。一次只装一个包。
@@ -504,7 +479,7 @@ nvim 0.13-dev 上 `/` 的 incsearch 重绘不渲染 `virt_text`，flash 的搜�
 
 - [folke](https://github.com/folke) —— lazy.nvim、tokyonight、flash
 - [echasnovski](https://github.com/echasnovski) —— mini.nvim 全家桶
-- [nvim-telescope](https://github.com/nvim-telescope)、[nvim-treesitter](https://github.com/nvim-treesitter) 与整个 LSP 社区
+- [nvim-treesitter](https://github.com/nvim-treesitter) 与整个 LSP 社区
 - [Kurama622/llm.nvim](https://github.com/Kurama622/llm.nvim) 与 [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) 提供的 AI 集成面
 
 ---
