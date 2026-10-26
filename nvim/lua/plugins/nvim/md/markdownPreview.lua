@@ -47,6 +47,6 @@ return {
         end
     end,
     config = function()
-        vim.keymap.set('n', '<leader>v/', '<cmd>MarkdownPreviewToggle<cr>', { remap = false, desc = 'zz:MDPreview:Toggle' })
+        vim.keymap.set('n', '<leader>e/', '<cmd>MarkdownPreviewToggle<cr>', { remap = false, desc = 'zz:MDPreview:Toggle' })
     end,
 }
