@@ -33,7 +33,7 @@ It also doubles as the Neovim backend for [VSCode-Neovim](https://github.com/vsc
 ## ✨ Highlights
 
 - **Cross-platform by construction**: every platform difference lives in a `has('win32')` branch — shell (`pwsh` vs `zsh`), build commands, paths, even the markdown-preview installer (deterministic System32 `curl.exe` + `tar.exe` download instead of the flaky PowerShell script).
-- **Dual snippet engines coexisting**: `LuaSnip` powers the nvim-cmp popup path, `mini.snippets` powers the manual `C-j` / `C-l` expansion path — fed from the **same** VSCode-style snippet files and edited in-place with `nvim-scissors` (its save hook hot-reloads both engines).
+- **Dual snippet engines coexisting**: `LuaSnip` powers the nvim-cmp popup path, `mini.snippets` powers the manual `C-]` expand / `C-l` jump path — fed from the **same** VSCode-style snippet files and edited in-place with `nvim-scissors` (its save hook hot-reloads both engines).
 - **Pluggable jump engines**: hop and leap are currently enabled (`,`-prefixed hints + `s`/`S` labeled jumps); flash and lightspeed specs are kept as ready-to-switch alternates.
 - **AI everywhere, provider-agnostic**: `llm.nvim` with a dozen custom app handlers (translate, explain, docstring, commit message, formula recognition…), `codecompanion.nvim` on the GLM Coding Plan endpoint, and `avante.nvim` over the `opencode` ACP — all key-driven from the `,m` / `,n` prefixes.
 - **Personal highlight theme**: `lua/theme/zz.lua` defines a `ZZ.*` palette (hop/leap/lightspeed labels, LSP semantic tokens, diff, rainbow delimiters…) that is re-applied on every colorscheme switch, so it survives theme changes on both platforms.
@@ -179,7 +179,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | [coc.nvim](https://github.com/neoclide/coc.nvim) | completion engine (alternate; `coc-settings.json` included) | `plugins/nvim/cmpn/coc.lua` |
 | [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) / [cmp-buffer](https://github.com/hrsh7th/cmp-buffer) / [cmp-path](https://github.com/hrsh7th/cmp-path) / [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline) | nvim-cmp sources | dependencies |
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | snippet engine, cmp-popup path (`A-l`/`A-h` jump) | `plugins/nvim/luaSnip.lua` |
-| [mini.snippets](https://github.com/echasnovski/mini.nvim) | snippet engine, manual path (`C-j` expand, `C-l`/`C-h` jump) | `plugins/mini/snippet.lua` |
+| [mini.snippets](https://github.com/echasnovski/mini.nvim) | snippet engine, manual path (`C-]` expand, `C-l`/`C-h` jump) | `plugins/mini/snippet.lua` |
 | [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip) / [cmp-mini-snippets](https://github.com/abeldekat/cmp-mini-snippets) | bridge each engine into nvim-cmp | dependencies |
 | [nvim-scissors](https://github.com/chrisgrieser/nvim-scissors) | add/edit snippets on the fly (`,za` / `,ze`); patched to hot-reload mini.snippets too | `plugins/nvim/nvimScissors.lua` |
 

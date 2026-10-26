@@ -34,7 +34,7 @@
 ## ✨ 特性
 
 - **结构性跨平台**：所有平台差异都收敛在 `has('win32')` 分支里 —— shell（`pwsh` vs `zsh`）、build 命令、路径，甚至 markdown-preview 的安装器（用系统自带的 System32 `curl.exe` + `tar.exe` 做确定性下载，绕开坑很多的 PowerShell 安装脚本）。
-- **双代码片段引擎并存**：`LuaSnip` 走 nvim-cmp 弹窗路径，`mini.snippets` 走手动 `C-j` / `C-l` 展开路径 —— 两者读**同一套** VSCode 风格片段文件，用 `nvim-scissors` 就地增删改（保存钩子会同时热重载两个引擎）。
+- **双代码片段引擎并存**：`LuaSnip` 走 nvim-cmp 弹窗路径，`mini.snippets` 走手动 `C-]` 展开 / `C-l` 跳转路径 —— 两者读**同一套** VSCode 风格片段文件，用 `nvim-scissors` 就地增删改（保存钩子会同时热重载两个引擎）。
 - **可插拔跳转引擎**：当前启用 hop + leap（`,` 前缀提示 + `s`/`S` 标签跳转）；flash 和 lightspeed 的 spec 作为随时可切的备胎保留。
 - **AI 无处不在、供应商无关**：`llm.nvim` 带十几个自定义 app handler（翻译、解释、文档字符串、提交信息、公式识别……），`codecompanion.nvim` 走 GLM Coding Plan 专用端点，`avante.nvim` 走 `opencode` ACP —— 全部由 `,m` / `,n` 前缀驱动。
 - **个人高亮主题**：`lua/theme/zz.lua` 定义了一套 `ZZ.*` 调色板（hop/leap/lightspeed 标签、LSP 语义 token、diff、彩虹括号……），并挂在 `ColorScheme` 自动命令上重新应用，主题怎么换都不丢，双端一致。
@@ -180,7 +180,7 @@ my-nvim/
 | [coc.nvim](https://github.com/neoclide/coc.nvim) | 补全引擎（备选；含 `coc-settings.json`） | `plugins/nvim/cmpn/coc.lua` |
 | [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) / [cmp-buffer](https://github.com/hrsh7th/cmp-buffer) / [cmp-path](https://github.com/hrsh7th/cmp-path) / [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline) | nvim-cmp 补全源 | 依赖 |
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | 片段引擎，cmp 弹窗路径（`A-l`/`A-h` 跳转） | `plugins/nvim/luaSnip.lua` |
-| [mini.snippets](https://github.com/echasnovski/mini.nvim) | 片段引擎，手动路径（`C-j` 展开、`C-l`/`C-h` 跳转） | `plugins/mini/snippet.lua` |
+| [mini.snippets](https://github.com/echasnovski/mini.nvim) | 片段引擎，手动路径（`C-]` 展开、`C-l`/`C-h` 跳转） | `plugins/mini/snippet.lua` |
 | [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip) / [cmp-mini-snippets](https://github.com/abeldekat/cmp-mini-snippets) | 把两个引擎分别接入 nvim-cmp | 依赖 |
 | [nvim-scissors](https://github.com/chrisgrieser/nvim-scissors) | 随手增改片段（`,za` / `,ze`）；已打补丁让 mini.snippets 也热重载 | `plugins/nvim/nvimScissors.lua` |
 

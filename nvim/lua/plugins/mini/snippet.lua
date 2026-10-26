@@ -11,7 +11,8 @@ function M.setup()
         },
         mappings = {
             -- Expand snippet at cursor position. Created globally in Insert mode.
-            expand = '<C-j>',
+            -- C-] (0x1D) has a C0 slot so legacy terminals can transmit it; C-, does not
+            expand = '<C-]>',
 
             -- Interact with default `expand.insert` session.
             -- Created for the duration of active session(s)
