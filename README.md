@@ -10,7 +10,7 @@ A personal, **cross-platform** (Windows / Linux) Neovim configuration, built aro
 
 1. **Speed first** — aggressive lazy-loading, carefully pruned startup work, a keymap layout optimized for minimal keystrokes (leader = `,`).
 2. **Swappable engines** — completion, snippets, file tree, tabline, colorscheme, markdown renderer and jump motions are all behind tiny selector tables. Trying a different engine is a one-word edit.
-3. **Batteries for daily work** — LSP + DAP + CMake, rich markdown authoring (rendering, live browser preview, image paste), git workflow, and AI/LLM assistance wired into the editor.
+3. **Batteries for daily work** — LSP + DAP + CMake, rich markdown authoring (rendering, live browser preview, image paste, Obsidian vault notes), git workflow, and AI/LLM assistance wired into the editor.
 It also doubles as the Neovim backend for [VSCode-Neovim](https://github.com/vscode-neovim/vscode-neovim): most plugin specs and keymaps have a `vim.g.vscode` branch, with a dedicated VSCode theme file.
 
 > Developed and daily-driven on **Neovim 0.13-dev (nightly)** on both Windows 11 and Linux; the `main`-branch `nvim-treesitter` and `vim.lsp.enable()` APIs require **Neovim ≥ 0.11**.
@@ -147,7 +147,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | tabline (**active**, slope style, LSP diagnostics) | `plugins/nvim/tab/bufferline.lua` |
 | [barbar.nvim](https://github.com/romgrk/barbar.nvim) | tabline (alternate) | `plugins/nvim/tab/barbar.lua` |
 | [tabby.nvim](https://github.com/nanozuki/tabby.nvim) | tabline (alternate) | `plugins/nvim/tab/tabby.lua` |
-| [snacks.nvim](https://github.com/folke/snacks.nvim) | dashboard · explorer · picker · notifier · zen/zoom · scratch · statuscolumn · indent · words (`,\v`/`,f`/`,o` prefixes) | `plugins/snacks/*` |
+| [snacks.nvim](https://github.com/folke/snacks.nvim) | dashboard · explorer · picker · notifier · zen/zoom · scratch · statuscolumn · indent · words (`,f`/`,v`/`,g`/`,b` prefixes) | `plugins/snacks/*` |
 | [mini.icons](https://github.com/echasnovski/mini.nvim) | icon provider (used by render-markdown, grug-far, snacks picker…) | `plugins/mini/icons.lua` |
 | [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | filetype icons (lualine, bufferline) | dependency |
 | [rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim) | rainbow parentheses (treesitter) | `plugins/nvim/rainbow.lua` |
@@ -216,6 +216,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | live browser preview (`,e/`); **custom deterministic build** — Windows downloads the prebuilt binary with System32 `curl.exe`/`tar.exe` (the stock PowerShell installer is bypassed) | `plugins/nvim/md/markdownPreview.lua` |
 | [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | paste images from clipboard into markdown (loads on all platforms; the `,ep` keymap is Windows-only) | `plugins/nvim/md/imgClip.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | in-terminal image rendering (Linux-only, currently disabled) | `plugins/nvim/md/image.lua` |
+| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault notes (`,o` prefix) over `D:/vaults/{personal,work}` (`~/vaults` on Linux): `:Obsidian` subcommand palette, daily notes under `<vault>/daily/` per workspace, wiki-link/tag completion through the in-process LSP (`[[`/`#`/`^`), backlinks/links/toc/rename; visual rendering is left to render-markdown (`ui.enable=false`); lazy-loads on `ft=markdown` | `plugins/note/obsidian.lua` |
 
 ### LSP · DAP · Build
 
@@ -357,53 +358,28 @@ flowchart TD
 
 ## ⌨️ Keymaps
 
-Leader is `,` (and `maplocalleader` too). Every custom map has a `zz:`-prefixed description — browse them all with **`,fk`**.
+Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefixed description — browse them live with **`,fk`**, or read **[KEYMAPS.md](KEYMAPS.md)**: the auto-generated full table, treesitter-parsed from the sources in this repo and collision-checked (vscode-branch and engine-selector overlaps are flagged there). That file is the single source of truth; this section only keeps the topology.
 
-Core editor:
+### Prefix layout
 
-| Key | Mode | Action |
-| --- | --- | --- |
-| `jk` | i / s | Esc |
-| `<C-s>` | i | UPPERCASE the word just typed |
-| `z;` | n | `:w` save |
-| `z'` | n | save named session (mini.sessions) |
-| `'` ↔ `` ` `` | n | marks and jump-marks keys swapped |
-| `<Space>` | n / o / x | end of line |
-| `<leader>y` / `<leader>p` / `<leader>P` | n / v / x | system-clipboard yank / paste |
-| `<Backspace>` | n | clear search highlight |
-| `<leader>\e` / `<leader>\s` / `<leader>\S` | n | edit config / source config / `Lazy reload` from register `l` |
-| `<C-h/j/k/l>` | n | window navigation |
-| `<leader>tn tj tt tk tc to` | n | tab new / next / goto-N / prev / close / only |
-| `<leader>q` / `<leader>Q` | n | quit / quit all |
-| `<leader><Tab>` | n | (Windows) reveal current file in Explorer |
-| `<leader>.` / `<leader>N` | n | snacks scratch toggle / Neovim news |
-| `gh` | n | diagnostic hover |
-| `gd` `gl` `gf` `gp` `gt` | n | LSP: definition / declaration / references / implementation / type |
-| `gi` / `go` | n | LSP incoming / outgoing calls |
-| `]]` / `[[` | n / t | next / prev LSP word reference |
+| Prefix | Domain |
+| --- | --- |
+| `,f` | snacks picker — files / grep / buffers / LSP symbols / jumps / marks / histories / notifications |
+| `,g` | git (snacks picker) |
+| `,v` | UI & floats — explorer, terminal, yazi, lazygit, scratch, DAP UI, zen/zoom, notifier |
+| `,o` | obsidian — global commands; a second buffer-local set lives only inside vault notes |
+| `,b` | snacks option toggles — spell, wrap, diagnostics, conceal, treesitter, indent, colorschemes |
+| `,e` | buffers & markdown — bufferline, render-markdown, markdown-preview, image paste |
+| `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / snippets / grug-far |
+| `,w` `,l` `,L` `,s` `,S` | hop — words / after / before / 2-char / pattern |
+| `s` `,S` `,x` `,X` `gk` | leap — jump / all windows / one-way traversal / remote ops |
+| `F1`–`F12` | DAP session control (`F1`–`F3` DAP UI open/close/toggle) |
 
-Prefix map:
+### Behavioral notes (not visible in the table)
 
-| Prefix | Domain | Highlights |
-| --- | --- | --- |
-| `,f` | snacks picker | `ff` files · `fg` git files · `fb` buffers · `fr` recent · `fp` projects · `f[`/`f]` grep / grep open buffers · `fw` grep word · `fd`/`fe` diagnostics · `f,`/`f.` LSP symbols / workspace symbols · `fl` buffer lines · `fk` keymaps · `fm` marks · `fu` undo · `fj` jumps · `fo` loclist · `fq` quickfix · `fs` resume · `fx` commands · `f;` cmdline history · `fv` notification history |
-| `,g` | git (snacks) | `gg`/`gl` log · `gb` branches · `gs` status · `gd` diff hunks · `gf` log file · `gh` stash · `gi`/`gI` GitHub issues · `gp`/`gP` GitHub PRs |
-| `,v` | UI & floats | `vn` explorer · `vm` terminal · `vy` yazi · `vu` lazygit · `vs`/`vf` scratch toggle/select · `vd` DAP UI · `v[`/`v]` zen/zoom · `va` notification history · `vh` dismiss notifications · `vo` aerial |
-| `,o` | option toggles (snacks) | `os` spell · `ow` wrap · `or` relativenumber · `od` diagnostics · `ol` line numbers · `ot` treesitter · `ob` background · `oh` inlay hints · `oi` indent · `om` dim · `ov` colorschemes |
-| `,d` | diffview | `do` open · `dc` close · `dr` refresh · `dh` file history |
-| `,m` | llm.nvim | `mc` chat · `mt`/`mT` translate word/text · `me` explain code · `mA` test cases · `mo` optimize & compare · `mg` AI commit message · `md` docstring · `mk`/`ma` ask / attach to chat · `mi` formula recognition · `mu` account info |
-| `,n` | codecompanion | `nn` chat · `na` action palette · `nc` chat toggle · `ni` opencode CLI · `nw` command gen |
-| `,c` | cmake | `cb`/`cB`/`cc`/`cg`/`cr`/`cR` build/build-file/clean/generate/run/run-file · `cs*` selects (preset/type/target/kit/…) |
-| `,e` | buffers, files & markdown | `eo`/`ec`/`es` bufferline pick/close-pick/close-others · `,1`–`,9`,`0` go to buffer N · `ed` delete buffer · `er` rename file · `e,`/`e.` render-markdown toggle/preview · `e/` markdown-preview browser · `ep` paste image (Windows only) |
-| `,z` | snippets | `za` add · `ze` edit |
-| `,r` | grug-far | `rd`/`ra` replace in current file / cwd · `rs`/`rf` cword in current file / cwd |
-| `,w` `,l` `,L` `,s` `,S` | hop | words / lines after / vertical / char / pattern hints |
-| `s` `S` `,x` `,X` `gk` | leap | jump / all-windows (incl. explorer float) / one-way traversal / Visitor remote ops |
-| `F1`–`F12` | DAP | `F4` CMakeDebug · `F5` new · `F7` continue · `F8` over · `F9` breakpoint · `F10` into · `F11` out · `F12` terminate |
-
-Snippets in insert mode: `<C-j>` expand (mini.snippets), `<C-l>`/`<C-h>` jump next/prev, `<C-c>` stop session; LuaSnip (cmp path): `<A-l>`/`<A-h>` jump, `<A-j>`/`<A-k>` cycle choice nodes.
-Surround (mini.surround): `ys`/`ds`/`cs` add/delete/replace, `Sf`/`SF`/`Sh` find/highlight.
-Hunks (mini.diff): `gy`/`gY` apply/reset, `gygy` apply hunk under cursor, `[g`/`]g`/`[G`/`]G` navigate.
+- **Picker windows**: `<PageUp>`/`<PageDown>` scroll the preview while focus is on the input or list window (the preview pane is a real buffer and scrolls natively); `F12` / `<a-w>` cycles input → list → preview; `F13`–`F21` mirror the in-picker `<a-x>` toggles and `<a-d>` inspect — those `F`-slots exist for an external translation layer (AutoHotkey remaps real chords onto the physically unreachable F13+ range), and the `<a-x>` originals keep working.
+- **obsidian scope split**: the note-context commands (backlinks, links, rename, toc, template, follow-link, footnotes, paste image, `]e`/`[e` link nav) are buffer-local and only exist inside vault notes, so they never shadow editor-wide bindings.
+- **Markdown engines share slots**: render-markdown owns `e,`/`e.`, markdown-preview owns `e/`; when the markview engine is selected it takes over `e/` and `e.` — the lhs belongs to the slot, not the engine.
 
 ## 🤖 AI / LLM Setup
 

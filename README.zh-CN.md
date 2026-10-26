@@ -10,7 +10,7 @@
 
 1. **速度优先** —— 激进的懒加载、精简的启动开销、为最少击键设计的键位布局（leader = `,`）。
 2. **引擎可切换** —— 补全、代码片段、文件树、标签栏、配色、Markdown 渲染器、跳转引擎，全部藏在一行选择器变量后面。想换引擎？改一个单词就行。
-3. **日用全家桶** —— LSP + DAP + CMake，成体系的 Markdown 写作环境（渲染、浏览器实时预览、贴图），git 工作流，以及接入编辑器的 AI/LLM 助手。
+3. **日用全家桶** —— LSP + DAP + CMake，成体系的 Markdown 写作环境（渲染、浏览器实时预览、贴图、Obsidian vault 笔记），git 工作流，以及接入编辑器的 AI/LLM 助手。
 
 它同时还是 [VSCode-Neovim](https://github.com/vscode-neovim/vscode-neovim) 的 Neovim 后端：绝大部分插件 spec 和键位都有 `vim.g.vscode` 分支，并配有独立的 VSCode 主题文件。
 
@@ -148,7 +148,7 @@ my-nvim/
 | [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | 标签栏（**当前启用**，slope 风格，LSP 诊断） | `plugins/nvim/tab/bufferline.lua` |
 | [barbar.nvim](https://github.com/romgrk/barbar.nvim) | 标签栏（备选） | `plugins/nvim/tab/barbar.lua` |
 | [tabby.nvim](https://github.com/nanozuki/tabby.nvim) | 标签栏（备选） | `plugins/nvim/tab/tabby.lua` |
-| [snacks.nvim](https://github.com/folke/snacks.nvim) | dashboard · explorer · picker · notifier · zen/zoom · scratch · statuscolumn · 缩进线 · words（`,v`/`,f`/`,o` 前缀） | `plugins/snacks/*` |
+| [snacks.nvim](https://github.com/folke/snacks.nvim) | dashboard · explorer · picker · notifier · zen/zoom · scratch · statuscolumn · 缩进线 · words（`,f`/`,v`/`,g`/`,b` 前缀） | `plugins/snacks/*` |
 | [mini.icons](https://github.com/echasnovski/mini.nvim) | 图标提供者（render-markdown、grug-far、snacks picker 等在用） | `plugins/mini/icons.lua` |
 | [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | 文件类型图标（lualine、bufferline） | 依赖 |
 | [rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim) | 彩虹括号（treesitter） | `plugins/nvim/rainbow.lua` |
@@ -217,6 +217,7 @@ my-nvim/
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | 浏览器实时预览（`,e/`）；**自定义确定性构建** —— Windows 用 System32 `curl.exe`/`tar.exe` 下载预编译产物（绕开原版 PowerShell 安装器的坑） | `plugins/nvim/md/markdownPreview.lua` |
 | [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | 剪贴板贴图进 markdown（全平台加载；`,ep` 绑定仅 Windows） | `plugins/nvim/md/imgClip.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | 终端内图片渲染（仅 Linux，当前停用） | `plugins/nvim/md/image.lua` |
+| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault 笔记（`,o` 前缀），路径 `D:/vaults/{personal,work}`（Linux 为 `~/vaults`）：`:Obsidian` 子命令菜单，daily 笔记按 workspace 落在 `<vault>/daily/`，in-process LSP 提供 wiki 链接/标签补全（`[[`/`#`/`^`），反链/出链/目录/重命名；视觉效果交给 render-markdown（`ui.enable=false`）；`ft=markdown` 懒加载 | `plugins/note/obsidian.lua` |
 
 ### LSP · DAP · 构建
 
@@ -355,53 +356,28 @@ flowchart TD
 
 ## ⌨️ 键位
 
-Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 前缀的描述 —— 按 **`,fk`**（snacks picker 键位表）可全部浏览。
+Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 前缀的描述 —— 按 **`,fk`** 实时浏览全部键位，或直接看 **[KEYMAPS.md](KEYMAPS.md)**：自动生成的完整总表，由 treesitter 从本仓库源码解析并做过冲突检查（vscode 分支与引擎选择器的重合会在其中标注）。该文件是唯一权威来源；本节只保留拓扑结构，不再重复内容。
 
-基础编辑：
+### 前缀布局
 
-| 键位 | 模式 | 功能 |
-| --- | --- | --- |
-| `jk` | i / s | Esc |
-| `<C-s>` | i | 把刚输入的单词转大写 |
-| `z;` | n | `:w` 保存 |
-| `z'` | n | 保存命名会话（mini.sessions） |
-| `'` ↔ `` ` `` | n | 交换 mark 与 jump-mark 键 |
-| `<Space>` | n / o / x | 行尾 |
-| `<leader>y` / `<leader>p` / `<leader>P` | n / v / x | 系统剪贴板复制 / 粘贴 |
-| `<Backspace>` | n | 清除搜索高亮 |
-| `<leader>\e` / `<leader>\s` / `<leader>\S` | n | 编辑配置 / 重载配置 / 从寄存器 `l` 执行 `Lazy reload` |
-| `<C-h/j/k/l>` | n | 窗口导航 |
-| `<leader>tn tj tt tk tc to` | n | 标签页 新建/下一个/跳N/上一个/关闭/只留此页 |
-| `<leader>q` / `<leader>Q` | n | 退出 / 全部退出 |
-| `<leader><Tab>` | n | （Windows）在资源管理器中定位当前文件 |
-| `<leader>.` / `<leader>N` | n | snacks 草稿本 / Neovim 新闻 |
-| `gh` | n | 诊断浮窗 |
-| `gd` `gl` `gf` `gp` `gt` | n | LSP：定义 / 声明 / 引用 / 实现 / 类型 |
-| `gi` / `go` | n | LSP 入参 / 出参调用 |
-| `]]` / `[[` | n / t | 下一个 / 上一个 LSP 词引用 |
+| 前缀 | 领域 |
+| --- | --- |
+| `,f` | snacks picker —— 文件 / grep / buffer / LSP 符号 / 跳转 / 标记 / 历史 / 通知 |
+| `,g` | git（snacks picker） |
+| `,v` | UI 与浮窗 —— explorer、终端、yazi、lazygit、草稿本、DAP UI、zen/zoom、通知 |
+| `,o` | obsidian —— 全局命令；第二组 buffer-local 键仅在 vault 笔记内生效 |
+| `,b` | snacks 选项开关 —— 拼写、换行、诊断、conceal、treesitter、缩进线、配色 |
+| `,e` | buffer 与 markdown —— bufferline、render-markdown、markdown-preview、贴图 |
+| `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / 片段 / grug-far |
+| `,w` `,l` `,L` `,s` `,S` | hop —— 词 / 行后 / 行前 / 2 字符 / 模式 |
+| `s` `,S` `,x` `,X` `gk` | leap —— 跳转 / 全窗口 / 单向遍历 / Visitor 远程操作 |
+| `F1`–`F12` | DAP 会话控制（`F1`–`F3` DAP UI 开/关/切换） |
 
-前缀速查：
+### 行为说明（总表里看不到的部分）
 
-| 前缀 | 领域 | 要点 |
-| --- | --- | --- |
-| `,f` | snacks picker | `ff` 文件 · `fg` git 文件 · `fb` buffer · `fr` 最近 · `fp` 项目 · `f[`/`f]` grep / grep 已开 buffer · `fw` grep 光标词 · `fd`/`fe` 诊断 · `f,`/`f.` LSP 符号 / 工作区符号 · `fl` 本 buffer 行 · `fk` 键位 · `fm` 标记 · `fu` undo · `fj` 跳转 · `fo` loclist · `fq` quickfix · `fs` 恢复会话 · `fx` 命令 · `f;` 命令历史 · `fv` 通知历史 |
-| `,g` | git（snacks） | `gg`/`gl` log · `gb` 分支 · `gs` 状态 · `gd` diff hunks · `gf` 文件 log · `gh` stash · `gi`/`gI` GitHub issues · `gp`/`gP` GitHub PRs |
-| `,v` | UI 与浮窗 | `vn` explorer · `vm` 终端 · `vy` yazi · `vu` lazygit · `vs`/`vf` 草稿本 开/选 · `vd` DAP UI · `v[`/`v]` zen/zoom · `va` 通知历史 · `vh` 关闭所有通知 · `vo` aerial |
-| `,o` | 选项开关（snacks） | `os` 拼写 · `ow` 换行 · `or` 相对行号 · `od` 诊断 · `ol` 行号 · `ot` treesitter · `ob` 背景 · `oh` inlay hints · `oi` 缩进线 · `om` dim · `ov` 配色 |
-| `,d` | diffview | `do` 打开 · `dc` 关闭 · `dr` 刷新 · `dh` 文件历史 |
-| `,m` | llm.nvim | `mc` 聊天 · `mt`/`mT` 翻译词/文 · `me` 解释代码 · `mA` 生成测试 · `mo` 优化对比 · `mg` AI 提交信息 · `md` 文档字符串 · `mk`/`ma` 提问 / 附到聊天 · `mi` 公式识别 · `mu` 账户信息 |
-| `,n` | codecompanion | `nn` 聊天 · `na` 动作面板 · `nc` 聊天开关 · `ni` opencode CLI · `nw` 命令生成 |
-| `,c` | cmake | `cb`/`cB`/`cc`/`cg`/`cr`/`cR` 构建/构建本文件/清理/生成/运行/运行本文件 · `cs*` 各类选择（preset/type/target/kit/…） |
-| `,e` | buffer、文件与 markdown | `eo`/`ec`/`es` bufferline 选择/选关/关其他 · `,1`–`,9`,`0` 跳到第 N 个 buffer · `ed` 删 buffer · `er` 重命名文件 · `e,`/`e.` render-markdown 开关/预览 · `e/` markdown-preview 浏览器 · `ep` 贴图（仅 Windows） |
-| `,z` | 片段 | `za` 新增 · `ze` 编辑 |
-| `,r` | grug-far | `rd`/`ra` 本文件 / 当前目录替换 · `rs`/`rf` 光标词变体 |
-| `,w` `,l` `,L` `,s` `,S` | hop | 词 / 行 / 垂直 / 字符 / 模式提示跳转 |
-| `s` `S` `,x` `,X` `gk` | leap | 跳转 / 全窗口（含 explorer 浮窗） / 单向遍历 / Visitor 远程操作 |
-| `F1`–`F12` | DAP | `F4` CMakeDebug · `F5` 新会话 · `F7` 继续 · `F8` 单步过 · `F9` 断点 · `F10` 单步入 · `F11` 步出 · `F12` 终止 |
-
-插入模式片段：`<C-j>` 展开（mini.snippets），`<C-l>`/`<C-h>` 前后跳转，`<C-c>` 结束会话；LuaSnip（cmp 路径）：`<A-l>`/`<A-h>` 跳转，`<A-j>`/`<A-k>` 切换 choice 节点。
-包围（mini.surround）：`ys`/`ds`/`cs` 增/删/换，`Sf`/`SF`/`Sh` 查找/高亮。
-hunk（mini.diff）：`gy`/`gY` 应用/还原，`gygy` 应用光标处 hunk，`[g`/`]g`/`[G`/`]G` 导航。
+- **Picker 窗口内**：`<PageUp>`/`<PageDown>` 在 input 或 list 焦点下滚动预览（preview 窗格本身是真实 buffer，原生支持翻页）；`F12` / `<a-w>` 在三个窗口间循环 input → list → preview；`F13`–`F21` 镜像 picker 内 `<a-x>` 各开关和 `<a-d>` 检查——这些 F 槽位留给外置转换层（AutoHotkey 把真实组合键映射到键盘够不到的 F13+ 区段），`<a-x>` 原键照常可用。
+- **obsidian 作用域分层**：笔记上下文命令（反链、出链、重命名、目录、模板、跟随链接、脚注、贴图、`]e`/`[e` 链接导航）是 buffer-local，只在 vault 笔记内生效，不会遮挡全局绑定。
+- **Markdown 引擎同槽复用**：render-markdown 占 `e,`/`e.`，markdown-preview 占 `e/`；选 markview 引擎时它接管 `e/` 与 `e.` —— 键位属于槽位，不属于引擎。
 
 ## 🤖 AI / LLM 配置
 
