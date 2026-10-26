@@ -41,7 +41,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>tt', '<cmd>exe v:count1 . "tabnext"<cr>', { remap = false, silent = true, desc = 'zz:N.TabNum' })
     vim.keymap.set('n', '<leader>tk', '<cmd>tabprevious<cr>', { remap = false, silent = true, desc = 'zz:N.TabPre' })
     vim.keymap.set('n', '<leader>tc', '<cmd>tabclose<cr>', { remap = false, silent = true, desc = 'zz:N.TabClose' })
-    vim.keymap.set('n', '<leader>to', '<cmd>tabonly<cr>', { remap = false, silent = true, desc = 'zz:N.TabOnly' })
+    vim.keymap.set('n', '<leader>ts', '<cmd>tabonly<cr>', { remap = false, silent = true, desc = 'zz:N.TabOnly' })
     vim.keymap.set('n', '<leader>q', '<cmd>q<cr>', { remap = false, silent = true, desc = 'zz:Quit' })
     vim.keymap.set('n', '<leader>Q', '<cmd>qa<cr>', { remap = false, silent = true, desc = 'zz:QuitAll' })
     if vim.fn.has('win32') == 1 then

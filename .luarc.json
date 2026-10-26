@@ -104,6 +104,8 @@
     "$LOCALAPPDATA/nvim-data/lazy/tokyonight.nvim/lua",
     "~/.local/share/nvim/lazy/tokyonight.nvim/lua",
     "$LOCALAPPDATA/nvim-data/lazy/vim-repeat/lua",
-    "~/.local/share/nvim/lazy/vim-repeat/lua"
+    "~/.local/share/nvim/lazy/vim-repeat/lua",
+    "$LOCALAPPDATA/nvim-data/lazy/obsidian.nvim//lua",
+    "~/.local/share/nvim/lazy/obsidian.nvim/lua",
   ]
 }
