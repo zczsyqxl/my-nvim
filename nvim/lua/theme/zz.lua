@@ -35,6 +35,13 @@ local function setNvimSyntaxHl()
     set_hl_full('ZZ.ViHolder', { fg = '#ffffff', bg = '#4170ff', sp = '#ffff00', underdouble = true })
     set_hl_full('ZZ.UnHolder', { fg = '#ffffff', bg = '#4170ff', sp = '#0000ff', underdouble = true })
 
+    -- blink.cmp windows (pure black background)
+    set_hl_full('ZZ.BlinkCmpMenu', { fg = '#c0caf5', bg = zzBlack })
+    set_hl_full('ZZ.BlinkCmpSelection', { fg = '#ffffff', bg = '#2a3f6f' }) -- deep navy, distinct from CursorLine
+    set_hl_full('ZZ.BlinkCmpDoc', { fg = '#c0caf5', bg = zzBlack })
+    set_hl_full('ZZ.BlinkCmpSignatureHelp', { fg = '#c0caf5', bg = zzBlack })
+    set_hl_full('ZZ.BlinkCmpBorder', { fg = '#3b4261', bg = zzBlack })
+
     --  diff
     set_hl_full('ZZ.DiffText', { fg = '#FFFF00', bg = '#000066', italic = false, bold = true }) -- sp -> underline color
     set_hl_full('ZZ.DiffDelete', { bg = '#660000', italic = false, bold = false }) -- sp -> underline color
@@ -81,6 +88,14 @@ local function setNvimSyntaxHl()
     set_hl_full('DiffChange', { link = 'ZZ.DiffChange' })
     set_hl_full('TelescopeMatching', { link = 'ZZ.TelescopeMatching' })
     set_hl_full('SnacksPickerMatch', { link = 'ZZ.SnacksPickerMatch' })
+    -- blink.cmp windows
+    set_hl_full('BlinkCmpMenu', { link = 'ZZ.BlinkCmpMenu' })
+    set_hl_full('BlinkCmpMenuSelection', { link = 'ZZ.BlinkCmpSelection' })
+    set_hl_full('BlinkCmpMenuBorder', { link = 'ZZ.BlinkCmpBorder' })
+    set_hl_full('BlinkCmpDoc', { link = 'ZZ.BlinkCmpDoc' })
+    set_hl_full('BlinkCmpDocBorder', { link = 'ZZ.BlinkCmpBorder' })
+    set_hl_full('BlinkCmpSignatureHelp', { link = 'ZZ.BlinkCmpSignatureHelp' })
+    set_hl_full('BlinkCmpSignatureHelpBorder', { link = 'ZZ.BlinkCmpBorder' })
     set_hl_full('@lsp.typemod.variable.fileScope', { link = 'ZZ.LspGlobalVar' })
     set_hl_full('@lsp.typemod.variable.globalScope', { link = 'ZZ.LspGlobalVar' })
     set_hl_full('@lsp.typemod.variable.functionScope', { link = 'ZZ.LspLocalVar' })

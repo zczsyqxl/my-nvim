@@ -12,7 +12,7 @@ return {
             menu = {
                 scrollbar = false,
                 border = 'none',
-                winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:FloatBorder',
+                winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None,CurSearch:None',
 
                 draw = {
                     components = {
@@ -54,7 +54,13 @@ return {
                 show_on_blocked_trigger_characters = {},
             },
         },
-        signature = { window = { border = 'single' } },
+        -- enabled: opt-in! blink ships signature help DISABLED by default (config/signature.lua:31).
+        -- show_on_keyword: request signature help on any typed keyword; compensates for
+        -- snippet-expanded '(' not counting as a typed trigger character
+        signature = {
+            enabled = true,
+            window = { border = 'double' },
+        },
 
         -- v2 overrides cmdline mode with menu.auto_show = false (its ghost-text replacement
         -- only renders with noice.nvim, which we don't use), so re-enable the popup.
