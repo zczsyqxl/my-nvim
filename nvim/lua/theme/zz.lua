@@ -36,11 +36,11 @@ local function setNvimSyntaxHl()
     set_hl_full('ZZ.UnHolder', { fg = '#ffffff', bg = '#4170ff', sp = '#0000ff', underdouble = true })
 
     -- blink.cmp windows (pure black background)
-    set_hl_full('ZZ.BlinkCmpMenu', { fg = '#c0caf5', bg = zzBlack })
+    set_hl_full('ZZ.BlinkCmpMenu', { fg = '#c0caf5', bg = '#101010' })
     set_hl_full('ZZ.BlinkCmpSelection', { fg = '#ffffff', bg = '#2a3f6f' }) -- deep navy, distinct from CursorLine
     set_hl_full('ZZ.BlinkCmpDoc', { fg = '#c0caf5', bg = zzBlack })
-    set_hl_full('ZZ.BlinkCmpSignatureHelp', { fg = '#c0caf5', bg = zzBlack })
-    set_hl_full('ZZ.BlinkCmpBorder', { fg = '#3b4261', bg = zzBlack })
+    set_hl_full('ZZ.BlinkCmpSignatureHelp', { fg = '#c0caf5', bg = '#101010' })
+    set_hl_full('ZZ.BlinkCmpBorder', { fg = '#3b4261', bg = '#101010' })
 
     --  diff
     set_hl_full('ZZ.DiffText', { fg = '#FFFF00', bg = '#000066', italic = false, bold = true }) -- sp -> underline color
@@ -166,8 +166,14 @@ end
 
 setMySyntaxHl()
 
--- 3. re-apply after colorscheme switches via an autocmd wrapper
+-- 3. re-apply after colorscheme switches via an autocmd wrapper.
+-- every :colorscheme run starts with :hi clear, wiping all ZZ.* groups and links;
+-- this callback re-establishes them on top of the new theme.
+-- augroup clear=true: a manual module reload (wipe package.loaded + require)
+-- replaces the previous listener instead of stacking duplicates
+vim.api.nvim_create_augroup('ZZTheme', { clear = true })
 vim.api.nvim_create_autocmd('ColorScheme', {
+    group = 'ZZTheme',
     pattern = '*',
     callback = setMySyntaxHl,
 })

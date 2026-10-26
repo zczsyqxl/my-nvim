@@ -43,10 +43,9 @@ return {
                     -- },
                 },
             },
-            -- nvim-cmp shows docs automatically when the popup opens; blink defaults to false
+            -- docs open manually via C-Space (toggle); C-b/C-f and PageUp/PageDown scroll
             documentation = {
-                auto_show = true,
-                auto_show_delay_ms = 200,
+                auto_show = false,
                 window = { border = 'none' },
             },
             trigger = {
@@ -80,16 +79,17 @@ return {
 
         keymap = {
             preset = 'default',
-            -- the default preset has no C-n/C-p; mirror nvim-cmp muscle memory (+ C-j/C-k)
-            ['<C-n>'] = { 'select_next', 'fallback' },
-            ['<C-p>'] = { 'select_prev', 'fallback' },
+            -- C-j/C-k select next/prev; the default preset also provides C-p (fallback_to_mappings)
+            -- and C-n — our explicit C-n below overrides the preset's select_next with the docs toggle
             ['<C-j>'] = { 'select_next', 'fallback' },
             ['<C-k>'] = { 'select_prev', 'fallback' },
-            ['<C-y>'] = {
-                function(cmp)
-                    cmp.show({ providers = { 'llm' } })
-                end,
-            },
+            -- long-doc scrolling alongside the preset's C-b/C-f
+            ['<PageUp>'] = { 'scroll_documentation_up', 'fallback' },
+            ['<PageDown>'] = { 'scroll_documentation_down', 'fallback' },
+            -- manual docs toggle on C-n (overrides the preset's select_next; C-j/C-k cover
+            -- selection). Rejected keys: C-Space (Windows IME swallows it), C-[ (ESC alias),
+            -- C-Tab (old-protocol terminal sends plain Tab), C-g (prefix commands C-g u/j/k)
+            ['<C-n>'] = { 'show', 'show_documentation', 'hide_documentation' },
             ['<CR>'] = { 'select_and_accept', 'fallback' },
             ['<Tab>'] = { 'select_and_accept', 'fallback' },
         },
