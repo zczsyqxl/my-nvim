@@ -17,7 +17,9 @@ return {
     },
     config = function(_, opts)
         require('markview').setup(opts)
-        vim.keymap.set('n', '<leader>e/', '<cmd>Markview<cr>', { remap = false, desc = 'zz:markview:Toggle' })
-        vim.keymap.set('n', '<leader>e.', '<cmd>Markview splitToggle<cr>', { remap = false, desc = 'zz:markview:SplitToggle' })
     end,
+    keys = {
+        { '<leader>e/', '<cmd>Markview<cr>',            desc = 'zz:markview:Toggle',       silent = true },
+        { '<leader>e.', '<cmd>Markview splitToggle<cr>', desc = 'zz:markview:SplitToggle', silent = true },
+    },
 }

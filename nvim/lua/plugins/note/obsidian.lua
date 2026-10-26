@@ -33,14 +33,14 @@ return {
                 vim.keymap.set("n", "[e", function()
                     require("obsidian.actions").nav_link("prev", false)
                 end, { buffer = true, silent = true, desc = "zz:obsidian:prev_link" })
-                vim.keymap.set("n", "<leader>ob", "<cmd>Obsidian backlinks<cr>" , { buffer = true, silent = true, desc = "zz:obsidian:rename" })
-                vim.keymap.set("n", "<leader>of", "<cmd>Obsidian footnotes<cr>" , { buffer = true, silent = true, desc = "zz:obsidian:rename" })
-                vim.keymap.set("n", "<leader>oF", "<cmd>Obsidian follow_link<cr>" , { buffer = true, silent = true, desc = "zz:obsidian:rename" })
-                vim.keymap.set("n", "<leader>ol", "<cmd>Obsidian links<cr>" , { buffer = true, silent = true, desc = "zz:obsidian:rename" })
-                vim.keymap.set("n", "<leader>op", "<cmd>Obsidian paste_img<cr>" , { buffer = true, silent = true, desc = "zz:obsidian:rename" })
-                vim.keymap.set("n", "<leader>or", "<cmd>Obsidian rename<cr>" , { buffer = true, silent = true, desc = "zz:obsidian:rename" })
-                vim.keymap.set("n", "<leader>ot", "<cmd>Obsidian toc<cr>" , { buffer = true, silent = true, desc = "zz:obsidian:rename" })
-                vim.keymap.set("n", "<leader>oT", "<cmd>Obsidian template<cr>" , { buffer = true, silent = true, desc = "zz:obsidian:rename" })
+                vim.keymap.set("n", "<leader>ob", "<cmd>Obsidian backlinks<cr>", { buffer = true, silent = true, desc = "zz:obsidian:backlinks" })
+                vim.keymap.set("n", "<leader>of", "<cmd>Obsidian footnotes<cr>", { buffer = true, silent = true, desc = "zz:obsidian:footnotes" })
+                vim.keymap.set("n", "<leader>oF", "<cmd>Obsidian follow_link<cr>", { buffer = true, silent = true, desc = "zz:obsidian:follow_link" })
+                vim.keymap.set("n", "<leader>ol", "<cmd>Obsidian links<cr>", { buffer = true, silent = true, desc = "zz:obsidian:links" })
+                vim.keymap.set("n", "<leader>op", "<cmd>Obsidian paste_img<cr>", { buffer = true, silent = true, desc = "zz:obsidian:paste_img" })
+                vim.keymap.set("n", "<leader>or", "<cmd>Obsidian rename<cr>", { buffer = true, silent = true, desc = "zz:obsidian:rename" })
+                vim.keymap.set("n", "<leader>ot", "<cmd>Obsidian toc<cr>", { buffer = true, silent = true, desc = "zz:obsidian:toc" })
+                vim.keymap.set("n", "<leader>oT", "<cmd>Obsidian template<cr>", { buffer = true, silent = true, desc = "zz:obsidian:template" })
             end,
         },
     },
