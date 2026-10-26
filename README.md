@@ -9,7 +9,7 @@
 A personal, **cross-platform** (Windows / Linux) Neovim configuration, built around three ideas:
 
 1. **Speed first** — aggressive lazy-loading, carefully pruned startup work, a keymap layout optimized for minimal keystrokes (leader = `,`).
-2. **Swappable engines** — completion, snippets, file tree, tabline, colorscheme, markdown renderer and jump motions are all behind tiny selector tables. Trying a different engine is a one-word edit.
+2. **Swappable engines** — completion, snippets, tabline, colorscheme, markdown renderer and jump motions are all behind tiny selector tables. Trying a different engine is a one-word edit.
 3. **Batteries for daily work** — LSP + DAP + CMake, rich markdown authoring (rendering, live browser preview, image paste, Obsidian vault notes), git workflow, and AI/LLM assistance wired into the editor.
 It also doubles as the Neovim backend for [VSCode-Neovim](https://github.com/vscode-neovim/vscode-neovim): most plugin specs and keymaps have a `vim.g.vscode` branch, with a dedicated VSCode theme file.
 
@@ -455,11 +455,11 @@ On nvim 0.13-dev, the incsearch redraw of `/` doesn't render `virt_text`, so fla
 
 Built on the shoulders of the Neovim ecosystem — in particular:
 
-- [folke](https://github.com/folke) — lazy.nvim, tokyonight, snacks.nvim
+- [folke](https://github.com/folke) — lazy.nvim, tokyonight, snacks.nvim, flash
 - [echasnovski](https://github.com/echasnovski) — the mini.nvim library
 - [nvim-treesitter](https://github.com/nvim-treesitter) and the LSP community
 - [Kurama622/llm.nvim](https://github.com/Kurama622/llm.nvim) and [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) for the AI integration surface
 
 ---
 
-License: personal configuration, not yet published under a license. If this is ever open-sourced, it will most likely be MIT.
+License: [MIT](LICENSE).

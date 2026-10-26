@@ -9,7 +9,7 @@
 一份个人的**跨平台**（Windows / Linux）Neovim 配置，围绕三个理念搭建：
 
 1. **速度优先** —— 激进的懒加载、精简的启动开销、为最少击键设计的键位布局（leader = `,`）。
-2. **引擎可切换** —— 补全、代码片段、文件树、标签栏、配色、Markdown 渲染器、跳转引擎，全部藏在一行选择器变量后面。想换引擎？改一个单词就行。
+2. **引擎可切换** —— 补全、代码片段、标签栏、配色、Markdown 渲染器、跳转引擎，全部藏在一行选择器变量后面。想换引擎？改一个单词就行。
 3. **日用全家桶** —— LSP + DAP + CMake，成体系的 Markdown 写作环境（渲染、浏览器实时预览、贴图、Obsidian vault 笔记），git 工作流，以及接入编辑器的 AI/LLM 助手。
 
 它同时还是 [VSCode-Neovim](https://github.com/vscode-neovim/vscode-neovim) 的 Neovim 后端：绝大部分插件 spec 和键位都有 `vim.g.vscode` 分支，并配有独立的 VSCode 主题文件。
@@ -453,11 +453,11 @@ nvim 0.13-dev 上 `/` 的 incsearch 重绘不渲染 `virt_text`，flash 的搜�
 
 站在 Neovim 生态的肩膀上 —— 特别感谢：
 
-- [folke](https://github.com/folke) —— lazy.nvim、tokyonight、flash
+- [folke](https://github.com/folke) —— lazy.nvim、tokyonight、snacks.nvim、flash
 - [echasnovski](https://github.com/echasnovski) —— mini.nvim 全家桶
 - [nvim-treesitter](https://github.com/nvim-treesitter) 与整个 LSP 社区
 - [Kurama622/llm.nvim](https://github.com/Kurama622/llm.nvim) 与 [olimorris/codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) 提供的 AI 集成面
 
 ---
 
-许可：个人配置，暂未以任何许可协议发布。若日后开源，大概率采用 MIT。
+许可：[MIT](LICENSE)。
