@@ -25,7 +25,7 @@ return {
             require("obsidian").setup(opts)
         end,
         callbacks = {
-            enter_note = function(_, _)
+            enter_note = function(note)
                 -- note-only navigation keys, buffer-local on vault notes
                 vim.keymap.set("n", "]e", function()
                     require("obsidian.actions").nav_link("next", false)
