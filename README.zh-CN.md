@@ -34,10 +34,10 @@
 ## ✨ 特性
 
 - **结构性跨平台**：所有平台差异都收敛在 `has('win32')` 分支里 —— shell（`pwsh` vs `zsh`）、build 命令、路径，甚至 markdown-preview 的安装器（用系统自带的 System32 `curl.exe` + `tar.exe` 做确定性下载，绕开坑很多的 PowerShell 安装脚本）。
-- **双代码片段引擎并存**：`LuaSnip` 走 nvim-cmp 弹窗路径，`mini.snippets` 走手动 `C-]` 展开 / `C-l` 跳转路径 —— 两者读**同一套** VSCode 风格片段文件，用 `nvim-scissors` 就地增删改（保存钩子会同时热重载两个引擎）。
+- **双代码片段引擎并存**：`LuaSnip` 走补全弹窗路径（blink.cmp 的 `luasnip` preset；nvim-cmp 下是 `cmp_luasnip`），`mini.snippets` 走手动 `C-]` 展开 / `C-l` 跳转路径 —— 两者读**同一套** VSCode 风格片段文件，用 `nvim-scissors` 就地增删改（保存钩子会同时热重载两个引擎）。
 - **可插拔跳转引擎**：当前启用 hop + leap（`,` 前缀提示 + `s`/`S` 标签跳转）；flash 和 lightspeed 的 spec 作为随时可切的备胎保留。
 - **AI 无处不在、供应商无关**：`llm.nvim` 带十几个自定义 app handler（翻译、解释、文档字符串、提交信息、公式识别……），`codecompanion.nvim` 走 GLM Coding Plan 专用端点，`avante.nvim` 走 `opencode` ACP —— 全部由 `,m` / `,n` 前缀驱动。
-- **个人高亮主题**：`lua/theme/zz.lua` 定义了一套 `ZZ.*` 调色板（hop/leap/lightspeed 标签、LSP 语义 token、diff、彩虹括号……），并挂在 `ColorScheme` 自动命令上重新应用，主题怎么换都不丢，双端一致。
+- **个人高亮主题**：`lua/theme/zz.lua` 定义了一套 `ZZ.*` 调色板（hop/leap/lightspeed 标签、LSP 语义 token、diff、彩虹括号、blink.cmp 纯黑窗口……），并挂在 `ColorScheme` 自动命令上重新应用，主题怎么换都不丢，双端一致。
 - **键位可发现**：所有自定义映射都带 `zz:` 前缀的 `desc`；按 `,fk`（snacks picker 键位表）即可全部浏览。
 
 ## 📦 环境要求与安装
@@ -174,7 +174,7 @@ my-nvim/
 
 | 插件 | 用途 | Spec |
 | --- | --- | --- |
-| [blink.cmp](https://github.com/Saghen/blink.cmp) | 补全引擎（**当前启用**；v2 + blink.lib，`build` 下载 Rust 模糊匹配器，内置 lsp/path/buffer/cmdline 源 + llm.nvim 幽灵补全，LuaSnip 片段 preset） | `plugins/nvim/cmpn/blinkCmp.lua` |
+| [blink.cmp](https://github.com/Saghen/blink.cmp) | 补全引擎（**当前启用**；v2 + blink.lib，`build` 下载 Rust 模糊匹配器，内置 lsp/path/buffer/cmdline 源 + llm.nvim 幽灵补全，LuaSnip 片段 preset，signature help 已显式开启，`ZZ.*` 纯黑窗口主题） | `plugins/nvim/cmpn/blinkCmp.lua` |
 | [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | 补全引擎（备选；LSP/buffer/path + `/`、`:` 命令行源） | `plugins/nvim/cmpn/nvimCmp.lua` |
 | [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) / [cmp-buffer](https://github.com/hrsh7th/cmp-buffer) / [cmp-path](https://github.com/hrsh7th/cmp-path) / [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline) | nvim-cmp 补全源（仅在选中 nvim-cmp 时加载） | 依赖 |
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | 片段引擎，cmp 弹窗路径（`A-l`/`A-h` 跳转） | `plugins/nvim/luaSnip.lua` |
@@ -215,7 +215,7 @@ my-nvim/
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | 浏览器实时预览（`,e/`）；**自定义确定性构建** —— Windows 用 System32 `curl.exe`/`tar.exe` 下载预编译产物（绕开原版 PowerShell 安装器的坑） | `plugins/nvim/md/markdownPreview.lua` |
 | [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | 剪贴板贴图进 markdown（全平台加载；`,ep` 绑定仅 Windows） | `plugins/nvim/md/imgClip.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | 终端内图片渲染（仅 Linux，当前停用） | `plugins/nvim/md/image.lua` |
-| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault 笔记（`,o` 前缀），路径 `D:/vaults/{personal,work}`（Linux 为 `~/vaults`）：`:Obsidian` 子命令菜单，daily 笔记按 workspace 落在 `<vault>/daily/`，in-process LSP 提供 wiki 链接/标签补全（`[[`/`#`/`^`），反链/出链/目录/重命名；视觉效果交给 render-markdown（`ui.enable=false`）；`ft=markdown` 懒加载 | `plugins/note/obsidian.lua` |
+| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault 笔记（`,o` 前缀），路径 `D:/vaults/{personal,work}`（Linux 为 `~/vaults`）：`:Obsidian` 子命令菜单，daily 笔记按 workspace 落在 `<vault>/daily/`，笔记 id/文件名扁平化（输入 `tools/nvim/keymap` → `tools/nvim/tools-nvim-keymap.md`），unique note 落 `<workspace>/muse/`，in-process LSP 提供 wiki 链接/标签补全（`[[`/`#`/`^`），反链/出链/目录/重命名；视觉效果交给 render-markdown（`ui.enable=false`）；`ft=markdown` 懒加载 | `plugins/note/obsidian.lua` |
 
 ### LSP · DAP · 构建
 

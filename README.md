@@ -33,10 +33,10 @@ It also doubles as the Neovim backend for [VSCode-Neovim](https://github.com/vsc
 ## ✨ Highlights
 
 - **Cross-platform by construction**: every platform difference lives in a `has('win32')` branch — shell (`pwsh` vs `zsh`), build commands, paths, even the markdown-preview installer (deterministic System32 `curl.exe` + `tar.exe` download instead of the flaky PowerShell script).
-- **Dual snippet engines coexisting**: `LuaSnip` powers the nvim-cmp popup path, `mini.snippets` powers the manual `C-]` expand / `C-l` jump path — fed from the **same** VSCode-style snippet files and edited in-place with `nvim-scissors` (its save hook hot-reloads both engines).
+- **Dual snippet engines coexisting**: `LuaSnip` powers the completion-popup path (blink.cmp's `luasnip` preset today; `cmp_luasnip` under nvim-cmp), `mini.snippets` powers the manual `C-]` expand / `C-l` jump path — fed from the **same** VSCode-style snippet files and edited in-place with `nvim-scissors` (its save hook hot-reloads both engines).
 - **Pluggable jump engines**: hop and leap are currently enabled (`,`-prefixed hints + `s`/`S` labeled jumps); flash and lightspeed specs are kept as ready-to-switch alternates.
 - **AI everywhere, provider-agnostic**: `llm.nvim` with a dozen custom app handlers (translate, explain, docstring, commit message, formula recognition…), `codecompanion.nvim` on the GLM Coding Plan endpoint, and `avante.nvim` over the `opencode` ACP — all key-driven from the `,m` / `,n` prefixes.
-- **Personal highlight theme**: `lua/theme/zz.lua` defines a `ZZ.*` palette (hop/leap/lightspeed labels, LSP semantic tokens, diff, rainbow delimiters…) that is re-applied on every colorscheme switch, so it survives theme changes on both platforms.
+- **Personal highlight theme**: `lua/theme/zz.lua` defines a `ZZ.*` palette (hop/leap/lightspeed labels, LSP semantic tokens, diff, rainbow delimiters, pure-black blink.cmp windows…) that is re-applied on every colorscheme switch, so it survives theme changes on both platforms.
 - **Discoverable keymaps**: every custom mapping carries a `zz:`-prefixed `desc`; press `,fk` (snacks picker keymaps) to browse them all.
 
 ## 📦 Requirements & Installation
@@ -173,7 +173,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 
 | Plugin | Purpose | Spec |
 | --- | --- | --- |
-| [blink.cmp](https://github.com/Saghen/blink.cmp) | completion engine (**active**; v2 + blink.lib, Rust fuzzy matcher via `build`, builtin lsp/path/buffer/cmdline providers + llm.nvim ghost completions, LuaSnip snippet preset) | `plugins/nvim/cmpn/blinkCmp.lua` |
+| [blink.cmp](https://github.com/Saghen/blink.cmp) | completion engine (**active**; v2 + blink.lib, Rust fuzzy matcher via `build`, builtin lsp/path/buffer/cmdline providers + llm.nvim ghost completions, LuaSnip snippet preset, signature help opted-in, pure-black `ZZ.*` window theming) | `plugins/nvim/cmpn/blinkCmp.lua` |
 | [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | completion engine (alternate; LSP/buffer/path + `/` and `:` cmdline sources) | `plugins/nvim/cmpn/nvimCmp.lua` |
 | [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) / [cmp-buffer](https://github.com/hrsh7th/cmp-buffer) / [cmp-path](https://github.com/hrsh7th/cmp-path) / [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline) | nvim-cmp sources (loaded only when nvim-cmp is selected) | dependencies |
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | snippet engine, cmp-popup path (`A-l`/`A-h` jump) | `plugins/nvim/luaSnip.lua` |
@@ -214,7 +214,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | live browser preview (`,e/`); **custom deterministic build** — Windows downloads the prebuilt binary with System32 `curl.exe`/`tar.exe` (the stock PowerShell installer is bypassed) | `plugins/nvim/md/markdownPreview.lua` |
 | [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | paste images from clipboard into markdown (loads on all platforms; the `,ep` keymap is Windows-only) | `plugins/nvim/md/imgClip.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | in-terminal image rendering (Linux-only, currently disabled) | `plugins/nvim/md/image.lua` |
-| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault notes (`,o` prefix) over `D:/vaults/{personal,work}` (`~/vaults` on Linux): `:Obsidian` subcommand palette, daily notes under `<vault>/daily/` per workspace, wiki-link/tag completion through the in-process LSP (`[[`/`#`/`^`), backlinks/links/toc/rename; visual rendering is left to render-markdown (`ui.enable=false`); lazy-loads on `ft=markdown` | `plugins/note/obsidian.lua` |
+| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault notes (`,o` prefix) over `D:/vaults/{personal,work}` (`~/vaults` on Linux): `:Obsidian` subcommand palette, daily notes under `<vault>/daily/` per workspace, flattened note ids/filenames (`tools/nvim/keymap` → `tools/nvim/tools-nvim-keymap.md`), unique notes land in `<workspace>/muse/`, wiki-link/tag completion through the in-process LSP (`[[`/`#`/`^`), backlinks/links/toc/rename; visual rendering is left to render-markdown (`ui.enable=false`); lazy-loads on `ft=markdown` | `plugins/note/obsidian.lua` |
 
 ### LSP · DAP · Build
 
