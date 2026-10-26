@@ -28,7 +28,7 @@ return {
     keys = {
         -- Top Pickers & Explorer
         { "<leader><space>", function() Snacks.picker.smart() end, desc = "zz:snacks:Smart Find Files" },
-        { "<leader>va", function() Snacks.notifier.show_history() end, desc = "zz:snacks:Notification History" },
+        { "<leader>va", function() Snacks.notifier.show_history() end, desc = "zz:snacks:Notifier show History" },
         { "<leader>vh", function() Snacks.notifier.hide() end, desc = "zz:snacks:Dismiss All Notifications" },
         { "<leader>vn", function() Snacks.explorer() end, desc = "zz:snacks:File Explorer" },
         { "<leader>vs", function() Snacks.scratch() end, desc = "zz:snacks:Toggle Scratch Buffer" },

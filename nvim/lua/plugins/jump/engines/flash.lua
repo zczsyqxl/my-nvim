@@ -36,14 +36,6 @@ return {
             desc = 'zz:Flash:Jump',
         },
         {
-            ',s',
-            mode = { 'n', 'v', 'o' },
-            function()
-                require('flash').jump({ search = { mode = 'fuzzy' } })
-            end,
-            desc = 'zz:Flash:fuzzy jump',
-        },
-        {
             ',w',
             mode = { 'n', 'v', 'o' },
             function()
@@ -51,39 +43,19 @@ return {
                     mode = function(pat)
                         return [[\<]] .. pat
                     end,
-                    forward = true,
                 } })
             end,
             desc = 'zz:Flash:words.after',
         },
         {
-            ',b',
+            ',l',
             mode = { 'n', 'v', 'o' },
             function()
-                require('flash').jump({ search = {
-                    mode = function(pat)
-                        return [[\<]] .. pat
-                    end,
-                    forward = false,
-                } })
-            end,
-            desc = 'zz:Flash:words.before',
-        },
-        {
-            ',j',
-            mode = { 'n', 'v', 'o' },
-            function()
-                require('flash').jump({ pattern = [[^.]], search = { mode = 'search', forward = true }, prompt = { enabled = false } })
+                require('flash').jump({ pattern = [[^.]], search = {
+                    mode = 'search'}, prompt = { enabled = false }
+                })
             end,
             desc = 'zz:Flash:lines.after',
-        },
-        {
-            ',k',
-            mode = { 'n', 'v', 'o' },
-            function()
-                require('flash').jump({ pattern = [[^.]], search = { mode = 'search', forward = false }, prompt = { enabled = false } })
-            end,
-            desc = 'zz:Flash:lines.before',
         },
         {
             ',r',
