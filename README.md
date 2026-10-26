@@ -213,7 +213,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | --- | --- | --- |
 | [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | in-editor markdown rendering (**active** renderer; LaTeX via `latex2text`, extensive tuning; `,e,`/`,e.` toggle/preview) | `plugins/nvim/md/renderMarkdown.lua` |
 | [markview.nvim](https://github.com/OXY2DEV/markview.nvim) | markdown renderer (alternate, hybrid-mode) | `plugins/nvim/md/markview.lua` |
-| [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | live browser preview (`,v/`); **custom deterministic build** — Windows downloads the prebuilt binary with System32 `curl.exe`/`tar.exe` (the stock PowerShell installer is bypassed) | `plugins/nvim/md/markdownPreview.lua` |
+| [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | live browser preview (`,e/`); **custom deterministic build** — Windows downloads the prebuilt binary with System32 `curl.exe`/`tar.exe` (the stock PowerShell installer is bypassed) | `plugins/nvim/md/markdownPreview.lua` |
 | [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | paste images from clipboard into markdown (loads on all platforms; the `,ep` keymap is Windows-only) | `plugins/nvim/md/imgClip.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | in-terminal image rendering (Linux-only, currently disabled) | `plugins/nvim/md/image.lua` |
 
@@ -388,13 +388,13 @@ Prefix map:
 | --- | --- | --- |
 | `,f` | snacks picker | `ff` files · `fg` git files · `fb` buffers · `fr` recent · `fp` projects · `f[`/`f]` grep / grep open buffers · `fw` grep word · `fd`/`fe` diagnostics · `f,`/`f.` LSP symbols / workspace symbols · `fl` buffer lines · `fk` keymaps · `fm` marks · `fu` undo · `fj` jumps · `fo` loclist · `fq` quickfix · `fs` resume · `fx` commands · `f;` cmdline history · `fv` notification history |
 | `,g` | git (snacks) | `gg`/`gl` log · `gb` branches · `gs` status · `gd` diff hunks · `gf` log file · `gh` stash · `gi`/`gI` GitHub issues · `gp`/`gP` GitHub PRs |
-| `,v` | UI & floats | `vn` explorer · `vm` terminal · `vy` yazi · `vu` lazygit · `vs`/`vf` scratch toggle/select · `vd` DAP UI · `v[`/`v]` zen/zoom · `va` notification history · `vh` dismiss notifications · `vo` aerial · `v/` markdown-preview browser |
+| `,v` | UI & floats | `vn` explorer · `vm` terminal · `vy` yazi · `vu` lazygit · `vs`/`vf` scratch toggle/select · `vd` DAP UI · `v[`/`v]` zen/zoom · `va` notification history · `vh` dismiss notifications · `vo` aerial |
 | `,o` | option toggles (snacks) | `os` spell · `ow` wrap · `or` relativenumber · `od` diagnostics · `ol` line numbers · `ot` treesitter · `ob` background · `oh` inlay hints · `oi` indent · `om` dim · `ov` colorschemes |
 | `,d` | diffview | `do` open · `dc` close · `dr` refresh · `dh` file history |
 | `,m` | llm.nvim | `mc` chat · `mt`/`mT` translate word/text · `me` explain code · `mA` test cases · `mo` optimize & compare · `mg` AI commit message · `md` docstring · `mk`/`ma` ask / attach to chat · `mi` formula recognition · `mu` account info |
 | `,n` | codecompanion | `nn` chat · `na` action palette · `nc` chat toggle · `ni` opencode CLI · `nw` command gen |
 | `,c` | cmake | `cb`/`cB`/`cc`/`cg`/`cr`/`cR` build/build-file/clean/generate/run/run-file · `cs*` selects (preset/type/target/kit/…) |
-| `,e` | buffers & files | `eo`/`ec`/`es` bufferline pick/close-pick/close-others · `,1`–`,9`,`0` go to buffer N · `ed` delete buffer · `er` rename file · `e,`/`e.` render-markdown toggle/preview · `ep` paste image (Windows only) |
+| `,e` | buffers, files & markdown | `eo`/`ec`/`es` bufferline pick/close-pick/close-others · `,1`–`,9`,`0` go to buffer N · `ed` delete buffer · `er` rename file · `e,`/`e.` render-markdown toggle/preview · `e/` markdown-preview browser · `ep` paste image (Windows only) |
 | `,z` | snippets | `za` add · `ze` edit |
 | `,r` | grug-far | `rd`/`ra` replace in current file / cwd · `rs`/`rf` cword in current file / cwd |
 | `,w` `,l` `,L` `,s` `,S` | hop | words / lines after / vertical / char / pattern hints |

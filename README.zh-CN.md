@@ -214,7 +214,7 @@ my-nvim/
 | --- | --- | --- |
 | [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) | 编辑器内 Markdown 渲染（**当前启用**；LaTeX 走 `latex2text`，深度调优） | `plugins/nvim/md/renderMarkdown.lua` |
 | [markview.nvim](https://github.com/OXY2DEV/markview.nvim) | Markdown 渲染器（备选，hybrid 模式） | `plugins/nvim/md/markview.lua` |
-| [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | 浏览器实时预览（`,v/`）；**自定义确定性构建** —— Windows 用 System32 `curl.exe`/`tar.exe` 下载预编译产物（绕开原版 PowerShell 安装器的坑） | `plugins/nvim/md/markdownPreview.lua` |
+| [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | 浏览器实时预览（`,e/`）；**自定义确定性构建** —— Windows 用 System32 `curl.exe`/`tar.exe` 下载预编译产物（绕开原版 PowerShell 安装器的坑） | `plugins/nvim/md/markdownPreview.lua` |
 | [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | 剪贴板贴图进 markdown（全平台加载；`,ep` 绑定仅 Windows） | `plugins/nvim/md/imgClip.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | 终端内图片渲染（仅 Linux，当前停用） | `plugins/nvim/md/image.lua` |
 
@@ -386,13 +386,13 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 | --- | --- | --- |
 | `,f` | snacks picker | `ff` 文件 · `fg` git 文件 · `fb` buffer · `fr` 最近 · `fp` 项目 · `f[`/`f]` grep / grep 已开 buffer · `fw` grep 光标词 · `fd`/`fe` 诊断 · `f,`/`f.` LSP 符号 / 工作区符号 · `fl` 本 buffer 行 · `fk` 键位 · `fm` 标记 · `fu` undo · `fj` 跳转 · `fo` loclist · `fq` quickfix · `fs` 恢复会话 · `fx` 命令 · `f;` 命令历史 · `fv` 通知历史 |
 | `,g` | git（snacks） | `gg`/`gl` log · `gb` 分支 · `gs` 状态 · `gd` diff hunks · `gf` 文件 log · `gh` stash · `gi`/`gI` GitHub issues · `gp`/`gP` GitHub PRs |
-| `,v` | UI 与浮窗 | `vn` explorer · `vm` 终端 · `vy` yazi · `vu` lazygit · `vs`/`vf` 草稿本 开/选 · `vd` DAP UI · `v[`/`v]` zen/zoom · `va` 通知历史 · `vh` 关闭所有通知 · `vo` aerial · `v/` markdown-preview 浏览器 |
+| `,v` | UI 与浮窗 | `vn` explorer · `vm` 终端 · `vy` yazi · `vu` lazygit · `vs`/`vf` 草稿本 开/选 · `vd` DAP UI · `v[`/`v]` zen/zoom · `va` 通知历史 · `vh` 关闭所有通知 · `vo` aerial |
 | `,o` | 选项开关（snacks） | `os` 拼写 · `ow` 换行 · `or` 相对行号 · `od` 诊断 · `ol` 行号 · `ot` treesitter · `ob` 背景 · `oh` inlay hints · `oi` 缩进线 · `om` dim · `ov` 配色 |
 | `,d` | diffview | `do` 打开 · `dc` 关闭 · `dr` 刷新 · `dh` 文件历史 |
 | `,m` | llm.nvim | `mc` 聊天 · `mt`/`mT` 翻译词/文 · `me` 解释代码 · `mA` 生成测试 · `mo` 优化对比 · `mg` AI 提交信息 · `md` 文档字符串 · `mk`/`ma` 提问 / 附到聊天 · `mi` 公式识别 · `mu` 账户信息 |
 | `,n` | codecompanion | `nn` 聊天 · `na` 动作面板 · `nc` 聊天开关 · `ni` opencode CLI · `nw` 命令生成 |
 | `,c` | cmake | `cb`/`cB`/`cc`/`cg`/`cr`/`cR` 构建/构建本文件/清理/生成/运行/运行本文件 · `cs*` 各类选择（preset/type/target/kit/…） |
-| `,e` | buffer 与文件 | `eo`/`ec`/`es` bufferline 选择/选关/关其他 · `,1`–`,9`,`0` 跳到第 N 个 buffer · `ed` 删 buffer · `er` 重命名文件 · `e,`/`e.` render-markdown 开关/预览 · `ep` 贴图（仅 Windows） |
+| `,e` | buffer、文件与 markdown | `eo`/`ec`/`es` bufferline 选择/选关/关其他 · `,1`–`,9`,`0` 跳到第 N 个 buffer · `ed` 删 buffer · `er` 重命名文件 · `e,`/`e.` render-markdown 开关/预览 · `e/` markdown-preview 浏览器 · `ep` 贴图（仅 Windows） |
 | `,z` | 片段 | `za` 新增 · `ze` 编辑 |
 | `,r` | grug-far | `rd`/`ra` 本文件 / 当前目录替换 · `rs`/`rf` 光标词变体 |
 | `,w` `,l` `,L` `,s` `,S` | hop | 词 / 行 / 垂直 / 字符 / 模式提示跳转 |
