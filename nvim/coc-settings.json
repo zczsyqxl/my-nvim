@@ -1,8 +1,0 @@
-{
-    "suggest.autoTrigger":"always",
-    "suggest.floatConfig": {
-        "border": false,
-        "borderhighlight": "CocFloatBorder"
-    }
-}
-

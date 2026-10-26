@@ -103,7 +103,6 @@ my-nvim/
 └── nvim/                        # ← the actual stdpath('config') content
     ├── init.lua                 # entry: reload + require('config')
     ├── lazy-lock.json           # pinned plugin commits (reproducible installs)
-    ├── coc-settings.json        # for the (alternate) coc.nvim engine
     ├── fdetect/zzft.lua         # *.stl / *.wsd / *.puml → plantuml
     ├── after/plugin/init.lua    # loads theme/zz.lua (single palette, vim.g.vscode-guarded)
     ├── colors/                  # ~1900 vendored classic vim colorschemes (picker `,ov` playground)
@@ -122,7 +121,7 @@ my-nvim/
         │   └── zz.lua           # personal ZZ.* highlight palette (nvim-only groups behind a vim.g.vscode guard)
         └── plugins/
             ├── nvim/            # main spec list (init.lua) + per-plugin specs
-            │   ├── cmpn/        # completion engine selector: nvimCmp | blinkCmp | coc
+            │   ├── cmpn/        # completion engine selector: blinkCmp | nvimCmp
             │   ├── tab/         # tabline selector: bufferline | barbar | tabby
             │   ├── theme/       # colorscheme selector: tokyonight | onedark | catppuccin
             │   └── md/          # markdown suite: renderer selector + preview + images
@@ -174,10 +173,9 @@ The default set is committed below; alternates stay installed-ready behind selec
 
 | Plugin | Purpose | Spec |
 | --- | --- | --- |
-| [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | completion engine (**active**; LSP/buffer/path + `/` and `:` cmdline sources) | `plugins/nvim/cmpn/nvimCmp.lua` |
-| [blink.cmp](https://github.com/Saghen/blink.cmp) | completion engine (alternate; integrates llm.nvim ghost completions) | `plugins/nvim/cmpn/blinkCmp.lua` |
-| [coc.nvim](https://github.com/neoclide/coc.nvim) | completion engine (alternate; `coc-settings.json` included) | `plugins/nvim/cmpn/coc.lua` |
-| [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) / [cmp-buffer](https://github.com/hrsh7th/cmp-buffer) / [cmp-path](https://github.com/hrsh7th/cmp-path) / [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline) | nvim-cmp sources | dependencies |
+| [blink.cmp](https://github.com/Saghen/blink.cmp) | completion engine (**active**; v2 + blink.lib, Rust fuzzy matcher via `build`, builtin lsp/path/buffer/cmdline providers + llm.nvim ghost completions, LuaSnip snippet preset) | `plugins/nvim/cmpn/blinkCmp.lua` |
+| [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | completion engine (alternate; LSP/buffer/path + `/` and `:` cmdline sources) | `plugins/nvim/cmpn/nvimCmp.lua` |
+| [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) / [cmp-buffer](https://github.com/hrsh7th/cmp-buffer) / [cmp-path](https://github.com/hrsh7th/cmp-path) / [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline) | nvim-cmp sources (loaded only when nvim-cmp is selected) | dependencies |
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | snippet engine, cmp-popup path (`A-l`/`A-h` jump) | `plugins/nvim/luaSnip.lua` |
 | [mini.snippets](https://github.com/echasnovski/mini.nvim) | snippet engine, manual path (`C-]` expand, `C-l`/`C-h` jump) | `plugins/mini/snippet.lua` |
 | [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip) / [cmp-mini-snippets](https://github.com/abeldekat/cmp-mini-snippets) | bridge each engine into nvim-cmp | dependencies |
@@ -244,7 +242,7 @@ Several "slots" in this config are one-word switches. Each slot directory has an
 
 ```lua
 -- plugins/nvim/cmpn/init.lua
-local cmp = 'nvimcmp'          -- 'nvimcmp' | 'blinkcmp' | anything else → coc
+local cmp = 'blinkcmp'         -- 'blinkcmp' | anything else → nvimcmp
 -- plugins/nvim/tab/init.lua
 local tab  = 'buf'             -- 'buf' → bufferline | 'barbar' | 'tabby'
 -- plugins/nvim/theme/init.lua
@@ -257,13 +255,13 @@ local engines = { 'hop', 'leap' }   -- list: hop / leap / flash / lightspeed
 local snipEngine = 'luasnip'   -- 'luasnip' | 'mini'
 ```
 
-Change a word, restart Neovim — done. The alternate specs are deliberately **not dead code**: they keep working keymaps and highlights (the `ZZ.*` theme covers hop, leap, flash-class labels, lightspeed, cmp, coc…), so switching engines never leaves you with broken UI.
+Change a word, restart Neovim — done. The alternate specs are deliberately **not dead code**: they keep working keymaps and highlights (the `ZZ.*` theme covers hop, leap, flash-class labels, lightspeed, cmp…), so switching engines never leaves you with broken UI.
 
 ```mermaid
 flowchart LR
     subgraph slots["Selector slots (one word each)"]
         direction LR
-        CMP["cmpn/init.lua<br/><b>cmp = 'nvimcmp'</b>"]
+        CMP["cmpn/init.lua<br/><b>cmp = 'blinkcmp'</b>"]
         TAB["tab/init.lua<br/><b>tab = 'buf'</b>"]
         THEME["theme/init.lua<br/><b>theme = 'tokyonight'</b>"]
         MD["md/init.lua<br/><b>md = 'render'</b>"]
@@ -271,9 +269,8 @@ flowchart LR
         SNIP["cmpn/nvimCmp.lua<br/><b>snipEngine = 'luasnip'</b>"]
     end
 
-    CMP -->|"nvimcmp"| C1[nvim-cmp]
     CMP -->|"blinkcmp"| C2[blink.cmp]
-    CMP -->|"else"| C3[coc.nvim]
+    CMP -->|"else"| C1[nvim-cmp]
     THEME --> TH1[tokyonight]
     THEME --> TH2[onedark]
     THEME --> TH3[catppuccin]

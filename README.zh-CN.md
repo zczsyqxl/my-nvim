@@ -104,7 +104,6 @@ my-nvim/
 └── nvim/                        # ← 实际的 stdpath('config') 内容
     ├── init.lua                 # 入口：reload + require('config')
     ├── lazy-lock.json           # 插件 commit 锁定（可复现安装）
-    ├── coc-settings.json        # 备选引擎 coc.nvim 使用
     ├── fdetect/zzft.lua         # *.stl / *.wsd / *.puml → plantuml
     ├── after/plugin/init.lua    # 加载 theme/zz.lua（单一调色板，vim.g.vscode 守卫分流）
     ├── colors/                  # 约 1900 个第三方经典 vim 配色（picker `,ov` 试衣间）
@@ -123,7 +122,7 @@ my-nvim/
         │   └── zz.lua           # 个人 ZZ.* 高亮调色板（nvim 独享组由 vim.g.vscode 守卫分流）
         └── plugins/
             ├── nvim/            # 主 spec 清单（init.lua）+ 各插件 spec
-            │   ├── cmpn/        # 补全引擎选择器：nvimCmp | blinkCmp | coc
+            │   ├── cmpn/        # 补全引擎选择器：blinkCmp | nvimCmp
             │   ├── tab/         # 标签栏选择器：bufferline | barbar | tabby
             │   ├── theme/       # 配色选择器：tokyonight | onedark | catppuccin
             │   └── md/          # Markdown 全家桶：渲染器选择 + 预览 + 图片
@@ -175,10 +174,9 @@ my-nvim/
 
 | 插件 | 用途 | Spec |
 | --- | --- | --- |
-| [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | 补全引擎（**当前启用**；LSP/buffer/path + `/`、`:` 命令行源） | `plugins/nvim/cmpn/nvimCmp.lua` |
-| [blink.cmp](https://github.com/Saghen/blink.cmp) | 补全引擎（备选；集成 llm.nvim 幽灵补全） | `plugins/nvim/cmpn/blinkCmp.lua` |
-| [coc.nvim](https://github.com/neoclide/coc.nvim) | 补全引擎（备选；含 `coc-settings.json`） | `plugins/nvim/cmpn/coc.lua` |
-| [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) / [cmp-buffer](https://github.com/hrsh7th/cmp-buffer) / [cmp-path](https://github.com/hrsh7th/cmp-path) / [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline) | nvim-cmp 补全源 | 依赖 |
+| [blink.cmp](https://github.com/Saghen/blink.cmp) | 补全引擎（**当前启用**；v2 + blink.lib，`build` 下载 Rust 模糊匹配器，内置 lsp/path/buffer/cmdline 源 + llm.nvim 幽灵补全，LuaSnip 片段 preset） | `plugins/nvim/cmpn/blinkCmp.lua` |
+| [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | 补全引擎（备选；LSP/buffer/path + `/`、`:` 命令行源） | `plugins/nvim/cmpn/nvimCmp.lua` |
+| [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp) / [cmp-buffer](https://github.com/hrsh7th/cmp-buffer) / [cmp-path](https://github.com/hrsh7th/cmp-path) / [cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline) | nvim-cmp 补全源（仅在选中 nvim-cmp 时加载） | 依赖 |
 | [LuaSnip](https://github.com/L3MON4D3/LuaSnip) | 片段引擎，cmp 弹窗路径（`A-l`/`A-h` 跳转） | `plugins/nvim/luaSnip.lua` |
 | [mini.snippets](https://github.com/echasnovski/mini.nvim) | 片段引擎，手动路径（`C-]` 展开、`C-l`/`C-h` 跳转） | `plugins/mini/snippet.lua` |
 | [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip) / [cmp-mini-snippets](https://github.com/abeldekat/cmp-mini-snippets) | 把两个引擎分别接入 nvim-cmp | 依赖 |
@@ -245,7 +243,7 @@ AI 栈依赖：[plenary.nvim](https://github.com/nvim-lua/plenary.nvim)、[nui.n
 
 ```lua
 -- plugins/nvim/cmpn/init.lua
-local cmp = 'nvimcmp'          -- 'nvimcmp' | 'blinkcmp' | 其他 → coc
+local cmp = 'blinkcmp'         -- 'blinkcmp' | 其他 → nvimcmp
 -- plugins/nvim/tab/init.lua
 local tab  = 'buf'             -- 'buf' → bufferline | 'barbar' | 'tabby'
 -- plugins/nvim/theme/init.lua
@@ -258,13 +256,13 @@ local engines = { 'hop', 'leap' }   -- 列表：hop / leap / flash / lightspeed
 local snipEngine = 'luasnip'   -- 'luasnip' | 'mini'
 ```
 
-改一个单词，重启 Neovim，完成。备选 spec 刻意**不是死代码**：它们的键位和高亮一直维护着（`ZZ.*` 主题覆盖了 hop、leap、flash 类标签、lightspeed、cmp、coc……），切换引擎永远不会留下残破的界面。
+改一个单词，重启 Neovim，完成。备选 spec 刻意**不是死代码**：它们的键位和高亮一直维护着（`ZZ.*` 主题覆盖了 hop、leap、flash 类标签、lightspeed、cmp……），切换引擎永远不会留下残破的界面。
 
 ```mermaid
 flowchart LR
     subgraph slots["选择器插槽（每个一个单词）"]
         direction LR
-        CMP["cmpn/init.lua<br/><b>cmp = 'nvimcmp'</b>"]
+        CMP["cmpn/init.lua<br/><b>cmp = 'blinkcmp'</b>"]
         TAB["tab/init.lua<br/><b>tab = 'buf'</b>"]
         THEME["theme/init.lua<br/><b>theme = 'tokyonight'</b>"]
         MD["md/init.lua<br/><b>md = 'render'</b>"]
@@ -272,9 +270,8 @@ flowchart LR
         SNIP["cmpn/nvimCmp.lua<br/><b>snipEngine = 'luasnip'</b>"]
     end
 
-    CMP -->|"nvimcmp"| C1[nvim-cmp]
     CMP -->|"blinkcmp"| C2[blink.cmp]
-    CMP -->|"else"| C3[coc.nvim]
+    CMP -->|"else"| C1[nvim-cmp]
     TAB -->|"buf"| B1[bufferline]
     TAB -->|"barbar"| B2[barbar]
     TAB -->|"else"| B3[tabby]

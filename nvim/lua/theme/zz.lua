@@ -31,10 +31,6 @@ local function setNvimSyntaxHl()
     -- MatchParen
     set_hl_full('ZZ.MatchParen', { fg = '#ffff00', italic = false, underdouble = true, bold = true, sp = '#FFFF00' }) -- sp -> underline color
 
-    -- coc
-    set_hl_full('ZZ.CocInlayHint', { fg = '#2ac3de', bg = '#292e42', italic = false }) -- sp -> underline color
-    set_hl_full('ZZ.CocPumDetail', { fg = '#617dbe', bg = 'NONE', italic = false, bold = false }) -- sp -> underline color
-
     -- luasnip
     set_hl_full('ZZ.ViHolder', { fg = '#ffffff', bg = '#4170ff', sp = '#ffff00', underdouble = true })
     set_hl_full('ZZ.UnHolder', { fg = '#ffffff', bg = '#4170ff', sp = '#0000ff', underdouble = true })
@@ -85,8 +81,6 @@ local function setNvimSyntaxHl()
     set_hl_full('DiffChange', { link = 'ZZ.DiffChange' })
     set_hl_full('TelescopeMatching', { link = 'ZZ.TelescopeMatching' })
     set_hl_full('SnacksPickerMatch', { link = 'ZZ.SnacksPickerMatch' })
-    set_hl_full('CocInlayHint', { link = 'ZZ.CocInlayHint' })
-    set_hl_full('CocPumDetail', { link = 'ZZ.CocPumDetail' })
     set_hl_full('@lsp.typemod.variable.fileScope', { link = 'ZZ.LspGlobalVar' })
     set_hl_full('@lsp.typemod.variable.globalScope', { link = 'ZZ.LspGlobalVar' })
     set_hl_full('@lsp.typemod.variable.functionScope', { link = 'ZZ.LspLocalVar' })

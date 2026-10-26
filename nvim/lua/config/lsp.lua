@@ -1,4 +1,4 @@
--- LSP client setup, independent of the completion engine (nvim-cmp/blink/coc).
+-- LSP client setup, independent of the completion engine (nvim-cmp/blink).
 -- Runs at startup so diagnostics/hover work before entering insert mode.
 --
 -- NOTE: no `require('cmp_nvim_lsp')` here. It used to retroactively load the
