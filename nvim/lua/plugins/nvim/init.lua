@@ -20,7 +20,7 @@ else
         require('plugins.nvim.luaSnip'),
         require('plugins.nvim.nvimColorizer'),
         require('plugins.nvim.codecompanion'),
-        require('plugins.nvim.avante'),
+        -- require('plugins.nvim.avante'),
         require('plugins.nvim.aegis'),
     }
 end

@@ -1,6 +1,6 @@
 return {
     'saghen/blink.cmp',
-    dependencies = { 'Kurama622/llm.nvim', 'saghen/blink.lib', 'Kaiser-Yang/blink-cmp-avante' }, -- blink.cmp v2 split its core into blink.lib, a hard dependency
+    dependencies = { 'Kurama622/llm.nvim', 'saghen/blink.lib' }, -- blink.cmp v2 split its core into blink.lib, a hard dependency
     -- v2 downloads the prebuilt Rust fuzzy matcher (falls back to slower Lua without it)
     build = function()
         require('blink.cmp').build():pwait()
@@ -97,12 +97,10 @@ return {
         sources = {
             -- if you want to use auto-complete
             -- cmdline provider is builtin (blink.cmp.sources.cmdline); it only triggers in cmdline mode
-            default = { 'lsp', 'path', 'snippets', 'buffer', 'cmdline', 'llm', 'avante' },
+            default = { 'lsp', 'path', 'snippets', 'buffer', 'cmdline', 'llm' },
             per_filetype = {
                 -- optionally inherit from the `default` sources
                 llm = { inherit_defaults = false },
-                AvanteInput = { 'avante', 'lsp', 'path', 'snippets', 'buffer' },
-                AvantePrompt = { 'avante', 'lsp', 'path', 'snippets', 'buffer' },
             },
 
             providers = {
@@ -112,11 +110,6 @@ return {
                     timeout_ms = 10000,
                     score_offset = 100,
                     async = true,
-                },
-                avante = {
-                    module = 'blink-cmp-avante',
-                    name = 'Avante',
-                    opts = {},
                 },
             },
         },
