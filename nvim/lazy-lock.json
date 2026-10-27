@@ -6,7 +6,7 @@
   "blink.cmp": { "branch": "main", "commit": "1e4cb39b9200950dca1cbc4d630c60c16eb8e7e4" },
   "blink.lib": { "branch": "main", "commit": "fd9a48ebbe6ec30d5dfcc5b42c243941ccdca1aa" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
-  "cmake-tools.nvim": { "branch": "master", "commit": "83c098a015f9db5e83c8ef3dba1c2a5d43238695" },
+  "cmake-tools.nvim": { "branch": "master", "commit": "782a254c62a61af1d4febddd0d6dbc5ea414a027" },
   "codecompanion.nvim": { "branch": "main", "commit": "052ad5ade662ea3e3a6b99bc39a6bf3ce1c42892" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "grug-far.nvim": { "branch": "main", "commit": "91b7e58b6ffc6ddad5acb7a7c1df21257724449e" },
