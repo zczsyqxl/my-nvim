@@ -19,7 +19,7 @@ return {
         require('markview').setup(opts)
     end,
     keys = {
-        { '<leader>e/', '<cmd>Markview<cr>',            desc = 'zz:markview:Toggle',       silent = true },
+        { '<leader>e/', '<cmd>Markview<cr>', desc = 'zz:markview:Toggle', silent = true },
         { '<leader>e.', '<cmd>Markview splitToggle<cr>', desc = 'zz:markview:SplitToggle', silent = true },
     },
 }

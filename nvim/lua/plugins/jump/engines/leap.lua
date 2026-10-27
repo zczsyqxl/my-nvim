@@ -15,7 +15,7 @@ return {
         -- to the cursor), 28 keys (' ' , . [ ] dropped by design); every char is a
         -- literal label -- '/' has no special meaning (leap's default string also
         -- contains '/' and '?')
-        labels = "asdfjklghqweruioptyzxcvmbn;/",
+        labels = 'asdfjklghqweruioptyzxcvmbn;/',
         -- safe_labels = '': disables autojump -- never auto-jump to the nearest match,
         -- always confirm with an explicit label (everything goes through the pool above;
         -- the cost: even a unique match needs one extra label press)

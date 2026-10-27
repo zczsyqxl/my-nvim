@@ -21,7 +21,6 @@ local zzBrightBlue = '#3b8eea'
 -- local zzBrightWhite = '#e5e5e5'
 
 local function setNvimSyntaxHl()
-
     set_hl_full('ZZ.WinSeparator', { fg = '#3b4261', bold = true, bg = 'NONE' })
     -- telescope
     set_hl_full('ZZ.TelescopeMatching', { fg = '#adff2f', italic = true, bold = true })
@@ -120,7 +119,6 @@ local function setNvimSyntaxHl()
 end
 
 local function setMySyntaxHl()
-
     if vim.g.vscode == nil then
         setNvimSyntaxHl()
     end

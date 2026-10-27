@@ -52,8 +52,8 @@ return {
             mode = { 'n', 'v', 'o' },
             function()
                 require('flash').jump({ pattern = [[^.]], search = {
-                    mode = 'search'}, prompt = { enabled = false }
-                })
+                    mode = 'search',
+                }, prompt = { enabled = false } })
             end,
             desc = 'zz:Flash:lines.after',
         },

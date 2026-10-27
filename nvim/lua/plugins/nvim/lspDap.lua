@@ -35,10 +35,38 @@ return {
             { '<F10>', '<cmd>DapStepInto<cr>', silent = true, desc = 'zz:DAP:StepInto' },
             { '<F11>', '<cmd>DapStepOut<cr>', silent = true, desc = 'zz:DAP:StepOut' },
             { '<F12>', '<cmd>DapTerminate<cr>', silent = true, desc = 'zz:DAP:Terminate' },
-            { '<F1>', function() require('dapui').open() end, silent = true, desc = 'zz:dapui:open' },
-            { '<F2>', function() require('dapui').close() end, silent = true, desc = 'zz:dapui:close' },
-            { '<F3>', function() require('dapui').toggle() end, silent = true, desc = 'zz:dapui:toggle' },
-            { '<leader>vd', function() require('dapui').toggle() end, silent = true, desc = 'zz:dapui:toggle' },
+            {
+                '<F1>',
+                function()
+                    require('dapui').open()
+                end,
+                silent = true,
+                desc = 'zz:dapui:open',
+            },
+            {
+                '<F2>',
+                function()
+                    require('dapui').close()
+                end,
+                silent = true,
+                desc = 'zz:dapui:close',
+            },
+            {
+                '<F3>',
+                function()
+                    require('dapui').toggle()
+                end,
+                silent = true,
+                desc = 'zz:dapui:toggle',
+            },
+            {
+                '<leader>vd',
+                function()
+                    require('dapui').toggle()
+                end,
+                silent = true,
+                desc = 'zz:dapui:toggle',
+            },
             {
                 '<leader>vt',
                 function()
@@ -143,7 +171,6 @@ return {
                             python = pydap,
                         },
                     })
-
                 end,
             },
         },

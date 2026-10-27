@@ -1,8 +1,22 @@
 return {
     'chrisgrieser/nvim-scissors',
     keys = {
-        { '<leader>za', mode = { 'n', 'x' }, function() require('scissors').addNewSnippet() end, desc = 'zz:Scissor:AddNewSnippet' },
-        { '<leader>ze', mode = { 'n', 'x' }, function() require('scissors').editSnippet() end, desc = 'zz:Scissor:EditSnippet' },
+        {
+            '<leader>za',
+            mode = { 'n', 'x' },
+            function()
+                require('scissors').addNewSnippet()
+            end,
+            desc = 'zz:Scissor:AddNewSnippet',
+        },
+        {
+            '<leader>ze',
+            mode = { 'n', 'x' },
+            function()
+                require('scissors').editSnippet()
+            end,
+            desc = 'zz:Scissor:EditSnippet',
+        },
     },
     config = function()
         require('scissors').setup({
