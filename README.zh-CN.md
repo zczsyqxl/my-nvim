@@ -36,7 +36,7 @@
 - **结构性跨平台**：所有平台差异都收敛在 `has('win32')` 分支里 —— shell（`pwsh` vs `zsh`）、build 命令、路径，甚至 markdown-preview 的安装器（用系统自带的 System32 `curl.exe` + `tar.exe` 做确定性下载，绕开坑很多的 PowerShell 安装脚本）。
 - **双代码片段引擎并存**：`LuaSnip` 走补全弹窗路径（blink.cmp 的 `luasnip` preset；nvim-cmp 下是 `cmp_luasnip`），`mini.snippets` 走手动 `C-]` 展开 / `C-l` 跳转路径 —— 两者读**同一套** VSCode 风格片段文件，用 `nvim-scissors` 就地增删改（保存钩子会同时热重载两个引擎）。
 - **可插拔跳转引擎**：当前启用 hop + leap（`,` 前缀提示 + `s`/`S` 标签跳转）；flash 和 lightspeed 的 spec 作为随时可切的备胎保留。
-- **AI 无处不在、供应商无关**：`llm.nvim` 带十几个自定义 app handler（翻译、解释、文档字符串、提交信息、公式识别……），`codecompanion.nvim` 走 GLM Coding Plan 专用端点，`avante.nvim` 走 `opencode` ACP —— 全部由 `,m` / `,n` 前缀驱动。
+- **AI 无处不在、供应商无关**：`llm.nvim` 带十几个自定义 app handler（翻译、解释、文档字符串、提交信息、公式识别……），`codecompanion.nvim` 走 GLM Coding Plan 专用端点 —— 全部由 `,m` / `,n` 前缀驱动。
 - **个人高亮主题**：`lua/theme/zz.lua` 定义了一套 `ZZ.*` 调色板（hop/leap/lightspeed 标签、LSP 语义 token、diff、彩虹括号、blink.cmp 纯黑窗口……），并挂在 `ColorScheme` 自动命令上重新应用，主题怎么换都不丢，双端一致。
 - **键位可发现**：所有自定义映射都带 `zz:` 前缀的 `desc`；按 `,fk`（snacks picker 键位表）即可全部浏览。
 
@@ -81,7 +81,7 @@ git clone https://github.com/<you>/my-nvim.git "$env:LOCALAPPDATA\nvim"
 | [pylatexenc](https://pypi.org/project/pylatexenc/) | render-markdown 的 LaTeX 渲染 | `python -m pip install pylatexenc`（`:checkhealth` 的 python 项须正常） |
 | [ImageMagick](https://imagemagick.org) | image.nvim（Linux，当前停用） | `sudo apt install imagemagick` |
 | [yazi](https://github.com/sxyazi/yazi)（可选） | `,vy` 浮窗文件管理器 | |
-| [opencode](https://opencode.ai)（可选） | codecompanion CLI/chat、avante ACP | CLI 在 `PATH` |
+| [opencode](https://opencode.ai)（可选） | codecompanion CLI/chat | CLI 在 `PATH` |
 
 LSP/DAP 的二进制由 Mason 自动管理，无需手动安装。
 
@@ -233,9 +233,9 @@ my-nvim/
 | --- | --- | --- |
 | [llm.nvim](https://github.com/Kurama622/llm.nvim) | 聊天 + 自定义 app handler（`,m` 前缀）：翻译、解释、文档字符串、生成测试、代码优化、提交信息、公式识别、账户信息…；多供应商模型表 | `plugins/llm/` |
 | [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) | AI 助手（`,n` 前缀），走 GLM Coding Plan 专用端点 + `opencode` CLI agent | `plugins/nvim/codecompanion.lua` |
-| [avante.nvim](https://github.com/yetone/avante.nvim) | Cursor 风格 AI 侧栏，走 `opencode` ACP | `plugins/nvim/avante.lua` |
+| [avante.nvim](https://github.com/yetone/avante.nvim) | Cursor 风格 AI 侧栏，走 `opencode` ACP（alternate；已在 `init.lua` 停用加载，spec 保留随时可再启用） | `plugins/nvim/avante.lua` |
 
-AI 栈依赖：[plenary.nvim](https://github.com/nvim-lua/plenary.nvim)、[nui.nvim](https://github.com/MunifTanjim/nui.nvim)、[mega.cmdparse](https://github.com/ColinKennedy/mega.cmdparse)（+ mega.logging）。
+AI 栈依赖：[plenary.nvim](https://github.com/nvim-lua/plenary.nvim)、[nui.nvim](https://github.com/MunifTanjim/nui.nvim)。保留的 avante alternate 再启用时会额外拉取 [mega.cmdparse](https://github.com/ColinKennedy/mega.cmdparse)（+ mega.logging）。
 
 ## 🔀 引擎选择器模式
 
@@ -344,7 +344,6 @@ flowchart TD
     %% ai
     LLM[llm.nvim] --> PLEN & NUI[nui.nvim]
     CC[codecompanion] --> PLEN & TS
-    AV[avante] --> PLEN & NUI & MEGA[mega.cmdparse<br/>+ mega.logging]
     BLINK[blink.cmp] -.补全源.-> LLM
 
     %% 跳转引擎高亮
@@ -382,7 +381,7 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 
 | 环境变量 | 供应商 / 用途 |
 | --- | --- |
-| `ZHIPUAI_API_KEY` | 智谱 **GLM Coding Plan** —— llm.nvim 默认模型（`glm-5.3`）、codecompanion 适配器、avante `glm` 供应商 |
+| `ZHIPUAI_API_KEY` | 智谱 **GLM Coding Plan** —— llm.nvim 默认模型（`glm-5.3`）、codecompanion 适配器 |
 | `KIMI_KEY` | 月之暗面 Kimi（`moonshot-v1-128k`） |
 | `DEEPSEEK_TOKEN` | DeepSeek（`deepseek-chat`） |
 | `OPENROUTER_KEY` | OpenRouter |

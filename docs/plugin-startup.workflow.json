@@ -128,7 +128,7 @@
       "dot": "emerald",
       "title": "懒加载触发映射",
       "items": [
-        "VeryLazy：avante · imagePreview · imgClip",
+        "VeryLazy：imagePreview · imgClip",
         "InsertEnter：nvim-cmp（cmp 选择器）",
         "cmd：llm.nvim · aegis · markdown-preview",
         "keys / ft：hop · lazygit · cmake-tools"

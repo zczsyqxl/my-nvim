@@ -35,7 +35,7 @@ It also doubles as the Neovim backend for [VSCode-Neovim](https://github.com/vsc
 - **Cross-platform by construction**: every platform difference lives in a `has('win32')` branch — shell (`pwsh` vs `zsh`), build commands, paths, even the markdown-preview installer (deterministic System32 `curl.exe` + `tar.exe` download instead of the flaky PowerShell script).
 - **Dual snippet engines coexisting**: `LuaSnip` powers the completion-popup path (blink.cmp's `luasnip` preset today; `cmp_luasnip` under nvim-cmp), `mini.snippets` powers the manual `C-]` expand / `C-l` jump path — fed from the **same** VSCode-style snippet files and edited in-place with `nvim-scissors` (its save hook hot-reloads both engines).
 - **Pluggable jump engines**: hop and leap are currently enabled (`,`-prefixed hints + `s`/`S` labeled jumps); flash and lightspeed specs are kept as ready-to-switch alternates.
-- **AI everywhere, provider-agnostic**: `llm.nvim` with a dozen custom app handlers (translate, explain, docstring, commit message, formula recognition…), `codecompanion.nvim` on the GLM Coding Plan endpoint, and `avante.nvim` over the `opencode` ACP — all key-driven from the `,m` / `,n` prefixes.
+- **AI everywhere, provider-agnostic**: `llm.nvim` with a dozen custom app handlers (translate, explain, docstring, commit message, formula recognition…) and `codecompanion.nvim` on the GLM Coding Plan endpoint — all key-driven from the `,m` / `,n` prefixes.
 - **Personal highlight theme**: `lua/theme/zz.lua` defines a `ZZ.*` palette (hop/leap/lightspeed labels, LSP semantic tokens, diff, rainbow delimiters, pure-black blink.cmp windows…) that is re-applied on every colorscheme switch, so it survives theme changes on both platforms.
 - **Discoverable keymaps**: every custom mapping carries a `zz:`-prefixed `desc`; press `,fk` (snacks picker keymaps) to browse them all.
 
@@ -80,7 +80,7 @@ Uninstall = delete the clone plus `~/.local/share/nvim` (Linux) / `%LOCALAPPDATA
 | [pylatexenc](https://pypi.org/project/pylatexenc/) | LaTeX rendering in render-markdown | `python -m pip install pylatexenc` (`:checkhealth` python must be OK) |
 | [ImageMagick](https://imagemagick.org) | image.nvim (Linux, currently disabled) | `sudo apt install imagemagick` |
 | [yazi](https://github.com/sxyazi/yazi) (optional) | `,vy` floating file manager | |
-| [opencode](https://opencode.ai) (optional) | codecompanion CLI/chat, avante ACP | CLI in `PATH` |
+| [opencode](https://opencode.ai) (optional) | codecompanion CLI/chat | CLI in `PATH` |
 
 LSP/DAP binaries are managed by Mason automatically — nothing to install manually.
 
@@ -232,9 +232,9 @@ The default set is committed below; alternates stay installed-ready behind selec
 | --- | --- | --- |
 | [llm.nvim](https://github.com/Kurama622/llm.nvim) | chat + custom app handlers (`,m` prefix): translate, explain, docstring, test generation, code optimization, commit messages, formula recognition, account info…; multi-provider model table | `plugins/llm/` |
 | [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) | AI assistant (`,n` prefix) on the GLM Coding Plan endpoint + `opencode` CLI agent | `plugins/nvim/codecompanion.lua` |
-| [avante.nvim](https://github.com/yetone/avante.nvim) | Cursor-like AI sidebar over the `opencode` ACP | `plugins/nvim/avante.lua` |
+| [avante.nvim](https://github.com/yetone/avante.nvim) | Cursor-like AI sidebar over the `opencode` ACP (alternate; load disabled in `init.lua`, spec kept ready-to-re-enable) | `plugins/nvim/avante.lua` |
 
-Dependencies of the AI stack: [plenary.nvim](https://github.com/nvim-lua/plenary.nvim), [nui.nvim](https://github.com/MunifTanjim/nui.nvim), [mega.cmdparse](https://github.com/ColinKennedy/mega.cmdparse) (+ mega.logging).
+Dependencies of the AI stack: [plenary.nvim](https://github.com/nvim-lua/plenary.nvim), [nui.nvim](https://github.com/MunifTanjim/nui.nvim). The kept avante alternate additionally pulls [mega.cmdparse](https://github.com/ColinKennedy/mega.cmdparse) (+ mega.logging) when re-enabled.
 
 ## 🔀 Engine Selector Pattern
 
@@ -346,7 +346,6 @@ flowchart TD
     %% ai
     LLM[llm.nvim] --> PLEN & NUI[nui.nvim]
     CC[codecompanion] --> PLEN & TS
-    AV[avante] --> PLEN & NUI & MEGA[mega.cmdparse<br/>+ mega.logging]
     BLINK[blink.cmp] -.completion source.-> LLM
 
     %% jump engines highlights
@@ -384,7 +383,7 @@ All AI features are optional and key-driven; each reads its API key from an envi
 
 | Env var | Provider / usage |
 | --- | --- |
-| `ZHIPUAI_API_KEY` | Zhipu **GLM Coding Plan** — llm.nvim default model (`glm-5.3`), codecompanion adapter, avante `glm` provider |
+| `ZHIPUAI_API_KEY` | Zhipu **GLM Coding Plan** — llm.nvim default model (`glm-5.3`), codecompanion adapter |
 | `KIMI_KEY` | Moonshot Kimi (`moonshot-v1-128k`) |
 | `DEEPSEEK_TOKEN` | DeepSeek (`deepseek-chat`) |
 | `OPENROUTER_KEY` | OpenRouter |
