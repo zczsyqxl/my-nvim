@@ -1,5 +1,5 @@
 -- vault root differs per platform
-local vaults = vim.fn.has('win32') == 1 and 'D:/vaults' or '~/vaults'
+local vaults = vim.fn.has('win32') == 1 and 'D:/myprojects/vaults' or '~/myprojects/vaults'
 
 -- flatten a vault-relative dir + base name into one dash-joined stem, so stems and ids are
 -- globally unique: dir "tools/nvim" + base "keymap" -> "tools-nvim-keymap".
