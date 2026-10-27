@@ -35,6 +35,17 @@ return {
                 rounded = false,
             },
         },
+        ---@alias avante.SelectorProvider "native" | "fzf_lua" | "mini_pick" | "snacks" | "telescope" | fun(selector: avante.ui.Selector): nil
+        file_selector = {
+            provider = 'snacks',
+        },
+        selector = {
+            provider = 'snacks',
+        },
+        input = {
+            provider = 'snacks',
+            provider_opts = {},
+        },
     },
     dependencies = {
         'nvim-lua/plenary.nvim',
