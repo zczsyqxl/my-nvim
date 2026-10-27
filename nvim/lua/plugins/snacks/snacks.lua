@@ -1,3 +1,27 @@
+-- focus jumper for the explorer picker (no close state; ,vn owns open/close):
+-- closed -> open it; open & unfocused -> focus its list window; focused -> back to file
+local function explorer_focus_toggle()
+    local picker = Snacks.picker.get({ source = "explorer" })[1]
+    if not picker then
+        Snacks.explorer()
+        return
+    end
+    if picker:is_focused() then
+        for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+            if w ~= vim.api.nvim_get_current_win()
+                and vim.api.nvim_win_get_config(w).relative == "" then
+                vim.api.nvim_set_current_win(w)
+                return
+            end
+        end
+        return
+    end
+    local list_win = picker.list.win and picker.list.win.win
+    if list_win and vim.api.nvim_win_is_valid(list_win) then
+        vim.api.nvim_set_current_win(list_win)
+    end
+end
+
 return {
     "folke/snacks.nvim",
     priority = 1000,
@@ -31,6 +55,7 @@ return {
         { "<leader>v.", function() Snacks.notifier.show_history() end, desc = "zz:snacks:Notifier show History" },
         { "<leader>v>", function() Snacks.notifier.hide() end, desc = "zz:snacks:Dismiss All Notifications" },
         { "<leader>vn", function() Snacks.explorer() end, desc = "zz:snacks:File Explorer" },
+        { "<leader>vf", explorer_focus_toggle, desc = "zz:snacks:Explorer focus toggle", silent = true },
         { "<leader>vs", function() Snacks.scratch() end, desc = "zz:snacks:Toggle Scratch Buffer" },
         { "<leader>vS", function() Snacks.scratch.select() end, desc = "zz:snacks:Select Scratch Buffer" },
         { "<leader>vu", function() Snacks.lazygit() end, desc = "zz:snacks:Lazygit" },
