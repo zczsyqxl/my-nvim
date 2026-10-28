@@ -17,7 +17,7 @@ if vim.g.vscode == nil then
         vim.o.shell = 'zsh'
     end
     vim.opt.foldmethod = 'syntax'
-    vim.opt.foldcolumn = '4'
+    -- vim.opt.foldcolumn = '4'
     vim.opt.expandtab = true
     vim.opt.belloff = 'all'
     vim.opt.visualbell = false
