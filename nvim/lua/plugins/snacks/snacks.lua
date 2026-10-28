@@ -516,7 +516,6 @@ return {
                 Snacks.words.jump(vim.v.count1)
             end,
             desc = 'zz:snacks:Next Reference',
-            mode = { 'n', 't' },
         },
         {
             '[s',
@@ -524,7 +523,6 @@ return {
                 Snacks.words.jump(-vim.v.count1)
             end,
             desc = 'zz:snacks:Prev Reference',
-            mode = { 'n', 't' },
         },
         {
             '<leader>N',
