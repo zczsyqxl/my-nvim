@@ -354,7 +354,7 @@ flowchart TD
 
 ## ⌨️ Keymaps
 
-Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefixed description — browse them live with **`,fk`**, or read **[KEYMAPS.md](KEYMAPS.md)**: the auto-generated full table, treesitter-parsed from the sources in this repo and collision-checked (vscode-branch and engine-selector overlaps are flagged there). That file is the single source of truth; this section only keeps the topology.
+Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefixed description — browse them live with **`,fk`**, or read **[KEYMAPS.md](KEYMAPS.md)**: the auto-generated full table, treesitter-parsed from the sources in this repo and collision-checked (vscode-branch and engine-selector overlaps are flagged there). That file is the single source of truth; this section only keeps the topology. Regenerate it after keymap changes with `nvim --headless -u NONE +"set noswapfile" +"luafile keymap_gen.lua"`.
 
 ### Prefix layout
 

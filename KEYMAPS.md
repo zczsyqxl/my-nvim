@@ -2,7 +2,7 @@
 
 共 316 条。treesitter 解析全部配置源码生成，覆盖 `vim.keymap.set`、leap 的 `map` 别名、lazy spec 的 `keys` 表、`Snacks.toggle:map`，以及 mini.snippets / mini.surround / mini.diff 在 opts `mappings` 表里的键和 blink.cmp 的 opts `keymap` 表（插入 + cmdline）。
 
-> 说明：`lua/config/keymap.lua` 中 RHS 为 `vscode.call(...)` 的条目属于 vscode-neovim 分支，仅在 VSCode 内嵌 nvim 时生效；其余为普通 nvim 生效。
+> 说明：`lua/config/keymap.lua` 中 RHS 为 `vscode.call(...)` 的条目属于 vscode-neovim 分支，仅在 VSCode 内嵌 nvim 时生效；其余为普通 nvim 生效。重新生成：`nvim --headless -u NONE +"set noswapfile" +"luafile keymap_gen.lua"
 
 | # | LHS | Mode | RHS | Description | 文件:行 |
 |---|-----|------|-----|-------------|---------|
@@ -308,17 +308,17 @@
 | 300 | `<leader>er` | n | `fn: Snacks.rename.rename_file()` | zz:snacks:Rename File | `lua/plugins/snacks/snacks.lua:492` |
 | 301 | `<c-/>` | n | `fn: Snacks.terminal()` | zz:snacks:Toggle Terminal | `lua/plugins/snacks/snacks.lua:499` |
 | 302 | `<c-_>` | n | `fn: Snacks.terminal()` | zz:snacks:Toggle Terminal | `lua/plugins/snacks/snacks.lua:506` |
-| 303 | `]s` | n+t | `fn: Snacks.words.jump(vim.v.count1)` | zz:snacks:Next Reference | `lua/plugins/snacks/snacks.lua:513` |
-| 304 | `[s` | n+t | `fn: Snacks.words.jump(-vim.v.count1)` | zz:snacks:Prev Reference | `lua/plugins/snacks/snacks.lua:521` |
-| 305 | `<leader>N` | n | `fn: Snacks.win({ file = vim.api.nvim_get_runtime_file('doc/news.` | Neovim News | `lua/plugins/snacks/snacks.lua:529` |
-| 306 | `<leader>bs` | n | `fn: Snacks.toggle.option('spell', { name = 'Spelling' })` | toggle: Spelling | `lua/plugins/snacks/snacks.lua:576` |
-| 307 | `<leader>bw` | n | `fn: Snacks.toggle.option('wrap', { name = 'Wrap' })` | toggle: Wrap | `lua/plugins/snacks/snacks.lua:577` |
-| 308 | `<leader>br` | n | `fn: Snacks.toggle.option('relativenumber', { name = 'Rel` | toggle: Relative Number | `lua/plugins/snacks/snacks.lua:578` |
-| 309 | `<leader>bd` | n | `fn: Snacks.toggle.diagnostics()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:579` |
-| 310 | `<leader>bl` | n | `fn: Snacks.toggle.line_number()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:580` |
-| 311 | `<leader>bc` | n | `fn: Snacks.toggle.option('conceallevel', { off = 0, on =` | Snacks toggle | `lua/plugins/snacks/snacks.lua:581` |
-| 312 | `<leader>bt` | n | `fn: Snacks.toggle.treesitter()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:582` |
-| 313 | `<leader>bb` | n | `fn: Snacks.toggle.option('background', { off = 'light', ` | toggle: Dark Background | `lua/plugins/snacks/snacks.lua:583` |
-| 314 | `<leader>bh` | n | `fn: Snacks.toggle.inlay_hints()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:584` |
-| 315 | `<leader>bi` | n | `fn: Snacks.toggle.indent()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:585` |
-| 316 | `<leader>bD` | n | `fn: Snacks.toggle.dim()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:586` |
+| 303 | `]s` | n | `fn: Snacks.words.jump(vim.v.count1)` | zz:snacks:Next Reference | `lua/plugins/snacks/snacks.lua:513` |
+| 304 | `[s` | n | `fn: Snacks.words.jump(-vim.v.count1)` | zz:snacks:Prev Reference | `lua/plugins/snacks/snacks.lua:520` |
+| 305 | `<leader>N` | n | `fn: Snacks.win({ file = vim.api.nvim_get_runtime_file('doc/news.` | Neovim News | `lua/plugins/snacks/snacks.lua:527` |
+| 306 | `<leader>bs` | n | `fn: Snacks.toggle.option('spell', { name = 'Spelling' })` | toggle: Spelling | `lua/plugins/snacks/snacks.lua:574` |
+| 307 | `<leader>bw` | n | `fn: Snacks.toggle.option('wrap', { name = 'Wrap' })` | toggle: Wrap | `lua/plugins/snacks/snacks.lua:575` |
+| 308 | `<leader>br` | n | `fn: Snacks.toggle.option('relativenumber', { name = 'Rel` | toggle: Relative Number | `lua/plugins/snacks/snacks.lua:576` |
+| 309 | `<leader>bd` | n | `fn: Snacks.toggle.diagnostics()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:577` |
+| 310 | `<leader>bl` | n | `fn: Snacks.toggle.line_number()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:578` |
+| 311 | `<leader>bc` | n | `fn: Snacks.toggle.option('conceallevel', { off = 0, on =` | Snacks toggle | `lua/plugins/snacks/snacks.lua:579` |
+| 312 | `<leader>bt` | n | `fn: Snacks.toggle.treesitter()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:580` |
+| 313 | `<leader>bb` | n | `fn: Snacks.toggle.option('background', { off = 'light', ` | toggle: Dark Background | `lua/plugins/snacks/snacks.lua:581` |
+| 314 | `<leader>bh` | n | `fn: Snacks.toggle.inlay_hints()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:582` |
+| 315 | `<leader>bi` | n | `fn: Snacks.toggle.indent()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:583` |
+| 316 | `<leader>bD` | n | `fn: Snacks.toggle.dim()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:584` |

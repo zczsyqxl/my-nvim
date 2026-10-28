@@ -352,7 +352,7 @@ flowchart TD
 
 ## ⌨️ 键位
 
-Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 前缀的描述 —— 按 **`,fk`** 实时浏览全部键位，或直接看 **[KEYMAPS.md](KEYMAPS.md)**：自动生成的完整总表，由 treesitter 从本仓库源码解析并做过冲突检查（vscode 分支与引擎选择器的重合会在其中标注）。该文件是唯一权威来源；本节只保留拓扑结构，不再重复内容。
+Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 前缀的描述 —— 按 **`,fk`** 实时浏览全部键位，或直接看 **[KEYMAPS.md](KEYMAPS.md)**：自动生成的完整总表，由 treesitter 从本仓库源码解析并做过冲突检查（vscode 分支与引擎选择器的重合会在其中标注）。该文件是唯一权威来源；本节只保留拓扑结构，不再重复内容。键位变更后在仓库根目录执行 `nvim --headless -u NONE +"set noswapfile" +"luafile keymap_gen.lua"` 重新生成。
 
 ### 前缀布局
 
