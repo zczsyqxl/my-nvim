@@ -22,5 +22,27 @@ return {
     },
     config = function(_, opts)
         require('project_nvim').setup(opts)
+        -- A nested repo (a git submodule carries a `.git` *file*, which pattern
+        -- matching cannot tell apart from a real one) gets detected as the
+        -- project root and hijacks the cwd via a global chdir; the DirChanged
+        -- event then re-roots the snacks explorer to the submodule. Skip the
+        -- chdir when the detected root lies inside the current cwd; every other
+        -- case (root outside cwd / equal to cwd / no root at all) keeps the
+        -- default flow (history + auto project switch).
+        local project = require('project_nvim.project')
+        local orig_set_pwd = project.set_pwd
+        project.set_pwd = function(dir, method)
+            if dir and vim.fn.getcwd() ~= dir then
+                local cwd = vim.fs.normalize(vim.fn.getcwd())
+                local root = vim.fs.normalize(dir)
+                -- the trailing "/" (hence the +1) rules out sibling dirs that
+                -- merely share a string prefix (e.g. 5507_bds_mult_appl vs
+                -- 5507_bds_mult_appl_extra)
+                if root:sub(1, #cwd + 1) == cwd .. '/' then
+                    return true
+                end
+            end
+            return orig_set_pwd(dir, method)
+        end
     end,
 }
