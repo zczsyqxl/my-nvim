@@ -99,8 +99,11 @@ make, ninja, diff, git_config, ssh_config, vim, vimdoc
 my-nvim/
 ├── README.md                    # 英文版说明
 ├── README.zh-CN.md              # 本文件
+├── KEYMAPS.md                   # 自动生成的快捷键总表（keymap_gen.lua 产物）
+├── keymap_gen.lua               # KEYMAPS.md 生成脚本（treesitter 解析配置源码）
 ├── .luarc.json                  # LuaLS：全量插件 library（$LOCALAPPDATA + ~/.local/share 双平台）、pathStrict 防模块撞名
 ├── assets/                      # 文档用截图
+├── docs/                        # 生成的图表（plugin-startup.html，依赖图一节有链接）
 └── nvim/                        # ← 实际的 stdpath('config') 内容
     ├── init.lua                 # 入口：reload + require('config')
     ├── lazy-lock.json           # 插件 commit 锁定（可复现安装）
@@ -167,7 +170,7 @@ my-nvim/
 | 插件 | 用途 | Spec |
 | --- | --- | --- |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) — picker | 万物模糊查找（`,f` 前缀；telescope 风格布局，列表在上） | `plugins/snacks/picker.lua` |
-| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 查找替换（`,rd`/`,ra` 文件/项目级，`,rs`/`,rf` 光标词变体） | `plugins/nvim/grugFar.lua` |
+| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 查找替换（`,rw` 光标词/当前文件，`,rW` 光标词/项目，`,rg`/`,rG` 空搜索/当前文件·项目） | `plugins/nvim/grugFar.lua` |
 
 ### 补全与代码片段
 

@@ -98,8 +98,11 @@ make, ninja, diff, git_config, ssh_config, vim, vimdoc
 my-nvim/
 ├── README.md                    # this file
 ├── README.zh-CN.md              # 中文版
+├── KEYMAPS.md                   # auto-generated keymap table (output of keymap_gen.lua)
+├── keymap_gen.lua               # KEYMAPS.md generator (treesitter-parses the config sources)
 ├── .luarc.json                  # LuaLS: full plugin library ($LOCALAPPDATA + ~/.local/share dual-platform), pathStrict to avoid module-name ambiguity
 ├── assets/                      # screenshots for docs
+├── docs/                        # generated diagrams (plugin-startup.html, linked from the dependency-graph section)
 └── nvim/                        # ← the actual stdpath('config') content
     ├── init.lua                 # entry: reload + require('config')
     ├── lazy-lock.json           # pinned plugin commits (reproducible installs)
@@ -166,7 +169,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | Plugin | Purpose | Spec |
 | --- | --- | --- |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) — picker | fuzzy finder for everything (`,f` prefix; telescope-style layout with the list on top) | `plugins/snacks/picker.lua` |
-| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | find & replace (`,rd`/`,ra` file/project scope, `,rs`/`,rf` cword variants) | `plugins/nvim/grugFar.lua` |
+| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | find & replace (`,rw` cword in current file, `,rW` cword in project, `,rg`/`,rG` blank search in current file/project) | `plugins/nvim/grugFar.lua` |
 
 ### Completion & Snippets
 
