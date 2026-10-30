@@ -46,14 +46,17 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>Q', '<cmd>qa<cr>', { remap = false, silent = true, desc = 'zz:QuitAll' })
     if vim.fn.has('win32') == 1 then
         vim.keymap.set('n', '<leader><tab>', function()
-            local path = vim.fn.expand('%:p')
+            local path = vim.fn.expand('%:p'):gsub('/', '\\')
             if path == '' then
                 vim.notify('Buffer has no file', vim.log.levels.WARN)
                 return
             end
-            -- 'start' goes through ShellExecute which activates the window;
-            -- direct CreateProcess (jobstart list) opens explorer hidden
-            vim.fn.system('start explorer /select,"' .. path .. '"')
+            -- Requires &shell = pwsh (base.lua). Pass the path as a single-quoted
+            -- PowerShell string so paths with spaces stay one argument ('' escapes
+            -- a literal quote). Must go through Start-Process (ShellExecuteEx):
+            -- launching explorer.exe directly (CreateProcess via native call or
+            -- jobstart) breaks `/select` and explorer falls back to Documents.
+            vim.fn.system("Start-Process explorer.exe -ArgumentList '/select," .. path:gsub("'", "''") .. "'")
         end, { remap = false, silent = true, desc = 'zz:SystemOpen' })
     end
 else
