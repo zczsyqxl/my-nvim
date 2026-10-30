@@ -35,7 +35,7 @@ It also doubles as the Neovim backend for [VSCode-Neovim](https://github.com/vsc
 - **Cross-platform by construction**: every platform difference lives in a `has('win32')` branch — shell (`pwsh` vs `zsh`), build commands, paths, even the markdown-preview installer (deterministic System32 `curl.exe` + `tar.exe` download instead of the flaky PowerShell script).
 - **Dual snippet engines coexisting**: `LuaSnip` powers the completion-popup path (blink.cmp's `luasnip` preset today; `cmp_luasnip` under nvim-cmp), `mini.snippets` powers the manual `C-]` expand / `C-l` jump path — fed from the **same** VSCode-style snippet files and edited in-place with `nvim-scissors` (its save hook hot-reloads both engines).
 - **Pluggable jump engines**: hop and leap are currently enabled (`,`-prefixed hints + `s`/`S` labeled jumps); flash and lightspeed specs are kept as ready-to-switch alternates.
-- **AI everywhere, provider-agnostic**: `llm.nvim` with a dozen custom app handlers (translate, explain, docstring, commit message, formula recognition…) and `codecompanion.nvim` on the GLM Coding Plan endpoint — all key-driven from the `,m` / `,n` prefixes.
+- **AI everywhere, provider-agnostic**: `llm.nvim` with a dozen custom app handlers (translate, explain, docstring, commit message, formula recognition…) and `codecompanion.nvim` with chat/inline/CLI on the `opencode` ACP agent plus command generation on the GLM Coding Plan endpoint — all key-driven from the `,m` / `,n` prefixes.
 - **Personal highlight theme**: `lua/theme/zz.lua` defines a `ZZ.*` palette (hop/leap/lightspeed labels, LSP semantic tokens, diff, rainbow delimiters, pure-black blink.cmp windows…) that is re-applied on every colorscheme switch, so it survives theme changes on both platforms.
 - **Discoverable keymaps**: every custom mapping carries a `zz:`-prefixed `desc`; press `,fk` (snacks picker keymaps) to browse them all.
 
@@ -103,9 +103,8 @@ my-nvim/
 └── nvim/                        # ← the actual stdpath('config') content
     ├── init.lua                 # entry: reload + require('config')
     ├── lazy-lock.json           # pinned plugin commits (reproducible installs)
-    ├── fdetect/zzft.lua         # *.stl / *.wsd / *.puml → plantuml
+    ├── ftdetect/zzft.lua        # *.stl / *.wsd / *.puml → plantuml
     ├── after/plugin/init.lua    # loads theme/zz.lua (single palette, vim.g.vscode-guarded)
-    ├── colors/                  # ~1900 vendored classic vim colorschemes (picker `,ov` playground)
     ├── snippets/                # VSCode-style snippet collection (shared by LuaSnip & mini.snippets)
     │   ├── package.json
     │   └── snippets/            # friendly-snippets layout + own global.json
@@ -192,7 +191,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | [mini.comment](https://github.com/echasnovski/mini.nvim) | commenting | `plugins/mini/comment.lua` |
 | [mini.bracketed](https://github.com/echasnovski/mini.nvim) | `[x`/`]x` traversal for everything | `plugins/mini/bracketed.lua` |
 | [mini.diff](https://github.com/echasnovski/mini.nvim) | hunk ops (`gl`/`gL` apply/reset, `[g`/`]g` navigate) | `plugins/mini/diff.lua` |
-| [hop.nvim](https://github.com/smoka7/hop.nvim) | jump engine (**active**): `,w`/`,b` words, `,j`/`,k` lines, `,J`/`,K` vertical, `,s` char, `,z` pattern | `plugins/jump/engines/hop.lua` |
+| [hop.nvim](https://github.com/smoka7/hop.nvim) | jump engine (**active**): `,w` words, `,l` lines, `,L` vertical, `,s` 1-char, `,S` pattern | `plugins/jump/engines/hop.lua` |
 | [leap.nvim](https://codeberg.org/andyg/leap.nvim) | jump engine (**active**): `s`/`S` labeled jump, `,x`/`,X` one-way traversal, `gk` Visitor remote ops, `o`-mode `z`/`x`/`Z`/`X` | `plugins/jump/engines/leap.lua` |
 | [flash.nvim](https://github.com/folke/flash.nvim) | jump engine (alternate; hop+lightspeed superset mapping) | `plugins/jump/engines/flash.lua` |
 | [lightspeed.nvim](https://github.com/ggandor/lightspeed.nvim) | jump engine (alternate, archived upstream) | `plugins/jump/engines/lightspeed.lua` |
@@ -214,7 +213,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | live browser preview (`,e/`); **custom deterministic build** — Windows downloads the prebuilt binary with System32 `curl.exe`/`tar.exe` (the stock PowerShell installer is bypassed) | `plugins/nvim/md/markdownPreview.lua` |
 | [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | paste images from clipboard into markdown (loads on all platforms; the `,ep` keymap is Windows-only) | `plugins/nvim/md/imgClip.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | in-terminal image rendering (Linux-only, currently disabled) | `plugins/nvim/md/image.lua` |
-| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault notes (`,o` prefix) over `D:/vaults/{personal,work}` (`~/vaults` on Linux): `:Obsidian` subcommand palette, daily notes under `<vault>/daily/` per workspace, flattened note ids/filenames (`tools/nvim/keymap` → `tools/nvim/tools-nvim-keymap.md`), unique notes land in `<workspace>/muse/`, wiki-link/tag completion through the in-process LSP (`[[`/`#`/`^`), backlinks/links/toc/rename; visual rendering is left to render-markdown (`ui.enable=false`); lazy-loads on `ft=markdown` | `plugins/note/obsidian.lua` |
+| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault notes (`,o` prefix) over `D:/myprojects/vaults/{personal,work}` (`~/myprojects/vaults` on Linux): `:Obsidian` subcommand palette, daily notes under `<vault>/daily/` per workspace, flattened note ids/filenames (`tools/nvim/keymap` → `tools/nvim/tools-nvim-keymap.md`), unique notes land in `<workspace>/muse/`, wiki-link/tag completion through the in-process LSP (`[[`/`#`/`^`), backlinks/links/toc/rename; visual rendering is left to render-markdown (`ui.enable=false`); lazy-loads on `ft=markdown` | `plugins/note/obsidian.lua` |
 
 ### LSP · DAP · Build
 
@@ -231,7 +230,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | Plugin | Purpose | Spec |
 | --- | --- | --- |
 | [llm.nvim](https://github.com/Kurama622/llm.nvim) | chat + custom app handlers (`,m` prefix): translate, explain, docstring, test generation, code optimization, commit messages, formula recognition, account info…; multi-provider model table | `plugins/llm/` |
-| [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) | AI assistant (`,n` prefix) on the GLM Coding Plan endpoint + `opencode` CLI agent | `plugins/nvim/codecompanion.lua` |
+| [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) | AI assistant (`,n` prefix): chat/inline/CLI through the `opencode` ACP agent; `:CodeCompanionCmd` uses the GLM Coding Plan endpoint | `plugins/nvim/codecompanion.lua` |
 | [avante.nvim](https://github.com/yetone/avante.nvim) | Cursor-like AI sidebar over the `opencode` ACP (alternate; load disabled in `init.lua`, spec kept ready-to-re-enable) | `plugins/nvim/avante.lua` |
 
 Dependencies of the AI stack: [plenary.nvim](https://github.com/nvim-lua/plenary.nvim), [nui.nvim](https://github.com/MunifTanjim/nui.nvim). The kept avante alternate additionally pulls [mega.cmdparse](https://github.com/ColinKennedy/mega.cmdparse) (+ mega.logging) when re-enabled.
@@ -295,6 +294,8 @@ flowchart LR
 ## 🗺 Plugin Dependency Graph
 
 Startup chain and the notable inter-plugin relationships:
+
+> 🧭 Interactive, explorable version of the startup flow: [docs/plugin-startup.html](docs/plugin-startup.html).
 
 ```mermaid
 flowchart TD
@@ -367,7 +368,7 @@ Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefi
 | `,b` | snacks option toggles — spell, wrap, diagnostics, conceal, treesitter, indent, colorschemes |
 | `,e` | buffers & markdown — bufferline, render-markdown, markdown-preview, image paste |
 | `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / snippets / grug-far |
-| `,w` `,l` `,L` `,s` `,S` | hop — words / after / before / 2-char / pattern |
+| `,w` `,l` `,L` `,s` `,S` | hop — words / lines / vertical / 1-char / pattern |
 | `s` `,S` `,x` `,X` `gk` | leap — jump / all windows / one-way traversal / remote ops |
 | `F1`–`F12` | DAP session control (`F1`–`F3` DAP UI open/close/toggle) |
 

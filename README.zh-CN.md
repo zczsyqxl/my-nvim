@@ -36,7 +36,7 @@
 - **结构性跨平台**：所有平台差异都收敛在 `has('win32')` 分支里 —— shell（`pwsh` vs `zsh`）、build 命令、路径，甚至 markdown-preview 的安装器（用系统自带的 System32 `curl.exe` + `tar.exe` 做确定性下载，绕开坑很多的 PowerShell 安装脚本）。
 - **双代码片段引擎并存**：`LuaSnip` 走补全弹窗路径（blink.cmp 的 `luasnip` preset；nvim-cmp 下是 `cmp_luasnip`），`mini.snippets` 走手动 `C-]` 展开 / `C-l` 跳转路径 —— 两者读**同一套** VSCode 风格片段文件，用 `nvim-scissors` 就地增删改（保存钩子会同时热重载两个引擎）。
 - **可插拔跳转引擎**：当前启用 hop + leap（`,` 前缀提示 + `s`/`S` 标签跳转）；flash 和 lightspeed 的 spec 作为随时可切的备胎保留。
-- **AI 无处不在、供应商无关**：`llm.nvim` 带十几个自定义 app handler（翻译、解释、文档字符串、提交信息、公式识别……），`codecompanion.nvim` 走 GLM Coding Plan 专用端点 —— 全部由 `,m` / `,n` 前缀驱动。
+- **AI 无处不在、供应商无关**：`llm.nvim` 带十几个自定义 app handler（翻译、解释、文档字符串、提交信息、公式识别……），`codecompanion.nvim` 的 chat/inline/CLI 走 `opencode` ACP、命令生成走 GLM Coding Plan 专用端点 —— 全部由 `,m` / `,n` 前缀驱动。
 - **个人高亮主题**：`lua/theme/zz.lua` 定义了一套 `ZZ.*` 调色板（hop/leap/lightspeed 标签、LSP 语义 token、diff、彩虹括号、blink.cmp 纯黑窗口……），并挂在 `ColorScheme` 自动命令上重新应用，主题怎么换都不丢，双端一致。
 - **键位可发现**：所有自定义映射都带 `zz:` 前缀的 `desc`；按 `,fk`（snacks picker 键位表）即可全部浏览。
 
@@ -104,9 +104,8 @@ my-nvim/
 └── nvim/                        # ← 实际的 stdpath('config') 内容
     ├── init.lua                 # 入口：reload + require('config')
     ├── lazy-lock.json           # 插件 commit 锁定（可复现安装）
-    ├── fdetect/zzft.lua         # *.stl / *.wsd / *.puml → plantuml
+    ├── ftdetect/zzft.lua        # *.stl / *.wsd / *.puml → plantuml
     ├── after/plugin/init.lua    # 加载 theme/zz.lua（单一调色板，vim.g.vscode 守卫分流）
-    ├── colors/                  # 约 1900 个第三方经典 vim 配色（picker `,ov` 试衣间）
     ├── snippets/                # VSCode 风格片段库（LuaSnip 与 mini.snippets 共用）
     │   ├── package.json
     │   └── snippets/            # friendly-snippets 布局 + 自有 global.json
@@ -193,7 +192,7 @@ my-nvim/
 | [mini.comment](https://github.com/echasnovski/mini.nvim) | 注释 | `plugins/mini/comment.lua` |
 | [mini.bracketed](https://github.com/echasnovski/mini.nvim) | 万物 `[x`/`]x` 遍历 | `plugins/mini/bracketed.lua` |
 | [mini.diff](https://github.com/echasnovski/mini.nvim) | hunk 操作（`gy`/`gY` 应用/还原，`[g`/`]g` 导航） | `plugins/mini/diff.lua` |
-| [hop.nvim](https://github.com/smoka7/hop.nvim) | 跳转引擎（**当前启用**）：`,w`/`,b` 词、`,j`/`,k` 行、`,J`/`,K` 垂直、`,s` 字符、`,z` 模式 | `plugins/jump/engines/hop.lua` |
+| [hop.nvim](https://github.com/smoka7/hop.nvim) | 跳转引擎（**当前启用**）：`,w` 词、`,l` 行、`,L` 垂直、`,s` 单字符、`,S` 模式 | `plugins/jump/engines/hop.lua` |
 | [leap.nvim](https://codeberg.org/andyg/leap.nvim) | 跳转引擎（**当前启用**）：`s`/`S` 标签跳转、`,x`/`,X` 单向遍历、`gk` Visitor 远程操作、`o` 模式 `z`/`x`/`Z`/`X` | `plugins/jump/engines/leap.lua` |
 | [flash.nvim](https://github.com/folke/flash.nvim) | 跳转引擎（备选；hop+lightspeed 超集映射） | `plugins/jump/engines/flash.lua` |
 | [lightspeed.nvim](https://github.com/ggandor/lightspeed.nvim) | 跳转引擎（备选，上游已归档） | `plugins/jump/engines/lightspeed.lua` |
@@ -215,7 +214,7 @@ my-nvim/
 | [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) | 浏览器实时预览（`,e/`）；**自定义确定性构建** —— Windows 用 System32 `curl.exe`/`tar.exe` 下载预编译产物（绕开原版 PowerShell 安装器的坑） | `plugins/nvim/md/markdownPreview.lua` |
 | [img-clip.nvim](https://github.com/HakonHarnes/img-clip.nvim) | 剪贴板贴图进 markdown（全平台加载；`,ep` 绑定仅 Windows） | `plugins/nvim/md/imgClip.lua` |
 | [image.nvim](https://github.com/3rd/image.nvim) | 终端内图片渲染（仅 Linux，当前停用） | `plugins/nvim/md/image.lua` |
-| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault 笔记（`,o` 前缀），路径 `D:/vaults/{personal,work}`（Linux 为 `~/vaults`）：`:Obsidian` 子命令菜单，daily 笔记按 workspace 落在 `<vault>/daily/`，笔记 id/文件名扁平化（输入 `tools/nvim/keymap` → `tools/nvim/tools-nvim-keymap.md`），unique note 落 `<workspace>/muse/`，in-process LSP 提供 wiki 链接/标签补全（`[[`/`#`/`^`），反链/出链/目录/重命名；视觉效果交给 render-markdown（`ui.enable=false`）；`ft=markdown` 懒加载 | `plugins/note/obsidian.lua` |
+| [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim) | vault 笔记（`,o` 前缀），路径 `D:/myprojects/vaults/{personal,work}`（Linux 为 `~/myprojects/vaults`）：`:Obsidian` 子命令菜单，daily 笔记按 workspace 落在 `<vault>/daily/`，笔记 id/文件名扁平化（输入 `tools/nvim/keymap` → `tools/nvim/tools-nvim-keymap.md`），unique note 落 `<workspace>/muse/`，in-process LSP 提供 wiki 链接/标签补全（`[[`/`#`/`^`），反链/出链/目录/重命名；视觉效果交给 render-markdown（`ui.enable=false`）；`ft=markdown` 懒加载 | `plugins/note/obsidian.lua` |
 
 ### LSP · DAP · 构建
 
@@ -232,7 +231,7 @@ my-nvim/
 | 插件 | 用途 | Spec |
 | --- | --- | --- |
 | [llm.nvim](https://github.com/Kurama622/llm.nvim) | 聊天 + 自定义 app handler（`,m` 前缀）：翻译、解释、文档字符串、生成测试、代码优化、提交信息、公式识别、账户信息…；多供应商模型表 | `plugins/llm/` |
-| [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) | AI 助手（`,n` 前缀），走 GLM Coding Plan 专用端点 + `opencode` CLI agent | `plugins/nvim/codecompanion.lua` |
+| [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) | AI 助手（`,n` 前缀）：chat/inline/CLI 走 `opencode` ACP agent，`:CodeCompanionCmd` 走 GLM Coding Plan 专用端点 | `plugins/nvim/codecompanion.lua` |
 | [avante.nvim](https://github.com/yetone/avante.nvim) | Cursor 风格 AI 侧栏，走 `opencode` ACP（alternate；已在 `init.lua` 停用加载，spec 保留随时可再启用） | `plugins/nvim/avante.lua` |
 
 AI 栈依赖：[plenary.nvim](https://github.com/nvim-lua/plenary.nvim)、[nui.nvim](https://github.com/MunifTanjim/nui.nvim)。保留的 avante alternate 再启用时会额外拉取 [mega.cmdparse](https://github.com/ColinKennedy/mega.cmdparse)（+ mega.logging）。
@@ -293,6 +292,8 @@ flowchart LR
 ## 🗺 插件依赖关系图
 
 启动链路和值得注意的插件间关系：
+
+> 🧭 可交互浏览的启动流程图：[docs/plugin-startup.html](docs/plugin-startup.html)。
 
 ```mermaid
 flowchart TD
@@ -365,7 +366,7 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 | `,b` | snacks 选项开关 —— 拼写、换行、诊断、conceal、treesitter、缩进线、配色 |
 | `,e` | buffer 与 markdown —— bufferline、render-markdown、markdown-preview、贴图 |
 | `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / 片段 / grug-far |
-| `,w` `,l` `,L` `,s` `,S` | hop —— 词 / 行后 / 行前 / 2 字符 / 模式 |
+| `,w` `,l` `,L` `,s` `,S` | hop —— 词 / 行 / 垂直 / 单字符 / 模式 |
 | `s` `,S` `,x` `,X` `gk` | leap —— 跳转 / 全窗口 / 单向遍历 / Visitor 远程操作 |
 | `F1`–`F12` | DAP 会话控制（`F1`–`F3` DAP UI 开/关/切换） |
 

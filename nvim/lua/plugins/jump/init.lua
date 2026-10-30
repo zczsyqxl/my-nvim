@@ -3,7 +3,7 @@
 -- only the engines listed below take effect. Restart nvim after editing.
 --
 -- Keymap usage (leader = ,):
---   hop        <leader>w b j k J K s z
+--   hop        <leader>w l L s S
 --   lightspeed s  S
 --   flash      s  S   ,s ,w ,b ,j ,k ,r   + / ? search labels
 --   leap       s  S   ,x ,X (one-way + traversal)  gk (Visitor remote ops)
