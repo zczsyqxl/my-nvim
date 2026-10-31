@@ -38,6 +38,7 @@ It also doubles as the Neovim backend for [VSCode-Neovim](https://github.com/vsc
 - **AI everywhere, provider-agnostic**: `llm.nvim` with a dozen custom app handlers (translate, explain, docstring, commit message, formula recognition…) and `codecompanion.nvim` with chat/inline/CLI on the `opencode` ACP agent plus command generation on the GLM Coding Plan endpoint — all key-driven from the `,m` / `,n` prefixes.
 - **Personal highlight theme**: `lua/theme/zz.lua` defines a `ZZ.*` palette (hop/leap/lightspeed labels, LSP semantic tokens, diff, rainbow delimiters, pure-black blink.cmp windows…) that is re-applied on every colorscheme switch, so it survives theme changes on both platforms.
 - **Discoverable keymaps**: every custom mapping carries a `zz:`-prefixed `desc`; press `,fk` (snacks picker keymaps) to browse them all.
+- **Todo workflow, three views over one engine**: todo-comments provides keyword highlighting and `]e`/`[e` jumps; its rg search engine feeds a custom snacks.picker finder (`,ft`/`,fT`), the native quickfix/loclist lists (`,vt`/`,vT`, windows toggled by `,vq`/`,vl`), and Trouble's todo view.
 
 ## 📦 Requirements & Installation
 
@@ -116,7 +117,7 @@ my-nvim/
         │   ├── init.lua         # module reload chain
         │   ├── base.lua         # options, encoding, clipboard (Zellij osc52), platform branches
         │   ├── lazy.lua         # lazy.nvim bootstrap + setup (leader = ,)
-        │   ├── lsp.lua          # native vim.lsp.enable (independent of completion engine)
+        │   ├── lsp.lua          # native vim.lsp.enable + startup fixes (mason PATH prepend, FileType replay — see T5)
         │   ├── keymap.lua       # base + VSCode-Neovim keymaps
         │   └── mylua/           # extra keymaps (quickfix/foldcolumn toggles), helpers
         ├── theme/
@@ -144,13 +145,13 @@ The default set is committed below; alternates stay installed-ready behind selec
 | [tokyonight.nvim](https://github.com/folke/tokyonight.nvim) | colorscheme (**active**, `night` style) | `plugins/nvim/theme/tokyonight.lua` |
 | [onedark.nvim](https://github.com/navarasu/onedark.nvim) | colorscheme (alternate) | `plugins/nvim/theme/onedark.lua` |
 | [catppuccin/nvim](https://github.com/catppuccin/nvim) | colorscheme (alternate) | `plugins/nvim/theme/nvim.lua` |
-| [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | statusline (global status, tokyonight theme) | `plugins/nvim/lualine.lua` |
+| [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | statusline (global status, tokyonight theme; custom LSP-client segment with a mini.icons filetype icon, quickfix/trouble/mason/toggleterm/snacks-picker extensions) | `plugins/nvim/lualine.lua` |
 | [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | tabline (**active**, slope style, LSP diagnostics) | `plugins/nvim/tab/bufferline.lua` |
 | [barbar.nvim](https://github.com/romgrk/barbar.nvim) | tabline (alternate) | `plugins/nvim/tab/barbar.lua` |
 | [tabby.nvim](https://github.com/nanozuki/tabby.nvim) | tabline (alternate) | `plugins/nvim/tab/tabby.lua` |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) | dashboard · explorer · picker · notifier · zen/zoom · scratch · statuscolumn · indent · words (`,f`/`,v`/`,g`/`,b` prefixes) | `plugins/snacks/*` |
 | [mini.icons](https://github.com/echasnovski/mini.nvim) | icon provider (used by render-markdown, grug-far, snacks picker…) | `plugins/mini/icons.lua` |
-| [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | filetype icons (lualine, bufferline) | dependency |
+| [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | filetype icons (bufferline / barbar tablines) | dependency |
 | [rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim) | rainbow parentheses (treesitter) | `plugins/nvim/rainbow.lua` |
 | [nvim-colorizer.lua](https://github.com/catgoose/nvim-colorizer.lua) | color hex/rgb preview (maintained fork) | `plugins/nvim/nvimColorizer.lua` |
 | [aegis.nvim](https://github.com/aekasitt/aegis.nvim) | keystroke latency/counter (`:AegisToggle`) | `plugins/nvim/aegis.lua` |
@@ -161,7 +162,6 @@ The default set is committed below; alternates stay installed-ready behind selec
 | --- | --- | --- |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) — explorer | file explorer sidebar (`,vn`; `P` previews in the main window) | `plugins/snacks/picker.lua` |
 | [project.nvim](https://github.com/ahmedkhalf/project.nvim) | auto-root-detection (`pattern`: `.git`, `Cargo.toml`, `CMakeLists.txt`…) + global cwd pinning | `plugins/nvim/project.lua` |
-| [aerial.nvim](https://github.com/stevearc/aerial.nvim) | symbol outline (lsp + treesitter + markdown backends) | `plugins/nvim/aerial.lua` |
 | [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | floating terminals (shell, yazi — 100% width / 85% height; cmake executor/runner) | `plugins/nvim/toggleterm.lua` |
 
 ### Fuzzy Finding & Search
@@ -169,6 +169,7 @@ The default set is committed below; alternates stay installed-ready behind selec
 | Plugin | Purpose | Spec |
 | --- | --- | --- |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) — picker | fuzzy finder for everything (`,f` prefix; telescope-style layout with the list on top) | `plugins/snacks/picker.lua` |
+| [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME keyword highlighting + `]e`/`[e` jumps; its rg engine drives a custom snacks.picker frontend (`,ft` all keywords / `,fT` fix-only) and the quickfix/loclist fills (`,vt`/`,vT`) | `plugins/nvim/todo.lua` |
 | [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | find & replace (`,rw` cword in current file, `,rW` cword in project, `,rg`/`,rG` blank search in current file/project) | `plugins/nvim/grugFar.lua` |
 
 ### Completion & Snippets
@@ -222,8 +223,9 @@ The default set is committed below; alternates stay installed-ready behind selec
 
 | Plugin | Purpose | Spec |
 | --- | --- | --- |
-| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP server configs (native `vim.lsp.enable`: clangd, rust-analyzer, lua_ls, pyright) | `config/lsp.lua` |
+| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP server configs (native `vim.lsp.enable`: clangd, rust-analyzer, lua_ls, pyright); startup-loaded so cmdline-opened files resolve configs in time — see T5 | `config/lsp.lua` |
 | [mason.nvim](https://github.com/mason-org/mason.nvim) / [mason-lspconfig](https://github.com/mason-org/mason-lspconfig.nvim) | tool installer; auto-installs the LSP list above | `plugins/nvim/lspDap.lua` |
+| [trouble.nvim](https://github.com/folke/trouble.nvim) | diagnostics / symbols / LSP references / quickfix / loclist browser (`,k` prefix; symbols kind whitelist extended with Variable/Constant — lua_ls fine-grained kinds were tried and reverted, pure config tables stay outline-empty by design) | `plugins/nvim/trouble.lua` |
 | [nvim-dap](https://github.com/mfussenegger/nvim-dap) / [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) / [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim) / [nvim-nio](https://github.com/nvim-neotest/nvim-nio) | debugging; custom debugpy adapter on Windows; `F1–F12` keymaps | `plugins/nvim/lspDap.lua` |
 | [cmake-tools.nvim](https://github.com/Civitasv/cmake-tools.nvim) | CMake build/run/debug from the editor (`,c` prefix; executor/runner via toggleterm) | `plugins/nvim/cmake.lua` |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (`main` branch) | parsing/highlighting/folding; `llm`↔markdown & `zsh`↔bash filetype registration | `plugins/nvim/treesitter.lua` |
@@ -324,8 +326,8 @@ flowchart TD
 
     %% fuzzy finding / navigation
     SNACKS --> PLEN[plenary.nvim]
-    AER[aerial.nvim] --> TS[nvim-treesitter]
-    AER -.->|backend| LSPC
+    TODOC[todo-comments.nvim] --> PLEN
+    TRB[trouble.nvim] -.todo/qf/loclist views.-> TODOC
 
     %% tree / ui
     LUAL[lualine] --> DEV[nvim-web-devicons] & MINI[mini.nvim]
@@ -364,9 +366,10 @@ Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefi
 
 | Prefix | Domain |
 | --- | --- |
-| `,f` | snacks picker — files / grep / buffers / LSP symbols / jumps / marks / histories / notifications |
+| `,f` | snacks picker — files / grep / buffers / LSP symbols / jumps / marks / histories / notifications / todo list (`,ft`, `,fT`) |
 | `,g` | git (snacks picker) |
-| `,v` | UI & floats — explorer, terminal, yazi, lazygit, scratch, DAP UI, zen/zoom, notifier |
+| `,k` | trouble — project/buffer diagnostics (`,kx`/`,kX`), symbols (`,ks`), LSP references (`,kl`), quickfix/loclist views (`,kq`/`,kL`) |
+| `,v` | UI & floats — explorer, terminal, yazi, lazygit, scratch, DAP UI, zen/zoom, notifier, quickfix/loclist/todo-list windows (`,vq`/`,vl`/`,vt`/`,vT`) |
 | `,o` | obsidian — global commands; a second buffer-local set lives only inside vault notes |
 | `,b` | snacks option toggles — spell, wrap, diagnostics, conceal, treesitter, indent, colorschemes |
 | `,e` | buffers & markdown — bufferline, render-markdown, markdown-preview, image paste |
@@ -374,6 +377,7 @@ Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefi
 | `,w` `,l` `,L` `,s` `,S` | hop — words / lines / vertical / 1-char / pattern |
 | `s` `,S` `,x` `,X` `gk` | leap — jump / all windows / one-way traversal / remote ops |
 | `F1`–`F12` | DAP session control (`F1`–`F3` DAP UI open/close/toggle) |
+| `]e` / `[e` | todo jump — next/prev TODO keyword; inside obsidian vault notes the same lhs is buffer-local link nav instead (obsidian wins there, todo-comments everywhere else) |
 
 ### Behavioral notes (not visible in the table)
 
@@ -428,6 +432,10 @@ This config builds it automatically with a custom `build` function (prebuilt rel
 - `Could not find executable "npm"` — Neovim started with a trimmed `PATH` (e.g. via a desktop launcher). Launch it from a shell so `/usr/bin` (node/npm) is visible, or fix the launcher's `PATH`.
 - Downloads crawl / `Installation was aborted` — slow or blocked access to GitHub releases; export `HTTPS_PROXY` / `HTTP_PROXY` (both cases) before starting Neovim. Install one package at a time.
 - `Lockfile exists, installation is already running in another process (pid: xxx)` — another Neovim instance is installing the same package. Close the extra instance first; if that pid is gone, clear leftovers with `rm -rf ~/.local/share/nvim/mason/staging/*`. Use `:MasonInstall --force` only to bypass a stale lock.
+
+**T5 · LSP not attached on a cmdline-opened file (fixed, kept for the record)**
+
+nvim 0.13 reads `nvim file.lua` file arguments **during** init, so their `FileType` fires before `vim.lsp.enable()` registers its autocmd — and nvim never retries the failed buffer. Mason-only servers (lua_ls, pyright) had a second hurdle: their executables live in mason's bin dir, which mason.nvim (VeryLazy) prepends to `PATH` too late. Both are fixed in `config/lsp.lua` (mason bin prepended to `PATH` + a `FileType` replay for already-loaded buffers) and `plugins/nvim/lspDap.lua` (nvim-lspconfig startup-loaded so `lsp/*.lua` configs resolve in time). Symptoms of the old bug: `:LspInfo` empty, Trouble symbols (`,ks`) empty while treesitter-based tools (snacks `treesitter` picker) still work. Check attachment live in the lualine LSP segment.
 
 **E1 · Inserted time shows in Chinese although the OS time format is US**
 

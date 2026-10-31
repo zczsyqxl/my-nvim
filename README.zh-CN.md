@@ -39,6 +39,7 @@
 - **AI 无处不在、供应商无关**：`llm.nvim` 带十几个自定义 app handler（翻译、解释、文档字符串、提交信息、公式识别……），`codecompanion.nvim` 的 chat/inline/CLI 走 `opencode` ACP、命令生成走 GLM Coding Plan 专用端点 —— 全部由 `,m` / `,n` 前缀驱动。
 - **个人高亮主题**：`lua/theme/zz.lua` 定义了一套 `ZZ.*` 调色板（hop/leap/lightspeed 标签、LSP 语义 token、diff、彩虹括号、blink.cmp 纯黑窗口……），并挂在 `ColorScheme` 自动命令上重新应用，主题怎么换都不丢，双端一致。
 - **键位可发现**：所有自定义映射都带 `zz:` 前缀的 `desc`；按 `,fk`（snacks picker 键位表）即可全部浏览。
+- **todo 工作流，一个引擎三个视图**：todo-comments 提供关键字高亮与 `]e`/`[e` 跳转；其 rg 搜索引擎同时驱动自定义 snacks.picker 前端（`,ft`/`,fT`）、原生 quickfix/loclist 列表（`,vt`/`,vT`，窗口由 `,vq`/`,vl` 切换）与 Trouble 的 todo 视图。
 
 ## 📦 环境要求与安装
 
@@ -117,7 +118,7 @@ my-nvim/
         │   ├── init.lua         # 模块 reload 链
         │   ├── base.lua         # 选项、编码、剪贴板（Zellij osc52）、平台分支
         │   ├── lazy.lua         # lazy.nvim 引导 + setup（leader = ,）
-        │   ├── lsp.lua          # 原生 vim.lsp.enable（独立于补全引擎）
+        │   ├── lsp.lua          # 原生 vim.lsp.enable + 启动时序修复（mason PATH prepend、FileType 重放 —— 见 T5）
         │   ├── keymap.lua       # 基础 + VSCode-Neovim 键位
         │   └── mylua/           # 扩展键位（quickfix/foldcolumn 开关）、小工具
         ├── theme/
@@ -145,13 +146,13 @@ my-nvim/
 | [tokyonight.nvim](https://github.com/folke/tokyonight.nvim) | 配色（**当前启用**，`night` 风格） | `plugins/nvim/theme/tokyonight.lua` |
 | [onedark.nvim](https://github.com/navarasu/onedark.nvim) | 配色（备选） | `plugins/nvim/theme/onedark.lua` |
 | [catppuccin/nvim](https://github.com/catppuccin/nvim) | 配色（备选） | `plugins/nvim/theme/nvim.lua` |
-| [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | 状态栏（全局状态栏，tokyonight 主题） | `plugins/nvim/lualine.lua` |
+| [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) | 状态栏（全局状态栏，tokyonight 主题；自定义 LSP 客户端段带 mini.icons 文件类型图标，quickfix/trouble/mason/toggleterm/snacks-picker 扩展） | `plugins/nvim/lualine.lua` |
 | [bufferline.nvim](https://github.com/akinsho/bufferline.nvim) | 标签栏（**当前启用**，slope 风格，LSP 诊断） | `plugins/nvim/tab/bufferline.lua` |
 | [barbar.nvim](https://github.com/romgrk/barbar.nvim) | 标签栏（备选） | `plugins/nvim/tab/barbar.lua` |
 | [tabby.nvim](https://github.com/nanozuki/tabby.nvim) | 标签栏（备选） | `plugins/nvim/tab/tabby.lua` |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) | dashboard · explorer · picker · notifier · zen/zoom · scratch · statuscolumn · 缩进线 · words（`,f`/`,v`/`,g`/`,b` 前缀） | `plugins/snacks/*` |
 | [mini.icons](https://github.com/echasnovski/mini.nvim) | 图标提供者（render-markdown、grug-far、snacks picker 等在用） | `plugins/mini/icons.lua` |
-| [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | 文件类型图标（lualine、bufferline） | 依赖 |
+| [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | 文件类型图标（bufferline / barbar 标签栏） | 依赖 |
 | [rainbow-delimiters.nvim](https://github.com/hiphish/rainbow-delimiters.nvim) | 彩虹括号（treesitter） | `plugins/nvim/rainbow.lua` |
 | [nvim-colorizer.lua](https://github.com/catgoose/nvim-colorizer.lua) | 颜色值预览（活跃维护 fork） | `plugins/nvim/nvimColorizer.lua` |
 | [aegis.nvim](https://github.com/aekasitt/aegis.nvim) | 击键延迟/计数测量（`:AegisToggle`） | `plugins/nvim/aegis.lua` |
@@ -162,7 +163,6 @@ my-nvim/
 | --- | --- | --- |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) — explorer | 文件树侧栏（`,vn`；按 `P` 在主窗口预览） | `plugins/snacks/picker.lua` |
 | [project.nvim](https://github.com/ahmedkhalf/project.nvim) | 项目根自动识别（`pattern`：`.git`、`Cargo.toml`、`CMakeLists.txt`…）+ 全局 cwd 钉死 | `plugins/nvim/project.lua` |
-| [aerial.nvim](https://github.com/stevearc/aerial.nvim) | 符号大纲（lsp + treesitter + markdown 后端） | `plugins/nvim/aerial.lua` |
 | [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) | 浮动终端（shell、yazi —— 100% 宽 / 85% 高；cmake 执行器/运行器） | `plugins/nvim/toggleterm.lua` |
 
 ### 模糊查找与搜索
@@ -170,6 +170,7 @@ my-nvim/
 | 插件 | 用途 | Spec |
 | --- | --- | --- |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) — picker | 万物模糊查找（`,f` 前缀；telescope 风格布局，列表在上） | `plugins/snacks/picker.lua` |
+| [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME 关键字高亮 + `]e`/`[e` 跳转；其 rg 引擎同时驱动自定义 snacks.picker 前端（`,ft` 全部 / `,fT` 仅 fix）与 quickfix/loclist 填充（`,vt`/`,vT`） | `plugins/nvim/todo.lua` |
 | [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 查找替换（`,rw` 光标词/当前文件，`,rW` 光标词/项目，`,rg`/`,rG` 空搜索/当前文件·项目） | `plugins/nvim/grugFar.lua` |
 
 ### 补全与代码片段
@@ -223,8 +224,9 @@ my-nvim/
 
 | 插件 | 用途 | Spec |
 | --- | --- | --- |
-| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP server 配置（原生 `vim.lsp.enable`：clangd、rust-analyzer、lua_ls、pyright） | `config/lsp.lua` |
+| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP server 配置（原生 `vim.lsp.enable`：clangd、rust-analyzer、lua_ls、pyright）；启动即加载，命令行直开的文件也能及时解析配置 —— 见 T5 | `config/lsp.lua` |
 | [mason.nvim](https://github.com/mason-org/mason.nvim) / [mason-lspconfig](https://github.com/mason-org/mason-lspconfig.nvim) | 工具安装器；自动装上述 LSP 清单 | `plugins/nvim/lspDap.lua` |
+| [trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断 / 符号 / LSP 引用 / quickfix / loclist 浏览器（`,k` 前缀；符号白名单扩展了 Variable/Constant —— lua_ls 细分 kind 试过又回退了，纯配置表的大纲保持刻意为空） | `plugins/nvim/trouble.lua` |
 | [nvim-dap](https://github.com/mfussenegger/nvim-dap) / [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) / [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim) / [nvim-nio](https://github.com/nvim-neotest/nvim-nio) | 调试；Windows 上自定义 debugpy 适配器；`F1–F12` 键位 | `plugins/nvim/lspDap.lua` |
 | [cmake-tools.nvim](https://github.com/Civitasv/cmake-tools.nvim) | 编辑器内 CMake 构建/运行/调试（`,c` 前缀；执行器/运行器走 toggleterm） | `plugins/nvim/cmake.lua` |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)（`main` 分支） | 解析/高亮/折叠；`llm`↔markdown、`zsh`↔bash 文件类型注册 | `plugins/nvim/treesitter.lua` |
@@ -322,8 +324,8 @@ flowchart TD
 
     %% 模糊查找 / 导航
     SNACKS --> PLEN[plenary.nvim]
-    AER[aerial.nvim] --> TS[nvim-treesitter]
-    AER -.->|后端| LSPC
+    TODOC[todo-comments.nvim] --> PLEN
+    TRB[trouble.nvim] -.todo/qf/loclist 视图.-> TODOC
 
     %% UI
     LUAL[lualine] --> DEV[nvim-web-devicons] & MINI[mini.nvim]
@@ -362,9 +364,10 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 
 | 前缀 | 领域 |
 | --- | --- |
-| `,f` | snacks picker —— 文件 / grep / buffer / LSP 符号 / 跳转 / 标记 / 历史 / 通知 |
+| `,f` | snacks picker —— 文件 / grep / buffer / LSP 符号 / 跳转 / 标记 / 历史 / 通知 / todo 列表（`,ft`、`,fT`） |
 | `,g` | git（snacks picker） |
-| `,v` | UI 与浮窗 —— explorer、终端、yazi、lazygit、草稿本、DAP UI、zen/zoom、通知 |
+| `,k` | trouble —— 项目/当前文件诊断（`,kx`/`,kX`）、符号大纲（`,ks`）、LSP 引用（`,kl`）、quickfix/loclist 视图（`,kq`/`,kL`） |
+| `,v` | UI 与浮窗 —— explorer、终端、yazi、lazygit、草稿本、DAP UI、zen/zoom、通知、quickfix/loclist/todo 列表窗口（`,vq`/`,vl`/`,vt`/`,vT`） |
 | `,o` | obsidian —— 全局命令；第二组 buffer-local 键仅在 vault 笔记内生效 |
 | `,b` | snacks 选项开关 —— 拼写、换行、诊断、conceal、treesitter、缩进线、配色 |
 | `,e` | buffer 与 markdown —— bufferline、render-markdown、markdown-preview、贴图 |
@@ -372,6 +375,7 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 | `,w` `,l` `,L` `,s` `,S` | hop —— 词 / 行 / 垂直 / 单字符 / 模式 |
 | `s` `,S` `,x` `,X` `gk` | leap —— 跳转 / 全窗口 / 单向遍历 / Visitor 远程操作 |
 | `F1`–`F12` | DAP 会话控制（`F1`–`F3` DAP UI 开/关/切换） |
+| `]e` / `[e` | todo 跳转 —— 下/上一个 TODO 关键字；obsidian vault 笔记内同一键位是 buffer-local 的链接导航（vault 内 obsidian 优先，其余地方 todo-comments） |
 
 ### 行为说明（总表里看不到的部分）
 
@@ -426,6 +430,10 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 - `Could not find executable "npm"` —— Neovim 从裁剪过 `PATH` 的环境启动（如桌面快捷方式）。改从 shell 启动以保证能看到 `/usr/bin`（node/npm），或修正启动器的 `PATH`。
 - 下载极慢 / `Installation was aborted` —— GitHub release 通道慢或不通；启动 Neovim 前 export `HTTPS_PROXY` / `HTTP_PROXY`（大小写都设）。一次只装一个包。
 - `Lockfile exists, installation is already running in another process (pid: xxx)` —— 另一个 Neovim 实例正在安装同一个包。先关掉多余实例；若该 pid 已不存在，用 `rm -rf ~/.local/share/nvim/mason/staging/*` 清理残留。`:MasonInstall --force` 仅用于绕过已失效的锁。
+
+**T5 · 命令行直开的文件 LSP 不附着（已修复，留档）**
+
+nvim 0.13 会在 **init 期间**就读入 `nvim file.lua` 的文件参数，其 `FileType` 早于 `vim.lsp.enable()` 注册自动命令 —— 而 nvim 不会为失败的 buffer 重试。仅由 mason 安装的 server（lua_ls、pyright）还有第二重障碍：可执行文件在 mason 的 bin 目录里，而负责把它加进 `PATH` 的 mason.nvim（VeryLazy）加载得太晚。两处都已修复：`config/lsp.lua`（手动 prepend mason bin + 为已加载 buffer 重放 `FileType`）与 `plugins/nvim/lspDap.lua`（nvim-lspconfig 启动即加载，`lsp/*.lua` 配置随取随有）。旧症状：`:LspInfo` 为空、Trouble 符号（`,ks`）为空但 treesitter 类工具正常。附着状态可直接看 lualine 的 LSP 段。
 
 **E1 · 插入时间显示为中文，尽管系统时间格式是美式**
 
