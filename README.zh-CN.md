@@ -375,12 +375,13 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 | `,w` `,l` `,L` `,s` `,S` | hop —— 词 / 行 / 垂直 / 单字符 / 模式 |
 | `s` `,S` `,x` `,X` `gk` | leap —— 跳转 / 全窗口 / 单向遍历 / Visitor 远程操作 |
 | `F1`–`F12` | DAP 会话控制（`F1`–`F3` DAP UI 开/关/切换） |
-| `]e` / `[e` | todo 跳转 —— 下/上一个 TODO 关键字；obsidian vault 笔记内同一键位是 buffer-local 的链接导航（vault 内 obsidian 优先，其余地方 todo-comments） |
+| `]e` / `[e` | todo 跳转 —— 下/上一个 TODO 关键字（todo-comments，全局） |
+| `]r` / `[r` | obsidian 链接导航 —— 下/上一个引用链接，buffer-local，仅 vault 笔记内生效 |
 
 ### 行为说明（总表里看不到的部分）
 
 - **Picker 窗口内**：`<PageUp>`/`<PageDown>` 在 input 或 list 焦点下滚动预览（preview 窗格本身是真实 buffer，原生支持翻页）；`F12` / `<a-w>` 在三个窗口间循环 input → list → preview；`F13`–`F21` 镜像 picker 内 `<a-x>` 各开关和 `<a-d>` 检查——这些 F 槽位留给外置转换层（AutoHotkey 把真实组合键映射到键盘够不到的 F13+ 区段），`<a-x>` 原键照常可用。
-- **obsidian 作用域分层**：笔记上下文命令（反链、出链、重命名、目录、模板、跟随链接、脚注、贴图、`]e`/`[e` 链接导航）是 buffer-local，只在 vault 笔记内生效，不会遮挡全局绑定。
+- **obsidian 作用域分层**：笔记上下文命令（反链、出链、重命名、目录、模板、跟随链接、脚注、贴图、`]r`/`[r` 链接导航）是 buffer-local，只在 vault 笔记内生效，不会遮挡全局绑定。
 - **Markdown 引擎同槽复用**：render-markdown 占 `e,`/`e.`，markdown-preview 占 `e/`；选 markview 引擎时它接管 `e/` 与 `e.` —— 键位属于槽位，不属于引擎。
 
 ## 🤖 AI / LLM 配置

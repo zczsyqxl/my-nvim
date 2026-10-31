@@ -377,12 +377,13 @@ Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefi
 | `,w` `,l` `,L` `,s` `,S` | hop — words / lines / vertical / 1-char / pattern |
 | `s` `,S` `,x` `,X` `gk` | leap — jump / all windows / one-way traversal / remote ops |
 | `F1`–`F12` | DAP session control (`F1`–`F3` DAP UI open/close/toggle) |
-| `]e` / `[e` | todo jump — next/prev TODO keyword; inside obsidian vault notes the same lhs is buffer-local link nav instead (obsidian wins there, todo-comments everywhere else) |
+| `]e` / `[e` | todo jump — next/prev TODO keyword (todo-comments, global) |
+| `]r` / `[r` | obsidian link nav — next/prev reference link, buffer-local inside vault notes only |
 
 ### Behavioral notes (not visible in the table)
 
 - **Picker windows**: `<PageUp>`/`<PageDown>` scroll the preview while focus is on the input or list window (the preview pane is a real buffer and scrolls natively); `F12` / `<a-w>` cycles input → list → preview; `F13`–`F21` mirror the in-picker `<a-x>` toggles and `<a-d>` inspect — those `F`-slots exist for an external translation layer (AutoHotkey remaps real chords onto the physically unreachable F13+ range), and the `<a-x>` originals keep working.
-- **obsidian scope split**: the note-context commands (backlinks, links, rename, toc, template, follow-link, footnotes, paste image, `]e`/`[e` link nav) are buffer-local and only exist inside vault notes, so they never shadow editor-wide bindings.
+- **obsidian scope split**: the note-context commands (backlinks, links, rename, toc, template, follow-link, footnotes, paste image, `]r`/`[r` link nav) are buffer-local and only exist inside vault notes, so they never shadow editor-wide bindings.
 - **Markdown engines share slots**: render-markdown owns `e,`/`e.`, markdown-preview owns `e/`; when the markview engine is selected it takes over `e/` and `e.` — the lhs belongs to the slot, not the engine.
 
 ## 🤖 AI / LLM Setup

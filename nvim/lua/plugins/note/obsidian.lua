@@ -66,10 +66,12 @@ return {
         callbacks = {
             enter_note = function(note)
                 -- note-only navigation keys, buffer-local on vault notes
-                vim.keymap.set('n', ']e', function()
+                -- (]r/[r: 'r' for reference links; ]e/[e belong to the
+                -- global todo-comments jumps now)
+                vim.keymap.set('n', ']r', function()
                     require('obsidian.actions').nav_link('next', false)
                 end, { buffer = true, silent = true, desc = 'zz:obsidian:next_link' })
-                vim.keymap.set('n', '[e', function()
+                vim.keymap.set('n', '[r', function()
                     require('obsidian.actions').nav_link('prev', false)
                 end, { buffer = true, silent = true, desc = 'zz:obsidian:prev_link' })
                 vim.keymap.set('n', '<leader>ob', '<cmd>Obsidian backlinks<cr>', { buffer = true, silent = true, desc = 'zz:obsidian:backlinks' })
