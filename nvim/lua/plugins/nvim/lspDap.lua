@@ -1,16 +1,27 @@
 return {
     {
+        -- startup-load: vim.lsp.enable (config/lsp.lua) resolves server
+        -- configs (lsp/lua_ls.lua etc.) from this plugin's runtime dir; with
+        -- VeryLazy, buffers opened before UIEnter (e.g. `nvim file.lua` from
+        -- the shell) miss the server entirely -- vim.lsp.config[name] is nil
+        -- at enable time and nvim never retries the failed buffer.
+        -- nvim 0.13 has no builtin lsp/ runtime configs, this plugin is the
+        -- only provider.
+        'neovim/nvim-lspconfig',
+        lazy = false,
+    },
+    {
         'mason-org/mason-lspconfig.nvim',
-        -- lazy: LSP itself runs on vim.lsp.enable + nvim's builtin runtime
-        -- configs, mason/mason-lspconfig are only needed to (re)install
+        -- lazy: mason/mason-lspconfig are only needed to (re)install
         -- missing servers -- defer them past first draw
         -- keep ensure_installed in sync with the vim.lsp.enable list in
         -- config/lsp.lua; on a new machine missing servers install automatically
         -- (already-installed ones are skipped, no duplicate downloads)
+        -- NOTE: mason's bin dir is prepended to PATH in config/lsp.lua so
+        -- vim.lsp.enable can spawn mason-only servers before mason loads
         event = 'VeryLazy',
         opts = { ensure_installed = { 'clangd', 'rust_analyzer', 'lua_ls', 'pyright' } },
         dependencies = {
-            'neovim/nvim-lspconfig',
             { 'mason-org/mason.nvim', opts = {}, config = true },
         },
     },
@@ -60,15 +71,7 @@ return {
                 desc = 'zz:dapui:toggle',
             },
             {
-                '<leader>vd',
-                function()
-                    require('dapui').toggle()
-                end,
-                silent = true,
-                desc = 'zz:dapui:toggle',
-            },
-            {
-                '<leader>vt',
+                '<leader>va',
                 function()
                     -- FloatElementArgs "required" fields have runtime defaults; false positive
                     ---@diagnostic disable-next-line: missing-fields

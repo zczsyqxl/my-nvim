@@ -2,7 +2,6 @@ if vim.g.vscode then
     return {}
 else
     return {
-        require('plugins.nvim.aerial'),
         require('plugins.nvim.cmpn'),
         require('plugins.nvim.cmake'),
         require('plugins.nvim.tab'),
@@ -22,5 +21,7 @@ else
         require('plugins.nvim.codecompanion'),
         -- require('plugins.nvim.avante'),
         require('plugins.nvim.aegis'),
+        require('plugins.nvim.todo'),
+        require('plugins.nvim.trouble'),
     }
 end

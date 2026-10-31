@@ -36,6 +36,29 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', '<c-j>', '<c-w>j', { remap = false, desc = 'zz:N.GotoDownWin' })
     vim.keymap.set('n', '<c-k>', '<c-w>k', { remap = false, desc = 'zz:N.GotoUpWin' })
     vim.keymap.set('n', '<c-l>', '<c-w>l', { remap = false, desc = 'zz:N.GotoRightWin' })
+    -- toggle the quickfix / location-list windows; the underlying lists are
+    -- shared with :TodoQuickFix / :TodoLocList and Trouble's ,kq / ,kL views
+    vim.keymap.set('n', '<leader>vq', function()
+        if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
+            vim.cmd('ccl')
+        elseif #vim.fn.getqflist() > 0 then
+            -- don't open on an empty list (mirrors ,vl behavior)
+            vim.cmd('copen')
+        else
+            vim.notify('Quickfix list is empty', vim.log.levels.INFO)
+        end
+    end, { remap = false, silent = true, desc = 'zz:ToggleQuickfix' })
+    vim.keymap.set('n', '<leader>vl', function()
+        if vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 then
+            vim.cmd('lcl')
+        elseif #vim.fn.getloclist(0) > 0 then
+            -- only :lopen when the list has entries, otherwise Vim raises
+            -- E776 "No location list" as a hard error
+            vim.cmd('lopen')
+        else
+            vim.notify('No location list for this window', vim.log.levels.INFO)
+        end
+    end, { remap = false, silent = true, desc = 'zz:ToggleLoclist' })
     vim.keymap.set('n', '<leader>tn', '<cmd>tabnew<cr>', { remap = false, silent = true, desc = 'zz:N.TabNew' })
     vim.keymap.set('n', '<leader>tj', '<cmd>tabnext<cr>', { remap = false, silent = true, desc = 'zz:N.TabNext' })
     vim.keymap.set('n', '<leader>tt', '<cmd>exe v:count1 . "tabnext"<cr>', { remap = false, silent = true, desc = 'zz:N.TabNum' })
