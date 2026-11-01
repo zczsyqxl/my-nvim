@@ -1,0 +1,20 @@
+-- uv.spawn (snacks' process launcher) cannot PATH-resolve npm's .cmd
+-- wrappers on Windows (ENOENT for bare "mmdc"), which kills snacks'
+-- mermaid conversion silently (health checks use a different exec path,
+-- so they still report mmdc as OK). exepath() resolves the full .cmd
+-- path, which uv.spawn CAN execute. Rewrite the cmd for mmdc only.
+-- if vim.fn.has('win32') ~= 0 then
+--     local ok, spawn = pcall(require, 'snacks.util.spawn')
+--     if ok and spawn and spawn.new then
+--         local orig = spawn.new
+--         spawn.new = function(opts)
+--             if type(opts) == 'table' and opts.cmd == 'mmdc' then
+--                 local full = vim.fn.exepath('mmdc')
+--                 if full ~= '' then
+--                     opts.cmd = full
+--                 end
+--             end
+--             return orig(opts)
+--         end
+--     end
+-- end
