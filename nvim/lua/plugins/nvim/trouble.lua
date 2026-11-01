@@ -32,12 +32,12 @@ return {
     cmd = "Trouble",
     keys = {
         {
-            "<leader>vx",
+            "<leader>vd",
             "<cmd>Trouble diagnostics toggle focus=true<cr>",
             desc = "zz:trouble:Diagnostics (Trouble)",
         },
         {
-            "<leader>vX",
+            "<leader>vD",
             "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>",
             desc = "zz:trouble:Buffer Diagnostics (Trouble)",
         },
@@ -47,7 +47,7 @@ return {
             desc = "zz:trouble:Symbols (Trouble)",
         },
         {
-            "<leader>vd",
+            "<leader>vx",
             "<cmd>Trouble lsp toggle focus=true win.position=right<cr>",
             desc = "zz:trouble:LSP Definitions / references / ... (Trouble)",
         },

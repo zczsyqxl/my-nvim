@@ -247,10 +247,10 @@
 | 239 | `[e` | n | `fn: require('todo-comments.jump').prev()` | zz:todo:PrevTodo | `lua/plugins/nvim/todo.lua:77` |
 | 240 | `<leader>vm` | n | `fn: require('toggleterm.terminal').Terminal:new({ cmd = vim.fn.h` | zz:toggleterm:ShellToggle | `lua/plugins/nvim/toggleterm.lua:10` |
 | 241 | `<leader>vy` | n | `fn: require('toggleterm.terminal').Terminal:new({ cmd = 'yazi', ` | zz:toggleterm:YaziToggle | `lua/plugins/nvim/toggleterm.lua:25` |
-| 242 | `<leader>vx` | n | `<cmd>Trouble diagnostics toggle focus=true<cr>` | zz:trouble:Diagnostics (Trouble) | `lua/plugins/nvim/trouble.lua:34` |
-| 243 | `<leader>vX` | n | `<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>` | zz:trouble:Buffer Diagnostics (Trouble) | `lua/plugins/nvim/trouble.lua:39` |
+| 242 | `<leader>vd` | n | `<cmd>Trouble diagnostics toggle focus=true<cr>` | zz:trouble:Diagnostics (Trouble) | `lua/plugins/nvim/trouble.lua:34` |
+| 243 | `<leader>vD` | n | `<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>` | zz:trouble:Buffer Diagnostics (Trouble) | `lua/plugins/nvim/trouble.lua:39` |
 | 244 | `<leader>v,` | n | `<cmd>Trouble symbols toggle focus=true<cr>` | zz:trouble:Symbols (Trouble) | `lua/plugins/nvim/trouble.lua:44` |
-| 245 | `<leader>vd` | n | `<cmd>Trouble lsp toggle focus=true win.position=right<cr>` | zz:trouble:LSP Definitions / references / ... (Trouble) | `lua/plugins/nvim/trouble.lua:49` |
+| 245 | `<leader>vx` | n | `<cmd>Trouble lsp toggle focus=true win.position=right<cr>` | zz:trouble:LSP Definitions / references / ... (Trouble) | `lua/plugins/nvim/trouble.lua:49` |
 | 246 | `<leader>vL` | n | `<cmd>Trouble loclist toggle<cr>` | zz:trouble:Location List (Trouble) | `lua/plugins/nvim/trouble.lua:54` |
 | 247 | `<leader>vQ` | n | `<cmd>Trouble qflist toggle<cr>` | zz:trouble:Quickfix List (Trouble) | `lua/plugins/nvim/trouble.lua:59` |
 | 248 | `<leader><space>` | n | `fn: Snacks.picker.smart()` | zz:snacks:Smart Find Files | `lua/plugins/snacks/snacks.lua:53` |
