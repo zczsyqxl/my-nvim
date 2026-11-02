@@ -23,5 +23,6 @@ else
         require('plugins.nvim.aegis'),
         require('plugins.nvim.todo'),
         require('plugins.nvim.trouble'),
+        require('plugins.nvim.ssr'),
     }
 end
