@@ -56,10 +56,18 @@ return {
             icons = {
                 fileIconsProvider = 'mini.icons',
             },
+            openTargetWindow = {
+                -- reuse the window we came from (the editor window before opening
+                -- grug-far) instead of always splitting a new one
+                preferredLocation = 'prev',
+            },
             keymaps = {
                 close = { n = '<localleader>q' },
                 qflist = { n = '<localleader>c' },
                 syncFile = { n = '<localleader>z' },
+                -- NOTE: openNextLocation/openPrevLocation were briefly tried on
+                -- <c-j>/<c-k> and reverted — they shadow the global window
+                -- navigation keys inside the grug-far buffer
             },
         })
     end,

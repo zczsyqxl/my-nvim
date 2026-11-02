@@ -388,6 +388,7 @@ Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefi
 - **Picker windows**: `<PageUp>`/`<PageDown>` scroll the preview while focus is on the input or list window (the preview pane is a real buffer and scrolls natively); `F12` / `<a-w>` cycles input → list → preview; `F13`–`F21` mirror the in-picker `<a-x>` toggles and `<a-d>` inspect — those `F`-slots exist for an external translation layer (AutoHotkey remaps real chords onto the physically unreachable F13+ range), and the `<a-x>` originals keep working.
 - **obsidian scope split**: the note-context commands (backlinks, links, rename, toc, template, follow-link, footnotes, paste image, `]r`/`[r` link nav) are buffer-local and only exist inside vault notes, so they never shadow editor-wide bindings.
 - **Markdown engines share slots**: render-markdown owns `e,`/`e.`, markdown-preview owns `e/`; when the markview engine is selected it takes over `e/` and `e.` — the lhs belongs to the slot, not the engine.
+- **grug-far in-window keys** (buffer-local, `<localleader>` = `,`): `,r` replace, `,j`/`,k` apply next/prev change (auto-opens the location, removes the synced line), `,n`/`,p` sync next/prev (cursor-only move), `,z` sync file, `,c` results → quickfix, `,i` floating preview, `,x` swap replacement interpreter (lua/vimscript). Goto/open reuses the window you came from (`openTargetWindow.preferredLocation = 'prev'`).
 
 ## 🤖 AI / LLM Setup
 
