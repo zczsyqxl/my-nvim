@@ -127,6 +127,7 @@ my-nvim/
             │   ├── cmpn/        # completion engine selector: blinkCmp | nvimCmp
             │   ├── tab/         # tabline selector: bufferline | barbar | tabby
             │   ├── theme/       # colorscheme selector: tokyonight | onedark | catppuccin
+            │   ├── replace/     # replace suite: grug-far (cross-file) + ssr (structural) + rip-substitute (in-file, PCRE2)
             │   └── md/          # markdown suite: renderer selector + preview + images
             ├── mini/            # one file per mini.nvim module
             ├── jump/            # jump engine selector + engines/ (hop/leap/flash/lightspeed)
@@ -170,8 +171,9 @@ The default set is committed below; alternates stay installed-ready behind selec
 | --- | --- | --- |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) — picker | fuzzy finder for everything (`,f` prefix; telescope-style layout with the list on top) | `plugins/snacks/picker.lua` |
 | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME keyword highlighting + `]e`/`[e` jumps; its rg engine drives a custom snacks.picker frontend (`,ft` all keywords / `,fT` fix-only) and the quickfix/loclist fills (`,vt`/`,vT`) | `plugins/nvim/todo.lua` |
-| [ssr.nvim](https://github.com/cshuaimin/ssr.nvim) | treesitter **structural** search & replace (`,rr`): match syntax nodes instead of regexes, edit SEARCH/REPLACE panes, `<cr>` applies to all matches | `plugins/nvim/ssr.lua` |
-| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | find & replace (`,rw` cword in current file, `,rW` cword in project, `,rg`/`,rG` blank search in current file/project) | `plugins/nvim/grugFar.lua` |
+| [ssr.nvim](https://github.com/cshuaimin/ssr.nvim) | treesitter **structural** search & replace (`,rr`): match syntax nodes instead of regexes; edit SEARCH/REPLACE panes, `<cr>` replaces with confirmation, `<leader><cr>` replaces all | `plugins/nvim/replace/ssr.lua` |
+| [nvim-rip-substitute](https://github.com/chrisgrieser/nvim-rip-substitute) | modern `:substitute` for the current buffer (`,rs`): PCRE2 regex, incremental preview & live match count, range support, history, regex101 debugging | `plugins/nvim/replace/nrs.lua` |
+| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | find & replace (`,rw` cword in current file, `,rW` cword in project, `,rg`/`,rG` blank search in current file/project) | `plugins/nvim/replace/grugFar.lua` |
 
 ### Completion & Snippets
 
@@ -374,7 +376,7 @@ Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefi
 | `,o` | obsidian — global commands; a second buffer-local set lives only inside vault notes |
 | `,b` | snacks option toggles — spell, wrap, diagnostics, conceal, treesitter, indent, colorschemes |
 | `,e` | buffers & markdown — bufferline, render-markdown, markdown-preview, image paste |
-| `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / snippets / grug-far (`,rw`/`,rW`/`,rg`/`,rG`) + ssr structural replace (`,rr`) |
+| `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / snippets / replace suite — grug-far (`,rw`/`,rW`/`,rg`/`,rG`), ssr structural replace (`,rr`), rip-substitute in-buffer (`,rs`) |
 | `,w` `,l` `,L` `,s` `,S` | hop — words / lines / vertical / 1-char / pattern |
 | `s` `,S` `,x` `,X` `gk` | leap — jump / all windows / one-way traversal / remote ops |
 | `F1`–`F12` | DAP session control (`F1`–`F3` DAP UI open/close/toggle) |

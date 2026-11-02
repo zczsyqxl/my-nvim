@@ -5,8 +5,8 @@ else
         require('plugins.nvim.cmpn'),
         require('plugins.nvim.cmake'),
         require('plugins.nvim.tab'),
+        require('plugins.nvim.replace'),
         require('plugins.nvim.diffview'),
-        require('plugins.nvim.grugFar'),
         require('plugins.nvim.rainbow'),
         require('plugins.nvim.lspDap'),
         require('plugins.nvim.lualine'),
@@ -23,6 +23,5 @@ else
         require('plugins.nvim.aegis'),
         require('plugins.nvim.todo'),
         require('plugins.nvim.trouble'),
-        require('plugins.nvim.ssr'),
     }
 end

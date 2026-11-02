@@ -16,8 +16,7 @@ return {
         },
     },
     opts = {
-        min_width = 50,
-        min_height = 5,
+        border = "double",
         -- keymaps use plugin defaults: q close, n/N next/prev match,
         -- <cr> replace with confirmation, <leader><cr> replace all.
         -- NOTE: the "(Press ? for help)" hint in the window title is

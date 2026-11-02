@@ -71,9 +71,12 @@ return {
             completion = { menu = { auto_show = true } },
             keymap = {
                 preset = 'cmdline',
+                ['<down>'] = { 'select_next' },
+                ['<up>'] = { 'select_prev' },
                 ['<C-j>'] = { 'select_next' },
                 ['<C-k>'] = { 'select_prev' },
                 ['<Tab>'] = { 'select_and_accept', 'fallback' },
+                -- ['<CR>'] = { 'select_and_accept', 'fallback' },
             },
         },
 
@@ -81,6 +84,8 @@ return {
             preset = 'default',
             -- C-j/C-k select next/prev; the default preset also provides C-p (fallback_to_mappings)
             -- and C-n — our explicit C-n below overrides the preset's select_next with the docs toggle
+            ['<down>'] = { 'select_next', 'fallback' },
+            ['<up>'] = { 'select_prev', 'fallback' },
             ['<C-j>'] = { 'select_next', 'fallback' },
             ['<C-k>'] = { 'select_prev', 'fallback' },
             -- long-doc scrolling alongside the preset's C-b/C-f
@@ -90,8 +95,8 @@ return {
             -- selection). Rejected keys: C-Space (Windows IME swallows it), C-[ (ESC alias),
             -- C-Tab (old-protocol terminal sends plain Tab), C-g (prefix commands C-g u/j/k)
             ['<C-n>'] = { 'show', 'show_documentation', 'hide_documentation' },
-            ['<CR>'] = { 'select_and_accept', 'fallback' },
             ['<Tab>'] = { 'select_and_accept', 'fallback' },
+            -- ['<CR>'] = { 'select_and_accept', 'fallback' },
         },
 
         sources = {

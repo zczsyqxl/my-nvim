@@ -128,6 +128,7 @@ my-nvim/
             │   ├── cmpn/        # 补全引擎选择器：blinkCmp | nvimCmp
             │   ├── tab/         # 标签栏选择器：bufferline | barbar | tabby
             │   ├── theme/       # 配色选择器：tokyonight | onedark | catppuccin
+            │   ├── replace/     # 替换全家桶：grug-far（跨文件）+ ssr（结构化）+ rip-substitute（单文件 PCRE2）
             │   └── md/          # Markdown 全家桶：渲染器选择 + 预览 + 图片
             ├── mini/            # mini.nvim 每模块一个文件
             ├── jump/            # 跳转引擎选择器 + engines/（hop/leap/flash/lightspeed）
@@ -171,8 +172,9 @@ my-nvim/
 | --- | --- | --- |
 | [snacks.nvim](https://github.com/folke/snacks.nvim) — picker | 万物模糊查找（`,f` 前缀；telescope 风格布局，列表在上） | `plugins/snacks/picker.lua` |
 | [todo-comments.nvim](https://github.com/folke/todo-comments.nvim) | TODO/FIXME 关键字高亮 + `]e`/`[e` 跳转；其 rg 引擎同时驱动自定义 snacks.picker 前端（`,ft` 全部 / `,fT` 仅 fix）与 quickfix/loclist 填充（`,vt`/`,vT`） | `plugins/nvim/todo.lua` |
-| [ssr.nvim](https://github.com/cshuaimin/ssr.nvim) | treesitter **结构化**查找替换（`,rr`）：按语法节点匹配而非正则，编辑 SEARCH/REPLACE 两栏后 `<cr>` 全部应用 | `plugins/nvim/ssr.lua` |
-| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 查找替换（`,rw` 光标词/当前文件，`,rW` 光标词/项目，`,rg`/`,rG` 空搜索/当前文件·项目） | `plugins/nvim/grugFar.lua` |
+| [ssr.nvim](https://github.com/cshuaimin/ssr.nvim) | treesitter **结构化**查找替换（`,rr`）：按语法节点匹配而非正则；编辑 SEARCH/REPLACE 两栏，`<cr>` 逐个确认替换，`<leader><cr>` 全部替换 | `plugins/nvim/replace/ssr.lua` |
+| [nvim-rip-substitute](https://github.com/chrisgrieser/nvim-rip-substitute) | 单文件版现代 `:substitute`（`,rs`）：PCRE2 正则、增量预览与实时匹配计数、范围支持、历史记录、regex101 调试 | `plugins/nvim/replace/nrs.lua` |
+| [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) | 查找替换（`,rw` 光标词/当前文件，`,rW` 光标词/项目，`,rg`/`,rG` 空搜索/当前文件·项目） | `plugins/nvim/replace/grugFar.lua` |
 
 ### 补全与代码片段
 
@@ -372,7 +374,7 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 | `,o` | obsidian —— 全局命令；第二组 buffer-local 键仅在 vault 笔记内生效 |
 | `,b` | snacks 选项开关 —— 拼写、换行、诊断、conceal、treesitter、缩进线、配色 |
 | `,e` | buffer 与 markdown —— bufferline、render-markdown、markdown-preview、贴图 |
-| `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / 片段 / grug-far（`,rw`/`,rW`/`,rg`/`,rG`）+ ssr 结构化替换（`,rr`） |
+| `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / 片段 / 替换全家桶 —— grug-far（`,rw`/`,rW`/`,rg`/`,rG`）、ssr 结构化替换（`,rr`）、rip-substitute 单文件（`,rs`） |
 | `,w` `,l` `,L` `,s` `,S` | hop —— 词 / 行 / 垂直 / 单字符 / 模式 |
 | `s` `,S` `,x` `,X` `gk` | leap —— 跳转 / 全窗口 / 单向遍历 / Visitor 远程操作 |
 | `F1`–`F12` | DAP 会话控制（`F1`–`F3` DAP UI 开/关/切换） |
