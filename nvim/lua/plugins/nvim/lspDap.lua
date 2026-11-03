@@ -37,17 +37,21 @@ return {
         keys = {
             -- extra opts (silent/remap/nowait) in entries are forwarded verbatim
             -- to the final vim.keymap.set by lazy's keys handler
-            { '<F4>', '<cmd>CMakeDebug<cr>', silent = true, desc = 'zz:DAP:CmakeDebug' },
+            { '<F15>', '<cmd>CMakeDebug<cr>', silent = true, desc = 'zz:DAP:CmakeDebug' },
             { '<F5>', '<cmd>DapNew<cr>', silent = true, desc = 'zz:DAP:New' },
             { '<F6>', '<cmd>DapPause<cr>', silent = true, desc = 'zz:DAP:Pause' },
             { '<F7>', '<cmd>DapContinue<cr>', silent = true, desc = 'zz:DAP:Continue' },
             { '<F8>', '<cmd>DapStepOver<cr>', silent = true, desc = 'zz:DAP:StepOver' },
             { '<F9>', '<cmd>DapToggleBreakpoint<cr>', silent = true, desc = 'zz:DAP:ToggleBreakpoint' },
             { '<F10>', '<cmd>DapStepInto<cr>', silent = true, desc = 'zz:DAP:StepInto' },
+            -- wezterm's Windows key decode table covers VK_F13-F20 only; VK_F21+
+            -- decode to unbindable RawCode(132+) events (upstream gap), so the
+            -- physical F21/F22 buttons are unusable -- F13/F14 are the spare
+            -- keys on the same working path.
             { '<F11>', '<cmd>DapStepOut<cr>', silent = true, desc = 'zz:DAP:StepOut' },
             { '<F12>', '<cmd>DapTerminate<cr>', silent = true, desc = 'zz:DAP:Terminate' },
             {
-                '<F1>',
+                '<F2>',
                 function()
                     require('dapui').open()
                 end,
@@ -55,7 +59,7 @@ return {
                 desc = 'zz:dapui:open',
             },
             {
-                '<F2>',
+                '<F3>',
                 function()
                     require('dapui').close()
                 end,
@@ -63,7 +67,7 @@ return {
                 desc = 'zz:dapui:close',
             },
             {
-                '<F3>',
+                '<F4>',
                 function()
                     require('dapui').toggle()
                 end,
@@ -146,31 +150,19 @@ return {
                             function(config)
                                 require('mason-nvim-dap').default_setup(config)
                             end,
-                            -- codelldb = function(config)
-                            --     config.adapters = {
-                            --         type = 'server',
-                            --         port = "${port}",
-                            --         executable = {
-                            --             command = vim.fn.stdpath('data') .. '/mason/bin/codelldb.cmd',
-                            --             args = {"--port", "${port}"},
-                            --         }
-                            --     }
-                            --
-                            --     config.configurations = {
-                            --         {
-                            --             name = "Launch (CMD)",
-                            --             type = "codelldb",
-                            --             request = "launch",
-                            --             program = function()
-                            --                 return vim.fn.input('Path to exe: ', vim.fn.getcwd() .. '\\build\\', 'file')
-                            --             end,
-                            --             cwd = '${workspaceFolder}',
-                            --             stopOnEntry = false,
-                            --             console = "externalTerminal",  -- <== key
-                            --         },
-                            --     }
-                            --     require('mason-nvim-dap').default_setup(config)
-                            -- end,
+                            -- stop at program entry on launch: no pre-set breakpoint
+                            -- needed. NOTE: LLDB stopOnEntry stops inside the CRT
+                            -- startup stub (no source info -> codelldb pops a
+                            -- disassembly window), so instead keep stopOnEntry off
+                            -- and place an automatic LLDB breakpoint on `main` via
+                            -- initCommands; the session then stops at main.c source.
+                            codelldb = function(config)
+                                for _, c in ipairs(config.configurations or {}) do
+                                    c.stopOnEntry = false
+                                    c.initCommands = { 'breakpoint set --name main' }
+                                end
+                                require('mason-nvim-dap').default_setup(config)
+                            end,
                             python = pydap,
                         },
                     })
@@ -222,6 +214,16 @@ return {
                 },
             })
             local dap, dapui = require('dap'), require('dapui')
+            -- nvim-dap's built-in sign defaults set texthl = 'SignColumn' for every
+            -- dap sign (lua/dap.lua signs table), which renders the breakpoint "B"
+            -- and the stopped arrow in theme-gray. Redefine them here (after dap
+            -- loads, so this overrides dap.lua's defaults) with the Dap* texthls
+            -- defined in theme/zz.lua.
+            vim.fn.sign_define('DapBreakpoint', { text = 'B', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+            vim.fn.sign_define('DapBreakpointCondition', { text = 'C', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' })
+            vim.fn.sign_define('DapBreakpointRejected', { text = 'R', texthl = 'DapBreakpointRejected', linehl = '', numhl = '' })
+            vim.fn.sign_define('DapLogPoint', { text = 'L', texthl = 'DapLogPoint', linehl = '', numhl = '' })
+            vim.fn.sign_define('DapStopped', { text = '→', texthl = 'DapStopped', linehl = 'DapStoppedLine', numhl = '' })
             -- nvim-dap builds listeners dynamically with setmetatable (dap.lua:124);
             -- LuaLS can't resolve them statically — suppress each of the 4 accesses below
             ---@diagnostic disable-next-line: undefined-field
@@ -234,11 +236,19 @@ return {
             end
             ---@diagnostic disable-next-line: undefined-field
             dap.listeners.before.event_terminated.dapui_config = function()
-                dapui.close()
+                -- KNOWN CRASH (igorlfs/nvim-dap-view#186, Windows + codelldb):
+                -- closing dap windows immediately when the adapter disconnects
+                -- segfaults nvim (exit code 0xC0000005, no VimLeavePre fires).
+                -- Defer the close so the adapter teardown finishes first.
+                vim.defer_fn(function()
+                    dapui.close()
+                end, 1000)
             end
             ---@diagnostic disable-next-line: undefined-field
             dap.listeners.before.event_exited.dapui_config = function()
-                dapui.close()
+                vim.defer_fn(function()
+                    dapui.close()
+                end, 1000)
             end
         end,
     },

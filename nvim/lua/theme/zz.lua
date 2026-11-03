@@ -138,6 +138,16 @@ local function setMySyntaxHl()
     set_hl_full('ZZ.LeapLabelPreview', { fg = '#7aa2f7' }) -- inactive labels of the preview phase (first input char), brightened to LeapLabel once confirmed -- via the beacons patch in engines/leap.lua
     set_hl_full('ZZ.LeapMatch', { fg = '#c0caf5', bg = '#3d59a1' }) -- traversal highlight (taken from tokyonight night's Search, consistent on both platforms)
 
+    -- nvim-dap signs: tokyonight defines only the dim DapStoppedLine and neither
+    -- nvim-dap nor the theme provide DapBreakpoint/DapStopped texthls, so the
+    -- breakpoint "B" and the stopped arrow render in an unreadable default gray.
+    set_hl_full('ZZ.DapBreakpoint', { fg = '#f14c4c', bold = true })
+    set_hl_full('ZZ.DapBreakpointCondition', { fg = '#3b8eea', bold = true })
+    set_hl_full('ZZ.DapBreakpointRejected', { fg = '#666666' })
+    set_hl_full('ZZ.DapLogPoint', { fg = '#0d8a79', bold = true })
+    set_hl_full('ZZ.DapStopped', { fg = '#adff2f', bold = true })
+    set_hl_full('ZZ.DapStoppedLine', { bg = '#3a2727' })
+
     -- lightspeed
     set_hl_full('ZZ.LightspeedMaskedChar', { fg = '#adff2f', bg = '', bold = false, italic = false })
     set_hl_full('ZZ.LightspeedLabel', { fg = '#80dcfe', bg = '', bold = false, italic = false })
@@ -161,6 +171,13 @@ local function setMySyntaxHl()
     set_hl_full('LightspeedCursor', { link = 'ZZ.LightspeedCursor' })
     set_hl_full('LightspeedLabelDistant', { link = 'ZZ.LightspeedLabelDistant' })
     -- set_hl_full("LightspeedUnlabeledMatch",            { link = "ZZ.LightspeedUnlabeledMatch"})
+    -- nvim-dap signs
+    set_hl_full('DapBreakpoint', { link = 'ZZ.DapBreakpoint' })
+    set_hl_full('DapBreakpointCondition', { link = 'ZZ.DapBreakpointCondition' })
+    set_hl_full('DapBreakpointRejected', { link = 'ZZ.DapBreakpointRejected' })
+    set_hl_full('DapLogPoint', { link = 'ZZ.DapLogPoint' })
+    set_hl_full('DapStopped', { link = 'ZZ.DapStopped' })
+    set_hl_full('DapStoppedLine', { link = 'ZZ.DapStoppedLine' })
 end
 
 setMySyntaxHl()

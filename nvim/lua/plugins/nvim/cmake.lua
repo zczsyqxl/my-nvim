@@ -34,6 +34,11 @@ return {
             action = 'none',
         },
         cmake_dap_configuration = {
+            -- stop at `main` on launch: LLDB command run when the adapter
+            -- initializes. NOTE this REPLACES cmake-tools' built-in initCommands
+            -- (which only sources ~/.lldbinit / ./.lldbinit). The DapContinue
+            -- path gets the same injection via the codelldb handler in lspDap.lua.
+            initCommands = { 'breakpoint set --name main' },
             -- stopOnEntry = true,
         },
     },
