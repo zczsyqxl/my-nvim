@@ -102,11 +102,7 @@ return {
                         pydap = function(config)
                             config.adapters = {
                                 type = 'executable',
-                                command = 'python',
-                                args = {
-                                    '-m',
-                                    'debugpy.adapter',
-                                },
+                                command = 'debugpy-adapter',
                             }
                             config.configurations = {
                                 {
