@@ -75,13 +75,25 @@ return {
                 },
                 opts = {},
                 config = function()
-                    -- local dap = require('dap')
+                    local dap = require('dap')
                     -- dap.set_log_level('DEBUG') -- verbose dap log every session, removed for perf
-                    -- dap.defaults.fallback.external_terminal = {
-                    --     command = [[pwsh]],
-                    --     args = {'-NoExit'},
-                    -- }
-                    -- dap.defaults.fallback.force_external_terminal = true
+                    -- codelldb runs the inferior via a runInTerminal reverse
+                    -- request; nvim-dap would spawn it in the terminal buffer
+                    -- that dapui's console element CACHEs
+                    -- (dapui/elements/console.lua:51), and nvim 0.11+ then
+                    -- rejects the reused modified buffer
+                    -- ("jobstart(...,{term=true}) requires unmodified buffer",
+                    -- nvim-dap-ui#482). Route EVERY session to an external
+                    -- console window instead: force_external_terminal covers
+                    -- mason's "LLDB: Launch" and cmake-tools' :CMakeDebug
+                    -- alike, and cmd /c start "" <prog> guarantees a fresh
+                    -- Windows console (stdout never interleaves with the
+                    -- nvim TUI), interactive stdin included.
+                    dap.defaults.fallback.external_terminal = {
+                        command = 'cmd',
+                        args = { '/c', 'start', '' },
+                    }
+                    dap.defaults.fallback.force_external_terminal = true
                     -- mason.nvim is already set up by the lazy dependency
                     -- ({ 'mason-org/mason.nvim', config = true }); calling setup()
                     -- again re-registers the default registries.
@@ -181,12 +193,12 @@ return {
                         elements = {
                             {
                                 id = 'repl',
-                                size = 0.5,
+                                size = 1.0,
                             },
-                            {
-                                id = 'console',
-                                size = 0.5,
-                            },
+                            -- {
+                            --     id = 'console',
+                            --     size = 0.5,
+                            -- },
                         },
                         position = 'bottom',
                         size = 10,
