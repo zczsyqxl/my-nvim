@@ -27,7 +27,7 @@ return {
     },
     {
         'rcarriga/nvim-dap-ui',
-        -- lazy-load the whole debug stack on the F1-F12 debug keys: mappings
+        -- lazy-load the whole debug stack on the F6-F14 debug keys: mappings
         -- exist at startup, nvim-dap/nvim-dap-ui/mason-* only load on first
         -- press; :Dap* commands get lazy shims too
         cmd = { 'DapNew', 'DapContinue', 'DapPause', 'DapStepOver', 'DapStepInto', 'DapStepOut', 'DapTerminate', 'DapToggleBreakpoint' },
@@ -37,37 +37,17 @@ return {
         keys = {
             -- extra opts (silent/remap/nowait) in entries are forwarded verbatim
             -- to the final vim.keymap.set by lazy's keys handler
-            { '<F15>', '<cmd>CMakeDebug<cr>', silent = true, desc = 'zz:DAP:CmakeDebug' },
-            { '<F5>', '<cmd>DapNew<cr>', silent = true, desc = 'zz:DAP:New' },
+            { '<F13>', '<cmd>CMakeDebug<cr>', silent = true, desc = 'zz:DAP:CmakeDebug' },
+            { '<F14>', '<cmd>DapNew<cr>', silent = true, desc = 'zz:DAP:New' },
             { '<F6>', '<cmd>DapPause<cr>', silent = true, desc = 'zz:DAP:Pause' },
             { '<F7>', '<cmd>DapContinue<cr>', silent = true, desc = 'zz:DAP:Continue' },
             { '<F8>', '<cmd>DapStepOver<cr>', silent = true, desc = 'zz:DAP:StepOver' },
             { '<F9>', '<cmd>DapToggleBreakpoint<cr>', silent = true, desc = 'zz:DAP:ToggleBreakpoint' },
             { '<F10>', '<cmd>DapStepInto<cr>', silent = true, desc = 'zz:DAP:StepInto' },
-            -- wezterm's Windows key decode table covers VK_F13-F20 only; VK_F21+
-            -- decode to unbindable RawCode(132+) events (upstream gap), so the
-            -- physical F21/F22 buttons are unusable -- F13/F14 are the spare
-            -- keys on the same working path.
             { '<F11>', '<cmd>DapStepOut<cr>', silent = true, desc = 'zz:DAP:StepOut' },
             { '<F12>', '<cmd>DapTerminate<cr>', silent = true, desc = 'zz:DAP:Terminate' },
             {
-                '<F2>',
-                function()
-                    require('dapui').open()
-                end,
-                silent = true,
-                desc = 'zz:dapui:open',
-            },
-            {
-                '<F3>',
-                function()
-                    require('dapui').close()
-                end,
-                silent = true,
-                desc = 'zz:dapui:close',
-            },
-            {
-                '<F4>',
+                '<leader>vb',
                 function()
                     require('dapui').toggle()
                 end,

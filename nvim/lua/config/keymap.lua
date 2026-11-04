@@ -23,7 +23,7 @@ if vim.g.vscode == nil then
     vim.keymap.set('i', '<c-l>', '<c-x>', { remap = true, silent = true, desc = 'zz:Complete' })
 
     vim.keymap.set('t', '<C-q>', [[<c-\><c-n>]], { remap = false, desc = 'zz:TerminalEscape' })
-    vim.keymap.set('t', '<esc><esc>', [[<c-\><c-n>]], { remap = false, desc = 'zz:TerminalEscape' })
+    -- vim.keymap.set('t', '<esc><esc>', [[<c-\><c-n>]], { remap = false, desc = 'zz:TerminalEscape' })
     -- vim.keymap.set('t', 'jk', [[<c-\><c-n>]], {remap = false, desc='zz:TerminalEscape'})
     vim.keymap.set('t', '<C-y>', function()
         -- getcharstr() always returns a string (getchar() returns a string for special

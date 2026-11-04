@@ -11,20 +11,20 @@ local cycleKey = { 'cycle_win', mode = { 'i', 'n' }, desc = 'Cycle Windows' }
 -- window coverage: input AND list — same as the <a-x> defaults;
 -- the preview window binds none of these (no such default keys there).
 local toggleCAlts = {
-    { '<F16>', 'toggle_follow', 'Toggle Follow' }, -- <a-f> toggle_follow
-    { '<F17>', 'toggle_hidden', 'Toggle Hidden' }, -- <a-h> toggle_hidden
-    { '<F18>', 'toggle_ignored', 'Toggle Ignored' }, -- <a-i> toggle_ignored
-    { '<F19>', 'toggle_regex', 'Toggle Regex' }, -- <a-r> toggle_regex
-    { '<F14>', 'toggle_maximize', 'Toggle Maximize' }, -- <a-m> toggle_maximize
-    { '<F13>', 'toggle_preview', 'Toggle Preview' }, -- <a-p> toggle_preview
-    { '<F15>', 'inspect', 'Inspect' }, -- <a-d> inspect
+    { '<F6>', 'toggle_follow', 'Toggle Follow' }, -- <a-f> toggle_follow
+    { '<F7>', 'toggle_hidden', 'Toggle Hidden' }, -- <a-h> toggle_hidden
+    { '<F8>', 'toggle_ignored', 'Toggle Ignored' }, -- <a-i> toggle_ignored
+    { '<F9>', 'toggle_regex', 'Toggle Regex' }, -- <a-r> toggle_regex
+    { '<F11>', 'toggle_maximize', 'Toggle Maximize' }, -- <a-m> toggle_maximize
+    { '<F12>', 'toggle_preview', 'Toggle Preview' }, -- <a-p> toggle_preview
+    { '<F13>', 'inspect', 'Inspect' }, -- <a-d> inspect
 }
 local function caKeys(modes)
     local keys = {}
     for _, k in ipairs(toggleCAlts) do
         keys[k[1]] = { k[2], mode = modes, desc = k[3] }
     end
-    keys['<F12>'] = cycleKey -- <a-w> cycle_win
+    keys['<F10>'] = cycleKey -- <a-w> cycle_win
     return keys
 end
 
@@ -39,10 +39,10 @@ return {
     -- win.*.keys: extra picker-window keymaps (merged over the defaults in
     -- picker/config/defaults.lua). Window notes:
     --   input:   <PageUp>/<PageDown> mirror the <c-b>/<c-f> preview scrolling
-    --            while typing; <F12> cycles windows (alt original <a-w>).
+    --            while typing; <F10> cycles windows (alt original <a-w>).
     --   preview: a real buffer, so <PageUp>/<PageDown> scroll it natively when
-    --            focus is here; only added <F12> (default <a-w> stays).
-    --   list:    <F12> cycles windows; <PageUp>/<PageDown> scroll the preview
+    --            focus is here; only added <F10> (default <a-w> stays).
+    --   list:    <F10> cycles windows; <PageUp>/<PageDown> scroll the preview
     --            while focus is here. List paging stays <c-d>/<c-u>.
     win = {
         input = {
@@ -58,7 +58,7 @@ return {
             }),
         },
         preview = {
-            keys = { ['<F12>'] = cycleKey },
+            keys = { ['<F10>'] = cycleKey },
         },
     },
     sources = {
