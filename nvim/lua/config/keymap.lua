@@ -19,6 +19,25 @@ if vim.g.vscode == nil then
     vim.keymap.set('n', 'gh', '<c-w>d', { remap = true, silent = true, desc = 'zz:ShowDiagnosticHover' })
     -- vim.keymap.set('n', '<leader>vm', '<cmd>botright split term://zsh<cr>i', {remap = false, silent = true, desc='zz:N.ToggleTerm'})
 
+    -- markdown only: gF opens the link target under the cursor with the
+    -- system handler (browser for .html, explorer for dirs). mkdp's preview
+    -- server 404s vault-relative links, so resolve them against the buffer
+    -- directory here, Obsidian-style. Buffer-local: built-in gF stays intact
+    -- in every other filetype.
+    local md_openlink = vim.api.nvim_create_augroup('zz_md_openlink', { clear = true })
+    vim.api.nvim_create_autocmd('FileType', {
+        group = md_openlink,
+        pattern = 'markdown',
+        callback = function(args)
+            vim.keymap.set('n', 'gF', require('plugins.nvim.md.openLink').open, {
+                buffer = args.buf,
+                remap = false,
+                silent = true,
+                desc = 'zz:md:OpenLinkTarget',
+            })
+        end,
+    })
+
     vim.keymap.set({ 'i', 's' }, 'jk', '<esc>', { remap = false, desc = 'zz:escape' })
     vim.keymap.set('i', '<c-l>', '<c-x>', { remap = true, silent = true, desc = 'zz:Complete' })
 
