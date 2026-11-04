@@ -68,7 +68,13 @@ if vim.g.vscode == nil then
     })
 end
 
-vim.cmd('syntax on')
+-- traditional syntax is OFF: it only colored/folded filetypes without a treesitter
+-- parser (all daily-use filetypes have one), and with syntax_on == 1 nvim 0.13-dev's
+-- treesitter highlighter replays the FileType event on buffer detach, which re-enters
+-- a closed snacks picker's finder task and crashes it (matcher is nil) during e.g.
+-- `,fp` project switch + session restore. re-enable only if a parser-less filetype
+-- ever needs legacy coloring
+-- vim.cmd('syntax on')
 
 vim.opt.showmode = false
 vim.opt.mmp = 2000000
