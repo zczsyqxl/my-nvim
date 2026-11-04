@@ -18,6 +18,26 @@ local function flattened_stem(dir, base)
     return stem
 end
 
+-- slug like builtin title_to_slug but keeps '_' (it marks a suffix, not a word
+-- boundary). cannot be layered on top of the builtin: its [_[:space:]]+ -> '-'
+-- fold is destructive — a folded '_' is indistinguishable from a real '-' afterwards,
+-- and sentinel placeholders don't survive the builtin's character drop — so the
+-- pipeline is mirrored here; keep in sync if builtin slug rules ever change.
+-- returns nil for nil/empty titles (caller falls back to zettel_id).
+local function slug_keep_underscore(title)
+    if type(title) ~= 'string' then
+        return nil
+    end
+    local slug = vim.trim(vim.fn.tolower(title))
+    if slug == '' then
+        return nil
+    end
+    slug = vim.fn.substitute(slug, '[^[:keyword:][:space:]-]', '', 'g')
+    slug = vim.fn.substitute(slug, '[[:space:]]\\+', '-', 'g')
+    slug = vim.fn.substitute(slug, '-\\+', '-', 'g')
+    return vim.trim(slug)
+end
+
 return {
     'obsidian-nvim/obsidian.nvim',
     version = '*', -- use latest release, remove to use latest commit
@@ -31,10 +51,15 @@ return {
         },
         ui = { enable = false }, -- obsidian's conceal-based UI (checkbox toggle, link conceal); disabled to avoid the conceallevel warning and conflicts with render-markdown
         -- id mirrors the flattened filename: input "tools/nvim/keymap" -> id "tools-nvim-keymap";
-        -- empty titles fall back to timestamp IDs (title_to_slug handles this).
+        -- nil/empty titles fall back to the builtin zettel_id timestamp. slug rules live in
+        -- slug_keep_underscore (top of file): underscores are KEPT — they are suffix markers,
+        -- not word separators (builtin title_to_slug collapses them to '-')
         -- wrapped in a closure: obsidian is lazy-loaded (ft=markdown), requiring the module eagerly here would fail at spec-collection time
         note_id_func = function(title, path)
-            local slug = require('obsidian.builtin').title_to_slug(title)
+            local slug = slug_keep_underscore(title)
+            if not slug or slug == '' then
+                slug = require('obsidian.builtin').zettel_id()
+            end
             return flattened_stem(path, slug)
         end,
         -- keep the input's dir but rename the stem via flattened_stem; stems already carrying
