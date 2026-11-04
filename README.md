@@ -228,8 +228,8 @@ The default set is committed below; alternates stay installed-ready behind selec
 | --- | --- | --- |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP server configs (native `vim.lsp.enable`: clangd, rust-analyzer, lua_ls, pyright); startup-loaded so cmdline-opened files resolve configs in time — see T5 | `config/lsp.lua` |
 | [mason.nvim](https://github.com/mason-org/mason.nvim) / [mason-lspconfig](https://github.com/mason-org/mason-lspconfig.nvim) | tool installer; auto-installs the LSP list above | `plugins/nvim/lspDap.lua` |
-| [trouble.nvim](https://github.com/folke/trouble.nvim) | diagnostics / symbols / LSP references / quickfix / loclist browser (`,k` prefix; symbols kind whitelist extended with Variable/Constant — lua_ls fine-grained kinds were tried and reverted, pure config tables stay outline-empty by design) | `plugins/nvim/trouble.lua` |
-| [nvim-dap](https://github.com/mfussenegger/nvim-dap) / [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) / [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim) / [nvim-nio](https://github.com/nvim-neotest/nvim-nio) | debugging; custom debugpy adapter on Windows; `F1–F12` keymaps | `plugins/nvim/lspDap.lua` |
+| [trouble.nvim](https://github.com/folke/trouble.nvim) | diagnostics / symbols / LSP references / quickfix / loclist browser (`,vd`/`,vD` project/buffer diagnostics, `,v,` symbols, `,vx` LSP refs, `,vL`/`,vQ` loclist/qflist; symbols kind whitelist extended with Variable/Constant — lua_ls fine-grained kinds were tried and reverted, pure config tables stay outline-empty by design) | `plugins/nvim/trouble.lua` |
+| [nvim-dap](https://github.com/mfussenegger/nvim-dap) / [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) / [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim) / [nvim-nio](https://github.com/nvim-neotest/nvim-nio) | debugging; custom debugpy adapter on Windows; `F6`–`F12` session keys, `F13`/`F14` CMakeDebug/DapNew, `,vb` DAP UI | `plugins/nvim/lspDap.lua` |
 | [cmake-tools.nvim](https://github.com/Civitasv/cmake-tools.nvim) | CMake build/run/debug from the editor (`,c` prefix; executor/runner via toggleterm) | `plugins/nvim/cmake.lua` |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (`main` branch) | parsing/highlighting/folding; `llm`↔markdown & `zsh`↔bash filetype registration | `plugins/nvim/treesitter.lua` |
 
@@ -350,7 +350,7 @@ flowchart TD
     DAP --> MNDAP[mason-nvim-dap] --> MASON
     CMAKE[cmake-tools] --> PLEN
     CMAKE -- "executor/runner" --> TOGG[toggleterm]
-    CMAKE -- F4 debug --> DAP
+    CMAKE -- F13 debug --> DAP
 
     %% ai
     LLM[llm.nvim] --> PLEN & NUI[nui.nvim]
@@ -371,21 +371,21 @@ Leader is `,` (and `maplocalleader` too). Every custom map carries a `zz:`-prefi
 | --- | --- |
 | `,f` | snacks picker — files / grep / buffers / LSP symbols / jumps / marks / histories / notifications / todo list (`,ft`, `,fT`) |
 | `,g` | git (snacks picker) |
-| `,k` | trouble — project/buffer diagnostics (`,kx`/`,kX`), symbols (`,ks`), LSP references (`,kl`), quickfix/loclist views (`,kq`/`,kL`) |
-| `,v` | UI & floats — explorer, terminal, yazi, lazygit, scratch, DAP UI, zen/zoom, notifier, quickfix/loclist/todo-list windows (`,vq`/`,vl`/`,vt`/`,vT`) |
+| `,v` | UI & floats — explorer, terminal, yazi, lazygit, scratch, zen/zoom, notifier; DAP UI (`,vb` toggle, `,va` console float); Trouble views (`,vd`/`,vD` project/buffer diagnostics, `,v,` symbols, `,vx` LSP refs, `,vL`/`,vQ` loclist/qflist); quickfix/loclist/todo-list windows (`,vq`/`,vl`/`,vt`/`,vT`) |
 | `,o` | obsidian — global commands; a second buffer-local set lives only inside vault notes |
 | `,b` | snacks option toggles — spell, wrap, diagnostics, conceal, treesitter, indent, colorschemes |
 | `,e` | buffers & markdown — bufferline, render-markdown, markdown-preview, image paste |
 | `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / snippets / replace suite — grug-far (`,rw`/`,rW`/`,rg`/`,rG`), ssr structural replace (`,rr`), rip-substitute in-buffer (`,rs`) |
 | `,w` `,l` `,L` `,s` `,S` | hop — words / lines / vertical / 1-char / pattern |
 | `s` `,S` `,x` `,X` `gk` | leap — jump / all windows / one-way traversal / remote ops |
-| `F1`–`F12` | DAP session control (`F1`–`F3` DAP UI open/close/toggle) |
+| `F6`–`F12` | DAP session control — pause / continue / step over / toggle breakpoint / step into / step out / terminate |
+| `F13` / `F14` | CMakeDebug / DapNew (spare keys on the same decode path — wezterm's Windows table stops at F20) |
 | `]e` / `[e` | todo jump — next/prev TODO keyword (todo-comments, global) |
 | `]r` / `[r` | obsidian link nav — next/prev reference link, buffer-local inside vault notes only |
 
 ### Behavioral notes (not visible in the table)
 
-- **Picker windows**: `<PageUp>`/`<PageDown>` scroll the preview while focus is on the input or list window (the preview pane is a real buffer and scrolls natively); `F12` / `<a-w>` cycles input → list → preview; `F13`–`F21` mirror the in-picker `<a-x>` toggles and `<a-d>` inspect — those `F`-slots exist for an external translation layer (AutoHotkey remaps real chords onto the physically unreachable F13+ range), and the `<a-x>` originals keep working.
+- **Picker windows**: `<PageUp>`/`<PageDown>` scroll the preview while focus is on the input or list window (the preview pane is a real buffer and scrolls natively); `F10` / `<a-w>` cycles input → list → preview; `F6`–`F13` mirror the in-picker `<a-x>` toggles and `<a-d>` inspect (`F6` follow, `F7` hidden, `F8` ignored, `F9` regex, `F11` maximize, `F12` preview, `F13` inspect), and the `<a-x>` originals keep working. Those picker F-keys are **buffer-local** — they exist only while a picker window has focus, so outside the picker the same physical `F6`–`F12` keys fall through to the global DAP session control above; inside the picker the picker wins.
 - **obsidian scope split**: the note-context commands (backlinks, links, rename, toc, template, follow-link, footnotes, paste image, `]r`/`[r` link nav) are buffer-local and only exist inside vault notes, so they never shadow editor-wide bindings.
 - **Markdown engines share slots**: render-markdown owns `e,`/`e.`, markdown-preview owns `e/`; when the markview engine is selected it takes over `e/` and `e.` — the lhs belongs to the slot, not the engine.
 - **grug-far in-window keys** (buffer-local, `<localleader>` = `,`): `,r` replace, `,j`/`,k` apply next/prev change (auto-opens the location, removes the synced line), `,n`/`,p` sync next/prev (cursor-only move), `,z` sync file, `,c` results → quickfix, `,i` floating preview, `,x` swap replacement interpreter (lua/vimscript). Goto/open reuses the window you came from (`openTargetWindow.preferredLocation = 'prev'`).
@@ -440,7 +440,7 @@ This config builds it automatically with a custom `build` function (prebuilt rel
 
 **T5 · LSP not attached on a cmdline-opened file (fixed, kept for the record)**
 
-nvim 0.13 reads `nvim file.lua` file arguments **during** init, so their `FileType` fires before `vim.lsp.enable()` registers its autocmd — and nvim never retries the failed buffer. Mason-only servers (lua_ls, pyright) had a second hurdle: their executables live in mason's bin dir, which mason.nvim (VeryLazy) prepends to `PATH` too late. Both are fixed in `config/lsp.lua` (mason bin prepended to `PATH` + a `FileType` replay for already-loaded buffers) and `plugins/nvim/lspDap.lua` (nvim-lspconfig startup-loaded so `lsp/*.lua` configs resolve in time). Symptoms of the old bug: `:LspInfo` empty, Trouble symbols (`,ks`) empty while treesitter-based tools (snacks `treesitter` picker) still work. Check attachment live in the lualine LSP segment.
+nvim 0.13 reads `nvim file.lua` file arguments **during** init, so their `FileType` fires before `vim.lsp.enable()` registers its autocmd — and nvim never retries the failed buffer. Mason-only servers (lua_ls, pyright) had a second hurdle: their executables live in mason's bin dir, which mason.nvim (VeryLazy) prepends to `PATH` too late. Both are fixed in `config/lsp.lua` (mason bin prepended to `PATH` + a `FileType` replay for already-loaded buffers) and `plugins/nvim/lspDap.lua` (nvim-lspconfig startup-loaded so `lsp/*.lua` configs resolve in time). Symptoms of the old bug: `:LspInfo` empty, Trouble symbols (`,v,`) empty while treesitter-based tools (snacks `treesitter` picker) still work. Check attachment live in the lualine LSP segment.
 
 **E1 · Inserted time shows in Chinese although the OS time format is US**
 

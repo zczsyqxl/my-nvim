@@ -229,8 +229,8 @@ my-nvim/
 | --- | --- | --- |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP server 配置（原生 `vim.lsp.enable`：clangd、rust-analyzer、lua_ls、pyright）；启动即加载，命令行直开的文件也能及时解析配置 —— 见 T5 | `config/lsp.lua` |
 | [mason.nvim](https://github.com/mason-org/mason.nvim) / [mason-lspconfig](https://github.com/mason-org/mason-lspconfig.nvim) | 工具安装器；自动装上述 LSP 清单 | `plugins/nvim/lspDap.lua` |
-| [trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断 / 符号 / LSP 引用 / quickfix / loclist 浏览器（`,k` 前缀；符号白名单扩展了 Variable/Constant —— lua_ls 细分 kind 试过又回退了，纯配置表的大纲保持刻意为空） | `plugins/nvim/trouble.lua` |
-| [nvim-dap](https://github.com/mfussenegger/nvim-dap) / [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) / [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim) / [nvim-nio](https://github.com/nvim-neotest/nvim-nio) | 调试；Windows 上自定义 debugpy 适配器；`F1–F12` 键位 | `plugins/nvim/lspDap.lua` |
+| [trouble.nvim](https://github.com/folke/trouble.nvim) | 诊断 / 符号 / LSP 引用 / quickfix / loclist 浏览器（`,vd`/`,vD` 项目/当前文件诊断、`,v,` 符号大纲、`,vx` LSP 引用、`,vL`/`,vQ` loclist/qflist；符号白名单扩展了 Variable/Constant —— lua_ls 细分 kind 试过又回退了，纯配置表的大纲保持刻意为空） | `plugins/nvim/trouble.lua` |
+| [nvim-dap](https://github.com/mfussenegger/nvim-dap) / [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui) / [mason-nvim-dap](https://github.com/jay-babu/mason-nvim-dap.nvim) / [nvim-nio](https://github.com/nvim-neotest/nvim-nio) | 调试；Windows 上自定义 debugpy 适配器；`F6`–`F12` 会话键位，`F13`/`F14` CMakeDebug/DapNew，`,vb` 开关 DAP UI | `plugins/nvim/lspDap.lua` |
 | [cmake-tools.nvim](https://github.com/Civitasv/cmake-tools.nvim) | 编辑器内 CMake 构建/运行/调试（`,c` 前缀；执行器/运行器走 toggleterm） | `plugins/nvim/cmake.lua` |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)（`main` 分支） | 解析/高亮/折叠；`llm`↔markdown、`zsh`↔bash 文件类型注册 | `plugins/nvim/treesitter.lua` |
 
@@ -348,7 +348,7 @@ flowchart TD
     DAP --> MNDAP[mason-nvim-dap] --> MASON
     CMAKE[cmake-tools] --> PLEN
     CMAKE -- "执行器/运行器" --> TOGG[toggleterm]
-    CMAKE -- "F4 调试" --> DAP
+    CMAKE -- "F13 调试" --> DAP
 
     %% ai
     LLM[llm.nvim] --> PLEN & NUI[nui.nvim]
@@ -369,21 +369,21 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 | --- | --- |
 | `,f` | snacks picker —— 文件 / grep / buffer / LSP 符号 / 跳转 / 标记 / 历史 / 通知 / todo 列表（`,ft`、`,fT`） |
 | `,g` | git（snacks picker） |
-| `,k` | trouble —— 项目/当前文件诊断（`,kx`/`,kX`）、符号大纲（`,ks`）、LSP 引用（`,kl`）、quickfix/loclist 视图（`,kq`/`,kL`） |
-| `,v` | UI 与浮窗 —— explorer、终端、yazi、lazygit、草稿本、DAP UI、zen/zoom、通知、quickfix/loclist/todo 列表窗口（`,vq`/`,vl`/`,vt`/`,vT`） |
+| `,v` | UI 与浮窗 —— explorer、终端、yazi、lazygit、草稿本、zen/zoom、通知；DAP UI（`,vb` 开关、`,va` 终端浮窗）；Trouble 视图（`,vd`/`,vD` 项目/当前文件诊断、`,v,` 符号大纲、`,vx` LSP 引用、`,vL`/`,vQ` loclist/qflist）；quickfix/loclist/todo 列表窗口（`,vq`/`,vl`/`,vt`/`,vT`) |
 | `,o` | obsidian —— 全局命令；第二组 buffer-local 键仅在 vault 笔记内生效 |
 | `,b` | snacks 选项开关 —— 拼写、换行、诊断、conceal、treesitter、缩进线、配色 |
 | `,e` | buffer 与 markdown —— bufferline、render-markdown、markdown-preview、贴图 |
 | `,d` / `,m` / `,n` / `,c` / `,z` / `,r` | diffview / llm.nvim / codecompanion / cmake / 片段 / 替换全家桶 —— grug-far（`,rw`/`,rW`/`,rg`/`,rG`）、ssr 结构化替换（`,rr`）、rip-substitute 单文件（`,rs`） |
 | `,w` `,l` `,L` `,s` `,S` | hop —— 词 / 行 / 垂直 / 单字符 / 模式 |
 | `s` `,S` `,x` `,X` `gk` | leap —— 跳转 / 全窗口 / 单向遍历 / Visitor 远程操作 |
-| `F1`–`F12` | DAP 会话控制（`F1`–`F3` DAP UI 开/关/切换） |
+| `F6`–`F12` | DAP 会话控制 —— 暂停 / 继续 / 步过 / 切换断点 / 步入 / 步出 / 终止 |
+| `F13` / `F14` | CMakeDebug / DapNew（同一解码路径上的备用键 —— wezterm 的 Windows 键表只到 F20） |
 | `]e` / `[e` | todo 跳转 —— 下/上一个 TODO 关键字（todo-comments，全局） |
 | `]r` / `[r` | obsidian 链接导航 —— 下/上一个引用链接，buffer-local，仅 vault 笔记内生效 |
 
 ### 行为说明（总表里看不到的部分）
 
-- **Picker 窗口内**：`<PageUp>`/`<PageDown>` 在 input 或 list 焦点下滚动预览（preview 窗格本身是真实 buffer，原生支持翻页）；`F12` / `<a-w>` 在三个窗口间循环 input → list → preview；`F13`–`F21` 镜像 picker 内 `<a-x>` 各开关和 `<a-d>` 检查——这些 F 槽位留给外置转换层（AutoHotkey 把真实组合键映射到键盘够不到的 F13+ 区段），`<a-x>` 原键照常可用。
+- **Picker 窗口内**：`<PageUp>`/`<PageDown>` 在 input 或 list 焦点下滚动预览（preview 窗格本身是真实 buffer，原生支持翻页）；`F10` / `<a-w>` 在三个窗口间循环 input → list → preview；`F6`–`F13` 镜像 picker 内 `<a-x>` 各开关和 `<a-d>` 检查（`F6` follow、`F7` hidden、`F8` ignored、`F9` regex、`F11` maximize、`F12` preview、`F13` inspect），`<a-x>` 原键照常可用。这批 picker F 键是 **buffer-local** —— 只在 picker 窗口持有焦点时存在；焦点移出 picker 后，同一批物理键 `F6`–`F12` 就回落到上表的全局 DAP 会话控制，picker 窗口内则以 picker 为准。
 - **obsidian 作用域分层**：笔记上下文命令（反链、出链、重命名、目录、模板、跟随链接、脚注、贴图、`]r`/`[r` 链接导航）是 buffer-local，只在 vault 笔记内生效，不会遮挡全局绑定。
 - **Markdown 引擎同槽复用**：render-markdown 占 `e,`/`e.`，markdown-preview 占 `e/`；选 markview 引擎时它接管 `e/` 与 `e.` —— 键位属于槽位，不属于引擎。
 - **grug-far 窗口内键位**（buffer-local，`<localleader>` = `,`）：`,r` 执行替换、`,j`/`,k` 应用下/上一处并自动打开定位（行随之移除）、`,n`/`,p` 仅回写并移动光标、`,z` 回写当前文件、`,c` 结果送 quickfix、`,i` 浮窗预览、`,x` 切换替换解释器（lua/vimscript）。跳转/打开复用打开 grug-far 前的窗口（`openTargetWindow.preferredLocation = 'prev'`）。
@@ -438,7 +438,7 @@ Leader 是 `,`（`maplocalleader` 同样）。所有自定义映射都带 `zz:` 
 
 **T5 · 命令行直开的文件 LSP 不附着（已修复，留档）**
 
-nvim 0.13 会在 **init 期间**就读入 `nvim file.lua` 的文件参数，其 `FileType` 早于 `vim.lsp.enable()` 注册自动命令 —— 而 nvim 不会为失败的 buffer 重试。仅由 mason 安装的 server（lua_ls、pyright）还有第二重障碍：可执行文件在 mason 的 bin 目录里，而负责把它加进 `PATH` 的 mason.nvim（VeryLazy）加载得太晚。两处都已修复：`config/lsp.lua`（手动 prepend mason bin + 为已加载 buffer 重放 `FileType`）与 `plugins/nvim/lspDap.lua`（nvim-lspconfig 启动即加载，`lsp/*.lua` 配置随取随有）。旧症状：`:LspInfo` 为空、Trouble 符号（`,ks`）为空但 treesitter 类工具正常。附着状态可直接看 lualine 的 LSP 段。
+nvim 0.13 会在 **init 期间**就读入 `nvim file.lua` 的文件参数，其 `FileType` 早于 `vim.lsp.enable()` 注册自动命令 —— 而 nvim 不会为失败的 buffer 重试。仅由 mason 安装的 server（lua_ls、pyright）还有第二重障碍：可执行文件在 mason 的 bin 目录里，而负责把它加进 `PATH` 的 mason.nvim（VeryLazy）加载得太晚。两处都已修复：`config/lsp.lua`（手动 prepend mason bin + 为已加载 buffer 重放 `FileType`）与 `plugins/nvim/lspDap.lua`（nvim-lspconfig 启动即加载，`lsp/*.lua` 配置随取随有）。旧症状：`:LspInfo` 为空、Trouble 符号（`,v,`）为空但 treesitter 类工具正常。附着状态可直接看 lualine 的 LSP 段。
 
 **E1 · 插入时间显示为中文，尽管系统时间格式是美式**
 
