@@ -15,6 +15,20 @@
 local mason_bin = vim.fn.stdpath('data') .. '/mason/bin'
 vim.env.PATH = mason_bin .. (vim.fn.has('win32') == 1 and ';' or ':') .. vim.env.PATH
 
+-- rust-analyzer: disable client-side file watching on Windows. RA dynamically
+-- registers didChangeWatchedFiles watchers incl. target/debug/build/** ; nvim's
+-- libuv (ReadDirectoryChangesW) handles then LOCK those directories, so
+-- deleting target/ from inside nvim fails, and the partial delete fires an
+-- EPERM retry storm in _watchfiles.lua that grew lsp.log to ~1GB (2026-11-05).
+-- files.watcherExclude did NOT stop these registrations; refusing the
+-- capability does. Cost: RA no longer notices changes made outside nvim
+-- buffers (cargo/git output) until the workspace is reloaded.
+local ra_capabilities = vim.lsp.protocol.make_client_capabilities()
+ra_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+vim.lsp.config('rust_analyzer', {
+    capabilities = ra_capabilities,
+})
+
 vim.lsp.enable({ 'clangd', 'rust_analyzer', 'lua_ls', 'pyright' })
 
 -- NOTE: the manual FileType replay loop that used to live here was removed
