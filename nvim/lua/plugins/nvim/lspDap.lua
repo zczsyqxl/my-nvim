@@ -154,6 +154,44 @@ return {
                             python = pydap,
                         },
                     })
+
+                    -- Rust-specific launch: auto-pick binaries from target/debug so
+                    -- the exe path never has to be typed. Prepended (not appended):
+                    -- table.insert(list, 1, item) puts this FIRST in the F7 picker,
+                    -- above mason-nvim-dap's shared "LLDB: Launch" entries.
+                    -- NOTE: no initCommands here: in a Rust binary `main` is the
+                    -- rustc-generated shim (no usable source line -> codelldb opens
+                    -- disassembly); put a source breakpoint (F10) in your own
+                    -- fn main() instead.
+                    dap.configurations.rust = dap.configurations.rust or {}
+                    table.insert(dap.configurations.rust, 1, {
+                        name = 'Rust: Launch (auto bin)',
+                        type = 'codelldb',
+                        request = 'launch',
+                        cwd = '${workspaceFolder}',
+                        stopOnEntry = false,
+                        program = function()
+                            -- top-level *.exe are exactly the bin targets
+                            -- (build-script/test binaries live in build/ and deps/)
+                            local bins = vim.fn.glob('target/debug/*.exe', false, true)
+                            if #bins == 0 then
+                                -- not a cargo project root (or not built yet):
+                                -- fall back to the manual path prompt
+                                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+                            end
+                            if #bins == 1 then
+                                return bins[1]
+                            end
+                            -- multiple bins: pick one. ui.select is async, so wrap
+                            -- in a coroutine (same pattern as mason-nvim-dap's
+                            -- get_dll in configurations.lua)
+                            return coroutine.create(function(dap_run_co)
+                                vim.ui.select(bins, { prompt = 'Select binary: ' }, function(choice)
+                                    coroutine.resume(dap_run_co, choice or bins[1])
+                                end)
+                            end)
+                        end,
+                    })
                 end,
             },
         },
