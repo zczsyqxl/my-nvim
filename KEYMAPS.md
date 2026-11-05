@@ -1,6 +1,6 @@
 # 自定义快捷键总表
 
-共 329 条。treesitter 解析全部配置源码生成，覆盖 `vim.keymap.set`、leap 的 `map` 别名、lazy spec 的 `keys` 表、`Snacks.toggle:map`，以及 mini.snippets / mini.surround / mini.diff 在 opts `mappings` 表里的键和 blink.cmp 的 opts `keymap` 表（插入 + cmdline）。
+共 330 条。treesitter 解析全部配置源码生成，覆盖 `vim.keymap.set`、leap 的 `map` 别名、lazy spec 的 `keys` 表、`Snacks.toggle:map`，以及 mini.snippets / mini.surround / mini.diff 在 opts `mappings` 表里的键和 blink.cmp 的 opts `keymap` 表（插入 + cmdline）。
 
 > 说明：`lua/config/keymap.lua` 中 RHS 为 `vscode.call(...)` 的条目属于 vscode-neovim 分支，仅在 VSCode 内嵌 nvim 时生效；其余为普通 nvim 生效。重新生成：`nvim --headless -u NONE +"set noswapfile" +"luafile keymap_gen.lua"
 
@@ -21,317 +21,318 @@
 | 13 | `<leader>\\s` | n | `<cmd>source $MYVIMRC<cr>` | zz:SourceVimConfig | `lua/config/keymap.lua:17` |
 | 14 | `<leader>\\S` | n | `<cmd>exe "Lazy reload " . @l<cr>` | zz:LazyReloadFromReg-l | `lua/config/keymap.lua:18` |
 | 15 | `gh` | n | `<c-w>d` | zz:ShowDiagnosticHover | `lua/config/keymap.lua:19` |
-| 16 | `jk` | i+s | `<esc>` | zz:escape | `lua/config/keymap.lua:22` |
-| 17 | `<c-l>` | i | `<c-x>` | zz:Complete | `lua/config/keymap.lua:23` |
-| 18 | `<C-q>` | t | `[[<c-\><c-n>]]` | zz:TerminalEscape | `lua/config/keymap.lua:25` |
-| 19 | `<C-y>` | t | `fn: vim.fn.getcharstr()` | zz:Paste from register in terminal mode | `lua/config/keymap.lua:28` |
-| 20 | `<c-h>` | n | `<c-w>h` | zz:N.GotoLeftWin | `lua/config/keymap.lua:35` |
-| 21 | `<c-j>` | n | `<c-w>j` | zz:N.GotoDownWin | `lua/config/keymap.lua:36` |
-| 22 | `<c-k>` | n | `<c-w>k` | zz:N.GotoUpWin | `lua/config/keymap.lua:37` |
-| 23 | `<c-l>` | n | `<c-w>l` | zz:N.GotoRightWin | `lua/config/keymap.lua:38` |
-| 24 | `<leader>vq` | n | `fn: vim.fn.getqflist({ winid = 0 })` | zz:ToggleQuickfix | `lua/config/keymap.lua:41` |
-| 25 | `<leader>vl` | n | `fn: vim.fn.getloclist(0, { winid = 0 })` | zz:ToggleLoclist | `lua/config/keymap.lua:51` |
-| 26 | `<leader>tn` | n | `<cmd>tabnew<cr>` | zz:N.TabNew | `lua/config/keymap.lua:62` |
-| 27 | `<leader>tj` | n | `<cmd>tabnext<cr>` | zz:N.TabNext | `lua/config/keymap.lua:63` |
-| 28 | `<leader>tt` | n | `<cmd>exe v:count1 . "tabnext"<cr>` | zz:N.TabNum | `lua/config/keymap.lua:64` |
-| 29 | `<leader>tk` | n | `<cmd>tabprevious<cr>` | zz:N.TabPre | `lua/config/keymap.lua:65` |
-| 30 | `<leader>tc` | n | `<cmd>tabclose<cr>` | zz:N.TabClose | `lua/config/keymap.lua:66` |
-| 31 | `<leader>ts` | n | `<cmd>tabonly<cr>` | zz:N.TabOnly | `lua/config/keymap.lua:67` |
-| 32 | `<leader>q` | n | `<cmd>q<cr>` | zz:Quit | `lua/config/keymap.lua:68` |
-| 33 | `<leader>Q` | n | `<cmd>qa<cr>` | zz:QuitAll | `lua/config/keymap.lua:69` |
-| 34 | `<leader><tab>` | n | `fn: vim.fn.expand('%:p'):gsub('/', '\\')` | zz:SystemOpen | `lua/config/keymap.lua:71` |
-| 35 | `za` | n | `fn: vscode.call('editor.toggleFold')` |  | `lua/config/keymap.lua:90` |
-| 36 | `zA` | n | `fn: vscode.call('diffEditor.toggleCollapseUnchangedRegions')` |  | `lua/config/keymap.lua:93` |
-| 37 | `zo` | n | `fn: vscode.call('editor.unfold')` |  | `lua/config/keymap.lua:96` |
-| 38 | `zc` | n | `fn: vscode.call('editor.fold')` |  | `lua/config/keymap.lua:99` |
-| 39 | `zO` | n | `fn: vscode.call('editor.unfoldRecursively')` |  | `lua/config/keymap.lua:102` |
-| 40 | `zC` | n | `fn: vscode.call('editor.foldRecursively')` |  | `lua/config/keymap.lua:105` |
-| 41 | `zM` | n | `fn: vscode.call('editor.foldAll')` |  | `lua/config/keymap.lua:108` |
-| 42 | `zR` | n | `fn: vscode.call('editor.unfoldAll')` |  | `lua/config/keymap.lua:111` |
-| 43 | `<leader>;` | n | `fn: vscode.call('editor.action.toggleWordWrap')` |  | `lua/config/keymap.lua:116` |
-| 44 | `<leader>vf` | n | `fn: vscode.call('workbench.files.action.showActiveFileInExplorer` |  | `lua/config/keymap.lua:120` |
-| 45 | `<leader>vo` | n | `fn: vscode.call('outline.focus')` |  | `lua/config/keymap.lua:123` |
-| 46 | `<leader>vh` | n | `fn: vscode.call('timeline.focus')` |  | `lua/config/keymap.lua:126` |
-| 47 | `<leader>ve` | n | `fn: vscode.call('workbench.action.focusActiveEditorGroup')` |  | `lua/config/keymap.lua:129` |
-| 48 | `<leader>vn` | n | `fn: vscode.call('workbench.action.toggleSidebarVisibility')` |  | `lua/config/keymap.lua:132` |
-| 49 | `<leader>vm` | n | `fn: vscode.call('workbench.action.togglePanel')` |  | `lua/config/keymap.lua:135` |
-| 50 | `<leader>.` | n | `fn: vscode.call('workbench.action.navigateToLastEditLocation')` |  | `lua/config/keymap.lua:138` |
-| 51 | `<leader>q` | n | `fn: vscode.call('workbench.action.closeActiveEditor')` |  | `lua/config/keymap.lua:141` |
-| 52 | `<leader>Q` | n | `fn: vscode.call('workbench.action.closeAllEditors')` |  | `lua/config/keymap.lua:144` |
-| 53 | `<leader>C` | n | `fn: vscode.call('workbench.action.closeEditorsInGroup')` |  | `lua/config/keymap.lua:147` |
-| 54 | `<leader>vu` | n | `fn: vscode.call('lazygit.openLazygit')` |  | `lua/config/keymap.lua:150` |
-| 55 | `<leader>f[` | n | `fn: vscode.call('workbench.action.findInFiles')` |  | `lua/config/keymap.lua:154` |
-| 56 | `]a` |  | `fn: vscode.call('gitlens.annotations.nextChange')` |  | `lua/config/keymap.lua:160` |
-| 57 | `[a` |  | `fn: vscode.call('gitlens.annotations.previousChange')` |  | `lua/config/keymap.lua:163` |
-| 58 | `]c` |  | `fn: vscode.call('workbench.action.compareEditor.nextChange')` |  | `lua/config/keymap.lua:166` |
-| 59 | `[c` |  | `fn: vscode.call('workbench.action.compareEditor.previousChange')` |  | `lua/config/keymap.lua:169` |
-| 60 | `]f` |  | `fn: vscode.call('merge-conflict.next')` |  | `lua/config/keymap.lua:172` |
-| 61 | `[f` |  | `fn: vscode.call('merge-conflict.previous')` |  | `lua/config/keymap.lua:175` |
-| 62 | `]e` |  | `fn: vscode.call('merge.goToNextUnhandledConflict')` |  | `lua/config/keymap.lua:178` |
-| 63 | `[e` |  | `fn: vscode.call('merge.goToPreviousUnhandledConflict')` |  | `lua/config/keymap.lua:181` |
-| 64 | `]g` |  | `fn: vscode.call('workbench.action.editor.nextChange')` |  | `lua/config/keymap.lua:184` |
-| 65 | `[g` |  | `fn: vscode.call('workbench.action.editor.previousChange')` |  | `lua/config/keymap.lua:187` |
-| 66 | `[d` |  | `fn: vscode.call('editor.action.marker.prev')` |  | `lua/config/keymap.lua:190` |
-| 67 | `]d` |  | `fn: vscode.call('editor.action.marker.next')` |  | `lua/config/keymap.lua:193` |
-| 68 | `[D` |  | `fn: vscode.call('editor.action.marker.prevInFiles')` |  | `lua/config/keymap.lua:196` |
-| 69 | `]D` |  | `fn: vscode.call('editor.action.marker.nextInFiles')` |  | `lua/config/keymap.lua:199` |
-| 70 | `<leader>do` |  | `fn: vscode.call('git.revertSelectedRanges')` |  | `lua/config/keymap.lua:202` |
-| 71 | `<leader>dp` |  | `fn: vscode.call('git.stageSelectedRanges')` |  | `lua/config/keymap.lua:205` |
-| 72 | `<leader>du` |  | `fn: vscode.call('git.unstageSelectedRanges')` |  | `lua/config/keymap.lua:208` |
-| 73 | `<leader>v.` |  | `fn: vscode.call('markdown-preview-enhanced.openPreviewToTheSide'` |  | `lua/config/keymap.lua:211` |
-| 74 | `s` | n+v+o | `fn: require('flash').jump()` | zz:Flash:Jump | `lua/plugins/jump/engines/flash.lua:22` |
-| 75 | `S` | n+v+o | `fn: require('flash').jump()` | zz:Flash:Jump | `lua/plugins/jump/engines/flash.lua:30` |
-| 76 | `,w` | n+v+o | `fn: require('flash').jump({ search = { mode = function(pat) retu` | zz:Flash:words.after | `lua/plugins/jump/engines/flash.lua:38` |
-| 77 | `,l` | n+v+o | `fn: require('flash').jump({ pattern = [[^.]], search = { mode = ` | zz:Flash:lines.after | `lua/plugins/jump/engines/flash.lua:50` |
-| 78 | `,r` | o | `fn: require('flash').remote()` | zz:Flash:Remote (operator) | `lua/plugins/jump/engines/flash.lua:60` |
-| 79 | `<leader>w` | n+v+o | `fn: require('hop').hint_words({})` | zz:hop:hint_words.after | `lua/plugins/jump/engines/hop.lua:13` |
-| 80 | `<leader>l` | n+v+o | `fn: require('hop').hint_lines({})` | zz:hop:hint_lines.after | `lua/plugins/jump/engines/hop.lua:33` |
-| 81 | `<leader>L` | n+v+o | `fn: require('hop').hint_vertical({})` | zz:hop:hint_vertical.after | `lua/plugins/jump/engines/hop.lua:53` |
-| 82 | `<leader>s` | n+v+o | `fn: require('hop').hint_char1({})` | zz:hop:hint_char1 | `lua/plugins/jump/engines/hop.lua:73` |
-| 83 | `<leader>S` | n+v+o | `fn: require('hop').hint_patterns({})` | zz:hop:hint_patterns | `lua/plugins/jump/engines/hop.lua:86` |
-| 84 | `s` | n+v | `<Plug>(leap)` | zz:Leap:Jump | `lua/plugins/jump/engines/leap.lua:85` |
-| 85 | `S` | n+v | `fn: vim.api.nvim_get_current_win()` | zz:Leap:AllWindows+Picker | `lua/plugins/jump/engines/leap.lua:92` |
-| 86 | `,x` | n+v | `<Plug>(leap-forward)` | zz:Leap:fwd | `lua/plugins/jump/engines/leap.lua:110` |
-| 87 | `,X` | n+v | `<Plug>(leap-backward)` | zz:Leap:bwd | `lua/plugins/jump/engines/leap.lua:111` |
-| 88 | `z` | o | `<Plug>(leap-forward-next-to)` | zz:Leap:fwd-excl | `lua/plugins/jump/engines/leap.lua:116` |
-| 89 | `x` | o | `<Plug>(leap-forward)` | zz:Leap:fwd-incl | `lua/plugins/jump/engines/leap.lua:117` |
-| 90 | `X` | o | `<Plug>(leap-backward-next-to)` | zz:Leap:bwd-incl | `lua/plugins/jump/engines/leap.lua:118` |
-| 91 | `Z` | o | `<Plug>(leap-backward)` | zz:Leap:bwd-excl | `lua/plugins/jump/engines/leap.lua:119` |
-| 92 | `gk` | n+v+o | `<Plug>(leap-visit)` | zz:Leap:Visit | `lua/plugins/jump/engines/leap.lua:122` |
-| 93 | `<leader>mc` | n | `<cmd>LLMSessionToggle<cr>` | zz:LLM:Toggle LLM Chat | `lua/plugins/llm/init.lua:82` |
-| 94 | `<leader>mt` | x+n | `<cmd>LLMAppHandler WordTranslate<cr>` | zz:LLM:Word Translate | `lua/plugins/llm/init.lua:83` |
-| 95 | `<leader>me` | n+v | `<cmd>LLMAppHandler CodeExplain<cr>` | zz:LLM:Explain the Code | `lua/plugins/llm/init.lua:84` |
-| 96 | `<leader>mT` | n | `<cmd>LLMAppHandler Translate<cr>` | zz:LLM:AI Translator | `lua/plugins/llm/init.lua:85` |
-| 97 | `<leader>mA` | x | `<cmd>LLMAppHandler TestCode<cr>` | zz:LLM:Generate Test Cases | `lua/plugins/llm/init.lua:86` |
-| 98 | `<leader>mo` | x | `<cmd>LLMAppHandler OptimCompare<cr>` | zz:LLM:Optimize the Code | `lua/plugins/llm/init.lua:87` |
-| 99 | `<leader>mu` | n | `<cmd>LLMAppHandler UserInfo<cr>` | zz:LLM:Check Account Information | `lua/plugins/llm/init.lua:88` |
-| 100 | `<leader>mg` | n | `<cmd>LLMAppHandler CommitMsg<cr>` | zz:LLM:Generate AI Commit Message | `lua/plugins/llm/init.lua:89` |
-| 101 | `<leader>md` | v | `<cmd>LLMAppHandler DocString<cr>` | zz:LLM:Generate a Docstring | `lua/plugins/llm/init.lua:90` |
-| 102 | `<leader>mk` | v+n | `<cmd>LLMAppHandler Ask<cr>` | zz:LLM:Ask LLM | `lua/plugins/llm/init.lua:91` |
-| 103 | `<leader>ma` | v+n | `<cmd>LLMAppHandler AttachToChat<cr>` | zz:LLM:Ask LLM (multi-turn) | `lua/plugins/llm/init.lua:92` |
-| 104 | `<leader>mi` | v+n | `<cmd>LLMAppHandler FormulaRecognition<cr>` | zz:LLM:formula recognition | `lua/plugins/llm/init.lua:94` |
-| 105 | `[G` | n | `opts: mini.diff` | zz:mini.diff:Goto first hunk | `lua/plugins/mini/diff.lua:7` |
+| 16 | `gF` | n | `require('plugins.nvim.md.openLink').open` | zz:md:OpenLinkTarget | `lua/config/keymap.lua:32` |
+| 17 | `jk` | i+s | `<esc>` | zz:escape | `lua/config/keymap.lua:41` |
+| 18 | `<c-l>` | i | `<c-x>` | zz:Complete | `lua/config/keymap.lua:42` |
+| 19 | `<C-q>` | t | `[[<c-\><c-n>]]` | zz:TerminalEscape | `lua/config/keymap.lua:44` |
+| 20 | `<C-y>` | t | `fn: vim.fn.getcharstr()` | zz:Paste from register in terminal mode | `lua/config/keymap.lua:47` |
+| 21 | `<c-h>` | n | `<c-w>h` | zz:N.GotoLeftWin | `lua/config/keymap.lua:54` |
+| 22 | `<c-j>` | n | `<c-w>j` | zz:N.GotoDownWin | `lua/config/keymap.lua:55` |
+| 23 | `<c-k>` | n | `<c-w>k` | zz:N.GotoUpWin | `lua/config/keymap.lua:56` |
+| 24 | `<c-l>` | n | `<c-w>l` | zz:N.GotoRightWin | `lua/config/keymap.lua:57` |
+| 25 | `<leader>vq` | n | `fn: vim.fn.getqflist({ winid = 0 })` | zz:ToggleQuickfix | `lua/config/keymap.lua:60` |
+| 26 | `<leader>vl` | n | `fn: vim.fn.getloclist(0, { winid = 0 })` | zz:ToggleLoclist | `lua/config/keymap.lua:70` |
+| 27 | `<leader>tn` | n | `<cmd>tabnew<cr>` | zz:N.TabNew | `lua/config/keymap.lua:81` |
+| 28 | `<leader>tj` | n | `<cmd>tabnext<cr>` | zz:N.TabNext | `lua/config/keymap.lua:82` |
+| 29 | `<leader>tt` | n | `<cmd>exe v:count1 . "tabnext"<cr>` | zz:N.TabNum | `lua/config/keymap.lua:83` |
+| 30 | `<leader>tk` | n | `<cmd>tabprevious<cr>` | zz:N.TabPre | `lua/config/keymap.lua:84` |
+| 31 | `<leader>tc` | n | `<cmd>tabclose<cr>` | zz:N.TabClose | `lua/config/keymap.lua:85` |
+| 32 | `<leader>ts` | n | `<cmd>tabonly<cr>` | zz:N.TabOnly | `lua/config/keymap.lua:86` |
+| 33 | `<leader>q` | n | `<cmd>q<cr>` | zz:Quit | `lua/config/keymap.lua:87` |
+| 34 | `<leader>Q` | n | `<cmd>qa<cr>` | zz:QuitAll | `lua/config/keymap.lua:88` |
+| 35 | `<leader><tab>` | n | `fn: vim.fn.expand('%:p'):gsub('/', '\\')` | zz:SystemOpen | `lua/config/keymap.lua:90` |
+| 36 | `za` | n | `fn: vscode.call('editor.toggleFold')` |  | `lua/config/keymap.lua:109` |
+| 37 | `zA` | n | `fn: vscode.call('diffEditor.toggleCollapseUnchangedRegions')` |  | `lua/config/keymap.lua:112` |
+| 38 | `zo` | n | `fn: vscode.call('editor.unfold')` |  | `lua/config/keymap.lua:115` |
+| 39 | `zc` | n | `fn: vscode.call('editor.fold')` |  | `lua/config/keymap.lua:118` |
+| 40 | `zO` | n | `fn: vscode.call('editor.unfoldRecursively')` |  | `lua/config/keymap.lua:121` |
+| 41 | `zC` | n | `fn: vscode.call('editor.foldRecursively')` |  | `lua/config/keymap.lua:124` |
+| 42 | `zM` | n | `fn: vscode.call('editor.foldAll')` |  | `lua/config/keymap.lua:127` |
+| 43 | `zR` | n | `fn: vscode.call('editor.unfoldAll')` |  | `lua/config/keymap.lua:130` |
+| 44 | `<leader>;` | n | `fn: vscode.call('editor.action.toggleWordWrap')` |  | `lua/config/keymap.lua:135` |
+| 45 | `<leader>vf` | n | `fn: vscode.call('workbench.files.action.showActiveFileInExplorer` |  | `lua/config/keymap.lua:139` |
+| 46 | `<leader>vo` | n | `fn: vscode.call('outline.focus')` |  | `lua/config/keymap.lua:142` |
+| 47 | `<leader>vh` | n | `fn: vscode.call('timeline.focus')` |  | `lua/config/keymap.lua:145` |
+| 48 | `<leader>ve` | n | `fn: vscode.call('workbench.action.focusActiveEditorGroup')` |  | `lua/config/keymap.lua:148` |
+| 49 | `<leader>vn` | n | `fn: vscode.call('workbench.action.toggleSidebarVisibility')` |  | `lua/config/keymap.lua:151` |
+| 50 | `<leader>vm` | n | `fn: vscode.call('workbench.action.togglePanel')` |  | `lua/config/keymap.lua:154` |
+| 51 | `<leader>.` | n | `fn: vscode.call('workbench.action.navigateToLastEditLocation')` |  | `lua/config/keymap.lua:157` |
+| 52 | `<leader>q` | n | `fn: vscode.call('workbench.action.closeActiveEditor')` |  | `lua/config/keymap.lua:160` |
+| 53 | `<leader>Q` | n | `fn: vscode.call('workbench.action.closeAllEditors')` |  | `lua/config/keymap.lua:163` |
+| 54 | `<leader>C` | n | `fn: vscode.call('workbench.action.closeEditorsInGroup')` |  | `lua/config/keymap.lua:166` |
+| 55 | `<leader>vu` | n | `fn: vscode.call('lazygit.openLazygit')` |  | `lua/config/keymap.lua:169` |
+| 56 | `<leader>f[` | n | `fn: vscode.call('workbench.action.findInFiles')` |  | `lua/config/keymap.lua:173` |
+| 57 | `]a` |  | `fn: vscode.call('gitlens.annotations.nextChange')` |  | `lua/config/keymap.lua:179` |
+| 58 | `[a` |  | `fn: vscode.call('gitlens.annotations.previousChange')` |  | `lua/config/keymap.lua:182` |
+| 59 | `]c` |  | `fn: vscode.call('workbench.action.compareEditor.nextChange')` |  | `lua/config/keymap.lua:185` |
+| 60 | `[c` |  | `fn: vscode.call('workbench.action.compareEditor.previousChange')` |  | `lua/config/keymap.lua:188` |
+| 61 | `]f` |  | `fn: vscode.call('merge-conflict.next')` |  | `lua/config/keymap.lua:191` |
+| 62 | `[f` |  | `fn: vscode.call('merge-conflict.previous')` |  | `lua/config/keymap.lua:194` |
+| 63 | `]e` |  | `fn: vscode.call('merge.goToNextUnhandledConflict')` |  | `lua/config/keymap.lua:197` |
+| 64 | `[e` |  | `fn: vscode.call('merge.goToPreviousUnhandledConflict')` |  | `lua/config/keymap.lua:200` |
+| 65 | `]g` |  | `fn: vscode.call('workbench.action.editor.nextChange')` |  | `lua/config/keymap.lua:203` |
+| 66 | `[g` |  | `fn: vscode.call('workbench.action.editor.previousChange')` |  | `lua/config/keymap.lua:206` |
+| 67 | `[d` |  | `fn: vscode.call('editor.action.marker.prev')` |  | `lua/config/keymap.lua:209` |
+| 68 | `]d` |  | `fn: vscode.call('editor.action.marker.next')` |  | `lua/config/keymap.lua:212` |
+| 69 | `[D` |  | `fn: vscode.call('editor.action.marker.prevInFiles')` |  | `lua/config/keymap.lua:215` |
+| 70 | `]D` |  | `fn: vscode.call('editor.action.marker.nextInFiles')` |  | `lua/config/keymap.lua:218` |
+| 71 | `<leader>do` |  | `fn: vscode.call('git.revertSelectedRanges')` |  | `lua/config/keymap.lua:221` |
+| 72 | `<leader>dp` |  | `fn: vscode.call('git.stageSelectedRanges')` |  | `lua/config/keymap.lua:224` |
+| 73 | `<leader>du` |  | `fn: vscode.call('git.unstageSelectedRanges')` |  | `lua/config/keymap.lua:227` |
+| 74 | `<leader>v.` |  | `fn: vscode.call('markdown-preview-enhanced.openPreviewToTheSide'` |  | `lua/config/keymap.lua:230` |
+| 75 | `s` | n+v+o | `fn: require('flash').jump()` | zz:Flash:Jump | `lua/plugins/jump/engines/flash.lua:22` |
+| 76 | `S` | n+v+o | `fn: require('flash').jump()` | zz:Flash:Jump | `lua/plugins/jump/engines/flash.lua:30` |
+| 77 | `,w` | n+v+o | `fn: require('flash').jump({ search = { mode = function(pat) retu` | zz:Flash:words.after | `lua/plugins/jump/engines/flash.lua:38` |
+| 78 | `,l` | n+v+o | `fn: require('flash').jump({ pattern = [[^.]], search = { mode = ` | zz:Flash:lines.after | `lua/plugins/jump/engines/flash.lua:50` |
+| 79 | `,r` | o | `fn: require('flash').remote()` | zz:Flash:Remote (operator) | `lua/plugins/jump/engines/flash.lua:60` |
+| 80 | `<leader>w` | n+v+o | `fn: require('hop').hint_words({})` | zz:hop:hint_words.after | `lua/plugins/jump/engines/hop.lua:13` |
+| 81 | `<leader>l` | n+v+o | `fn: require('hop').hint_lines({})` | zz:hop:hint_lines.after | `lua/plugins/jump/engines/hop.lua:33` |
+| 82 | `<leader>L` | n+v+o | `fn: require('hop').hint_vertical({})` | zz:hop:hint_vertical.after | `lua/plugins/jump/engines/hop.lua:53` |
+| 83 | `<leader>s` | n+v+o | `fn: require('hop').hint_char1({})` | zz:hop:hint_char1 | `lua/plugins/jump/engines/hop.lua:73` |
+| 84 | `<leader>S` | n+v+o | `fn: require('hop').hint_patterns({})` | zz:hop:hint_patterns | `lua/plugins/jump/engines/hop.lua:86` |
+| 85 | `s` | n+v | `<Plug>(leap)` | zz:Leap:Jump | `lua/plugins/jump/engines/leap.lua:85` |
+| 86 | `S` | n+v | `fn: vim.api.nvim_get_current_win()` | zz:Leap:AllWindows+Picker | `lua/plugins/jump/engines/leap.lua:92` |
+| 87 | `,x` | n+v | `<Plug>(leap-forward)` | zz:Leap:fwd | `lua/plugins/jump/engines/leap.lua:110` |
+| 88 | `,X` | n+v | `<Plug>(leap-backward)` | zz:Leap:bwd | `lua/plugins/jump/engines/leap.lua:111` |
+| 89 | `z` | o | `<Plug>(leap-forward-next-to)` | zz:Leap:fwd-excl | `lua/plugins/jump/engines/leap.lua:116` |
+| 90 | `x` | o | `<Plug>(leap-forward)` | zz:Leap:fwd-incl | `lua/plugins/jump/engines/leap.lua:117` |
+| 91 | `X` | o | `<Plug>(leap-backward-next-to)` | zz:Leap:bwd-incl | `lua/plugins/jump/engines/leap.lua:118` |
+| 92 | `Z` | o | `<Plug>(leap-backward)` | zz:Leap:bwd-excl | `lua/plugins/jump/engines/leap.lua:119` |
+| 93 | `gk` | n+v+o | `<Plug>(leap-visit)` | zz:Leap:Visit | `lua/plugins/jump/engines/leap.lua:122` |
+| 94 | `<leader>mc` | n | `<cmd>LLMSessionToggle<cr>` | zz:LLM:Toggle LLM Chat | `lua/plugins/llm/init.lua:82` |
+| 95 | `<leader>mt` | x+n | `<cmd>LLMAppHandler WordTranslate<cr>` | zz:LLM:Word Translate | `lua/plugins/llm/init.lua:83` |
+| 96 | `<leader>me` | n+v | `<cmd>LLMAppHandler CodeExplain<cr>` | zz:LLM:Explain the Code | `lua/plugins/llm/init.lua:84` |
+| 97 | `<leader>mT` | n | `<cmd>LLMAppHandler Translate<cr>` | zz:LLM:AI Translator | `lua/plugins/llm/init.lua:85` |
+| 98 | `<leader>mA` | x | `<cmd>LLMAppHandler TestCode<cr>` | zz:LLM:Generate Test Cases | `lua/plugins/llm/init.lua:86` |
+| 99 | `<leader>mo` | x | `<cmd>LLMAppHandler OptimCompare<cr>` | zz:LLM:Optimize the Code | `lua/plugins/llm/init.lua:87` |
+| 100 | `<leader>mu` | n | `<cmd>LLMAppHandler UserInfo<cr>` | zz:LLM:Check Account Information | `lua/plugins/llm/init.lua:88` |
+| 101 | `<leader>mg` | n | `<cmd>LLMAppHandler CommitMsg<cr>` | zz:LLM:Generate AI Commit Message | `lua/plugins/llm/init.lua:89` |
+| 102 | `<leader>md` | v | `<cmd>LLMAppHandler DocString<cr>` | zz:LLM:Generate a Docstring | `lua/plugins/llm/init.lua:90` |
+| 103 | `<leader>mk` | v+n | `<cmd>LLMAppHandler Ask<cr>` | zz:LLM:Ask LLM | `lua/plugins/llm/init.lua:91` |
+| 104 | `<leader>ma` | v+n | `<cmd>LLMAppHandler AttachToChat<cr>` | zz:LLM:Ask LLM (multi-turn) | `lua/plugins/llm/init.lua:92` |
+| 105 | `<leader>mi` | v+n | `<cmd>LLMAppHandler FormulaRecognition<cr>` | zz:LLM:formula recognition | `lua/plugins/llm/init.lua:94` |
 | 106 | `[g` | n | `opts: mini.diff` | zz:mini.diff:Goto prev hunk | `lua/plugins/mini/diff.lua:7` |
 | 107 | `]g` | n | `opts: mini.diff` | zz:mini.diff:Goto next hunk | `lua/plugins/mini/diff.lua:7` |
-| 108 | `gy` | o | `opts: mini.diff` | zz:mini.diff:TextObject | `lua/plugins/mini/diff.lua:7` |
-| 109 | `gy` | n+x | `opts: mini.diff` | zz:mini.diff:Apply hunks | `lua/plugins/mini/diff.lua:7` |
+| 108 | `[G` | n | `opts: mini.diff` | zz:mini.diff:Goto first hunk | `lua/plugins/mini/diff.lua:7` |
+| 109 | `gy` | o | `opts: mini.diff` | zz:mini.diff:TextObject | `lua/plugins/mini/diff.lua:7` |
 | 110 | `gY` | n+x | `opts: mini.diff` | zz:mini.diff:Reset hunks | `lua/plugins/mini/diff.lua:7` |
 | 111 | `]G` | n | `opts: mini.diff` | zz:mini.diff:Goto last hunk | `lua/plugins/mini/diff.lua:7` |
-| 112 | `gH` | n | `fn: MiniDiff.toggle_overlay(0)` | zz:mini.diff:Toggle overlay | `lua/plugins/mini/diff.lua:20` |
-| 113 | `gxc` | n | `<c-c>` | zz:mini.operators:CancelPendingExchange | `lua/plugins/mini/operators.lua:2` |
-| 114 | `z'` | n | `fn: vim.cmd('wa')` | zz:mini.sessions:WriteLocalSession | `lua/plugins/mini/sessions.lua:96` |
-| 115 | `<C-c>` | i | `opts: mini.snippets` | zz:MiniSnippets:stop (session) | `lua/plugins/mini/snippet.lua:12` |
-| 116 | `<C-l>` | i | `opts: mini.snippets` | zz:MiniSnippets:jump next | `lua/plugins/mini/snippet.lua:12` |
-| 117 | `<C-h>` | i | `opts: mini.snippets` | zz:MiniSnippets:jump prev | `lua/plugins/mini/snippet.lua:12` |
-| 118 | `<C-]>` | i | `opts: mini.snippets` | zz:MiniSnippets:expand (insert) | `lua/plugins/mini/snippet.lua:12` |
-| 119 | `<C-c>` | n | `fn: require('mini.snippets')` | zz:MiniSnippets:stop session (normal) | `lua/plugins/mini/snippet.lua:29` |
-| 120 | `cs` | n+x | `opts: mini.surround` | zz:mini.surround:Replace | `lua/plugins/mini/surround.lua:4` |
-| 121 | `Sn` | n | `opts: mini.surround` | zz:mini.surround:UpdateNLines | `lua/plugins/mini/surround.lua:4` |
-| 122 | `Sh` | n+x | `opts: mini.surround` | zz:mini.surround:Highlight | `lua/plugins/mini/surround.lua:4` |
-| 123 | `SF` | n+x | `opts: mini.surround` | zz:mini.surround:FindLeft | `lua/plugins/mini/surround.lua:4` |
-| 124 | `Sf` | n+x | `opts: mini.surround` | zz:mini.surround:Find | `lua/plugins/mini/surround.lua:4` |
-| 125 | `ys` | n+x | `opts: mini.surround` | zz:mini.surround:Add | `lua/plugins/mini/surround.lua:4` |
+| 112 | `gy` | n+x | `opts: mini.diff` | zz:mini.diff:Apply hunks | `lua/plugins/mini/diff.lua:7` |
+| 113 | `gH` | n | `fn: MiniDiff.toggle_overlay(0)` | zz:mini.diff:Toggle overlay | `lua/plugins/mini/diff.lua:20` |
+| 114 | `gxc` | n | `<c-c>` | zz:mini.operators:CancelPendingExchange | `lua/plugins/mini/operators.lua:2` |
+| 115 | `z'` | n | `fn: vim.cmd('wa')` | zz:mini.sessions:WriteLocalSession | `lua/plugins/mini/sessions.lua:96` |
+| 116 | `<C-h>` | i | `opts: mini.snippets` | zz:MiniSnippets:jump prev | `lua/plugins/mini/snippet.lua:12` |
+| 117 | `<C-l>` | i | `opts: mini.snippets` | zz:MiniSnippets:jump next | `lua/plugins/mini/snippet.lua:12` |
+| 118 | `<C-c>` | i | `opts: mini.snippets` | zz:MiniSnippets:stop (session) | `lua/plugins/mini/snippet.lua:12` |
+| 119 | `<C-]>` | i | `opts: mini.snippets` | zz:MiniSnippets:expand (insert) | `lua/plugins/mini/snippet.lua:12` |
+| 120 | `<C-c>` | n | `fn: require('mini.snippets')` | zz:MiniSnippets:stop session (normal) | `lua/plugins/mini/snippet.lua:29` |
+| 121 | `Sh` | n+x | `opts: mini.surround` | zz:mini.surround:Highlight | `lua/plugins/mini/surround.lua:4` |
+| 122 | `cs` | n+x | `opts: mini.surround` | zz:mini.surround:Replace | `lua/plugins/mini/surround.lua:4` |
+| 123 | `Sn` | n | `opts: mini.surround` | zz:mini.surround:UpdateNLines | `lua/plugins/mini/surround.lua:4` |
+| 124 | `SF` | n+x | `opts: mini.surround` | zz:mini.surround:FindLeft | `lua/plugins/mini/surround.lua:4` |
+| 125 | `Sf` | n+x | `opts: mini.surround` | zz:mini.surround:Find | `lua/plugins/mini/surround.lua:4` |
 | 126 | `ds` | n+x | `opts: mini.surround` | zz:mini.surround:Delete | `lua/plugins/mini/surround.lua:4` |
-| 127 | `yss` | n | `ys_` | zz:mini.surround:AddLineSurround | `lua/plugins/mini/surround.lua:43` |
-| 128 | `S` | x | `[[:<C-u>lua MiniSurround.add('visual')<CR>]]` | zz:mini.surround:AddVisSurround | `lua/plugins/mini/surround.lua:45` |
-| 129 | `]r` | n | `fn: require('obsidian.actions').nav_link('next', false)` | zz:obsidian:next_link | `lua/plugins/note/obsidian.lua:71` |
-| 130 | `[r` | n | `fn: require('obsidian.actions').nav_link('prev', false)` | zz:obsidian:prev_link | `lua/plugins/note/obsidian.lua:74` |
-| 131 | `<leader>ob` | n | `<cmd>Obsidian backlinks<cr>` | zz:obsidian:backlinks | `lua/plugins/note/obsidian.lua:77` |
-| 132 | `<leader>of` | n | `<cmd>Obsidian footnotes<cr>` | zz:obsidian:footnotes | `lua/plugins/note/obsidian.lua:78` |
-| 133 | `<leader>oF` | n | `<cmd>Obsidian follow_link<cr>` | zz:obsidian:follow_link | `lua/plugins/note/obsidian.lua:79` |
-| 134 | `<leader>ol` | n | `<cmd>Obsidian links<cr>` | zz:obsidian:links | `lua/plugins/note/obsidian.lua:80` |
-| 135 | `<leader>op` | n | `<cmd>Obsidian paste_img<cr>` | zz:obsidian:paste_img | `lua/plugins/note/obsidian.lua:81` |
-| 136 | `<leader>or` | n | `<cmd>Obsidian rename<cr>` | zz:obsidian:rename | `lua/plugins/note/obsidian.lua:82` |
-| 137 | `<leader>ot` | n | `<cmd>Obsidian toc<cr>` | zz:obsidian:toc | `lua/plugins/note/obsidian.lua:83` |
-| 138 | `<leader>oT` | n | `<cmd>Obsidian template<cr>` | zz:obsidian:template | `lua/plugins/note/obsidian.lua:84` |
-| 139 | `<leader>oc` | n | `<cmd>Obsidian check<cr>` | zz:obsidian:check | `lua/plugins/note/obsidian.lua:89` |
-| 140 | `<leader>odl` | n | `<cmd>Obsidian dailies<cr>` | zz:obsidian:dailies | `lua/plugins/note/obsidian.lua:90` |
-| 141 | `<leader>odt` | n | `<cmd>Obsidian today<cr>` | zz:obsidian:today | `lua/plugins/note/obsidian.lua:91` |
-| 142 | `<leader>odm` | n | `<cmd>Obsidian tomorrow<cr>` | zz:obsidian:tomorrow | `lua/plugins/note/obsidian.lua:92` |
-| 143 | `<leader>ody` | n | `<cmd>Obsidian yesterday<cr>` | zz:obsidian:yesterday | `lua/plugins/note/obsidian.lua:93` |
-| 144 | `<leader>ov` | n | `<cmd>Obsidian<cr>` | zz:obsidian:obsidian | `lua/plugins/note/obsidian.lua:94` |
-| 145 | `<leader>oh` | n | `<cmd>Obsidian help<cr>` | zz:obsidian:help | `lua/plugins/note/obsidian.lua:95` |
-| 146 | `<leader>oH` | n | `<cmd>Obsidian helpgrep<cr>` | zz:obsidian:helpgrep | `lua/plugins/note/obsidian.lua:96` |
-| 147 | `<leader>om` | n | `<cmd>Obsidian bookmarks<cr>` | zz:obsidian:bookmarks | `lua/plugins/note/obsidian.lua:97` |
-| 148 | `<leader>on` | n | `<cmd>Obsidian new<cr>` | zz:obsidian:new | `lua/plugins/note/obsidian.lua:98` |
-| 149 | `<leader>oN` | n | `<cmd>Obsidian new_from_template<cr>` | zz:obsidian:new_from_template | `lua/plugins/note/obsidian.lua:99` |
-| 150 | `<leader>oo` | n | `<cmd>Obsidian open<cr>` | zz:obsidian:open | `lua/plugins/note/obsidian.lua:100` |
-| 151 | `<leader>oq` | n | `<cmd>Obsidian quick_switch<cr>` | zz:obsidian:quick_switch | `lua/plugins/note/obsidian.lua:101` |
-| 152 | `<leader>oR` | n | `<cmd>Obsidian rebuild_cache<cr>` | zz:obsidian:rebuild_cache | `lua/plugins/note/obsidian.lua:102` |
-| 153 | `<leader>os` | n | `<cmd>Obsidian search<cr>` | zz:obsidian:search | `lua/plugins/note/obsidian.lua:103` |
-| 154 | `<leader>og` | n | `<cmd>Obsidian tags<cr>` | zz:obsidian:tags | `lua/plugins/note/obsidian.lua:104` |
-| 155 | `<leader>ou` | n | `<cmd>Obsidian unique_note<cr>` | zz:obsidian:unique_note | `lua/plugins/note/obsidian.lua:105` |
-| 156 | `<leader>ow` | n | `<cmd>Obsidian workspace<cr>` | zz:obsidian:workspace | `lua/plugins/note/obsidian.lua:106` |
-| 157 | `<leader>cb` | n | `<cmd>CMakeBuild<cr>` | zz:cmake:Build | `lua/plugins/nvim/cmake.lua:47` |
-| 158 | `<leader>cB` | n | `<cmd>CMakeBuildCurrentFile<cr>` | zz:cmake:BuildCurFile | `lua/plugins/nvim/cmake.lua:48` |
-| 159 | `<leader>cc` | n | `<cmd>CMakeClean<cr>` | zz:cmake:Clean | `lua/plugins/nvim/cmake.lua:49` |
-| 160 | `<leader>cg` | n | `<cmd>CMakeGenerate<cr>` | zz:cmake:Generate | `lua/plugins/nvim/cmake.lua:50` |
-| 161 | `<leader>cr` | n | `<cmd>CMakeRun<cr>` | zz:cmake:Run | `lua/plugins/nvim/cmake.lua:51` |
-| 162 | `<leader>cR` | n | `<cmd>CMakeRunCurrentFile<cr>` | zz:cmake:RunCurFile | `lua/plugins/nvim/cmake.lua:52` |
-| 163 | `<leader>csc` | n | `<cmd>CMakeSelectConfigurePreset<cr>` | zz:cmake:SelectConPreset | `lua/plugins/nvim/cmake.lua:53` |
-| 164 | `<leader>csd` | n | `<cmd>CMakeSelectBuildDir<cr>` | zz:cmake:SelectBuildDir | `lua/plugins/nvim/cmake.lua:54` |
-| 165 | `<leader>cst` | n | `<cmd>CMakeSelectBuildTarget<cr>` | zz:cmake:SelectBuildTarget | `lua/plugins/nvim/cmake.lua:55` |
-| 166 | `<leader>csp` | n | `<cmd>CMakeSelectBuildType<cr>` | zz:cmake:SelectBuildType | `lua/plugins/nvim/cmake.lua:56` |
-| 167 | `<leader>csb` | n | `<cmd>CMakeSelectBuildPreset<cr>` | zz:cmake:SelectBuildPreset | `lua/plugins/nvim/cmake.lua:57` |
-| 168 | `<leader>csw` | n | `<cmd>CMakeSelectCwd<cr>` | zz:cmake:SelectCWD | `lua/plugins/nvim/cmake.lua:58` |
-| 169 | `<leader>csk` | n | `<cmd>CMakeSelectKit<cr>` | zz:cmake:SelectKit | `lua/plugins/nvim/cmake.lua:59` |
-| 170 | `<leader>csl` | n | `<cmd>CMakeSelectLaunchTarget<cr>` | zz:cmake:SelectLaunchTarget | `lua/plugins/nvim/cmake.lua:60` |
-| 171 | `<C-k>` | c | `opts: blink.cmp` | blink: select_prev | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
-| 172 | `<C-j>` | c | `opts: blink.cmp` | blink: select_next | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
-| 173 | `<Tab>` | c | `opts: blink.cmp` | blink: select_and_accept\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
-| 174 | `<down>` | c | `opts: blink.cmp` | blink: select_next | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
-| 175 | `<up>` | c | `opts: blink.cmp` | blink: select_prev | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
-| 176 | `<PageUp>` | i | `opts: blink.cmp` | blink: scroll_documentation_up\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
+| 127 | `ys` | n+x | `opts: mini.surround` | zz:mini.surround:Add | `lua/plugins/mini/surround.lua:4` |
+| 128 | `yss` | n | `ys_` | zz:mini.surround:AddLineSurround | `lua/plugins/mini/surround.lua:43` |
+| 129 | `S` | x | `[[:<C-u>lua MiniSurround.add('visual')<CR>]]` | zz:mini.surround:AddVisSurround | `lua/plugins/mini/surround.lua:45` |
+| 130 | `]r` | n | `fn: require('obsidian.actions').nav_link('next', false)` | zz:obsidian:next_link | `lua/plugins/note/obsidian.lua:96` |
+| 131 | `[r` | n | `fn: require('obsidian.actions').nav_link('prev', false)` | zz:obsidian:prev_link | `lua/plugins/note/obsidian.lua:99` |
+| 132 | `<leader>ob` | n | `<cmd>Obsidian backlinks<cr>` | zz:obsidian:backlinks | `lua/plugins/note/obsidian.lua:102` |
+| 133 | `<leader>of` | n | `<cmd>Obsidian footnotes<cr>` | zz:obsidian:footnotes | `lua/plugins/note/obsidian.lua:103` |
+| 134 | `<leader>oF` | n | `<cmd>Obsidian follow_link<cr>` | zz:obsidian:follow_link | `lua/plugins/note/obsidian.lua:104` |
+| 135 | `<leader>ol` | n | `<cmd>Obsidian links<cr>` | zz:obsidian:links | `lua/plugins/note/obsidian.lua:105` |
+| 136 | `<leader>op` | n | `<cmd>Obsidian paste_img<cr>` | zz:obsidian:paste_img | `lua/plugins/note/obsidian.lua:106` |
+| 137 | `<leader>or` | n | `<cmd>Obsidian rename<cr>` | zz:obsidian:rename | `lua/plugins/note/obsidian.lua:107` |
+| 138 | `<leader>ot` | n | `<cmd>Obsidian toc<cr>` | zz:obsidian:toc | `lua/plugins/note/obsidian.lua:108` |
+| 139 | `<leader>oT` | n | `<cmd>Obsidian template<cr>` | zz:obsidian:template | `lua/plugins/note/obsidian.lua:109` |
+| 140 | `<leader>oc` | n | `<cmd>Obsidian check<cr>` | zz:obsidian:check | `lua/plugins/note/obsidian.lua:114` |
+| 141 | `<leader>odl` | n | `<cmd>Obsidian dailies<cr>` | zz:obsidian:dailies | `lua/plugins/note/obsidian.lua:115` |
+| 142 | `<leader>odt` | n | `<cmd>Obsidian today<cr>` | zz:obsidian:today | `lua/plugins/note/obsidian.lua:116` |
+| 143 | `<leader>odm` | n | `<cmd>Obsidian tomorrow<cr>` | zz:obsidian:tomorrow | `lua/plugins/note/obsidian.lua:117` |
+| 144 | `<leader>ody` | n | `<cmd>Obsidian yesterday<cr>` | zz:obsidian:yesterday | `lua/plugins/note/obsidian.lua:118` |
+| 145 | `<leader>ov` | n | `<cmd>Obsidian<cr>` | zz:obsidian:obsidian | `lua/plugins/note/obsidian.lua:119` |
+| 146 | `<leader>oh` | n | `<cmd>Obsidian help<cr>` | zz:obsidian:help | `lua/plugins/note/obsidian.lua:120` |
+| 147 | `<leader>oH` | n | `<cmd>Obsidian helpgrep<cr>` | zz:obsidian:helpgrep | `lua/plugins/note/obsidian.lua:121` |
+| 148 | `<leader>om` | n | `<cmd>Obsidian bookmarks<cr>` | zz:obsidian:bookmarks | `lua/plugins/note/obsidian.lua:122` |
+| 149 | `<leader>on` | n | `<cmd>Obsidian new<cr>` | zz:obsidian:new | `lua/plugins/note/obsidian.lua:123` |
+| 150 | `<leader>oN` | n | `<cmd>Obsidian new_from_template<cr>` | zz:obsidian:new_from_template | `lua/plugins/note/obsidian.lua:124` |
+| 151 | `<leader>oo` | n | `<cmd>Obsidian open<cr>` | zz:obsidian:open | `lua/plugins/note/obsidian.lua:125` |
+| 152 | `<leader>oq` | n | `<cmd>Obsidian quick_switch<cr>` | zz:obsidian:quick_switch | `lua/plugins/note/obsidian.lua:126` |
+| 153 | `<leader>oR` | n | `<cmd>Obsidian rebuild_cache<cr>` | zz:obsidian:rebuild_cache | `lua/plugins/note/obsidian.lua:127` |
+| 154 | `<leader>os` | n | `<cmd>Obsidian search<cr>` | zz:obsidian:search | `lua/plugins/note/obsidian.lua:128` |
+| 155 | `<leader>og` | n | `<cmd>Obsidian tags<cr>` | zz:obsidian:tags | `lua/plugins/note/obsidian.lua:129` |
+| 156 | `<leader>ou` | n | `<cmd>Obsidian unique_note<cr>` | zz:obsidian:unique_note | `lua/plugins/note/obsidian.lua:130` |
+| 157 | `<leader>ow` | n | `<cmd>Obsidian workspace<cr>` | zz:obsidian:workspace | `lua/plugins/note/obsidian.lua:131` |
+| 158 | `<leader>cb` | n | `<cmd>CMakeBuild<cr>` | zz:cmake:Build | `lua/plugins/nvim/cmake.lua:47` |
+| 159 | `<leader>cB` | n | `<cmd>CMakeBuildCurrentFile<cr>` | zz:cmake:BuildCurFile | `lua/plugins/nvim/cmake.lua:48` |
+| 160 | `<leader>cc` | n | `<cmd>CMakeClean<cr>` | zz:cmake:Clean | `lua/plugins/nvim/cmake.lua:49` |
+| 161 | `<leader>cg` | n | `<cmd>CMakeGenerate<cr>` | zz:cmake:Generate | `lua/plugins/nvim/cmake.lua:50` |
+| 162 | `<leader>cr` | n | `<cmd>CMakeRun<cr>` | zz:cmake:Run | `lua/plugins/nvim/cmake.lua:51` |
+| 163 | `<leader>cR` | n | `<cmd>CMakeRunCurrentFile<cr>` | zz:cmake:RunCurFile | `lua/plugins/nvim/cmake.lua:52` |
+| 164 | `<leader>csc` | n | `<cmd>CMakeSelectConfigurePreset<cr>` | zz:cmake:SelectConPreset | `lua/plugins/nvim/cmake.lua:53` |
+| 165 | `<leader>csd` | n | `<cmd>CMakeSelectBuildDir<cr>` | zz:cmake:SelectBuildDir | `lua/plugins/nvim/cmake.lua:54` |
+| 166 | `<leader>cst` | n | `<cmd>CMakeSelectBuildTarget<cr>` | zz:cmake:SelectBuildTarget | `lua/plugins/nvim/cmake.lua:55` |
+| 167 | `<leader>csp` | n | `<cmd>CMakeSelectBuildType<cr>` | zz:cmake:SelectBuildType | `lua/plugins/nvim/cmake.lua:56` |
+| 168 | `<leader>csb` | n | `<cmd>CMakeSelectBuildPreset<cr>` | zz:cmake:SelectBuildPreset | `lua/plugins/nvim/cmake.lua:57` |
+| 169 | `<leader>csw` | n | `<cmd>CMakeSelectCwd<cr>` | zz:cmake:SelectCWD | `lua/plugins/nvim/cmake.lua:58` |
+| 170 | `<leader>csk` | n | `<cmd>CMakeSelectKit<cr>` | zz:cmake:SelectKit | `lua/plugins/nvim/cmake.lua:59` |
+| 171 | `<leader>csl` | n | `<cmd>CMakeSelectLaunchTarget<cr>` | zz:cmake:SelectLaunchTarget | `lua/plugins/nvim/cmake.lua:60` |
+| 172 | `<Tab>` | c | `opts: blink.cmp` | blink: select_and_accept\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
+| 173 | `<C-j>` | c | `opts: blink.cmp` | blink: select_next | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
+| 174 | `<C-k>` | c | `opts: blink.cmp` | blink: select_prev | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
+| 175 | `<down>` | c | `opts: blink.cmp` | blink: select_next | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
+| 176 | `<up>` | c | `opts: blink.cmp` | blink: select_prev | `lua/plugins/nvim/cmpn/blinkCmp.lua:72` |
 | 177 | `<C-n>` | i | `opts: blink.cmp` | blink: show\|show_documentation\|hide_documentation | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
-| 178 | `<PageDown>` | i | `opts: blink.cmp` | blink: scroll_documentation_down\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
-| 179 | `<C-k>` | i | `opts: blink.cmp` | blink: select_prev\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
-| 180 | `<up>` | i | `opts: blink.cmp` | blink: select_prev\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
+| 178 | `<PageUp>` | i | `opts: blink.cmp` | blink: scroll_documentation_up\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
+| 179 | `<PageDown>` | i | `opts: blink.cmp` | blink: scroll_documentation_down\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
+| 180 | `<C-k>` | i | `opts: blink.cmp` | blink: select_prev\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
 | 181 | `<C-j>` | i | `opts: blink.cmp` | blink: select_next\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
-| 182 | `<Tab>` | i | `opts: blink.cmp` | blink: select_and_accept\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
-| 183 | `<down>` | i | `opts: blink.cmp` | blink: select_next\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
-| 184 | `<leader>nn` | n | `<cmd>CodeCompanion<cr>` | zz:CC:Chat | `lua/plugins/nvim/codecompanion.lua:76` |
-| 185 | `<leader>na` | n | `<cmd>CodeCompanionAction<cr>` | zz:CC:Action | `lua/plugins/nvim/codecompanion.lua:77` |
-| 186 | `<leader>nc` | n | `<cmd>CodeCompanionChat Toggle<cr>` | zz:CC:Chat Toggle | `lua/plugins/nvim/codecompanion.lua:78` |
-| 187 | `<leader>ni` | n | `<cmd>CodeCompanionCLI<cr>` | zz:CC:CLI | `lua/plugins/nvim/codecompanion.lua:79` |
-| 188 | `<leader>nw` | n | `<cmd>CodeCompanionCmd<cr>` | zz:CC:Cmd | `lua/plugins/nvim/codecompanion.lua:80` |
-| 189 | `<leader>do` | n | `<cmd>DiffviewOpen<cr>` | zz:diffview:Open | `lua/plugins/nvim/diffview.lua:7` |
-| 190 | `<leader>dc` | n | `<cmd>DiffviewClose<cr>` | zz:diffview:Close | `lua/plugins/nvim/diffview.lua:8` |
-| 191 | `<leader>dr` | n | `<cmd>DiffviewRefresh<cr>` | zz:diffview:Refresh | `lua/plugins/nvim/diffview.lua:9` |
-| 192 | `<leader>dh` | n | `<cmd>DiffviewFileHistory %<cr>` | zz:diffview:fileHistory | `lua/plugins/nvim/diffview.lua:10` |
-| 193 | `<leader>dh` | x | `:'<,'>DiffviewFileHistory %<cr>` | zz:diffview:fileHistory[range] | `lua/plugins/nvim/diffview.lua:11` |
-| 194 | `<F13>` | n | `<cmd>CMakeDebug<cr>` | zz:DAP:CmakeDebug | `lua/plugins/nvim/lspDap.lua:40` |
-| 195 | `<F14>` | n | `<cmd>DapNew<cr>` | zz:DAP:New | `lua/plugins/nvim/lspDap.lua:41` |
-| 196 | `<F6>` | n | `<cmd>DapPause<cr>` | zz:DAP:Pause | `lua/plugins/nvim/lspDap.lua:42` |
-| 197 | `<F7>` | n | `<cmd>DapContinue<cr>` | zz:DAP:Continue | `lua/plugins/nvim/lspDap.lua:43` |
-| 198 | `<F8>` | n | `<cmd>DapStepOver<cr>` | zz:DAP:StepOver | `lua/plugins/nvim/lspDap.lua:44` |
-| 199 | `<F9>` | n | `<cmd>DapToggleBreakpoint<cr>` | zz:DAP:ToggleBreakpoint | `lua/plugins/nvim/lspDap.lua:45` |
-| 200 | `<F10>` | n | `<cmd>DapStepInto<cr>` | zz:DAP:StepInto | `lua/plugins/nvim/lspDap.lua:46` |
-| 201 | `<F11>` | n | `<cmd>DapStepOut<cr>` | zz:DAP:StepOut | `lua/plugins/nvim/lspDap.lua:47` |
-| 202 | `<F12>` | n | `<cmd>DapTerminate<cr>` | zz:DAP:Terminate | `lua/plugins/nvim/lspDap.lua:48` |
-| 203 | `<leader>vb` | n | `fn: require('dapui').toggle()` | zz:dapui:toggle | `lua/plugins/nvim/lspDap.lua:49` |
-| 204 | `<leader>va` | n | `fn: require('dapui').float_element('console', { position = 'cent` | zz:dapui:FlotTerm | `lua/plugins/nvim/lspDap.lua:57` |
-| 205 | `<A-l>` | i+s | `fn: ls.jump(1)` | zz:LuaSnip:JumpNext | `lua/plugins/nvim/luaSnip.lua:97` |
-| 206 | `<A-h>` | i+s | `fn: ls.jump(-1)` | zz:LuaSnip:JumpPrev | `lua/plugins/nvim/luaSnip.lua:100` |
-| 207 | `<esc>` | n | `fn: ls.unlink_current()` | zz:LuaSnip:Cancel | `lua/plugins/nvim/luaSnip.lua:104` |
-| 208 | `<A-j>` | i+s | `fn: ls.choice_active()` | zz:LuaSnip:ChangeChoiceNext | `lua/plugins/nvim/luaSnip.lua:108` |
-| 209 | `<A-k>` | i+s | `fn: ls.choice_active()` | zz:LuaSnip:ChangeChoicePrev | `lua/plugins/nvim/luaSnip.lua:114` |
-| 210 | `<leader>ep` | n | `<cmd>PasteImage<cr>` | ZZ:ImgClip:PasteImageFromSystemClipboard | `lua/plugins/nvim/md/imgClip.lua:13` |
-| 211 | `<leader>e/` | n | `<cmd>MarkdownPreviewToggle<cr>` | zz:MDPreview:Toggle | `lua/plugins/nvim/md/markdownPreview.lua:50` |
-| 212 | `<leader>e/` | n | `<cmd>Markview<cr>` | zz:markview:Toggle | `lua/plugins/nvim/md/markview.lua:22` |
-| 213 | `<leader>e.` | n | `<cmd>Markview splitToggle<cr>` | zz:markview:SplitToggle | `lua/plugins/nvim/md/markview.lua:23` |
-| 214 | `<leader>e,` | n | `<cmd>RenderMarkdown buf_toggle<cr>` | zz:RenderMD:Toggle | `lua/plugins/nvim/md/renderMarkdown.lua:14` |
-| 215 | `<leader>e.` | n | `<cmd>RenderMarkdown preview<cr>` | zz:RenderMD:SplitToggle | `lua/plugins/nvim/md/renderMarkdown.lua:15` |
-| 216 | `<leader>za` | n+x | `fn: require('scissors').addNewSnippet()` | zz:Scissor:AddNewSnippet | `lua/plugins/nvim/nvimScissors.lua:4` |
-| 217 | `<leader>ze` | n+x | `fn: require('scissors').editSnippet()` | zz:Scissor:EditSnippet | `lua/plugins/nvim/nvimScissors.lua:12` |
-| 218 | `<leader>rw` | n+v | `fn: require('grug-far').open({ prefills = { search = vim.fn.expa` | zz:grugfar:SearchCWordInCurFile | `lua/plugins/nvim/replace/grugFar.lua:6` |
-| 219 | `<leader>rW` | n+v | `fn: require('grug-far').open({ prefills = { search = vim.fn.expa` | zz:grugfar:SearchCWordInCWD | `lua/plugins/nvim/replace/grugFar.lua:20` |
-| 220 | `<leader>rg` | n | `fn: require('grug-far').open({ prefills = { paths = vim.fn.expan` | zz:grugfar:SearchInCurFile | `lua/plugins/nvim/replace/grugFar.lua:33` |
-| 221 | `<leader>rG` | n | `fn: require('grug-far').open({})` | zz:grugfar:SearchInCWD | `lua/plugins/nvim/replace/grugFar.lua:45` |
-| 222 | `<leader>rs` | n+x | `fn: require('rip-substitute').sub()` | zz:nrs:rip substitute | `lua/plugins/nvim/replace/nrs.lua:11` |
-| 223 | `<leader>rr` | n+x | `fn: require('ssr').open()` | zz:ssr:StructuralReplace | `lua/plugins/nvim/replace/ssr.lua:9` |
-| 224 | `<leader>eo` | n | `<cmd>BufferLinePick<cr>` | zz:bufferline:BufPick | `lua/plugins/nvim/tab/bufferline.lua:145` |
-| 225 | `<leader>ec` | n | `<cmd>BufferLinePickClose<cr>` | zz:bufferline:BufPickClose | `lua/plugins/nvim/tab/bufferline.lua:146` |
-| 226 | `<leader>es` | n | `<cmd>BufferLineCloseOthers<cr>` | zz:bufferline:BufCloseOthers | `lua/plugins/nvim/tab/bufferline.lua:147` |
-| 227 | `<leader>1` | n | `fn: require('bufferline').go_to(1, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:158` |
-| 228 | `<leader>2` | n | `fn: require('bufferline').go_to(2, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:161` |
-| 229 | `<leader>3` | n | `fn: require('bufferline').go_to(3, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:164` |
-| 230 | `<leader>4` | n | `fn: require('bufferline').go_to(4, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:167` |
-| 231 | `<leader>5` | n | `fn: require('bufferline').go_to(5, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:170` |
-| 232 | `<leader>6` | n | `fn: require('bufferline').go_to(6, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:173` |
-| 233 | `<leader>7` | n | `fn: require('bufferline').go_to(7, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:176` |
-| 234 | `<leader>8` | n | `fn: require('bufferline').go_to(8, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:179` |
-| 235 | `<leader>9` | n | `fn: require('bufferline').go_to(9, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:182` |
-| 236 | `<leader>0` | n | `fn: require('bufferline').go_to(-1, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:185` |
-| 237 | `<leader>ft` | n | `fn: todo_picker()` | zz:todo:picker | `lua/plugins/nvim/todo.lua:69` |
-| 238 | `<leader>fT` | n | `fn: todo_picker({ keywords = 'TODO,FIX,FIXME' })` | zz:todo:picker (fix only) | `lua/plugins/nvim/todo.lua:70` |
-| 239 | `<leader>vt` | n | `<cmd>TodoQuickFix<cr>` | zz:todo:quickfix | `lua/plugins/nvim/todo.lua:71` |
-| 240 | `<leader>vT` | n | `<cmd>TodoLocList<cr>` | zz:todo:loclist | `lua/plugins/nvim/todo.lua:72` |
-| 241 | `]e` | n | `fn: require('todo-comments.jump').next()` | zz:todo:NextTodo | `lua/plugins/nvim/todo.lua:76` |
-| 242 | `[e` | n | `fn: require('todo-comments.jump').prev()` | zz:todo:PrevTodo | `lua/plugins/nvim/todo.lua:77` |
-| 243 | `<leader>vm` | n | `fn: require('toggleterm.terminal').Terminal:new({ cmd = vim.fn.h` | zz:toggleterm:ShellToggle | `lua/plugins/nvim/toggleterm.lua:10` |
-| 244 | `<leader>vy` | n | `fn: require('toggleterm.terminal').Terminal:new({ cmd = 'yazi', ` | zz:toggleterm:YaziToggle | `lua/plugins/nvim/toggleterm.lua:25` |
-| 245 | `<leader>vd` | n | `<cmd>Trouble diagnostics toggle focus=true<cr>` | zz:trouble:Diagnostics (Trouble) | `lua/plugins/nvim/trouble.lua:34` |
-| 246 | `<leader>vD` | n | `<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>` | zz:trouble:Buffer Diagnostics (Trouble) | `lua/plugins/nvim/trouble.lua:39` |
-| 247 | `<leader>v,` | n | `<cmd>Trouble symbols toggle focus=true<cr>` | zz:trouble:Symbols (Trouble) | `lua/plugins/nvim/trouble.lua:44` |
-| 248 | `<leader>vx` | n | `<cmd>Trouble lsp toggle focus=true win.position=right<cr>` | zz:trouble:LSP Definitions / references / ... (Trouble) | `lua/plugins/nvim/trouble.lua:49` |
-| 249 | `<leader>vL` | n | `<cmd>Trouble loclist toggle<cr>` | zz:trouble:Location List (Trouble) | `lua/plugins/nvim/trouble.lua:54` |
-| 250 | `<leader>vQ` | n | `<cmd>Trouble qflist toggle<cr>` | zz:trouble:Quickfix List (Trouble) | `lua/plugins/nvim/trouble.lua:59` |
-| 251 | `<leader><space>` | n | `fn: Snacks.picker.smart()` | zz:snacks:Smart Find Files | `lua/plugins/snacks/snacks.lua:53` |
-| 252 | `<leader>v.` | n | `fn: Snacks.notifier.show_history()` | zz:snacks:Notifier show History | `lua/plugins/snacks/snacks.lua:60` |
-| 253 | `<leader>v>` | n | `fn: Snacks.notifier.hide()` | zz:snacks:Dismiss All Notifications | `lua/plugins/snacks/snacks.lua:67` |
-| 254 | `<leader>vn` | n | `fn: Snacks.explorer()` | zz:snacks:File Explorer | `lua/plugins/snacks/snacks.lua:74` |
-| 255 | `<leader>vf` | n | `explorer_focus_toggle` | zz:snacks:Explorer focus toggle | `lua/plugins/snacks/snacks.lua:81` |
-| 256 | `<leader>vs` | n | `fn: Snacks.scratch()` | zz:snacks:Toggle Scratch Buffer | `lua/plugins/snacks/snacks.lua:82` |
-| 257 | `<leader>vS` | n | `fn: Snacks.scratch.select()` | zz:snacks:Select Scratch Buffer | `lua/plugins/snacks/snacks.lua:89` |
-| 258 | `<leader>vu` | n | `fn: Snacks.lazygit()` | zz:snacks:Lazygit | `lua/plugins/snacks/snacks.lua:96` |
-| 259 | `<leader>v[` | n | `fn: Snacks.zen()` | zz:snacks:Toggle Zen Mode | `lua/plugins/snacks/snacks.lua:103` |
-| 260 | `<leader>v]` | n | `fn: Snacks.zen.zoom()` | zz:snacks:Toggle Zoom | `lua/plugins/snacks/snacks.lua:110` |
-| 261 | `<leader>fa` | n | `fn: Snacks.picker.autocmds()` | zz:snacks:Autocmds | `lua/plugins/snacks/snacks.lua:118` |
-| 262 | `<leader>fb` | n | `fn: Snacks.picker.buffers()` | zz:snacks:Buffers | `lua/plugins/snacks/snacks.lua:125` |
-| 263 | `<leader>fc` | n | `fn: Snacks.picker.files({ cwd = vim.fn.stdpath('config') })` | zz:snacks:Find Config File | `lua/plugins/snacks/snacks.lua:132` |
-| 264 | `<leader>fd` | n | `fn: Snacks.picker.diagnostics()` | zz:snacks:Diagnostics | `lua/plugins/snacks/snacks.lua:139` |
-| 265 | `<leader>fD` | n | `fn: Snacks.picker.diagnostics_buffer()` | zz:snacks:Buffer Diagnostics | `lua/plugins/snacks/snacks.lua:146` |
-| 266 | `<leader>ff` | n | `fn: Snacks.picker.files()` | zz:snacks:Find Files | `lua/plugins/snacks/snacks.lua:153` |
-| 267 | `<leader>fg` | n | `fn: Snacks.picker.git_files()` | zz:snacks:Find Git Files | `lua/plugins/snacks/snacks.lua:160` |
-| 268 | `<leader>fh` | n | `fn: Snacks.picker.help()` | zz:snacks:Help Pages | `lua/plugins/snacks/snacks.lua:167` |
-| 269 | `<leader>fH` | n | `fn: Snacks.picker.highlights()` | zz:snacks:Highlights | `lua/plugins/snacks/snacks.lua:174` |
-| 270 | `<leader>fi` | n | `fn: Snacks.picker.icons()` | zz:snacks:Icons | `lua/plugins/snacks/snacks.lua:181` |
-| 271 | `<leader>fj` | n | `fn: Snacks.picker.jumps()` | zz:snacks:Jumps | `lua/plugins/snacks/snacks.lua:188` |
-| 272 | `<leader>fk` | n | `fn: Snacks.picker.keymaps()` | zz:snacks:Keymaps | `lua/plugins/snacks/snacks.lua:195` |
-| 273 | `<leader>fl` | n | `fn: Snacks.picker.lines()` | zz:snacks:Buffer Lines | `lua/plugins/snacks/snacks.lua:202` |
-| 274 | `<leader>fL` | n | `fn: Snacks.picker.loclist()` | zz:snacks:Location List | `lua/plugins/snacks/snacks.lua:209` |
-| 275 | `<leader>fm` | n | `fn: Snacks.picker.man()` | zz:snacks:Man Pages | `lua/plugins/snacks/snacks.lua:216` |
-| 276 | `<leader>fp` | n | `fn: Snacks.picker.projects()` | zz:snacks:Projects | `lua/plugins/snacks/snacks.lua:223` |
-| 277 | `<leader>fq` | n | `fn: Snacks.picker.qflist()` | zz:snacks:Quickfix List | `lua/plugins/snacks/snacks.lua:230` |
-| 278 | `<leader>fr` | n | `fn: Snacks.picker.resume()` | zz:snacks:Resume | `lua/plugins/snacks/snacks.lua:237` |
-| 279 | `<leader>fR` | n | `fn: Snacks.picker.recent()` | zz:snacks:Recent | `lua/plugins/snacks/snacks.lua:244` |
-| 280 | `<leader>fu` | n | `fn: Snacks.picker.undo()` | zz:snacks:Undo History | `lua/plugins/snacks/snacks.lua:251` |
-| 281 | `<leader>fw` | n+x | `fn: Snacks.picker.grep_word()` | zz:snacks:Visual selection or word | `lua/plugins/snacks/snacks.lua:258` |
-| 282 | `<leader>fy` | n | `fn: Snacks.picker.lazy()` | zz:snacks:Search for Plugin Spec | `lua/plugins/snacks/snacks.lua:266` |
-| 283 | `<leader>f;` | n | `fn: Snacks.picker.command_history()` | zz:snacks:Command History | `lua/plugins/snacks/snacks.lua:273` |
-| 284 | `<leader>f:` | n | `fn: Snacks.picker.commands()` | zz:snacks:Commands | `lua/plugins/snacks/snacks.lua:280` |
-| 285 | `<leader>f'` | n | `fn: Snacks.picker.marks()` | zz:snacks:Marks | `lua/plugins/snacks/snacks.lua:287` |
-| 286 | `<leader>f"` | n | `fn: Snacks.picker.registers()` | zz:snacks:Registers | `lua/plugins/snacks/snacks.lua:294` |
-| 287 | `<leader>f/` | n | `fn: Snacks.picker.search_history()` | zz:snacks:Search History | `lua/plugins/snacks/snacks.lua:301` |
-| 288 | `<leader>f[` | n | `fn: Snacks.picker.grep()` | zz:snacks:Grep | `lua/plugins/snacks/snacks.lua:308` |
-| 289 | `<leader>f]` | n | `fn: Snacks.picker.grep_buffers()` | zz:snacks:Grep Open Buffers | `lua/plugins/snacks/snacks.lua:315` |
-| 290 | `<leader>f,` | n | `fn: Snacks.picker.lsp_symbols()` | zz:snacks:LSP Symbols | `lua/plugins/snacks/snacks.lua:322` |
-| 291 | `<leader>f<` | n | `fn: Snacks.picker.lsp_workspace_symbols()` | zz:snacks:LSP Workspace Symbols | `lua/plugins/snacks/snacks.lua:329` |
-| 292 | `<leader>f.` | n | `fn: Snacks.picker.notifications()` | zz:snacks:Notification History | `lua/plugins/snacks/snacks.lua:336` |
-| 293 | `<leader>gb` | n | `fn: Snacks.picker.git_branches()` | zz:snacks:Git Branches | `lua/plugins/snacks/snacks.lua:344` |
-| 294 | `<leader>glg` | n | `fn: Snacks.picker.git_log()` | zz:snacks:Git Log | `lua/plugins/snacks/snacks.lua:351` |
-| 295 | `<leader>gll` | n | `fn: Snacks.picker.git_log_line()` | zz:snacks:Git Log Line | `lua/plugins/snacks/snacks.lua:358` |
-| 296 | `<leader>glf` | n | `fn: Snacks.picker.git_log_file()` | zz:snacks:Git Log File | `lua/plugins/snacks/snacks.lua:365` |
-| 297 | `<leader>gs` | n | `fn: Snacks.picker.git_status()` | zz:snacks:Git Status | `lua/plugins/snacks/snacks.lua:372` |
-| 298 | `<leader>gh` | n | `fn: Snacks.picker.git_stash()` | zz:snacks:Git Stash | `lua/plugins/snacks/snacks.lua:379` |
-| 299 | `<leader>gd` | n | `fn: Snacks.picker.git_diff()` | zz:snacks:Git Diff (Hunks) | `lua/plugins/snacks/snacks.lua:386` |
-| 300 | `<leader>gi` | n | `fn: Snacks.picker.gh_issue()` | zz:snacks:GitHub Issues (open) | `lua/plugins/snacks/snacks.lua:394` |
-| 301 | `<leader>gI` | n | `fn: Snacks.picker.gh_issue({ state = 'all' })` | zz:snacks:GitHub Issues (all) | `lua/plugins/snacks/snacks.lua:401` |
-| 302 | `<leader>gp` | n | `fn: Snacks.picker.gh_pr()` | zz:snacks:GitHub Pull Requests (open) | `lua/plugins/snacks/snacks.lua:408` |
-| 303 | `<leader>gP` | n | `fn: Snacks.picker.gh_pr({ state = 'all' })` | zz:snacks:GitHub Pull Requests (all) | `lua/plugins/snacks/snacks.lua:415` |
-| 304 | `gd` | n | `fn: Snacks.picker.lsp_definitions()` | zz:snacks:Goto Definition | `lua/plugins/snacks/snacks.lua:424` |
-| 305 | `gD` | n | `fn: Snacks.picker.lsp_declarations()` | zz:snacks:Goto Declaration | `lua/plugins/snacks/snacks.lua:431` |
-| 306 | `gf` | n | `fn: Snacks.picker.lsp_references()` | zz:snacks:References | `lua/plugins/snacks/snacks.lua:438` |
-| 307 | `gp` | n | `fn: Snacks.picker.lsp_implementations()` | zz:snacks:Goto Implementation | `lua/plugins/snacks/snacks.lua:446` |
-| 308 | `gt` | n | `fn: Snacks.picker.lsp_type_definitions()` | zz:snacks:Goto T[y]pe Definition | `lua/plugins/snacks/snacks.lua:453` |
-| 309 | `gi` | n | `fn: Snacks.picker.lsp_incoming_calls()` | zz:snacks:C[a]lls Incoming | `lua/plugins/snacks/snacks.lua:460` |
-| 310 | `go` | n | `fn: Snacks.picker.lsp_outgoing_calls()` | zz:snacks:C[a]lls Outgoing | `lua/plugins/snacks/snacks.lua:467` |
-| 311 | `<leader>bC` | n | `fn: Snacks.picker.colorschemes()` | zz:snacks:Colorschemes | `lua/plugins/snacks/snacks.lua:476` |
-| 312 | `<leader>ed` | n | `fn: Snacks.bufdelete()` | zz:snacks:Delete Buffer | `lua/plugins/snacks/snacks.lua:485` |
-| 313 | `<leader>er` | n | `fn: Snacks.rename.rename_file()` | zz:snacks:Rename File | `lua/plugins/snacks/snacks.lua:492` |
-| 314 | `<c-/>` | n | `fn: Snacks.terminal()` | zz:snacks:Toggle Terminal | `lua/plugins/snacks/snacks.lua:499` |
-| 315 | `<c-_>` | n | `fn: Snacks.terminal()` | zz:snacks:Toggle Terminal | `lua/plugins/snacks/snacks.lua:506` |
-| 316 | `]s` | n | `fn: Snacks.words.jump(vim.v.count1)` | zz:snacks:Next Reference | `lua/plugins/snacks/snacks.lua:513` |
-| 317 | `[s` | n | `fn: Snacks.words.jump(-vim.v.count1)` | zz:snacks:Prev Reference | `lua/plugins/snacks/snacks.lua:520` |
-| 318 | `<leader>N` | n | `fn: Snacks.win({ file = vim.api.nvim_get_runtime_file('doc/news.` | Neovim News | `lua/plugins/snacks/snacks.lua:527` |
-| 319 | `<leader>bs` | n | `fn: Snacks.toggle.option('spell', { name = 'Spelling' })` | toggle: Spelling | `lua/plugins/snacks/snacks.lua:574` |
-| 320 | `<leader>bw` | n | `fn: Snacks.toggle.option('wrap', { name = 'Wrap' })` | toggle: Wrap | `lua/plugins/snacks/snacks.lua:575` |
-| 321 | `<leader>br` | n | `fn: Snacks.toggle.option('relativenumber', { name = 'Rel` | toggle: Relative Number | `lua/plugins/snacks/snacks.lua:576` |
-| 322 | `<leader>bd` | n | `fn: Snacks.toggle.diagnostics()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:577` |
-| 323 | `<leader>bl` | n | `fn: Snacks.toggle.line_number()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:578` |
-| 324 | `<leader>bc` | n | `fn: Snacks.toggle.option('conceallevel', { off = 0, on =` | Snacks toggle | `lua/plugins/snacks/snacks.lua:579` |
-| 325 | `<leader>bt` | n | `fn: Snacks.toggle.treesitter()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:580` |
-| 326 | `<leader>bb` | n | `fn: Snacks.toggle.option('background', { off = 'light', ` | toggle: Dark Background | `lua/plugins/snacks/snacks.lua:581` |
-| 327 | `<leader>bh` | n | `fn: Snacks.toggle.inlay_hints()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:582` |
-| 328 | `<leader>bi` | n | `fn: Snacks.toggle.indent()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:583` |
-| 329 | `<leader>bD` | n | `fn: Snacks.toggle.dim()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:584` |
+| 182 | `<down>` | i | `opts: blink.cmp` | blink: select_next\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
+| 183 | `<up>` | i | `opts: blink.cmp` | blink: select_prev\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
+| 184 | `<Tab>` | i | `opts: blink.cmp` | blink: select_and_accept\|fallback | `lua/plugins/nvim/cmpn/blinkCmp.lua:83` |
+| 185 | `<leader>nn` | n | `<cmd>CodeCompanion<cr>` | zz:CC:Chat | `lua/plugins/nvim/codecompanion.lua:76` |
+| 186 | `<leader>na` | n | `<cmd>CodeCompanionAction<cr>` | zz:CC:Action | `lua/plugins/nvim/codecompanion.lua:77` |
+| 187 | `<leader>nc` | n | `<cmd>CodeCompanionChat Toggle<cr>` | zz:CC:Chat Toggle | `lua/plugins/nvim/codecompanion.lua:78` |
+| 188 | `<leader>ni` | n | `<cmd>CodeCompanionCLI<cr>` | zz:CC:CLI | `lua/plugins/nvim/codecompanion.lua:79` |
+| 189 | `<leader>nw` | n | `<cmd>CodeCompanionCmd<cr>` | zz:CC:Cmd | `lua/plugins/nvim/codecompanion.lua:80` |
+| 190 | `<leader>do` | n | `<cmd>DiffviewOpen<cr>` | zz:diffview:Open | `lua/plugins/nvim/diffview.lua:7` |
+| 191 | `<leader>dc` | n | `<cmd>DiffviewClose<cr>` | zz:diffview:Close | `lua/plugins/nvim/diffview.lua:8` |
+| 192 | `<leader>dr` | n | `<cmd>DiffviewRefresh<cr>` | zz:diffview:Refresh | `lua/plugins/nvim/diffview.lua:9` |
+| 193 | `<leader>dh` | n | `<cmd>DiffviewFileHistory %<cr>` | zz:diffview:fileHistory | `lua/plugins/nvim/diffview.lua:10` |
+| 194 | `<leader>dh` | x | `:'<,'>DiffviewFileHistory %<cr>` | zz:diffview:fileHistory[range] | `lua/plugins/nvim/diffview.lua:11` |
+| 195 | `<F13>` | n | `<cmd>CMakeDebug<cr>` | zz:DAP:CmakeDebug | `lua/plugins/nvim/lspDap/dap-ui.lua:20` |
+| 196 | `<F14>` | n | `<cmd>DapNew<cr>` | zz:DAP:New | `lua/plugins/nvim/lspDap/dap-ui.lua:21` |
+| 197 | `<F6>` | n | `<cmd>DapPause<cr>` | zz:DAP:Pause | `lua/plugins/nvim/lspDap/dap-ui.lua:22` |
+| 198 | `<F7>` | n | `<cmd>DapContinue<cr>` | zz:DAP:Continue | `lua/plugins/nvim/lspDap/dap-ui.lua:23` |
+| 199 | `<F8>` | n | `<cmd>DapStepOver<cr>` | zz:DAP:StepOver | `lua/plugins/nvim/lspDap/dap-ui.lua:24` |
+| 200 | `<F9>` | n | `<cmd>DapToggleBreakpoint<cr>` | zz:DAP:ToggleBreakpoint | `lua/plugins/nvim/lspDap/dap-ui.lua:25` |
+| 201 | `<F10>` | n | `<cmd>DapStepInto<cr>` | zz:DAP:StepInto | `lua/plugins/nvim/lspDap/dap-ui.lua:26` |
+| 202 | `<F11>` | n | `<cmd>DapStepOut<cr>` | zz:DAP:StepOut | `lua/plugins/nvim/lspDap/dap-ui.lua:27` |
+| 203 | `<F12>` | n | `<cmd>DapTerminate<cr>` | zz:DAP:Terminate | `lua/plugins/nvim/lspDap/dap-ui.lua:28` |
+| 204 | `<leader>vb` | n | `fn: require('dapui').toggle()` | zz:dapui:toggle | `lua/plugins/nvim/lspDap/dap-ui.lua:29` |
+| 205 | `<leader>va` | n | `fn: require('dapui').float_element('console', { position = 'cent` | zz:dapui:FlotTerm | `lua/plugins/nvim/lspDap/dap-ui.lua:37` |
+| 206 | `<A-l>` | i+s | `fn: ls.jump(1)` | zz:LuaSnip:JumpNext | `lua/plugins/nvim/luaSnip.lua:97` |
+| 207 | `<A-h>` | i+s | `fn: ls.jump(-1)` | zz:LuaSnip:JumpPrev | `lua/plugins/nvim/luaSnip.lua:100` |
+| 208 | `<esc>` | n | `fn: ls.unlink_current()` | zz:LuaSnip:Cancel | `lua/plugins/nvim/luaSnip.lua:104` |
+| 209 | `<A-j>` | i+s | `fn: ls.choice_active()` | zz:LuaSnip:ChangeChoiceNext | `lua/plugins/nvim/luaSnip.lua:108` |
+| 210 | `<A-k>` | i+s | `fn: ls.choice_active()` | zz:LuaSnip:ChangeChoicePrev | `lua/plugins/nvim/luaSnip.lua:114` |
+| 211 | `<leader>ep` | n | `<cmd>PasteImage<cr>` | ZZ:ImgClip:PasteImageFromSystemClipboard | `lua/plugins/nvim/md/imgClip.lua:13` |
+| 212 | `<leader>e/` | n | `<cmd>MarkdownPreviewToggle<cr>` | zz:MDPreview:Toggle | `lua/plugins/nvim/md/markdownPreview.lua:50` |
+| 213 | `<leader>e/` | n | `<cmd>Markview<cr>` | zz:markview:Toggle | `lua/plugins/nvim/md/markview.lua:22` |
+| 214 | `<leader>e.` | n | `<cmd>Markview splitToggle<cr>` | zz:markview:SplitToggle | `lua/plugins/nvim/md/markview.lua:23` |
+| 215 | `<leader>e,` | n | `<cmd>RenderMarkdown buf_toggle<cr>` | zz:RenderMD:Toggle | `lua/plugins/nvim/md/renderMarkdown.lua:14` |
+| 216 | `<leader>e.` | n | `<cmd>RenderMarkdown preview<cr>` | zz:RenderMD:SplitToggle | `lua/plugins/nvim/md/renderMarkdown.lua:15` |
+| 217 | `<leader>za` | n+x | `fn: require('scissors').addNewSnippet()` | zz:Scissor:AddNewSnippet | `lua/plugins/nvim/nvimScissors.lua:4` |
+| 218 | `<leader>ze` | n+x | `fn: require('scissors').editSnippet()` | zz:Scissor:EditSnippet | `lua/plugins/nvim/nvimScissors.lua:12` |
+| 219 | `<leader>rw` | n+v | `fn: require('grug-far').open({ prefills = { search = vim.fn.expa` | zz:grugfar:SearchCWordInCurFile | `lua/plugins/nvim/replace/grugFar.lua:6` |
+| 220 | `<leader>rW` | n+v | `fn: require('grug-far').open({ prefills = { search = vim.fn.expa` | zz:grugfar:SearchCWordInCWD | `lua/plugins/nvim/replace/grugFar.lua:20` |
+| 221 | `<leader>rg` | n | `fn: require('grug-far').open({ prefills = { paths = vim.fn.expan` | zz:grugfar:SearchInCurFile | `lua/plugins/nvim/replace/grugFar.lua:33` |
+| 222 | `<leader>rG` | n | `fn: require('grug-far').open({})` | zz:grugfar:SearchInCWD | `lua/plugins/nvim/replace/grugFar.lua:45` |
+| 223 | `<leader>rs` | n+x | `fn: require('rip-substitute').sub()` | zz:nrs:rip substitute | `lua/plugins/nvim/replace/nrs.lua:11` |
+| 224 | `<leader>rr` | n+x | `fn: require('ssr').open()` | zz:ssr:StructuralReplace | `lua/plugins/nvim/replace/ssr.lua:9` |
+| 225 | `<leader>eo` | n | `<cmd>BufferLinePick<cr>` | zz:bufferline:BufPick | `lua/plugins/nvim/tab/bufferline.lua:145` |
+| 226 | `<leader>ec` | n | `<cmd>BufferLinePickClose<cr>` | zz:bufferline:BufPickClose | `lua/plugins/nvim/tab/bufferline.lua:146` |
+| 227 | `<leader>es` | n | `<cmd>BufferLineCloseOthers<cr>` | zz:bufferline:BufCloseOthers | `lua/plugins/nvim/tab/bufferline.lua:147` |
+| 228 | `<leader>1` | n | `fn: require('bufferline').go_to(1, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:158` |
+| 229 | `<leader>2` | n | `fn: require('bufferline').go_to(2, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:161` |
+| 230 | `<leader>3` | n | `fn: require('bufferline').go_to(3, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:164` |
+| 231 | `<leader>4` | n | `fn: require('bufferline').go_to(4, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:167` |
+| 232 | `<leader>5` | n | `fn: require('bufferline').go_to(5, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:170` |
+| 233 | `<leader>6` | n | `fn: require('bufferline').go_to(6, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:173` |
+| 234 | `<leader>7` | n | `fn: require('bufferline').go_to(7, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:176` |
+| 235 | `<leader>8` | n | `fn: require('bufferline').go_to(8, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:179` |
+| 236 | `<leader>9` | n | `fn: require('bufferline').go_to(9, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:182` |
+| 237 | `<leader>0` | n | `fn: require('bufferline').go_to(-1, true)` | zz:bufferline:GoToBufNum | `lua/plugins/nvim/tab/bufferline.lua:185` |
+| 238 | `<leader>ft` | n | `fn: todo_picker()` | zz:todo:picker | `lua/plugins/nvim/todo.lua:69` |
+| 239 | `<leader>fT` | n | `fn: todo_picker({ keywords = 'TODO,FIX,FIXME' })` | zz:todo:picker (fix only) | `lua/plugins/nvim/todo.lua:70` |
+| 240 | `<leader>vt` | n | `<cmd>TodoQuickFix<cr>` | zz:todo:quickfix | `lua/plugins/nvim/todo.lua:71` |
+| 241 | `<leader>vT` | n | `<cmd>TodoLocList<cr>` | zz:todo:loclist | `lua/plugins/nvim/todo.lua:72` |
+| 242 | `]e` | n | `fn: require('todo-comments.jump').next()` | zz:todo:NextTodo | `lua/plugins/nvim/todo.lua:76` |
+| 243 | `[e` | n | `fn: require('todo-comments.jump').prev()` | zz:todo:PrevTodo | `lua/plugins/nvim/todo.lua:77` |
+| 244 | `<leader>vm` | n | `fn: require('toggleterm.terminal').Terminal:new({ cmd = vim.fn.h` | zz:toggleterm:ShellToggle | `lua/plugins/nvim/toggleterm.lua:10` |
+| 245 | `<leader>vy` | n | `fn: require('toggleterm.terminal').Terminal:new({ cmd = 'yazi', ` | zz:toggleterm:YaziToggle | `lua/plugins/nvim/toggleterm.lua:25` |
+| 246 | `<leader>vd` | n | `<cmd>Trouble diagnostics toggle focus=true<cr>` | zz:trouble:Diagnostics (Trouble) | `lua/plugins/nvim/trouble.lua:34` |
+| 247 | `<leader>vD` | n | `<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>` | zz:trouble:Buffer Diagnostics (Trouble) | `lua/plugins/nvim/trouble.lua:39` |
+| 248 | `<leader>v,` | n | `<cmd>Trouble symbols toggle focus=true<cr>` | zz:trouble:Symbols (Trouble) | `lua/plugins/nvim/trouble.lua:44` |
+| 249 | `<leader>vx` | n | `<cmd>Trouble lsp toggle focus=true win.position=right<cr>` | zz:trouble:LSP Definitions / references / ... (Trouble) | `lua/plugins/nvim/trouble.lua:49` |
+| 250 | `<leader>vL` | n | `<cmd>Trouble loclist toggle<cr>` | zz:trouble:Location List (Trouble) | `lua/plugins/nvim/trouble.lua:54` |
+| 251 | `<leader>vQ` | n | `<cmd>Trouble qflist toggle<cr>` | zz:trouble:Quickfix List (Trouble) | `lua/plugins/nvim/trouble.lua:59` |
+| 252 | `<leader><space>` | n | `fn: Snacks.picker.smart()` | zz:snacks:Smart Find Files | `lua/plugins/snacks/snacks.lua:53` |
+| 253 | `<leader>v.` | n | `fn: Snacks.notifier.show_history()` | zz:snacks:Notifier show History | `lua/plugins/snacks/snacks.lua:60` |
+| 254 | `<leader>v>` | n | `fn: Snacks.notifier.hide()` | zz:snacks:Dismiss All Notifications | `lua/plugins/snacks/snacks.lua:67` |
+| 255 | `<leader>vn` | n | `fn: Snacks.explorer()` | zz:snacks:File Explorer | `lua/plugins/snacks/snacks.lua:74` |
+| 256 | `<leader>vf` | n | `explorer_focus_toggle` | zz:snacks:Explorer focus toggle | `lua/plugins/snacks/snacks.lua:81` |
+| 257 | `<leader>vs` | n | `fn: Snacks.scratch()` | zz:snacks:Toggle Scratch Buffer | `lua/plugins/snacks/snacks.lua:82` |
+| 258 | `<leader>vS` | n | `fn: Snacks.scratch.select()` | zz:snacks:Select Scratch Buffer | `lua/plugins/snacks/snacks.lua:89` |
+| 259 | `<leader>vu` | n | `fn: Snacks.lazygit()` | zz:snacks:Lazygit | `lua/plugins/snacks/snacks.lua:96` |
+| 260 | `<leader>v[` | n | `fn: Snacks.zen()` | zz:snacks:Toggle Zen Mode | `lua/plugins/snacks/snacks.lua:103` |
+| 261 | `<leader>v]` | n | `fn: Snacks.zen.zoom()` | zz:snacks:Toggle Zoom | `lua/plugins/snacks/snacks.lua:110` |
+| 262 | `<leader>fa` | n | `fn: Snacks.picker.autocmds()` | zz:snacks:Autocmds | `lua/plugins/snacks/snacks.lua:118` |
+| 263 | `<leader>fb` | n | `fn: Snacks.picker.buffers()` | zz:snacks:Buffers | `lua/plugins/snacks/snacks.lua:125` |
+| 264 | `<leader>fc` | n | `fn: Snacks.picker.files({ cwd = vim.fn.stdpath('config') })` | zz:snacks:Find Config File | `lua/plugins/snacks/snacks.lua:132` |
+| 265 | `<leader>fd` | n | `fn: Snacks.picker.diagnostics()` | zz:snacks:Diagnostics | `lua/plugins/snacks/snacks.lua:139` |
+| 266 | `<leader>fD` | n | `fn: Snacks.picker.diagnostics_buffer()` | zz:snacks:Buffer Diagnostics | `lua/plugins/snacks/snacks.lua:146` |
+| 267 | `<leader>ff` | n | `fn: Snacks.picker.files()` | zz:snacks:Find Files | `lua/plugins/snacks/snacks.lua:153` |
+| 268 | `<leader>fg` | n | `fn: Snacks.picker.git_files()` | zz:snacks:Find Git Files | `lua/plugins/snacks/snacks.lua:160` |
+| 269 | `<leader>fh` | n | `fn: Snacks.picker.help()` | zz:snacks:Help Pages | `lua/plugins/snacks/snacks.lua:167` |
+| 270 | `<leader>fH` | n | `fn: Snacks.picker.highlights()` | zz:snacks:Highlights | `lua/plugins/snacks/snacks.lua:174` |
+| 271 | `<leader>fi` | n | `fn: Snacks.picker.icons()` | zz:snacks:Icons | `lua/plugins/snacks/snacks.lua:181` |
+| 272 | `<leader>fj` | n | `fn: Snacks.picker.jumps()` | zz:snacks:Jumps | `lua/plugins/snacks/snacks.lua:188` |
+| 273 | `<leader>fk` | n | `fn: Snacks.picker.keymaps()` | zz:snacks:Keymaps | `lua/plugins/snacks/snacks.lua:195` |
+| 274 | `<leader>fl` | n | `fn: Snacks.picker.lines()` | zz:snacks:Buffer Lines | `lua/plugins/snacks/snacks.lua:202` |
+| 275 | `<leader>fL` | n | `fn: Snacks.picker.loclist()` | zz:snacks:Location List | `lua/plugins/snacks/snacks.lua:209` |
+| 276 | `<leader>fm` | n | `fn: Snacks.picker.man()` | zz:snacks:Man Pages | `lua/plugins/snacks/snacks.lua:216` |
+| 277 | `<leader>fp` | n | `fn: Snacks.picker.projects()` | zz:snacks:Projects | `lua/plugins/snacks/snacks.lua:223` |
+| 278 | `<leader>fq` | n | `fn: Snacks.picker.qflist()` | zz:snacks:Quickfix List | `lua/plugins/snacks/snacks.lua:230` |
+| 279 | `<leader>fr` | n | `fn: Snacks.picker.resume()` | zz:snacks:Resume | `lua/plugins/snacks/snacks.lua:237` |
+| 280 | `<leader>fR` | n | `fn: Snacks.picker.recent()` | zz:snacks:Recent | `lua/plugins/snacks/snacks.lua:244` |
+| 281 | `<leader>fu` | n | `fn: Snacks.picker.undo()` | zz:snacks:Undo History | `lua/plugins/snacks/snacks.lua:251` |
+| 282 | `<leader>fw` | n+x | `fn: Snacks.picker.grep_word()` | zz:snacks:Visual selection or word | `lua/plugins/snacks/snacks.lua:258` |
+| 283 | `<leader>fy` | n | `fn: Snacks.picker.lazy()` | zz:snacks:Search for Plugin Spec | `lua/plugins/snacks/snacks.lua:266` |
+| 284 | `<leader>f;` | n | `fn: Snacks.picker.command_history()` | zz:snacks:Command History | `lua/plugins/snacks/snacks.lua:273` |
+| 285 | `<leader>f:` | n | `fn: Snacks.picker.commands()` | zz:snacks:Commands | `lua/plugins/snacks/snacks.lua:280` |
+| 286 | `<leader>f'` | n | `fn: Snacks.picker.marks()` | zz:snacks:Marks | `lua/plugins/snacks/snacks.lua:287` |
+| 287 | `<leader>f"` | n | `fn: Snacks.picker.registers()` | zz:snacks:Registers | `lua/plugins/snacks/snacks.lua:294` |
+| 288 | `<leader>f/` | n | `fn: Snacks.picker.search_history()` | zz:snacks:Search History | `lua/plugins/snacks/snacks.lua:301` |
+| 289 | `<leader>f[` | n | `fn: Snacks.picker.grep()` | zz:snacks:Grep | `lua/plugins/snacks/snacks.lua:308` |
+| 290 | `<leader>f]` | n | `fn: Snacks.picker.grep_buffers()` | zz:snacks:Grep Open Buffers | `lua/plugins/snacks/snacks.lua:315` |
+| 291 | `<leader>f,` | n | `fn: Snacks.picker.lsp_symbols()` | zz:snacks:LSP Symbols | `lua/plugins/snacks/snacks.lua:322` |
+| 292 | `<leader>f<` | n | `fn: Snacks.picker.lsp_workspace_symbols()` | zz:snacks:LSP Workspace Symbols | `lua/plugins/snacks/snacks.lua:329` |
+| 293 | `<leader>f.` | n | `fn: Snacks.picker.notifications()` | zz:snacks:Notification History | `lua/plugins/snacks/snacks.lua:336` |
+| 294 | `<leader>gb` | n | `fn: Snacks.picker.git_branches()` | zz:snacks:Git Branches | `lua/plugins/snacks/snacks.lua:344` |
+| 295 | `<leader>glg` | n | `fn: Snacks.picker.git_log()` | zz:snacks:Git Log | `lua/plugins/snacks/snacks.lua:351` |
+| 296 | `<leader>gll` | n | `fn: Snacks.picker.git_log_line()` | zz:snacks:Git Log Line | `lua/plugins/snacks/snacks.lua:358` |
+| 297 | `<leader>glf` | n | `fn: Snacks.picker.git_log_file()` | zz:snacks:Git Log File | `lua/plugins/snacks/snacks.lua:365` |
+| 298 | `<leader>gs` | n | `fn: Snacks.picker.git_status()` | zz:snacks:Git Status | `lua/plugins/snacks/snacks.lua:372` |
+| 299 | `<leader>gh` | n | `fn: Snacks.picker.git_stash()` | zz:snacks:Git Stash | `lua/plugins/snacks/snacks.lua:379` |
+| 300 | `<leader>gd` | n | `fn: Snacks.picker.git_diff()` | zz:snacks:Git Diff (Hunks) | `lua/plugins/snacks/snacks.lua:386` |
+| 301 | `<leader>gi` | n | `fn: Snacks.picker.gh_issue()` | zz:snacks:GitHub Issues (open) | `lua/plugins/snacks/snacks.lua:394` |
+| 302 | `<leader>gI` | n | `fn: Snacks.picker.gh_issue({ state = 'all' })` | zz:snacks:GitHub Issues (all) | `lua/plugins/snacks/snacks.lua:401` |
+| 303 | `<leader>gp` | n | `fn: Snacks.picker.gh_pr()` | zz:snacks:GitHub Pull Requests (open) | `lua/plugins/snacks/snacks.lua:408` |
+| 304 | `<leader>gP` | n | `fn: Snacks.picker.gh_pr({ state = 'all' })` | zz:snacks:GitHub Pull Requests (all) | `lua/plugins/snacks/snacks.lua:415` |
+| 305 | `gd` | n | `fn: Snacks.picker.lsp_definitions()` | zz:snacks:Goto Definition | `lua/plugins/snacks/snacks.lua:424` |
+| 306 | `gD` | n | `fn: Snacks.picker.lsp_declarations()` | zz:snacks:Goto Declaration | `lua/plugins/snacks/snacks.lua:431` |
+| 307 | `gf` | n | `fn: Snacks.picker.lsp_references()` | zz:snacks:References | `lua/plugins/snacks/snacks.lua:438` |
+| 308 | `gp` | n | `fn: Snacks.picker.lsp_implementations()` | zz:snacks:Goto Implementation | `lua/plugins/snacks/snacks.lua:446` |
+| 309 | `gt` | n | `fn: Snacks.picker.lsp_type_definitions()` | zz:snacks:Goto T[y]pe Definition | `lua/plugins/snacks/snacks.lua:453` |
+| 310 | `gi` | n | `fn: Snacks.picker.lsp_incoming_calls()` | zz:snacks:C[a]lls Incoming | `lua/plugins/snacks/snacks.lua:460` |
+| 311 | `go` | n | `fn: Snacks.picker.lsp_outgoing_calls()` | zz:snacks:C[a]lls Outgoing | `lua/plugins/snacks/snacks.lua:467` |
+| 312 | `<leader>bC` | n | `fn: Snacks.picker.colorschemes()` | zz:snacks:Colorschemes | `lua/plugins/snacks/snacks.lua:476` |
+| 313 | `<leader>ed` | n | `fn: Snacks.bufdelete()` | zz:snacks:Delete Buffer | `lua/plugins/snacks/snacks.lua:485` |
+| 314 | `<leader>er` | n | `fn: Snacks.rename.rename_file()` | zz:snacks:Rename File | `lua/plugins/snacks/snacks.lua:492` |
+| 315 | `<c-/>` | n | `fn: Snacks.terminal()` | zz:snacks:Toggle Terminal | `lua/plugins/snacks/snacks.lua:499` |
+| 316 | `<c-_>` | n | `fn: Snacks.terminal()` | zz:snacks:Toggle Terminal | `lua/plugins/snacks/snacks.lua:506` |
+| 317 | `]s` | n | `fn: Snacks.words.jump(vim.v.count1)` | zz:snacks:Next Reference | `lua/plugins/snacks/snacks.lua:513` |
+| 318 | `[s` | n | `fn: Snacks.words.jump(-vim.v.count1)` | zz:snacks:Prev Reference | `lua/plugins/snacks/snacks.lua:520` |
+| 319 | `<leader>N` | n | `fn: Snacks.win({ file = vim.api.nvim_get_runtime_file('doc/news.` | Neovim News | `lua/plugins/snacks/snacks.lua:527` |
+| 320 | `<leader>bs` | n | `fn: Snacks.toggle.option('spell', { name = 'Spelling' })` | toggle: Spelling | `lua/plugins/snacks/snacks.lua:574` |
+| 321 | `<leader>bw` | n | `fn: Snacks.toggle.option('wrap', { name = 'Wrap' })` | toggle: Wrap | `lua/plugins/snacks/snacks.lua:575` |
+| 322 | `<leader>br` | n | `fn: Snacks.toggle.option('relativenumber', { name = 'Rel` | toggle: Relative Number | `lua/plugins/snacks/snacks.lua:576` |
+| 323 | `<leader>bd` | n | `fn: Snacks.toggle.diagnostics()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:577` |
+| 324 | `<leader>bl` | n | `fn: Snacks.toggle.line_number()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:578` |
+| 325 | `<leader>bc` | n | `fn: Snacks.toggle.option('conceallevel', { off = 0, on =` | Snacks toggle | `lua/plugins/snacks/snacks.lua:579` |
+| 326 | `<leader>bt` | n | `fn: Snacks.toggle.treesitter()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:580` |
+| 327 | `<leader>bb` | n | `fn: Snacks.toggle.option('background', { off = 'light', ` | toggle: Dark Background | `lua/plugins/snacks/snacks.lua:581` |
+| 328 | `<leader>bh` | n | `fn: Snacks.toggle.inlay_hints()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:582` |
+| 329 | `<leader>bi` | n | `fn: Snacks.toggle.indent()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:583` |
+| 330 | `<leader>bD` | n | `fn: Snacks.toggle.dim()` | Snacks toggle | `lua/plugins/snacks/snacks.lua:584` |
