@@ -17,13 +17,11 @@ vim.env.PATH = mason_bin .. (vim.fn.has('win32') == 1 and ';' or ':') .. vim.env
 
 vim.lsp.enable({ 'clangd', 'rust_analyzer', 'lua_ls', 'pyright' })
 
--- nvim 0.13 reads cmdline file args during init (before this file runs):
--- their FileType event fires before vim.lsp.enable registers its autocmd,
--- and enable()'s internal doautoall recovery misses them, so those buffers
--- never get a client (e.g. `nvim file.lua` from the shell). Re-play the
--- FileType event for buffers already loaded at this point.
-for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buftype == '' then
-        vim.api.nvim_exec_autocmds('FileType', { buffer = buf, group = 'nvim.lsp.enable' })
-    end
-end
+-- NOTE: the manual FileType replay loop that used to live here was removed
+-- 2026-11-05. On nvim v0.13.0-dev-1804+, vim.lsp.enable()'s internal recovery
+-- covers cmdline-arg buffers: the doautoall condition now includes
+-- `vim.fn.did_filetype() == 1` (runtime/lua/vim/lsp.lua:658), so `nvim file.rs`
+-- attaches without help. The old comment ("doautoall recovery misses them")
+-- described an earlier dev build. Post-install attach (fresh machine) is
+-- handled by mason-lspconfig v2's automatic_enable, which re-calls
+-- vim.lsp.enable() on package:install:success.
