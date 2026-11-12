@@ -4,7 +4,8 @@ return {
     -- can't see them and the plugin would load at startup)
     keys = function()
         local keys = {
-            { 's', '<Plug>Lightspeed_omni_s', mode = { 'n', 'v', 'o' }, remap = true, desc = 'zz:LightSpeed:omni_s' },
+            -- x (not v): v covers Select mode too; keep native "type to replace"
+            { 's', '<Plug>Lightspeed_omni_s', mode = { 'n', 'x', 'o' }, remap = true, desc = 'zz:LightSpeed:omni_s' },
         }
         if vim.g.vscode == nil then
             keys[#keys + 1] = { 'S', '<Plug>Lightspeed_omni_gs', mode = 'n', remap = true, desc = 'zz:LightSpeed:omni_gs' }

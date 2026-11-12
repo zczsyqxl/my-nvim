@@ -82,14 +82,17 @@ return {
         require('leap').setup(opts)
         local map = vim.keymap.set
         -- normal/visual jump: s/S (visual's native s is v_c substitute, and an equivalent command exists)
-        map({ 'n', 'v' }, 's', '<Plug>(leap)', { desc = 'zz:Leap:Jump' })
+        -- x (not v): v would also cover Select mode (luasnip placeholder
+        -- selection), where the mapping would hijack the "type to replace"
+        -- behavior and auto-switch to Visual. See :h Select-mode-mapping.
+        map({ 'n', 'x' }, 's', '<Plug>(leap)', { desc = 'zz:Leap:Jump' })
         -- S: cross-window leap. Upstream <Plug>(leap-from-window) hard-excludes
         -- all floating windows (leap/user.lua get_enterable_windows checks
         -- config.relative == "", meant to keep diagnostic hover popups out, #137),
         -- so the snacks explorer float is unreachable. Pass an explicit window
         -- list instead: replicate the original predicate + whitelist the
         -- snacks picker list window.
-        map({ 'n', 'v' }, 'S', function()
+        map({ 'n', 'x' }, 'S', function()
             local cur = vim.api.nvim_get_current_win()
             local wins = {}
             for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
@@ -107,8 +110,8 @@ return {
         -- pressing enter ends the session):
         --   ,x ab<enter><enter>... walks matches, <backspace> steps back;
         --   s{char}<enter> jumps to the nearest match (multiline f/t), s<enter> repeats the last search
-        map({ 'n', 'v' }, ',x', '<Plug>(leap-forward)', { desc = 'zz:Leap:fwd' })
-        map({ 'n', 'v' }, ',X', '<Plug>(leap-backward)', { desc = 'zz:Leap:bwd' })
+        map({ 'n', 'x' }, ',x', '<Plug>(leap-forward)', { desc = 'zz:Leap:fwd' })
+        map({ 'n', 'x' }, ',X', '<Plug>(leap-backward)', { desc = 'zz:Leap:bwd' })
         -- After an operator (y/d/c... + motion): replicate lightspeed's z/x/Z/X,
         -- avoiding surround's ys/ds/cs; normal-mode z/x keep native behavior (zz/zt/zb intact).
         --   Forward: z excludes the target char (t-style), x includes it (f-style);
@@ -119,6 +122,6 @@ return {
         map('o', 'Z', '<Plug>(leap-backward)', { desc = 'zz:Leap:bwd-excl' })
         -- Visitor mode (remote ops; gs is taken by mini.operators' sort, so use gk):
         --   gk{leap}y = remote yank; 2gk{leap} selects by line; y1gk{leap} = yank one remote line
-        map({ 'n', 'v', 'o' }, 'gk', '<Plug>(leap-visit)', { desc = 'zz:Leap:Visit' })
+        map({ 'n', 'x', 'o' }, 'gk', '<Plug>(leap-visit)', { desc = 'zz:Leap:Visit' })
     end,
 }

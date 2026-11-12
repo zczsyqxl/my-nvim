@@ -18,10 +18,12 @@ return {
     --   ,r    <- hop-yank's replacement for remote ops: y ,r <target> / d ,r <target>
     --   hop's ,z duplicates s; ,J/,K vertical jumps are covered by ,j/,k +
     --   relative line numbers, not migrated
+    -- x (not v): v covers Select mode too (luasnip placeholder
+    -- selection); keep native "type to replace" there
     keys = {
         {
             's',
-            mode = { 'n', 'v', 'o' },
+            mode = { 'n', 'x', 'o' },
             function()
                 require('flash').jump()
             end,
@@ -29,7 +31,7 @@ return {
         },
         {
             'S',
-            mode = { 'n', 'v', 'o' },
+            mode = { 'n', 'x', 'o' },
             function()
                 require('flash').jump()
             end,
@@ -37,7 +39,7 @@ return {
         },
         {
             ',w',
-            mode = { 'n', 'v', 'o' },
+            mode = { 'n', 'x', 'o' },
             function()
                 require('flash').jump({ search = {
                     mode = function(pat)
@@ -49,7 +51,7 @@ return {
         },
         {
             ',l',
-            mode = { 'n', 'v', 'o' },
+            mode = { 'n', 'x', 'o' },
             function()
                 require('flash').jump({ pattern = [[^.]], search = {
                     mode = 'search',
