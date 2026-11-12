@@ -79,7 +79,19 @@ return {
             -- picker.sources.explorer (see the merge table in
             -- snacks/picker/config/init.lua); the top-level opts.explorer is
             -- the MODULE slot — the picker's source resolution never reads it.
-            layout = { preset = 'sidebar', preview = 'main', hidden = { 'preview' } },
+            -- width/min_width live INSIDE the nested `layout` box tree: the
+            -- top-level ones are ignored for split (sidebar) layouts, and the
+            -- sidebar preset ships width=40 inside its box tree.
+            -- 0.25 = a quarter of the window width; min_width floors it.
+            layout = {
+                preset = 'sidebar',
+                preview = 'main',
+                hidden = { 'preview' },
+                layout = {
+                    width = 32,
+                    min_width = 32,
+                },
+            },
             win = {
                 preview = {
                     border = 'double',
