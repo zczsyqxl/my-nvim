@@ -5,12 +5,21 @@ vim.keymap.set('n', '`', "'", { remap = false, desc = "zz:exchange'`" })
 vim.keymap.set('n', 'z;', '<cmd>w<cr>', { remap = false, desc = 'zz:WriteBuffer' })
 vim.keymap.set({ 'n', 'o', 'x' }, '<space>', '$', { remap = false, desc = 'zz:GoToEndOfLine' })
 
-vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y', { remap = false, desc = 'zz:YankToSysClipboard' })
-vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { remap = false, desc = 'zz:PasteFromSysClipboard' })
-vim.keymap.set({ 'n', 'v', 'x' }, '<leader>P', '"+P', { remap = false, desc = 'zz:PasteFromSysClipboard' })
-vim.keymap.set({ 'n', 'v', 'x' }, '<leader>]p', '"+]p', { remap = false, desc = 'zz:PasteFromSysClipboard' })
-vim.keymap.set({ 'n', 'v', 'x' }, '<leader>[p', '"+[p', { remap = false, desc = 'zz:PasteFromSysClipboard' })
+vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { remap = false, desc = 'zz:YankToSysClipboard' })
+vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p', { remap = false, desc = 'zz:PasteFromSysClipboard' })
+vim.keymap.set({ 'n', 'v' }, '<leader>P', '"+P', { remap = false, desc = 'zz:PasteFromSysClipboard' })
+vim.keymap.set({ 'n', 'v' }, '<leader>]p', '"+]p', { remap = false, desc = 'zz:PasteFromSysClipboard' })
+vim.keymap.set({ 'n', 'v' }, '<leader>[p', '"+[p', { remap = false, desc = 'zz:PasteFromSysClipboard' })
 vim.keymap.set('n', '<backspace>', '<cmd>noh<cr>', { remap = false, silent = true, desc = 'zz:RemoveHighlight' })
+-- nvim 0.13's "CTRL-L clears multicursors" is a default *mapping* (not C-level
+-- behavior); the <c-l> -> <c-w>l override below (nvim-only) shadows it, and a
+-- noremap RHS skips mappings entirely. So spell the default's action out here,
+-- top-level so both plain nvim and vscode-neovim get it.
+vim.keymap.set('n', '<c-q>', function()
+    vim.cmd('nohlsearch | diffupdate')
+    vim.api.nvim_buf_clear_namespace(0, vim.api.nvim_create_namespace('nvim.multicursor'), 0, -1)
+    vim.cmd('normal! <C-l>')
+end, { desc = 'zz:N.ClearMultCursor' })
 
 if vim.g.vscode == nil then
     vim.keymap.set('n', '<leader>\\e', '<cmd>vsplit $MYVIMRC<cr>', { remap = false, desc = 'zz:EditVimConfig' })
@@ -132,7 +141,7 @@ else
     end, { remap = false, silent = true })
 
     -- view
-    vim.keymap.set('n', '<leader>;', function()
+    vim.keymap.set('n', '<leader>bw', function()
         vscode.call('editor.action.toggleWordWrap')
     end, { remap = false, silent = true })
 
@@ -227,7 +236,7 @@ else
     vim.keymap.set('', '<leader>du', function()
         vscode.call('git.unstageSelectedRanges')
     end, { remap = false, silent = true })
-    vim.keymap.set('', '<leader>v.', function()
+    vim.keymap.set('', '<leader>e.', function()
         local ft = vim.bo.filetype
         if ft == 'markdown' then
             vscode.call('markdown-preview-enhanced.openPreviewToTheSide')

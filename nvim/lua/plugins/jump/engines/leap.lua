@@ -92,7 +92,7 @@ return {
         -- so the snacks explorer float is unreachable. Pass an explicit window
         -- list instead: replicate the original predicate + whitelist the
         -- snacks picker list window.
-        map({ 'n', 'x' }, 'S', function()
+        map({ 'n' }, 'S', function()
             local cur = vim.api.nvim_get_current_win()
             local wins = {}
             for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
@@ -110,8 +110,8 @@ return {
         -- pressing enter ends the session):
         --   ,x ab<enter><enter>... walks matches, <backspace> steps back;
         --   s{char}<enter> jumps to the nearest match (multiline f/t), s<enter> repeats the last search
-        map({ 'n', 'x' }, ',x', '<Plug>(leap-forward)', { desc = 'zz:Leap:fwd' })
-        map({ 'n', 'x' }, ',X', '<Plug>(leap-backward)', { desc = 'zz:Leap:bwd' })
+        -- map({ 'n', 'x' }, ',x', '<Plug>(leap-forward)', { desc = 'zz:Leap:fwd' })
+        -- map({ 'n', 'x' }, ',X', '<Plug>(leap-backward)', { desc = 'zz:Leap:bwd' })
         -- After an operator (y/d/c... + motion): replicate lightspeed's z/x/Z/X,
         -- avoiding surround's ys/ds/cs; normal-mode z/x keep native behavior (zz/zt/zb intact).
         --   Forward: z excludes the target char (t-style), x includes it (f-style);

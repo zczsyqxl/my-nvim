@@ -131,7 +131,7 @@ local OPT_MAPPINGS = {
         find_left      = { nil, 'zz:mini.surround:FindLeft',     'n+x' },
         highlight      = { nil, 'zz:mini.surround:Highlight',    'n+x' },
         replace        = { nil, 'zz:mini.surround:Replace',      'n+x' },
-        update_n_lines = { nil, 'zz:mini.surround:UpdateNLines', 'n' },
+        -- update_n_lines is now a manual vim.keymap.set (picked up by that scanner)
     },
     ['lua/plugins/mini/diff.lua'] = {
         family      = 'opts: mini.diff',

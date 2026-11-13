@@ -4,11 +4,10 @@ require('mini.surround').setup({
     mappings = {
         add = 'ys', -- Add surrounding in Normal and Visual modes
         delete = 'ds', -- Delete surrounding
-        find = 'Sf', -- Find surrounding (to the right)
-        find_left = 'SF', -- Find surrounding (to the left)
-        highlight = 'Sh', -- Highlight surrounding
+        find = ',xf', -- Find surrounding (to the right)
+        find_left = ',xb', -- Find surrounding (to the left)
+        highlight = ',xh', -- Highlight surrounding
         replace = 'cs', -- Replace surrounding
-        update_n_lines = 'Sn',
 
         suffix_last = 'l', -- Suffix to search with "prev" method
         suffix_next = 'n', -- Suffix to search with "next" method
@@ -40,6 +39,9 @@ require('mini.surround').setup({
     },
 })
 
+-- `update_n_lines` is no longer mapped from the `mappings` opts table
+-- (removed upstream); map it manually:
+vim.keymap.set('n', '<leader>xn', '<Cmd>lua MiniSurround.update_n_lines()<CR>', { desc = 'zz:mini.surround:UpdateNLines' })
 vim.keymap.set('n', 'yss', 'ys_', { remap = true, desc = 'zz:mini.surround:AddLineSurround' })
 vim.keymap.del('x', 'ys')
 vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true, desc = 'zz:mini.surround:AddVisSurround' })
