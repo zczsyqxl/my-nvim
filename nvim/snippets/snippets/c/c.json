@@ -175,6 +175,10 @@
     "description": "'case' branch",
     "prefix": "case"
   },
+  "ccc": {
+    "body": "/* your code */",
+    "prefix": "ccc"
+  },
   "ccn": {
     "body": [
       "/*=== INCLUDE SECTOR ========================================================*/",
